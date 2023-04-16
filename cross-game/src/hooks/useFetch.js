@@ -40,7 +40,8 @@ const useFetch = ({ url, method, body = null, headers = null }) => {
 
     useEffect(() => {
         fetchData();
-    }, [method, url, body, headers, fetchData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [method, url, body, headers]);
 
     return { response, error, loading };
 };

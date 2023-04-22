@@ -1,12 +1,14 @@
 import React from 'react';
 import "./style.css";
-import NavBar from './NavBar/Navbar';
+import NavBar from './NavBar/navbar.jsx';
 
 
 function Home() {
   return (
     <>
-      <NavBar />
+      <section className='bannerContainer'>
+        <NavBar />
+      </section>
     </>
   );
 }

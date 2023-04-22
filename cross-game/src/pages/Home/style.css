@@ -1,3 +1,14 @@
 body{
     background-color: #1A1A1A;
 }
+
+.bannerContainer{
+    width: 100vw;
+    height: 100vh;
+    background-image: url(../../assets/index-page/banner.svg);
+    background-repeat: no-repeat;
+    background-position:  center top;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+}

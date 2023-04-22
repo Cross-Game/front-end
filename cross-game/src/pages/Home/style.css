@@ -1,14 +1,154 @@
-body{
+body {
     background-color: #1A1A1A;
+    width: 98.7vw;
 }
 
-.bannerContainer{
-    width: 100vw;
+.bannerContainer {
+    width: 100%;
     height: 100vh;
     background-image: url(../../assets/index-page/banner.svg);
     background-repeat: no-repeat;
-    background-position:  center top;
+    background-position: center top;
     background-size: cover;
     display: flex;
     justify-content: center;
+    border-bottom: 3px solid #00FF33;
 }
+
+.explanatoryContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 120vh;
+}
+
+.explanatoryContent .container {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.itensExplainContainer {
+    width: 100%;
+    height: 75%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.leftGroup {
+    width: 22%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.findPlayersContainer {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1AFF00
+}
+
+.discordContainer {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #7289DA;
+}
+
+.midGroup {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.friendsContainer {
+    width: 100%;
+    height: 30%;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bottomMidContainer {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.leftBottomMidContainer {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.calendarContainer {
+    width: 100%;
+    height: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #D9D9D9;
+}
+
+.chatContainer {
+    width: 100%;
+    height: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #D9D9D9;
+}
+
+.platformsContainer {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #000;
+}
+
+.rightGroup {
+    width: 22%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.riotContainer {
+    width: 100%;
+    height: 60%;
+    background-color: #FF4654;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avaliationContainer {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #19FF00;
+}
+
+

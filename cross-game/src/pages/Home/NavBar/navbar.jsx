@@ -6,7 +6,7 @@ import instagram from "../assets/Instagram.svg"
 import youtube from "../assets/Youtube.svg"
 import { BiGroup } from "react-icons/bi"
 import "@fontsource/krona-one";
-import "./navbar.css"
+import "./style.css"
 
 function NavBar() {
     return (

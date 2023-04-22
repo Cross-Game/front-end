@@ -8,15 +8,21 @@ import {
 
 import App from './App';
 import Cadastro from "./pages/Cadastro/Cadastro";
+import Login from "./pages/Login/Login";
 
 // configuração do router
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />
-  },{
+  },
+  {
     path: "/cadastro",
     element: <Cadastro />
+  },
+  {
+    path: "/login",
+    element: <Login />
   }
 ]);
 

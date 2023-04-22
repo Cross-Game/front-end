@@ -7,14 +7,17 @@ import {
 } from "react-router-dom";
 
 import App from './App';
-
+import Cadastro from "./pages/Cadastro/Cadastro";
 
 // configuração do router
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />
-  },
+  },{
+    path: "/cadastro",
+    element: <Cadastro />
+  }
 ]);
 
 

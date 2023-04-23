@@ -107,26 +107,3 @@ span {
     align-items: center;
     justify-content: space-around;
 }
-
-button {
-    box-sizing: border-box;
-    border: 1px solid #00FF33;
-    background: none;
-    border-radius: 15px;
-    color: #fff;
-    width: 100px;
-    height: 40px;
-    cursor: pointer;
-    font-family: "Krona One";
-}
-
-button:hover {
-    box-sizing: border-box;
-    border: 1px solid #00FF33;
-    background: #00FF33;
-    border-radius: 15px;
-    color: #000;
-    width: 100px;
-    height: 40px;
-    cursor: pointer;
-}

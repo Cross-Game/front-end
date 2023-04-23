@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import App from './App';
-import Cadastro from "./pages/Cadastro/Cadastro";
+import Cadastro from "./pages/Cadastro/Cadastro.jsx";
 
 // configuração do router
 const router = createBrowserRouter([

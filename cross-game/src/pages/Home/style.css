@@ -152,3 +152,103 @@ body {
 }
 
 
+.medalsContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.medalsContent .container {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.medalsContainer {
+    width: 100%;
+    height: 75%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.itensMedalsContainer {
+    width: 23%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+}
+
+.itensMedalsContainer :nth-last-child() {
+    justify-content: center;
+    align-items: center;
+}
+
+.itensMedalsContainer p {
+    color: #7A7A7A;
+    padding-left: 2%;
+    margin-bottom: 3%;
+    font-size: 0.8rem;
+}
+
+.itensMedalsContainer h2 {
+    color: #FFFFFF;
+    padding-left: 2%;
+    font-size: 1.4rem;
+}
+
+.medalIconContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 85%;
+    height: 70%;
+    margin-left: 3%;
+    border-radius: 30px;
+    transition: 300ms;
+    cursor: pointer;
+}
+
+.medalIconContainer img{
+    width: 80%;
+}
+
+.prata{
+    border: solid #7F7F7F 5px;
+}
+
+.prata:hover{
+    background-color: #7F7F7F;
+    border: solid #7F7F7F 5px;
+}
+
+.ouro{
+    border: solid #BF9E01 5px;
+}
+
+.ouro:hover{
+    background-color: #BF9E01;
+    border: solid #BF9E01 5px;
+}
+
+.diamante{
+    border: solid #6FFBFF 5px;
+}
+
+.diamante:hover{
+    background-color: #6FFBFF;
+    border: solid #6FFBFF 5px;
+}
+
+.mestre{
+    border: solid #A11B11 5px;
+}
+
+.mestre:hover{
+    background-color: #A11B11;
+    border: solid #A11B11 5px;
+}

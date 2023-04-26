@@ -12,6 +12,10 @@ import playIcon from '../../assets/index-page/playstationIcon.svg'
 import pcIcon from '../../assets/index-page/pcIcon.svg'
 import riotIcon from '../../assets/index-page/riotIcon.svg'
 import likeIcon from '../../assets/index-page/likeIcon.svg'
+import medalPrata from '../../assets/index-page/medalPrata.svg'
+import medalOuro from '../../assets/index-page/medalOuro.svg'
+import medalDiamante from '../../assets/index-page/medalDiamante.svg'
+import medalMestre from '../../assets/index-page/medalMestre.svg'
 
 
 function Home() {
@@ -66,6 +70,70 @@ function Home() {
               </div>
               <div className='avaliationContainer'>
                 <img src={likeIcon} alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div className='medalsContent'>
+        <div className="container">
+          <ItemSection section="Conquiste sua patente" text="Imagine uma em seu perfil" />
+          <div className="medalsContainer">
+            <div className="itensMedalsContainer ">
+              <div>
+                <p>
+                  NÍVEL
+                </p>
+                <h2>
+                  Prata
+                </h2>
+              </div>
+              <div className="medalIconContainer prata">
+                <img src={medalPrata} alt="" />
+              </div>
+            </div>
+
+            <div className="itensMedalsContainer ">
+              <div>
+                <p>
+                  NÍVEL
+                </p>
+                <h2>
+                  Ouro
+                </h2>
+              </div>
+              <div className="medalIconContainer ouro">
+                <img src={medalOuro} alt="" />
+              </div>
+            </div>
+
+            <div className="itensMedalsContainer ">
+              <div>
+                <p>
+                  NÍVEL
+                </p>
+                <h2>
+                  Diamante
+                </h2>
+              </div>
+              <div className="medalIconContainer diamante">
+                <img src={medalDiamante} alt="" />
+              </div>
+            </div>
+
+            <div className="itensMedalsContainer ">
+              <div>
+                <p>
+                  NÍVEL
+                </p>
+                <h2>
+                  Mestre
+                </h2>
+              </div>
+              <div className="medalIconContainer mestre">
+                <img src={medalMestre} alt="" />
               </div>
             </div>
           </div>

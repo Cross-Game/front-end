@@ -166,15 +166,17 @@ a {
 .title {
     font-size: medium;
     color: #00FF33;
+    opacity: 1;
 }
 
 .subtitle {
     font-size: large;
     color: #00FF33;
+    opacity: 1;
 }
 
 .divWelcome {
     margin-top: 42px;
     margin-left: 50px;
-    opacity: 1
+    opacity: 1;
 }

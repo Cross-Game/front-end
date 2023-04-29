@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import App from './App';
+import Teste from "./pages/Teste";
 
 
 // configuração do router
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />
   },
+  {
+    path: "/teste",
+    element: <Teste />
+  }
 ]);
 
 

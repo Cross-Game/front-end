@@ -1,0 +1,10 @@
+.tag {
+  font-family: "Krona One";
+  color: black;
+  font-size: 10px;
+  padding: 5px 10px;
+  display: flex;
+  background-color: #19FF00;
+  border-radius: 25px;
+  margin-right: 10px;
+}

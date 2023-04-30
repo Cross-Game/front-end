@@ -1,42 +1,86 @@
 import React, { useState } from "react";
-import { BsController, BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill, BsArrowRightShort, BsDiscord, BsFillEyeFill, BsFillEyeSlashFill, BsGoogle, BsPersonCircle } from "react-icons/bs";
 import "./Cadastro.css";
-
-
+import { BsArrowLeftShort, BsArrowRightShort, BsDiscord, BsFillEyeFill, BsFillEyeSlashFill, BsGoogle, BsPersonCircle } from "react-icons/bs";
+import { GiCrossShield, GiCrenulatedShield, GiCrossedAxes, GiCrownedSkull, GiEyeShield } from "react-icons/gi";
+import { SiValorant } from "react-icons/si";
 
 function Cadastro() {
 
-    const [senha, setSenha] = useState('');
+
     const [mostrarSenha, setMostrarSenha] = useState(false);
-    const [estadoSenha, setEstadoSenha] = useState(false)
-    const [email, setEmail] = useState('');
-    const [bordaEmail, setBordaEmail] = useState({})
     const [ativarProximo, setAtivarProximo] = useState({})
     const [ativarAnterio, setAtivarAnterior] = useState({ display: 'none' })
+    const [bordaJogo, setBordaJogo] = useState({ border: '1px solid #fff' })
+    const [valorant, setValorant] = useState(false);
+    const [tft, setTft] = useState(false);
+    const [ lol, setLol] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-    function validarEmail() {
-        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (regexEmail.test(email)) {
-            setBordaEmail({ border: '1px solid #00ff03' })
+    const [showModaSenha, setShowModalSenha] = useState(false);
+    const [showModalEmail, setShowModalEmail] = useState(false);
+    const [validationMessageSenha, setValidationMessageSenha] = useState('');
+    const [validationMessageEmail, setValidationMessageEmail] = useState('');
+    const [validadoSenha, setvalidadoSenha] = useState(false);
+    const [validadoEmail, setValidadoEmail] = useState(false);
+    
+    const [selectedIcon, setSelectedIcon] = useState(<BsPersonCircle className="iconAvatar"/>);
+
+
+
+    const handleSelectIcon = (icon) => {
+        setSelectedIcon(icon);
+      }
+
+    const handleEmailChange = (event) => {
+        const newEmail = event.target.value;
+        setEmail(newEmail);
+        validateEmail(newEmail);
+    };
+
+    const handlePasswordChange = (event) => {
+        const newPassword = event.target.value;
+        setPassword(newPassword);
+        validatePassword(newPassword);
+    };
+
+    const validatePassword = (password) => {
+        // Lógica para validar a senha
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+
+        if (!passwordRegex.test(password)) {
+            setShowModalSenha(true);
+            setvalidadoSenha(false)
+            setValidationMessageSenha('A senha deve ter pelo menos 8 caracteres, 1 numero, 1 letra maiúscula, 1 letra minúscula e 1 caractere especial.');
         } else {
-            setBordaEmail({ border: '1px solid red' })
+            setShowModalSenha(false);
+            setValidationMessageSenha('');
+            setvalidadoSenha(true)
         }
-        return regexEmail.test(email);
-    }
+    };
+
+    const validateEmail = (email) => {
+        // Lógica para validar o email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+            setShowModalEmail(true);
+            setValidadoEmail(false)
+            setValidationMessageEmail('O email esta sem o @ ou "."');
+        } else {
+            setShowModalEmail(false);
+            setValidadoEmail(true)
+            setValidationMessageEmail('');
+        }
+    };
+
 
     function handleMostrarSenha() {
         setMostrarSenha(!mostrarSenha);
     }
 
-    function validarSenha() {
-        const regexSenha = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+=[{\]};:<>|./?,-])[A-Za-z\d!@#$%^&*()_+=[{\]};:<>|./?,-]{8,}$/;
-        return regexSenha.test(senha);
-    }
-
     function handleSubmit() {
-        validarEmail();
-        validarSenha() ? setEstadoSenha(true) : setEstadoSenha(false);
-        if (validarEmail() && validarSenha()) {
+        if (validadoEmail && validadoSenha) {
             setAtivarProximo({ display: 'none' });
             setAtivarAnterior({ display: '' });
         }
@@ -51,15 +95,35 @@ function Cadastro() {
         setAtivarAnterior({ display: 'none' });
     }
 
+    const selecionarJogo = (indice) => {
+        setBordaJogo({ border: '0.1px solid #fff' })
+        if(indice === 1) {
+            setValorant(true);
+            setLol(false)
+            setTft(false)
+        } else if(indice === 2){
+            setValorant(false);
+            setLol(true)
+            setTft(false)
+        } else {
+            setValorant(false);
+            setLol(false)
+            setTft(true)
+        }
+    }
+
     return (
         <>
             <div className="container">
                 <div className="botaoVoltar" >
-                    <p className="voltar">Voltar</p>
+                    <p><BsArrowLeftShort className="arrowVoltarInicio" />Voltar</p>
                 </div>
                 <form className="cardCadastro" style={ativarProximo}>
                     <div className="img">
-
+                    </div>
+                    <div className="tituloImg">
+                        <p>Constinue sua jornada conosco</p>
+                        <h1>Seja Bem Vindo !</h1>
                     </div>
                     <div className="cardFormCadastro">
                         <div className="tituloCadastro">Cadastrar</div>
@@ -67,24 +131,40 @@ function Cadastro() {
 
                             <label htmlFor="">Email</label>
                             <input
-                                style={bordaEmail}
                                 type="text"
                                 placeholder="email@email.com"
+                                id="email"
+                                name="email"
                                 value={email}
-                                onChange={event => setEmail(event.target.value)} />
+                                onChange={handleEmailChange} />
+                            {showModalEmail && (
+                                <div className="modal">
+                                    <div className="modal-content">
+                                        <p>{validationMessageEmail}</p>
+                                    </div>
+                                </div>
+                            )}
                             <label htmlFor="">Usuário</label>
                             <input type="text" placeholder="HOmonster" />
 
                             <label htmlFor="">Senha</label>
                             <input
                                 type={mostrarSenha ? 'text' : 'password'}
-                                value={senha}
-                                onChange={(event) => setSenha(event.target.value)}
-                                placeholder="********" />
+                                id="password"
+                                name="password"
+                                value={password}
+                                onChange={handlePasswordChange}
+                                placeholder="⁕⁕⁕⁕⁕⁕⁕⁕" />
                             <span className="show-password">
                                 <span className="iconPassword" onClick={handleMostrarSenha}>{mostrarSenha ? <BsFillEyeSlashFill /> : <BsFillEyeFill />}</span>
                             </span>
-                            <span className="estiloEstadoSenha">{estadoSenha ? "Senha Forte  🟢" : "Senha Fraca  🔴"}</span>
+                            {showModaSenha && (
+                                <div className="modal">
+                                    <div className="modal-content">
+                                        <p>{validationMessageSenha}</p>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                         <div className="botaoCadastro" onClick={handleSubmit}>
                             <div>Próximo</div>
@@ -92,40 +172,52 @@ function Cadastro() {
                         </div>
                         <div className="subTitulo">ou com as seguintes plataformas</div>
                         <div className="loginRapido">
-                            <div><BsDiscord className="loginDiscord" /></div>
-                            <div><BsGoogle className="loginGoogle" /></div>
+                            <div><BsDiscord className="loginDiscord" onClick={handleSubmit} /></div>
+                            <div><BsGoogle className="loginGoogle" onClick={handleSubmit} /></div>
                         </div>
                     </div>
                 </form>
                 <form className="cardCadastroTwo" style={ativarAnterio}>
-                    <BsPersonCircle className="iconAvatar" />
-                    <div>Selecione Seu Avatar</div>
+                    {selectedIcon}
+                    <div>Selecione o icone do seu perfil</div>
                     <div className="iconsEscolha">
-                        <BsFillArrowLeftCircleFill className="iconArrow" />
-                        <BsPersonCircle className="iconEscolhaAvatar" />
-                        <BsPersonCircle className="iconEscolhaAvatar" />
-                        <BsPersonCircle className="iconEscolhaAvatar" />
-                        <BsPersonCircle className="iconEscolhaAvatar" />
-                        <BsPersonCircle className="iconEscolhaAvatar" />
-                        <BsFillArrowRightCircleFill className="iconArrow" />
+                        <GiCrossShield className="iconEscolhaAvatar"
+                            onClick={() => handleSelectIcon(<GiCrossShield className="iconAvatar"/>)} />
+
+                        <GiCrenulatedShield className="iconEscolhaAvatar"
+                            onClick={() => handleSelectIcon(<GiCrenulatedShield className="iconAvatar"/>)} />
+
+                        <GiEyeShield className="iconEscolhaAvatar"
+                            onClick={() => handleSelectIcon(<GiEyeShield className="iconAvatar"/>)} />
+
+                        <GiCrossedAxes className="iconEscolhaAvatar"
+                            onClick={() => handleSelectIcon(<GiCrossedAxes className="iconAvatar"/>)} />
+
+                        <GiCrownedSkull className="iconEscolhaAvatar"
+                            onClick={() => handleSelectIcon(<GiCrownedSkull className="iconAvatar"/>)} />
+
                     </div>
-                    <div>Selecione um jogo você irá jogar</div>
+                    <div>Selecione um jogo você irá jogar:</div>
                     <div className="containerJogos">
-                        <div className="contornoJogo">
-                            <span><BsController /></span>
+                        <div className="contornoJogo" style={valorant ? bordaJogo : {border: '1px solid #000'}} onClick={() => selecionarJogo(1)}>
+                            <SiValorant className="valorant" />
                         </div>
-                        <div className="contornoJogo">
-                            <span><BsController /></span>
+                        <div className="contornoJogo" style={lol ? bordaJogo : {border: '1px solid #000'}} onClick={() => selecionarJogo(2)}>
+                            <span className="leagueOfLegends"></span>
                         </div>
-                        <div className="contornoJogo">
-                            <span><BsController /></span>
+                        <div className="contornoJogo" style={tft ? bordaJogo : {border: '1px solid #000'}} onClick={() => selecionarJogo(3)}>
+                            <span className="teamfightTactics"></span>
                         </div>
                     </div>
-                    <div>Digite o seu Username do jogo</div>
-                    <div>input de Username</div>
-                    <div>Botoes de cadastrar e coltar
-                        <div onClick={cadastrar}>Cadastrar <BsArrowRightShort className="arrowProximo" /></div>
-                        <div onClick={voltar}><BsArrowRightShort className="arrowProximo" /> Voltar</div>
+                    <div className="inputUsername">
+                        <label htmlFor="username" className="labelUsername">
+                            Digite o seu Username do jogo:
+                        </label>
+                        <input type="text" id="username" className="inputUsernameEstilo" placeholder="HOmonster" />
+                    </div>
+                    <div className="botoes">
+                        <div onClick={voltar} className="botaoVoltarCadastro" ><BsArrowLeftShort className="arrowFinalVoltar" />Voltar</div>
+                        <div onClick={cadastrar} className="botaoCadastrar">Cadastrar<BsArrowRightShort className="arrowFinalCadastrar" /></div>
                     </div>
                 </form>
             </div>

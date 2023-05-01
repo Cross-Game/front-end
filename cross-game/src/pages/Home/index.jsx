@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import AwesomeSlider from 'react-awesome-slider';
+import 'react-awesome-slider/dist/styles.css';
 import "./style.css";
 import NavBar from './NavBar/navbar.jsx';
 import ItemSection from './ItemSection/index'
@@ -17,12 +19,38 @@ import medalOuro from '../../assets/index-page/medalOuro.svg'
 import medalDiamante from '../../assets/index-page/medalDiamante.svg'
 import medalMestre from '../../assets/index-page/medalMestre.svg'
 
+import axios from 'axios';
 
 function Home() {
+  const [noticies, setNoticies] = useState([]);
+
+  let config = {
+    method: 'get',
+    maxBodyLength: 5,
+    url: 'https://newsapi.org/v2/everything?q=games&apiKey=6ac810e80de24125838316d999b45fc0',
+    headers: {
+      'Authorization': 'Basic dXNlcjp1c2Vy'
+    }
+  };
+
+  axios.request(config)
+    .then((response) => {
+      console.log(JSON.stringify());
+      setNoticies(response.data.articles)
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+
+
   return (
     <>
       <section className='bannerContainer'>
         <NavBar />
+
+        <h2>UMA EQUIPE FORTE COMEÇA AQUI !</h2>
+
       </section>
 
       <div className='explanatoryContent'>
@@ -33,9 +61,11 @@ function Home() {
 
               <div className='findPlayersContainer'>
                 <img src={userIcon} alt="" />
+                <div>Conheça novos players e faça amizades incríveis</div>
               </div>
               <div className='discordContainer'>
                 <img src={discordIcon} alt="" />
+                <div>Faça login de forma rápida com o discord</div>
               </div>
 
             </div>
@@ -43,6 +73,7 @@ function Home() {
 
               <div className='friendsContainer'>
                 <img src={friendIcon} alt="" />
+                <div>Crie salas com seus amigos</div>
               </div>
 
               <div className='bottomMidContainer'>
@@ -50,9 +81,11 @@ function Home() {
                 <div className='leftBottomMidContainer'>
                   <div className='calendarContainer'>
                     <img src={calendarIcon} alt="" />
+                    <div>Agende partidas com seus amigos</div>
                   </div>
                   <div className='chatContainer'>
                     <img src={chatIcon} alt="" />
+                    <div>Converse e conheça jogadores através do chat</div>
                   </div>
                 </div>
 
@@ -60,6 +93,8 @@ function Home() {
                   <img src={xboxIcon} alt="" />
                   <img src={playIcon} alt="" />
                   <img src={pcIcon} alt="" />
+                  <div>Faça amigos
+                    em todas as plataformas</div>
                 </div>
               </div>
             </div>
@@ -67,9 +102,12 @@ function Home() {
             <div className='rightGroup'>
               <div className='riotContainer'>
                 <img src={riotIcon} alt="" />
+                <div>Adicione seu perfil
+                  da Riot Games</div>
               </div>
               <div className='avaliationContainer'>
                 <img src={likeIcon} alt="" />
+                <div>Avalie os jogadores, e ganhe recompensas</div>
               </div>
             </div>
           </div>
@@ -139,8 +177,38 @@ function Home() {
           </div>
         </div>
       </div>
+      {/* noticies */}
+      <div className="noticiesContent">
+        <AwesomeSlider >
+          {
+            noticies.map((element) => (
+              <div data-src={element.urlToImage} />
+            ))
+          }
+        </AwesomeSlider>
+      </div>
+
+
+      <div className="contactContent">
+        <div className="container">
+          <div className="contactContainerCard">
+            <div className="content">
+              <h2>Entre em Contato</h2>
+              <div className="inputsContact">
+                <form className="search-wrapper cf">
+                  <input type="text" placeholder="Email" />
+                  <input type="text" placeholder="Mensagem" />
+                  <button type="submit">Enviar</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div className="reservedRights">
+            <h3> © 2022 Todos os direitos reservados à Cross Game </h3>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
-
 export default Home;

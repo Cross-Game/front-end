@@ -11,7 +11,7 @@ import "./style.css"
 function NavBar() {
     return (
         <>
-            <nav>
+            <nav className="navbar">
                 <div className="logo">
                     <div className="img">
                         <img src={iconLogo} alt="" />

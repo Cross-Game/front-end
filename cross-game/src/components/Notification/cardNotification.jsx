@@ -1,14 +1,24 @@
 
-import React from "react";
+import React, { useState } from 'react';
 import "../../assets/global.css";
 import "../Notification/notification.css";
-
+import useFetch from '../../hooks/useFetch';
 
 function CardNotification(props) {
     const {icon, title, message, date, time, temFooter, children} = props;
 
+    const [hover, setHover] = useState(false);
+
+    const handleMouseEnter = () => {
+      setHover(true);
+    };
+  
+    const handleMouseLeave = () => {
+      setHover(false);
+    };
+
     return (
-        <div className="cardNotification">
+        <div className="cardNotification"  onClick={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <div className="content">
             {icon && <span className="icon">{icon}</span>}
                 <div className="group-body">
@@ -20,8 +30,8 @@ function CardNotification(props) {
                 <p>{time}</p>
                 </div>
             </div>
-            {temFooter && (
-            <div className="footer">{children}
+            {temFooter &&  hover &&(
+            <div className="cardNotification-footer">{children}
             </div>
             )}
         </div>

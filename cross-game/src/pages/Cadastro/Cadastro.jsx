@@ -3,10 +3,13 @@ import "./Cadastro.css";
 import { BsArrowLeftShort, BsArrowRightShort, BsDiscord, BsFillEyeFill, BsFillEyeSlashFill, BsGoogle, BsPersonCircle } from "react-icons/bs";
 import { GiCrossShield, GiCrenulatedShield, GiCrossedAxes, GiCrownedSkull, GiEyeShield } from "react-icons/gi";
 import { SiValorant } from "react-icons/si";
+import { loginWithGoogle, loginWithDiscord  } from "./Cadastro.js";
+
 
 function Cadastro() {
 
-
+    const [usuarioGoogle, setUsuarioGoogle] = useState(null);
+    const [usuarioDiscord, setUsuarioDiscord] = useState(null);
     const [mostrarSenha, setMostrarSenha] = useState(false);
     const [ativarProximo, setAtivarProximo] = useState({})
     const [ativarAnterio, setAtivarAnterior] = useState({ display: 'none' })
@@ -86,6 +89,28 @@ function Cadastro() {
         }
     }
 
+    const handleSubmitGoogle = async ()=> {
+        try{
+            const response = await loginWithGoogle();
+            setUsuarioGoogle(response.profileObj);
+            console.log(response);
+        }
+        catch(error){
+            console.log(error);
+        }
+
+       
+    }
+    const handleSubmitDiscord = async ()=> {
+        try{
+            const response = await loginWithDiscord();
+            setUsuarioDiscord(response.profileObj);
+            console.log(response);
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
     function cadastrar() {
 
     }
@@ -172,8 +197,8 @@ function Cadastro() {
                         </div>
                         <div className="subTitulo">ou com as seguintes plataformas</div>
                         <div className="loginRapido">
-                            <div><BsDiscord className="loginDiscord" onClick={handleSubmit} /></div>
-                            <div><BsGoogle className="loginGoogle" onClick={handleSubmit} /></div>
+                            <div><BsDiscord className="loginDiscord" onClick={handleSubmitGoogle} /></div>
+                            <div><BsGoogle className="loginGoogle" onClick={handleSubmitDiscord} /></div>
                         </div>
                     </div>
                 </form>

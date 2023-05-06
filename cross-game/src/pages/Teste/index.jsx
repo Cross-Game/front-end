@@ -3,12 +3,13 @@ import Modal from '../../components/Modal';
 import { FaSearch as FaSearch } from 'react-icons/fa';
 import Button from '../../components/Button'
 import Tag from '../../components/Tag'
-import { MdNotificationsActive as MdNotificationsActive } from 'react-icons/md';
+import { MdGroups, MdNotificationsActive as MdNotificationsActive } from 'react-icons/md';
 import Notification from '../../components/Notification';
-import { BsArrowRightShort, BsFilterLeft } from "react-icons/bs";
+import { BsArrowRightShort, BsFileMinus, BsFileMinusFill, BsFillCalendarFill, BsFillCalendarWeekFill, BsFilterLeft, BsPlus } from "react-icons/bs";
 import "./style.css"
 import Option from "./Option";
 import RangeBar from "../../components/RangeBar";
+import { HiMinusSm } from "react-icons/hi";
 
 
 function Teste() {
@@ -28,32 +29,79 @@ function Teste() {
       <button onClick={handleOpenModal}>Open Modal</button>
       {showModal && (
 
-        <Modal title="Filtrar por" icon={<BsFilterLeft/>} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort/>} textButton='Filtrar'>
-        <div className="container_filtro">
-          
-          <div className="filtro_jogos">
-          <p className="titleFiltro">Meus Jogos</p>
-          <div className="jogos">
-            {jogos.map((jogo) => (
-               <React.Fragment key={jogo.toLowerCase()}>
+        <Modal title="Criar uma sala" icon={<MdGroups/>} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort/>} textButton='Criar'>
+          <div className="container_filtro">
+             <div className="filtro_jogos">
+           <p className="titleFiltro">Escolha um Jogo</p>
+           <div className="jogos">
+             {jogos.map((jogo) => (
+                <React.Fragment key={jogo.toLowerCase()}>
                 <Tag text={jogo}/>
-               </React.Fragment>
-             ))}
+                </React.Fragment>
+              ))}
+              </div>
+           </div>
+
+             <div className="filtro_level">
+           <p className="titleFiltro">Level</p>
+             <RangeBar min='0' max='100' />
+           </div>
+
+           <div className="filtro_qtdPlayers">
+           <p className="titleFiltro">Qtd de Players</p>
+           <>
+             <input type="text" value={10}></input>
+             <HiMinusSm/>
+             <BsPlus/>
+           </>
+           </div>
+
+           
+           <div className="filtro_rank">
+           <p className="titleFiltro">Rank</p>
+             // Fazer um GetRank de cada jogo
              </div>
-          </div>
-          
-          <div className="filtro_level">
-          <p className="titleFiltro">Level</p>
-            <RangeBar min='0' max='100' />
+
+             <div className="filtro_descricao">
+           <p className="titleFiltro">Descrição</p>
+             <span>______</span>
+            </div>
+
+            <div className="filtro_horario">
+          <p className="titleFiltro">Quando?</p>
+          <input type="radio" /> Agora
+          <input type="radio" /> Apartir de <BsFillCalendarWeekFill/>
           </div>
 
-          <div className="filtro_rank">
-          <p className="titleFiltro">Rank</p>
-            // Fazer um GetRank de cada jogo
-            </div>
 
         </div>
         </Modal>
+        // <Modal title="Filtrar por" icon={<BsFilterLeft/>} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort/>} textButton='Filtrar'>
+        // <div className="container_filtro">
+          
+        //   <div className="filtro_jogos">
+        //   <p className="titleFiltro">Meus Jogos</p>
+        //   <div className="jogos">
+        //     {jogos.map((jogo) => (
+        //        <React.Fragment key={jogo.toLowerCase()}>
+        //         <Tag text={jogo}/>
+        //        </React.Fragment>
+        //      ))}
+        //      </div>
+        //   </div>
+          
+        //   <div className="filtro_level">
+        //   <p className="titleFiltro">Level</p>
+        //     <RangeBar min='0' max='100' />
+        //   </div>
+
+        //   <div className="filtro_rank">
+        //   <p className="titleFiltro">Rank</p>
+        //     // Fazer um GetRank de cada jogo
+        //     </div>
+
+        // </div>
+        // </Modal>
         // <Modal title="Filtrar por" icon={<BsFilterLeft/>} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort/>} textButton='Filtrar'>
         // <div className="container_filtro">
         //   <div className="filtro_nivel">

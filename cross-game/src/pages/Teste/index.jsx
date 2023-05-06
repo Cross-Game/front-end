@@ -5,6 +5,10 @@ import Button from '../../components/Button'
 import Tag from '../../components/Tag'
 import { MdNotificationsActive as MdNotificationsActive } from 'react-icons/md';
 import Notification from '../../components/Notification';
+import { BsFilterLeft } from "react-icons/bs";
+import "./style.css"
+import Option from "./Option";
+import RangeBar from "../../components/RangeBar";
 
 
 function Teste() {
@@ -22,7 +26,24 @@ function Teste() {
     <div>
       <button onClick={handleOpenModal}>Open Modal</button>
       {showModal && (
-        <Notification/>
+        <Modal title="Filtrar por" icon={<BsFilterLeft/>} clearAll='true' temFooter='true' ativarBotao='true' iconButton='' textButton='Filtrar'>
+        <div className="container_filtro">
+          <div className="filtro_nivel">
+            <p className="titleFiltro">Nivel</p>
+            <div className="opcoesNivel">
+            <Option backgroundColor='#4D4D4D'/>
+            <Option backgroundColor='#604F00'/>
+            <Option backgroundColor='#052D4F'/>
+            <Option backgroundColor='#571618'/>
+            </div>
+          </div>
+          <div className="container_sliders">
+          <div className="filtro_comportamento"><p className="titleFiltro">Comportamento</p> <RangeBar min='0' max='5' /> </div>
+          <div className="filtro_habilidade"><p className="titleFiltro">Habilidade</p>  <RangeBar min='0' max='5' /> </div>
+          </div>
+        </div>
+        </Modal>
+        // <Notification/>
         // <Modal
         //   onClose={handleCloseModal}
         //   title="Notificações"

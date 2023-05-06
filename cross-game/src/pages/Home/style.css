@@ -1,3 +1,537 @@
-body{
+body {
     background-color: #1A1A1A;
+    width: 98.7vw;
+}
+
+.bannerContainer {
+    width: 100%;
+    height: 100vh;
+    background-image: url(../../assets/index-page/banner.svg);
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    border-bottom: 3px solid #00FF33;
+    justify-content: space-around;
+}
+
+.bannerContainer h2 {
+    margin-top: 40%;
+    font-size: 1.8rem;
+    color: #FFFFFF;    ;
+}
+
+.explanatoryContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 120vh;
+}
+
+.explanatoryContent .container {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.itensExplainContainer {
+    width: 100%;
+    height: 75%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.leftGroup {
+    width: 22%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.findPlayersContainer {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1AFF00;
+    transition: 3000ms;
+    cursor: pointer;
+}
+
+.findPlayersContainer div {
+    display: none;
+}
+
+.findPlayersContainer:hover img {
+    display: none;
+}
+
+.findPlayersContainer:hover div {
+    display: block;
+    margin-left: 10%;
+    color: #000;
+}
+
+
+.discordContainer {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #7289DA;
+    cursor: pointer;
+}
+
+.discordContainer div {
+    display: none;
+    color: #fff;
+    font-size: 1.8rem;
+    width: 70%;
+    line-height: 120%;
+}
+
+.discordContainer:hover img {
+    display: none;
+
+}
+
+.discordContainer:hover div {
+    display: block;
+}
+
+.midGroup {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.friendsContainer {
+    width: 100%;
+    height: 30%;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.friendsContainer div {
+    display: none;
+
+}
+
+.friendsContainer:hover img {
+    display: none;
+}
+
+.friendsContainer:hover div {
+    display: block;
+    color: #fff;
+}
+
+.bottomMidContainer {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.leftBottomMidContainer {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.calendarContainer {
+    width: 100%;
+    height: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #D9D9D9;
+    cursor: pointer;
+}
+
+.calendarContainer div {
+    display: none;
+
+}
+
+.calendarContainer:hover img {
+    display: none;
+}
+
+.calendarContainer:hover div {
+    display: block;
+    margin-left: 10%;
+    color: #000;
+}
+
+.chatContainer {
+    width: 100%;
+    height: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #D9D9D9;
+    cursor: pointer;
+}
+
+.chatContainer div {
+    display: none;
+    width: 80%;
+}
+
+.chatContainer:hover img {
+    display: none;
+}
+
+.chatContainer:hover div {
+    display: block;
+    color: #000;
+}
+
+.platformsContainer {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #000;
+    cursor: pointer;
+}
+
+.platformsContainer div {
+    display: none;
+
+}
+
+.platformsContainer:hover img {
+    display: none;
+}
+
+.platformsContainer:hover div {
+    display: block;
+    margin-left: 10%;
+    color: #fff;
+}
+
+.rightGroup {
+    width: 22%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.riotContainer {
+    width: 100%;
+    height: 60%;
+    background-color: #FF4654;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.riotContainer div {
+    display: none;
+    width: 70%;
+    font-size: 1.5rem;
+    line-height: 120%;
+}
+
+.riotContainer:hover img {
+    display: none;
+}
+
+.riotContainer:hover div {
+    display: block;
+    color: #fff;
+}
+
+.avaliationContainer {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #19FF00;
+    cursor: pointer;
+}
+
+.avaliationContainer div {
+    display: none;
+    width: 70%;
+}
+
+.avaliationContainer:hover img {
+    display: none;
+}
+
+.avaliationContainer:hover div {
+    display: block;
+    color: #000;
+}
+
+
+.medalsContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.medalsContent .container {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.medalsContainer {
+    width: 100%;
+    height: 75%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.itensMedalsContainer {
+    width: 23%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.itensMedalsContainer :nth-last-child() {
+    justify-content: center;
+    align-items: center;
+}
+
+.itensMedalsContainer p {
+    color: #7A7A7A;
+    padding-left: 2%;
+    margin-bottom: 3%;
+    font-size: 0.8rem;
+}
+
+.itensMedalsContainer h2 {
+    color: #FFFFFF;
+    padding-left: 2%;
+    font-size: 1.4rem;
+}
+
+.medalIconContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 85%;
+    height: 70%;
+    margin-left: 3%;
+    border-radius: 30px;
+    transition: 300ms;
+    cursor: pointer;
+}
+
+.medalIconContainer img {
+    width: 80%;
+}
+
+.prata {
+    border: solid #7F7F7F 5px;
+}
+
+.prata:hover {
+    background-color: #7F7F7F;
+    border: solid #7F7F7F 5px;
+}
+
+.ouro {
+    border: solid #BF9E01 5px;
+}
+
+.ouro:hover {
+    background-color: #BF9E01;
+    border: solid #BF9E01 5px;
+}
+
+.diamante {
+    border: solid #6FFBFF 5px;
+}
+
+.diamante:hover {
+    background-color: #6FFBFF;
+    border: solid #6FFBFF 5px;
+}
+
+.mestre {
+    border: solid #A11B11 5px;
+}
+
+.mestre:hover {
+    background-color: #A11B11;
+    border: solid #A11B11 5px;
+}
+
+/* 
+seção para noticias - não finalizada */
+
+.noticiesContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background-color: red;
+}
+
+/*  */
+
+.contactContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.contactContent .container {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+
+.contactContainerCard {
+    width: 85%;
+    height: 60%;
+    border-radius: 15px 100px 15px 100px;
+    background-color: black;
+    background-image: url(../../assets/index-page/backgroundIconContact.svg);
+    background-repeat: no-repeat;
+    background-position: center right;
+    background-size: 39%;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+}
+
+.contactContainerCard .content {
+    width: 70%;
+    height: 60%;
+    margin-left: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.contactContainerCard .content h2 {
+    color: #FFFFFF;
+    font-size: 1.5rem;
+}
+
+.inputsContact {
+    width: 100%;
+    height: 65%;
+    display: flex;
+}
+
+
+.search-wrapper {
+    width: 100%;
+    border-radius: 40px;
+    background: transparent;
+}
+
+/* Form text input */
+
+.search-wrapper input {
+    padding-left: 20px;
+    width: 80%;
+    height: 20%;
+    padding: 10px 5px;
+    float: left;
+    font: #fff bold 13px 'lucida sans', 'trebuchet MS', 'Tahoma';
+    border: 0;
+    background: #2E312D;
+    border-radius: 40px;
+    border-top-style: none;
+    margin-top: 2%;
+    color: #FFFFFF;
+}
+
+.search-wrapper input:focus {
+    outline: 0;
+    background: #2E312D;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.8) inset;
+}
+
+.search-wrapper input::-webkit-input-placeholder {
+    color: #fff;
+    font-weight: normal;
+    padding-left: 20px;
+}
+
+.search-wrapper input:-moz-placeholder {
+
+    color: #fff;
+    font-weight: normal;
+    font-style: italic;
+}
+
+.search-wrapper input:-ms-input-placeholder {
+    color: #fff;
+    font-weight: normal;
+    font-style: italic;
+    border-style: none;
+}
+
+/* Form submit button */
+.search-wrapper button {
+    overflow: visible;
+    position: relative;
+    float: right;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    height: 35.5%;
+    width: 18%;
+    font-size: 1.0rem;
+    color: #000;
+    font-weight: 500;
+    background: #00FF33;
+    border-radius: 40px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);
+    left: -18.5%;
+    top: 11.5%;
+}
+
+.search-wrapper button:hover {
+    background-color: #1AFF00;
+}
+
+.reservedRights {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

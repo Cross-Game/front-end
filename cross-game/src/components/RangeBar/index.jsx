@@ -13,8 +13,8 @@ function RangeBar(props) {
   return (
     <div className="slider-container">
       <InputRange
-        maxValue= '5'
-        minValue='0'
+        minValue={props.min}
+        maxValue={props.max}
         value={values}
         onChange={handleChange}
         formatLabel={(value) => `${value}`}

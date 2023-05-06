@@ -5,13 +5,14 @@ import Button from '../../components/Button'
 import Tag from '../../components/Tag'
 import { MdNotificationsActive as MdNotificationsActive } from 'react-icons/md';
 import Notification from '../../components/Notification';
-import { BsFilterLeft } from "react-icons/bs";
+import { BsArrowRightShort, BsFilterLeft } from "react-icons/bs";
 import "./style.css"
 import Option from "./Option";
 import RangeBar from "../../components/RangeBar";
 
 
 function Teste() {
+  const [jogos, setJogos] = useState(['Valorant', 'League of Legends', 'UmJogoAi']);
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = () => {
@@ -26,23 +27,50 @@ function Teste() {
     <div>
       <button onClick={handleOpenModal}>Open Modal</button>
       {showModal && (
-        <Modal title="Filtrar por" icon={<BsFilterLeft/>} clearAll='true' temFooter='true' ativarBotao='true' iconButton='' textButton='Filtrar'>
+
+        <Modal title="Filtrar por" icon={<BsFilterLeft/>} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort/>} textButton='Filtrar'>
         <div className="container_filtro">
-          <div className="filtro_nivel">
-            <p className="titleFiltro">Nivel</p>
-            <div className="opcoesNivel">
-            <Option backgroundColor='#4D4D4D'/>
-            <Option backgroundColor='#604F00'/>
-            <Option backgroundColor='#052D4F'/>
-            <Option backgroundColor='#571618'/>
+          
+          <div className="filtro_jogos">
+          <p className="titleFiltro">Meus Jogos</p>
+          <div className="jogos">
+            {jogos.map((jogo) => (
+               <React.Fragment key={jogo.toLowerCase()}>
+                <Tag text={jogo}/>
+               </React.Fragment>
+             ))}
+             </div>
+          </div>
+          
+          <div className="filtro_level">
+          <p className="titleFiltro">Level</p>
+            <RangeBar min='0' max='100' />
+          </div>
+
+          <div className="filtro_rank">
+          <p className="titleFiltro">Rank</p>
+            // Fazer um GetRank de cada jogo
             </div>
-          </div>
-          <div className="container_sliders">
-          <div className="filtro_comportamento"><p className="titleFiltro">Comportamento</p> <RangeBar min='0' max='5' /> </div>
-          <div className="filtro_habilidade"><p className="titleFiltro">Habilidade</p>  <RangeBar min='0' max='5' /> </div>
-          </div>
+
         </div>
         </Modal>
+        // <Modal title="Filtrar por" icon={<BsFilterLeft/>} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort/>} textButton='Filtrar'>
+        // <div className="container_filtro">
+        //   <div className="filtro_nivel">
+        //     <p className="titleFiltro">Nivel</p>
+        //     <div className="opcoesNivel">
+        //     <Option backgroundColor='#4D4D4D'/>
+        //     <Option backgroundColor='#604F00'/>
+        //     <Option backgroundColor='#052D4F'/>
+        //     <Option backgroundColor='#571618'/>
+        //     </div>
+        //   </div>
+        //   <div className="container_sliders">
+        //   <div className="filtro_comportamento"><p className="titleFiltro">Comportamento</p> <RangeBar min='0' max='5' /> </div>
+        //   <div className="filtro_habilidade"><p className="titleFiltro">Habilidade</p>  <RangeBar min='0' max='5' /> </div>
+        //   </div>
+        // </div>
+        // </Modal>
         // <Notification/>
         // <Modal
         //   onClose={handleCloseModal}

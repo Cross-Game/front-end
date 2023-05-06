@@ -1,3 +1,5 @@
+
+/*MODAL JOGADOR*/
 .container_filtro {
     display: flex;
     font-size: 12px;
@@ -8,7 +10,7 @@
 .filtro_nivel {
     display: flex;
     width: auto;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .opcoesNivel{
@@ -32,4 +34,16 @@ p.titleFiltro {
 
 .filtro_habilidade {
     width: 200px;
+}
+
+/*MODAL SALA*/
+
+.filtro_rank {
+    width: 200px;
+    margin-top: 20px;
+}
+
+.filtro_level {
+    width: 400px;
+    margin-top: 20px;
 }

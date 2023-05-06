@@ -8,6 +8,8 @@
   border-radius: 25px;
   margin-right: 10px;
   transition: all 0.4s opacity;
+  align-items: center;
+  white-space: nowrap;
 }
 
 .tag:hover {
@@ -30,6 +32,8 @@
   border-radius: 25px;
   margin-right: 10px;
   transition: all 0.4s opacity;
+  align-items: center;
+  white-space: nowrap;
 }
 
 

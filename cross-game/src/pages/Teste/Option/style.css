@@ -1,3 +1,5 @@
+/* MODAL JOGADORES */
+
 .option {
     cursor: pointer;
     width: 32px;
@@ -26,4 +28,11 @@
 .invisivel {
     width: 50vw;
     height: auto;
+}
+
+
+/* MODAL JOGOS */
+
+.jogos{
+    display: flex;
 }

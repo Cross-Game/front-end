@@ -1,7 +1,7 @@
 import React from "react";
 import { RiCloseLine, RiDeleteBinLine } from "react-icons/ri";
 import "../../assets/global.css";
-import "./modal.css";
+import "./style.css";
 import Button from '../Button'
 
 function Modal(props) {

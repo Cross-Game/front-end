@@ -8,6 +8,7 @@ Calendário - import { BsFillCalendarFill } from 'react-icons/bs';
 Grupos/Salas - import { MdGroups as MdGroups } from 'react-icons/md';
 Relógio - import { HiClock as HiClock } from 'react-icons/hi';
 X/Fechar - import { RiCloseLine, RiDeleteBinLine } from "react-icons/ri";
+FiltroHamburger - import { BsFilterLeft } from 'react-icons/bs';
 
 
 ## Cores Utilizadas

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./Cadastro.css";
-import { BsArrowLeftShort, BsArrowRightShort, BsDiscord, BsFillEyeFill, BsFillEyeSlashFill, BsGoogle, BsPersonCircle } from "react-icons/bs";
+import { BsDiscord, BsArrowLeftShort, BsArrowRightShort, BsFillEyeFill, BsFillEyeSlashFill, BsGoogle, BsPersonCircle } from "react-icons/bs";
 import { GiCrossShield, GiCrenulatedShield, GiCrossedAxes, GiCrownedSkull, GiEyeShield } from "react-icons/gi";
 import { SiValorant } from "react-icons/si";
-import { LoginSocialGoogle } from "reactjs-social-login"
+import { LoginSocialGoogle } from "reactjs-social-login";
 import axios from "axios";
+
 
 
 
@@ -27,21 +28,51 @@ function Cadastro() {
     const [password, setPassword] = useState();
     let username;
     let emailUsuario;
+    let senha;
 
     const [selectedIcon, setSelectedIcon] = useState(<BsPersonCircle className="iconAvatar" />);
-    const [token, setToken] = useState(null);
-    const clientId = '1102730864972009612';
-    const redirectUri = 'http://localhost:3000/cadastro';
-    
+
+    const CLIENT_ID = "1102730864972009612";
+    const REDIRECT_URI = "http://localhost:3000/cadastro";
+    const SCOPE = "identify email";
+    const RESPONSE_TYPE = "code";
+    const currentUrl = new URL(window.location.href);
+    const queryParams = new URLSearchParams(currentUrl.search);
+
     const handleLogin = () => {
-        const scope = 'identify email';
-        const responseType = 'code';
-        const authUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&permissions=76832&scope=${scope}&response_type=${responseType}&redirect_uri=${redirectUri}`;
-        const response = axios.get(authUrl);
-        window.location.href = authUrl;
-        setToken(response.data)
-        sessionStorage.setItem("Token", response.data);
-        console.log(response.data)
+        const url = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=${RESPONSE_TYPE}&scope=${encodeURIComponent(SCOPE)}`;
+        window.location.href = url;
+
+    };
+
+    const handleCallback = async () => {
+        const data = {
+            code: queryParams.get("code"),
+            redirect_uri: "http://localhost:3000/cadastro",
+            grant_type: "authorization_code",
+            client_id: CLIENT_ID,
+            client_secret: "Xrn0whYArSqBySPDGZbVGJlZj0sAL903"
+        };
+
+        try {
+            const headersPost = {
+                "Content-Type": "application/x-www-form-urlencoded",
+            };
+            const body = Object.keys(data)
+                .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+                .join("&");
+            const response = await axios.post("https://discord.com/api/oauth2/token", body, { headersPost });
+            const userResponse = await axios.get("https://discord.com/api/users/@me", {
+                headers: {
+                    authorization: `Bearer ${response.data.access_token}`,
+                },
+            });
+            emailUsuario = userResponse.data.email;
+            username = userResponse.data.username;
+            senha = response.data.access_token;
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     const handleSelectIcon = (icon) => {
@@ -100,12 +131,12 @@ function Cadastro() {
             setAtivarProximo({ display: 'none' });
             setAtivarAnterior({ display: '' });
         }
+        handleCallback()
+        console.log(queryParams.get("code"))
     }
 
-
-
     function cadastrar() {
-
+        
     }
 
     function voltar() {
@@ -129,8 +160,6 @@ function Cadastro() {
             setTft(true)
         }
     }
-
-
 
     return (
         <>
@@ -201,8 +230,11 @@ function Cadastro() {
                                     acess_type="offline"
                                     onResolve={({ providor, data }) => {
                                         console.log(data.name)
+                                        console.log(data.email)
+                                        console.log(data.access_token)
                                         emailUsuario = data.email;
                                         username = data.name;
+                                        senha = data.access_token;
                                     }}
                                     onReject={(err) => {
                                         console.log(err)

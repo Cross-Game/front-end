@@ -6,7 +6,7 @@ import Button from '../Button'
 
 function Modal(props) {
   const { onClose, title, clearAll, icon, children, textButton, iconButton, ativarBotao } = props;
-
+  
   return (
     <div className="modal">
       <div className="modal-content">

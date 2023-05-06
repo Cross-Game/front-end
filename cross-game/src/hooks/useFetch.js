@@ -18,7 +18,7 @@ import axios from 'axios';
 //       })
 //     });
 
-axios.defaults.baseURL = 'nossa api';
+axios.defaults.baseURL = 'localhost:8080/';
 
 const useFetch = ({ url, method, body = null, headers = null }) => {
     const [response, setResponse] = useState(null);

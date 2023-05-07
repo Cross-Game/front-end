@@ -39,11 +39,153 @@ p.titleFiltro {
 /*MODAL SALA*/
 
 .filtro_rank {
-    width: 200px;
+    width: 100%;
     margin-top: 20px;
+    margin-right: auto;
 }
 
 .filtro_level {
     width: 380px;
     margin-top: 20px;
 }
+
+.filtro_qtdPlayers {
+    width: auto;
+    margin-top: 20px;
+    margin-right: 3vw;
+}
+
+.input_qtd_players {
+    border-radius: 25px;
+    width: 30px;
+    border: 0;
+    padding: 5px;
+    text-align: center;
+    font-size: 9px;
+    font-family: 'Krona One';
+}
+
+.input_qtd_players:focus, .input_qtd_players:hover {
+    outline: 2px solid #19FF00;
+    background-color: #0b5a02;
+    color: #fff;
+}
+
+.container_input_qtd {
+    display: flex;
+}
+
+.container_valor {
+    margin-left: 10px;
+}
+
+.valor{
+    color: #7A7A7A;
+    font-size: 25px;
+}
+
+.valor:hover {
+    color: #a0a0a0;
+}
+
+.valor:active {
+    color: #19FF00;
+}
+
+.filtro_descricao {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.filtro_horario {
+    margin-top: 20px;
+}
+
+input[type=radio] {
+    outline: none;
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #7A7A7A;
+}
+
+input[type=radio]:hover{
+    cursor: pointer;
+    color: #0b5a02;
+    background-color: #0b5a02;
+    border: 2px solid #19FF00;
+    box-shadow: 0 0 0.3rem #19FF00;
+}
+
+input[type=radio]:checked {
+    color: white;
+    border-color:#19FF00;
+    background-color: #19FF00;
+    animation: ripple 0.2s linear forwards;   
+    box-shadow: 0 0 0.3rem #19FF00;
+}
+
+input[type=radio]:focus {
+    border: 2px solid #19FF00;
+    box-shadow: 0 0 0.3rem #19FF00;
+} 
+
+label {
+    margin-right: 10px;
+}
+
+.iconCalendario{
+    margin-left: 5px;
+}
+
+.iconCalendario:hover {
+    color: #19FF00;
+}
+/* Estilos gerais para o textarea */
+.my-textarea {
+    font-family: 'Krona One';
+    width: 98%;
+    font-size: 9px;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: #7A7A7A;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    resize: none; /* impede a redimensionamento da área de texto */
+  }
+  
+  /* Estilos quando o textarea está focado */
+  .my-textarea:focus, .my-textarea:hover {
+    background-color: #0b5a02;
+    outline: solid 2px #19FF00;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    color: #fff;
+  }
+  
+  /* Estilos para a borda inferior */
+  .my-textarea::after {
+    content: "";
+    display: block;
+    height: 2px;
+    background-color: #ccc;
+    position: relative;
+    top: -2px;
+    left: 0;
+    right: 0;
+    z-index: 1;
+  }
+  
+  /* Estilos para o texto do placeholder */
+  .my-textarea::placeholder {
+    color: #aaa;
+    font-style: italic;
+  }
+  
+  /* Estilos para o contador de caracteres */
+  .char-counter {
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+    text-align: right;
+  }

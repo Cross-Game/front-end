@@ -49,28 +49,32 @@ function Teste() {
 
            <div className="filtro_qtdPlayers">
            <p className="titleFiltro">Qtd de Players</p>
-           <>
-             <input type="text" value={10}></input>
-             <HiMinusSm/>
-             <BsPlus/>
-           </>
+           <div className="container_input_qtd">
+             <input type="text" value={10} className="input_qtd_players"></input>
+             <div className="container_valor">
+             <HiMinusSm className="valor"/>
+             <BsPlus className="valor"/>
+             </div>
+             </div>
            </div>
 
            
            <div className="filtro_rank">
            <p className="titleFiltro">Rank</p>
-             // Fazer um GetRank de cada jogo
+             // ToDo (Fazer um GetRank de cada jogo)
              </div>
 
-             <div className="filtro_descricao">
+          <div className="filtro_descricao">
            <p className="titleFiltro">Descrição</p>
-             <span>______</span>
-            </div>
+            <textarea class="my-textarea"></textarea>
+          </div>
 
             <div className="filtro_horario">
+              <form>
           <p className="titleFiltro">Quando?</p>
-          <input type="radio" /> Agora
-          <input type="radio" /> Apartir de <BsFillCalendarWeekFill/>
+          <label><input type="radio" name='quando'checked value='agora'/> Agora</label>
+          <label><input type="radio" name='quando' value='agendado'/> Apartir de <span>______________________</span> <BsFillCalendarWeekFill className="iconCalendario"/></label>
+          </form>
           </div>
 
 

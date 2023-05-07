@@ -1,5 +1,5 @@
 .slider-container {
-    margin: 0px 15px 0 15px;
+    margin: 10px 15px 0 15px;
     width: 80%;
     font-family: 'Krona One';
   }
@@ -39,13 +39,13 @@
 
 
 .input-range__slider {
-    background-color: #0b5a02;
+    background-color: #19FF00;
     border: 0;
 }
 
-.input-range__slider:hover {
+.input-range__slider:hover, .input-range__slider:active  {
     background-color: #19FF00;
-    box-shadow: 0 0 0.rem #19FF00;
+    box-shadow: 0 0 1rem #19FF00;
 }
 
 .input-range__slider::selection {

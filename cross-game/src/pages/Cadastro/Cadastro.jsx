@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Cadastro.css";
+// import "./Cadastro.css";
 import { BsArrowLeftShort, BsArrowRightShort, BsDiscord, BsFillEyeFill, BsFillEyeSlashFill, BsGoogle, BsPersonCircle } from "react-icons/bs";
 import { GiCrossShield, GiCrenulatedShield, GiCrossedAxes, GiCrownedSkull, GiEyeShield } from "react-icons/gi";
 import { SiValorant } from "react-icons/si";

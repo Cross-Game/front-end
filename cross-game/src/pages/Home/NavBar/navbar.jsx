@@ -7,8 +7,11 @@ import youtube from "../../../assets/index-page/Youtube.svg"
 import { BiGroup } from "react-icons/bi"
 import "@fontsource/krona-one";
 import "./style.css"
+import { useNavigate } from "react-router-dom"
 
 function NavBar() {
+
+    const navigate = useNavigate();
     return (
         <>
             <nav className="navbar">
@@ -53,7 +56,7 @@ function NavBar() {
                                 <button className="buttonLink">Entrar</button>
                             </div>
                             <div>
-                                <button className="buttonLink">Cadastrar-se</button>
+                                <button className="buttonLink" onClick={() => navigate("/cadastro")}>Cadastrar-se</button>
                             </div>
                         </div>
                     </div>

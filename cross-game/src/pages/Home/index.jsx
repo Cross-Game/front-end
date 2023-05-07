@@ -24,6 +24,8 @@ import axios from 'axios';
 function Home() {
   const [noticies, setNoticies] = useState([]);
 
+  const [teste, setTeste] = useState(false)
+
   let config = {
     method: 'get',
     maxBodyLength: 5,
@@ -37,9 +39,11 @@ function Home() {
     .then((response) => {
       console.log(JSON.stringify());
       setNoticies(response.data.articles)
+      setTeste(true)
     })
     .catch((error) => {
       console.log(error);
+      setTeste(false)
     });
 
 
@@ -179,14 +183,18 @@ function Home() {
       </div>
       {/* noticies */}
       <div className="noticiesContent">
-          <AwesomeSlider >
-            {
+        <AwesomeSlider >
+          {
+            teste ?
               noticies.map((element) => (
                 <div className="imgNoticies" data-src={element.urlToImage} />
               ))
-            }
-          </AwesomeSlider>
-      
+
+              // setando imagem de erro quando der erro na api
+              : <div className="imgNoticies" data-src={medalDiamante} />
+          }
+        </AwesomeSlider>
+
       </div>
 
 

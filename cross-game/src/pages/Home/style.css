@@ -397,9 +397,29 @@ seção para noticias - não finalizada */
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100vh;
-    background-color: red;
+    height: 50vh;
 }
+
+.noticiesContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50%;
+    background-color: green;
+}
+
+.imgNoticies img{
+    width: 10%;
+}
+
+.awssld__content{
+    top: 25%;
+    height: 50%;
+}
+
+
+
 
 /*  */
 

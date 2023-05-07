@@ -27,7 +27,7 @@ function Home() {
   let config = {
     method: 'get',
     maxBodyLength: 5,
-    url: 'https://newsapi.org/v2/everything?q=games&apiKey=6ac810e80de24125838316d999b45fc0',
+    url: 'https://newsapi.org/v2/everything?q=games&pageSize=20&apiKey=6ac810e80de24125838316d999b45fc0',
     headers: {
       'Authorization': 'Basic dXNlcjp1c2Vy'
     }
@@ -179,13 +179,14 @@ function Home() {
       </div>
       {/* noticies */}
       <div className="noticiesContent">
-        <AwesomeSlider >
-          {
-            noticies.map((element) => (
-              <div data-src={element.urlToImage} />
-            ))
-          }
-        </AwesomeSlider>
+          <AwesomeSlider >
+            {
+              noticies.map((element) => (
+                <div className="imgNoticies" data-src={element.urlToImage} />
+              ))
+            }
+          </AwesomeSlider>
+      
       </div>
 
 

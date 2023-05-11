@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
-import "./style.css";
+import "./home.css";
 import NavBar from './NavBar/navbar.jsx';
 import ItemSection from './ItemSection/index'
 import userIcon from '../../assets/index-page/userExplainSection.svg'
@@ -28,8 +28,7 @@ function Home() {
 
   let config = {
     method: 'get',
-    maxBodyLength: 5,
-    url: 'https://newsapi.org/v2/everything?q=games&pageSize=20&apiKey=6ac810e80de24125838316d999b45fc0',
+    url: 'https://newsapi.org/v2/everything?q=games&pageSize=10&apiKey=6ac810e80de24125838316d999b45fc0',
     headers: {
       'Authorization': 'Basic dXNlcjp1c2Vy'
     }

@@ -413,11 +413,26 @@ seção para noticias - não finalizada */
     width: 10%;
 }
 
-.awssld__content{
-    top: 25%;
-    height: 50%;
+.awssld{
+    height: 80%;
 }
 
+.awssld__content{
+    height: 100%;
+    padding: 1%;
+}
+
+.awssld__box {
+    height: 50px;
+}
+
+.awssld--active{
+    height: 100%;
+}
+
+.awssld__bar {
+    background-color: transparent   ;
+}
 
 
 

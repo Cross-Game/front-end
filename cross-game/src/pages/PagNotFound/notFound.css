@@ -1,0 +1,112 @@
+body {
+    background: linear-gradient(45deg, rgb(01, 01, 01), rgb(43, 43, 43));
+    font-family: "Krona One";
+}
+
+.div-texto {
+    position: absolute;
+    width: 817px;
+    height: 96px;
+    left: -38px;
+    top: 498px;
+}
+
+.paragrafoTexto {
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 30px;
+    text-align: center;
+    letter-spacing: 0.1em;
+    color: #FFFFFF;
+}
+
+.div-404 {
+    position: absolute;
+    width: 553px;
+    height: 160px;
+    left: 132px;
+    top: 254px;
+}
+
+.paragrafo404 {
+    font-weight: 400;
+    font-size: 60px;
+    line-height: 80px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.1em;
+    color: #00FF33;
+    backdrop-filter: blur(2px);
+}
+
+
+
+.button-voltar {
+    margin-top: 20px;
+    width: 200px;
+    height: 50px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #00FF33;
+    color: #000;
+    border: 1px solid #00FF33;
+    cursor: pointer;
+    font-family: 'Krona One';
+    font-style: normal;
+    font-size: 30px;
+
+}
+.div-button{
+position: absolute;
+left: 170px;
+top: 260px;
+}
+
+.div-not-found {
+    font-size: 0;
+    width: 50vw;
+    height: 100vh;
+}
+
+.jinx {
+    font-size: 0;
+    width: 50vw;
+    height: 100vh;
+    float: right;
+}
+
+.jinx-img {
+    width: 75%;
+}
+
+.div-geral-not {
+    font-size: 0;
+    display: inline-flex;
+}
+
+.paragrafoCross {
+    position: absolute;
+    width: 817px;
+    height: 96px;
+    left: -89px;
+    top: 73px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 35px;
+    text-align: center;
+    letter-spacing: 0.1em;
+    color: #FFFFFF;
+}
+
+.logo {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    left: 83px;
+    top: 43px;
+
+}

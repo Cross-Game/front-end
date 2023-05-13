@@ -5,7 +5,7 @@ import { FaUser, FaChartLine, FaUserPlus, FaUsers, FaDoorClosed, FaChevronLeft }
 import imgProfileMock from '../../assets/index-page/medalOuro.svg'
 
 function Sidebar() {
-    const [isOpen, setIsOpen] = useState();
+    const [isOpen, setIsOpen] = useState(true);
     const toggle = () => setIsOpen(!isOpen);
     return (
         <>

@@ -42,6 +42,8 @@ p.titleFiltro {
     width: 100%;
     margin-top: 20px;
     margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .filtro_level {
@@ -135,6 +137,11 @@ label {
     margin-right: 10px;
 }
 
+label:hover {
+    color: white;
+}
+
+
 .iconCalendario{
     margin-left: 5px;
 }
@@ -189,3 +196,195 @@ label {
     margin-top: 5px;
     text-align: right;
   }
+
+  .salas-whiteText {
+    color: #fff;
+  }
+
+  .salas-ModalSalaFooter button{
+    padding: 7px 10px;
+    border-radius: 3px;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.7s ease-out, 0.2s;
+    font-family: 'Krona One';
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+    margin-top: 5px;
+  }
+
+  .salas-botaoClose {
+    background-color: #999;
+  }
+
+  .salas-botaoClose:hover {
+    color: #fff;
+    background-color: #ff3033;
+}
+
+
+.salas-botaoCadeado--public {
+    background-color: #0b5a02;
+    box-shadow: 0 0 0.3rem #0b5a02;
+  }
+  
+.salas-botaoCadeado--private {
+    background-color: #a30d0f;
+    box-shadow: 0 0 0.3rem #a30d0f;
+  }
+
+.salas-botaoCadeado:hover {
+    color: #fff;
+  }
+
+  .salas-botaoCadeado--public:hover {
+    background-color: #19FF00;
+  }
+  
+  .salas-botaoCadeado--private:hover {
+    background-color: #ff3033;
+  }
+
+  .salas-ModalSalaFooter span {
+    margin-left: 5px;
+  }
+
+  .salas-ModalSalaFooter {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .salas-group-userAvatar {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .salas-userAvatar__image{
+    width: 60px;
+    height: 60px;
+    border-radius: 25px;
+  }
+
+  .salas-userAvatar__name {
+    margin-top: 10px;
+    font-size: 9px;
+    color: #999;
+  }
+
+  .salas-convidados {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+.salas-groupLink {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 10px;
+    margin-top: 15px;
+}
+  
+.salas-groupLink svg {
+    width: 17px;
+    height: 17px;
+}
+
+ #salas-linkSala {
+    margin:  0 10px;
+}
+
+.salas-userAvatar__image:hover +  .salas-userAvatar__name{
+    color: #19FF00;
+    text-shadow: 0 0 0.3rem #19FF00;
+}
+
+.salas-userAvatar__name:hover{
+    color: #19FF00;
+    text-shadow: 0 0 0.3rem #19FF00;
+}
+
+.salas-span-idsala-modalsubtitle {
+    font-size: 10px;
+    color: #7a7a7a;
+    /* padding-bottom: 7px;
+    display: flex; */
+}
+.salas-subtitleModalSala {
+    margin-bottom: 10px;
+    margin-left: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: -15px;
+}
+
+.salas-ModalSalaFooter {
+    margin-top: 10px;
+}
+
+.salas-group-tagsModalSala {
+  display: flex;
+  padding: 7px 0;
+}
+
+.salas-group-buttonsFooter {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.salas-jogador-selecionado-icons {
+  display: flex;
+  flex-direction: column;
+  color: #7a7a7a;
+  margin-left: -5px;
+}
+
+
+.icon-jogadorSelecionado:hover {
+  color: #19FF00;
+}
+
+.salas-jogador-selecionado-icons svg {
+  width: 12px;
+  height: 12px;
+}
+
+.salas-modalFeedback-avaliacao {
+  font-size: 10px;
+  color: #7A7A7A;
+  display: flex;
+  /* margin: auto; */
+  width: 50%;
+  flex-direction: column;
+  margin-top: 20px;
+  /* justify-content: center; */
+}
+
+.salas-group-avaliacao {
+  display: flex;
+  flex-wrap: wrap
+}
+.estrelinhas {
+  display: flex;
+  margin-top: 10px;
+  /* margin-left: 20px; */
+  margin-bottom: 20px;
+}
+
+.salas-modalFeedback-avaliacao-comentario {
+  width: 98%;
+  font-size: 10px;
+  color: #7A7A7A;
+}
+
+.salas-modalFeedback-avaliacao-comentario span {
+  margin-bottom: 10px;
+  display: flex;
+}

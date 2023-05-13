@@ -5,7 +5,7 @@ import "./style.css";
 import Button from '../Button'
 
 function Modal(props) {
-  const { onClose, title, clearAll, icon, children, textButton, iconButton, ativarBotao } = props;
+  const { onClose, title, clearAll, icon, children, textButton, iconButton, ativarBotao, temFooter } = props;
   
   return (
     <div className="modal">
@@ -30,11 +30,13 @@ function Modal(props) {
           </div>
         </div>
         <div className="modal-body">{children}</div>
+        {temFooter && (
         <div className="modal-footer">
             {ativarBotao && (
             <Button text={textButton} icon={iconButton} />
             )}
         </div>
+        )}
       </div>
     </div>
   );

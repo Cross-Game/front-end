@@ -10,10 +10,11 @@ import "./style.css"
 import Option from "./Option";
 import RangeBar from "../../components/RangeBar";
 import { HiMinusSm } from "react-icons/hi";
+import { jogos as listaJogos } from "../../utils/jogos";
 
 
 function Teste() {
-  const [jogos, setJogos] = useState(['Valorant', 'League of Legends', 'UmJogoAi']);
+  const [jogos, setJogos] = useState(listaJogos)
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = () => {
@@ -35,8 +36,8 @@ function Teste() {
            <p className="titleFiltro">Escolha um Jogo</p>
            <div className="jogos">
              {jogos.map((jogo) => (
-                <React.Fragment key={jogo.toLowerCase()}>
-                <Tag text={jogo}/>
+                <React.Fragment key={jogo.id}>
+                <Tag text={jogo.nome}/>
                 </React.Fragment>
               ))}
               </div>
@@ -61,7 +62,11 @@ function Teste() {
            
            <div className="filtro_rank">
            <p className="titleFiltro">Rank</p>
-             // ToDo (Fazer um GetRank de cada jogo)
+           {jogos.rank.map((rank) => (
+                <React.Fragment key={jogos.id}>
+                <Tag text={rank}/>
+                </React.Fragment>
+              ))}
              </div>
 
           <div className="filtro_descricao">

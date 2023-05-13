@@ -1,0 +1,30 @@
+.loading-image {
+    display: flex;
+    flex-direction: column;
+    height: 15vh;
+    animation: jump 1s infinite;
+    transform: scale(2s);
+  }
+  
+  @keyframes jump {
+    from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+  }
+
+.loading-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5%;
+}
+
+.loading {
+    color: #00ff33;
+}

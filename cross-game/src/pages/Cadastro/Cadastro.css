@@ -120,7 +120,7 @@ input {
     font-size: small;
 }
 
-.modal {
+.modalForm {
     border: 1px solid red;
     border-radius: 8px;
     background-color: #fff;

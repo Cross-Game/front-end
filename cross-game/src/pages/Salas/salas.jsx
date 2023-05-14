@@ -1,24 +1,28 @@
 import React, { useState } from "react";
 import Modal from "../../components/Modal";
+import { useEffect } from 'react';
+import moment from 'moment';
 import { MdContentCopy, MdFeedback, MdGroupRemove, MdGroups } from "react-icons/md";
 import Tag from "../../components/Tag";
 import RangeBar from "../../components/RangeBar";
 import { HiLink, HiMinusSm } from "react-icons/hi";
-import { BsArrowRightShort, BsChatLeftTextFill, BsFillCalendarFill, BsFillCalendarWeekFill, BsFillChatLeftTextFill, BsFillStarFill, BsFillUnlockFill, BsLink, BsLink45Deg, BsLockFill, BsPersonFillAdd, BsPlus, BsUnlockFill } from "react-icons/bs";
+import { BsArrowLeftShort, BsArrowRightShort, BsChatLeftTextFill, BsChevronLeft, BsChevronRight, BsFillCalendarFill, BsFillCalendarWeekFill, BsFillChatLeftTextFill, BsFillStarFill, BsFillUnlockFill, BsLink, BsLink45Deg, BsLockFill, BsPersonFillAdd, BsPlus, BsUnlockFill } from "react-icons/bs";
 import { jogos as listaJogos } from "../../utils/jogos";
 import Button from "../../components/Button";
 import Option from "../Teste/Option/index";
 import { RiCloseLine } from "react-icons/ri";
+import "./salas.css";
+
 
 function Salas() {
     const [jogos, setJogos] = useState(listaJogos);
     const [adminSala, setAdminSala] = useState(true);
 
     const [showModalCriarSala, setShowModalCriarSala] = useState(false);
-    const [showModalCalendario, setShowModalCalendario] = useState(false);
+    const [showModalCalendario, setShowModalCalendario] = useState(true);
     const [showModalSala, setShowModalSala] = useState(false);
     const [showModalConvidar, setShowModalConvidar] = useState(false);
-    const [showModalFeedback, setShowModalFeedback] = useState(true);
+    const [showModalFeedback, setShowModalFeedback] = useState(false);
 
     const [ratingHabilidade, setRatingHabilidade] = useState(null);
     const [ratingComportamento, setRatingComportamento] = useState(null);
@@ -106,13 +110,29 @@ function Salas() {
         label.classList.remove('salas-whiteText');
       }
 
-      const rankStyle = {
-        marginTop: '15px'
-      };
+
 
       function removerUsuarios(){
         console.log("To do")
       }
+
+      const [currentDayNow, setCurrentDayNow] = useState(moment().format("DD"));
+      const [currentMonthNow, setCurrentMonthNow] = useState(moment().format("MM"));
+      const [currentHourNow, setCurrentHourNow] = useState(moment().format("HH"));
+      const [currentMinuteNow, setCurrentMinuteNow] = useState(moment().format("mm"));
+
+      useEffect(() => {
+        const interval = setInterval(() => {
+          const now = moment();
+          console.log(now)
+          setCurrentDayNow(now.format("DD"));
+          setCurrentMonthNow(now.format("MM"));
+          setCurrentHourNow(now.format("HH"));
+          setCurrentMinuteNow(now.format("mm"));
+        }, 5000);
+        
+        return () => clearInterval(interval);
+      }, []);
 
     return (
         <div>
@@ -260,10 +280,15 @@ function Salas() {
 
         {showModalCalendario && (
             
-            <Modal onClose={()=> setShowModalCalendario(false)} title='Agendar partida' icon={<BsFillCalendarWeekFill/>} clearAll='true'>
+            <Modal onClose={()=> setShowModalCalendario(false)} title='Agendar partida' icon={<BsFillCalendarWeekFill/>} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort/>} textButton='Agendar'> 
+            <div className="salas-groupCalendario">
             Dia
+            {currentDayNow && <NumberList min={1} max={31} step={1} initialValue={parseInt(currentDayNow)} />}
             Hora
+            {currentHourNow && <NumberList min={0} max={23} step={1} initialValue={parseInt(currentHourNow)} />}
             Minutos
+            {currentMinuteNow && <NumberList min={0} max={55} step={5} initialValue={Math.ceil(currentMinuteNow / 5) * 5} />}
+            </div>
             </Modal>
         )}
 
@@ -382,6 +407,54 @@ const Avaliacao = ({ setRating }) => {
     </div>
   );
 };
+
+const NumberList = ({ min, max, step, initialValue }) => {
+  const [selectedNumber, setSelectedNumber] = useState(null);
+  const [currentNumber, setCurrentNumber] = useState(initialValue || min);
+
+  const handleNextClick = () => {
+    const nextNumber = currentNumber + step;
+    if (nextNumber > max) {
+      setCurrentNumber(min);
+      setSelectedNumber(min);
+    } else {
+      setCurrentNumber(nextNumber);
+    }
+  };
+
+  const handlePrevClick = () => {
+    const prevNumber = currentNumber - step;
+    if (prevNumber < min) {
+      setCurrentNumber(max - step + 1);
+      setSelectedNumber(max);
+    } else {
+      setCurrentNumber(prevNumber);
+    }
+  };
+
+  const numbers = [];
+  for (let i = 0; i < 6; i++) {
+    const number = currentNumber + i * step;
+    if (number > max) {
+      numbers.push(number - max + min - 1);
+    } else {
+      numbers.push(number);
+    }
+  }
+
+  return (
+    <div className="numberList">
+     <BsArrowLeftShort onClick={handlePrevClick} className="numberList-seta" size={'40px'}/>
+      {numbers.map((number) => (
+        <span key={number} className={selectedNumber === number ? "salas-spanNumber-selected" : "salas-spanNumber"} onClick={() => setSelectedNumber(number)}>
+          {number}
+        </span>
+      ))}
+      <BsArrowRightShort onClick={handleNextClick} className="numberList-seta" size={'40px'}/>
+    </div>
+  );
+};
+
 
 
 export default Salas;

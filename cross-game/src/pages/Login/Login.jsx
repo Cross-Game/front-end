@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import "./Login.css"
 import { BsDiscord, BsGoogle, BsArrowRightShort,  BsArrowLeftShort, BsFillEyeSlashFill, BsFillEyeFill} from "react-icons/bs";
 import axios from "axios";
@@ -7,6 +8,7 @@ import Toast from "../../components/Toast";
 function Login() {
 
     const [mostrarSenha, setMostrarSenha] = useState(false);
+    const navigate = useNavigate();
 
     const [password, setPassword] = useState('');
     const [usuario, setUsuario] = useState('');
@@ -26,8 +28,8 @@ function Login() {
         setPassword(newPassword);
     };
     
-    const [showToast, setShowToast] = useState(true);
-    const [toastMessage, setToastMessage] = useState('teste');
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
     const [toastType, setToastType] = useState('erro');
     
     function mudarToast(tipo,mensagem){
@@ -38,23 +40,36 @@ function Login() {
     
 
     const realizarLogin = async () => {
-        try {
-          mudarToast('carregando', 'Requisição solicitada');
-          const response = await axios.post('/user-auth', JSON.stringify({ usuario, password }));
+        mudarToast('carregando', 'Requisição solicitada');
+        console.log(usuario, password);
+        axios.post("http://localhost:8080/user-auth", { username: usuario, password }, {
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/json'
+          }
+        })
+        .then((response) => {
           if (response.status === 200) {
-            setToken(response.data.token);
-            sessionStorage.setItem('token', response.data.token);
-            console.log("Sucesso ao realizar login: ", response.data.token);
-            mudarToast('sucesso', 'Login realizado com sucesso');
+            console.log(response)
+            sessionStorage.setItem('ACESS_TOKEN', response.data.encodedToken);
+            setToken(response.data.encodedToken)
+            console.log("Sucesso ao realizar login: ", response.data.encodedToken);
+            mudarToast('sucesso', 'Login realizado!');
+
+            setTimeout(() => {
+                navigate('/perfil');
+              }, 2000);
+
           } else {
-            console.error('Erro ao realizar login:', response.status);
+            console.error('Erro ao realizar login: status', response.status);
             mudarToast('erro', 'Erro ao realizar login');
           }
-        } catch (error) {
+        })
+        .catch((error) => {
           console.error('Erro ao realizar login:', error);
           mudarToast('erro', 'Erro ao realizar login');
-        }
-      };
+        });
+    }
 
     return (
         <>

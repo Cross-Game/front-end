@@ -53,10 +53,9 @@ body {
 
 .cardLogin {
     align-self: center;
-    border: 1px solid red;
     width: 70%;
     height: 75%;
-    border: 1px solid #00ff03;
+    border: 1px solid #fff;
     border-radius: 20px;
     display: flex;
 }
@@ -113,19 +112,19 @@ body {
     width: 50%;
     border-radius: 20px 0 0 20px;
     background-color: #00ff0330;
-    border-right: 1px solid #00ff03;
+    border-right: 1px solid #fff;
     color: #fff;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-.titulo {
-    height: 100px;
+.tituloLogin {
     display: flex;
     align-items: center;
     font-weight: 100;
     font-size: large;
+    margin: 5%;
 }
 
 .inputsForm {
@@ -260,4 +259,53 @@ a {
         align-items: flex-start;
         width: 30%;
     }
+}
+
+@media only screen and (max-width: 1100px) {
+    .tituloImg {
+        display: none;
+    }
+
+    .cardCadastro {
+        width: 60%;
+        height: auto;
+        border-radius: 20px;
+        flex-direction: column;
+
+    }
+    .cardFormLogin {
+        width: 100%;
+        border-radius: 20px;
+    }
+
+    .img {
+        display: none;
+    }
+
+    .cardFormCadastro {
+        width: 100%;
+        border-radius: 20px;
+        border-left: none;
+    }
+
+    .inputCadastro {
+        width: 60%;
+    }
+
+    .botaoCadastro {
+        width: 60%;
+    }
+
+
+    .loginDiscord,
+    .loginGoogle {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .botaoVoltar {
+        display: flex;
+        align-items: flex-start;
+        width: 30%;
+    }
+
 }

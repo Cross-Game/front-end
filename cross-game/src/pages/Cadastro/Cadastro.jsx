@@ -181,7 +181,7 @@ function Cadastro() {
                             {showModaSenha && (
                                 <div className="modal">
                                     <div className="modal-content">
-                                        <p>{validationMessageSenha}</p>
+                                        {/* <p>{validhandleLoginationMessageSenha}</p> */}
                                     </div>
                                 </div>
                             )}

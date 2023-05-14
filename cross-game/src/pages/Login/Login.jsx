@@ -4,6 +4,7 @@ import "./Login.css"
 import { BsDiscord, BsGoogle, BsArrowRightShort,  BsArrowLeftShort, BsFillEyeSlashFill, BsFillEyeFill} from "react-icons/bs";
 import axios from "axios";
 import Toast from "../../components/Toast";
+import { LoginSocialGoogle } from "reactjs-social-login";
 
 function Login() {
 
@@ -71,6 +72,21 @@ function Login() {
         });
     }
 
+    let emailUsuario;
+    let username;
+    const redirectUri = 'http://localhost:3000/cadastro';
+    const handleLogin = () => {
+        const scope = 'identify email';
+        const responseType = 'code';
+        const clientId = '1102730864972009612';
+        const authUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&permissions=76832&scope=${scope}&response_type=${responseType}&redirect_uri=${redirectUri}`;
+        const response = axios.get(authUrl);
+        window.location.href = authUrl;
+        setToken(response.data)
+        sessionStorage.setItem("Token", response.data);
+        console.log(response.data)
+    };
+
     return (
         <>
             <div className="container">
@@ -81,7 +97,7 @@ function Login() {
                 
                     
                 <div className="cardFormLogin">
-                        <div className="titulo">Entrar</div>
+                        <div className="tituloLogin">Entrar</div>
                         
                         <div className="inputsForm">
 
@@ -114,7 +130,7 @@ function Login() {
 
                         <div className="subInputs">
                             <a>Esqueceu a senha?</a> 
-                            <a>Não possui conta?</a>
+                            <a onClick={() => navigate('/cadastro')}>Não possui conta?</a>
                         
                         </div>
 
@@ -124,9 +140,30 @@ function Login() {
                             <BsArrowRightShort className="arrowProximo"/>
                         </div>
                         <div className="subTitulo">ou com as seguintes plataformas</div>
+
                         <div className="loginRapido">
-                            <div><BsDiscord className="loginDiscord"/></div>
-                            <div><BsGoogle className="loginGoogle"/></div>
+                            <div><BsDiscord className="loginDiscord" onClick={handleLogin} /></div>
+                            <div>
+                                <LoginSocialGoogle
+                                    client_id={'885530994482-00qe1f2qo6m0htsqeprvua1tthf2kqdt.apps.googleusercontent.com'}
+                                    scope="openid profile email"
+                                    discoveryDocs="claims_supported"
+                                    acess_type="offline"
+                                    onResolve={({ providor, data }) => {
+                                        console.log(data);
+                                        console.log(data.name)
+                                        emailUsuario = data.email;
+                                        username = data.name;
+                                        sessionStorage.setItem('ACESS_TOKEN', data.access_token);
+                                    }}
+                                    onReject={(err) => {
+                                        console.log(err)
+                                    }}
+                                >
+                                    <BsGoogle className="loginGoogle" />
+                                </LoginSocialGoogle>
+                            </div>
+
                         </div>
                     </div>
 

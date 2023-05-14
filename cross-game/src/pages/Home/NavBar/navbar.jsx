@@ -1,17 +1,20 @@
 import React from "react";
-import iconLogo from "../assets/Union.png"
-import facebook from "../assets/Facebook.svg"
-import discord from "../assets/Discord.svg"
-import instagram from "../assets/Instagram.svg"
-import youtube from "../assets/Youtube.svg"
+import iconLogo from "../../../assets/index-page/Union.png"
+import facebook from "../../../assets/index-page/Facebook.svg"
+import discord from "../../../assets/index-page/Discord.svg"
+import instagram from "../../../assets/index-page/Instagram.svg"
+import youtube from "../../../assets/index-page/Youtube.svg"
 import { BiGroup } from "react-icons/bi"
 import "@fontsource/krona-one";
-import "./navbar.css"
+import "./style.css"
+import { useNavigate } from "react-router-dom"
 
 function NavBar() {
+
+    const navigate = useNavigate();
     return (
         <>
-            <nav>
+            <nav className="navbar">
                 <div className="logo">
                     <div className="img">
                         <img src={iconLogo} alt="" />
@@ -35,19 +38,25 @@ function NavBar() {
                             <div> +<span>1000</span> Players</div>
                         </div>
                         <div className="baixoMeio">
-                            <div className="botaoInicio">
-                                <button>Inicio</button>
+                            <div className="linkPages">
+                                <span>
+                                    Inicio
+                                </span>
                             </div>
-                            <div className="botaoNoticias">
-                                <button>Noticias</button>
+
+                            <div className="linkPages">
+                                <span>
+                                    Noticias
+                                </span>
                             </div>
                         </div>
+
                         <div className="baixoDireita">
                             <div>
-                                <button>Entrar</button>
+                                <button className="buttonLink">Entrar</button>
                             </div>
                             <div>
-                                <button>Cadastrar</button>
+                                <button className="buttonLink" onClick={() => navigate("/cadastro")}>Cadastrar-se</button>
                             </div>
                         </div>
                     </div>

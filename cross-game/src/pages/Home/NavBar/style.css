@@ -1,24 +1,15 @@
-body {
-    font-family: "Krona One";
-    font-size: small;
-}
-
-nav {
+.navbar {
     box-sizing: border-box;
-
+    font-size: small;
     position: absolute;
-    width: 1129px;
-    height: 118px;
-    left: 9vw;
-    top: 10vh;
-
+    width: 80%;
+    height: 18%;
     background: #2E312D;
     border: 1px solid #000000;
     backdrop-filter: blur(2px);
-    /* Note: backdrop-filter has minimal browser support */
-
     border-radius: 0px 70px;
     display: flex;
+    margin-top: 2%;
 }
 
 .logo {
@@ -63,8 +54,11 @@ nav {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding: 2%;
-    width: 100%;
+    margin-left:1% ;
+    height: 100%;
+    width: 90%;
+    
+    /* background-color: red; */
 }
 
 .redeSocial {
@@ -73,6 +67,8 @@ nav {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    /* background-color: red; */
+    height: 100%;
 }
 
 span {
@@ -94,7 +90,7 @@ span {
 }
 
 .baixoMeio {
-    width: 40%;
+    width: 30%;
     border-left: 1px solid black;
     display: flex;
     align-items: center;
@@ -105,28 +101,46 @@ span {
     width: 40%;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
-button {
+.buttonLink {
+    display: flex;
     box-sizing: border-box;
-    border: 1px solid #00FF33;
+    border: 2px solid #00FF33;
     background: none;
     border-radius: 15px;
+    padding: 10%;
+    min-width: 100px;
+    justify-content: center;
     color: #fff;
-    width: 100px;
-    height: 40px;
+    width: max-content;
     cursor: pointer;
     font-family: "Krona One";
+    transition: 100ms;
 }
 
-button:hover {
+.buttonLink:hover {
     box-sizing: border-box;
-    border: 1px solid #00FF33;
+    border: 2px solid #00FF33;
     background: #00FF33;
     border-radius: 15px;
     color: #000;
-    width: 100px;
-    height: 40px;
+    cursor: pointer;
+}
+
+.linkPages {
+    color: #7A7A7A;
+    font-size: 1rem;
+}
+
+.linkPages:hover span{
+    width: 100%;
+    margin-bottom: 5px;
+    border-bottom: 3px solid green ;
+}
+
+.linkPages:hover{
+    color: #fff;
     cursor: pointer;
 }

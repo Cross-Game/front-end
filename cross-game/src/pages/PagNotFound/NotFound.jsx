@@ -13,10 +13,11 @@ function NotFound() {
 
   return (
     <>
-      <div className="div-geral-not">
+    <body className="body404">
+    <div className="div-geral-not">
         <div className="div-not-found">
-          <div className="imagem">
-            <img src={logo} className="logo" alt="" />
+          <div className="imagem404">
+            <img src={logo} className="logo404" alt="" />
             <div className="paragrafoCross">
               <p>Cross Game</p>
             </div>
@@ -38,6 +39,7 @@ function NotFound() {
           <img className="jinx-img" src={imgJinx} alt="" />
         </div>
       </div>
+    </body>
     </>
 
   );

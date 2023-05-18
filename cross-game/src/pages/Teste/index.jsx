@@ -30,61 +30,62 @@ function Teste() {
       <button onClick={handleOpenModal}>Open Modal</button>
       {showModal && (
 
-        <Modal title="Criar uma sala" icon={<MdGroups/>} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort/>} textButton='Criar'>
-          <div className="container_filtro">
-             <div className="filtro_jogos">
-           <p className="titleFiltro">Escolha um Jogo</p>
-           <div className="jogos">
-             {jogos.map((jogo) => (
-                <React.Fragment key={jogo.id}>
-                <Tag text={jogo.nome}/>
-                </React.Fragment>
-              ))}
-              </div>
-           </div>
+        // <Modal title="Criar uma sala" icon={<MdGroups/>} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort/>} textButton='Criar'>
+        //   <div className="container_filtro">
+        //      <div className="filtro_jogos">
+        //    <p className="titleFiltro">Escolha um Jogo</p>
+        //    <div className="jogos">
+        //      {jogos.map((jogo) => (
+        //         <React.Fragment key={jogo.id}>
+        //         <Tag text={jogo.nome}/>
+        //         </React.Fragment>
+        //       ))}
+        //       </div>
+        //    </div>
 
-             <div className="filtro_level">
-           <p className="titleFiltro">Level</p>
-             <RangeBar min='0' max='100' />
-           </div>
+        //      <div className="filtro_level">
+        //    <p className="titleFiltro">Level</p>
+        //      <RangeBar min='0' max='100' />
+        //    </div>
 
-           <div className="filtro_qtdPlayers">
-           <p className="titleFiltro">Qtd de Players</p>
-           <div className="container_input_qtd">
-             <input type="text" value={10} className="input_qtd_players"></input>
-             <div className="container_valor">
-             <HiMinusSm className="valor"/>
-             <BsPlus className="valor"/>
-             </div>
-             </div>
-           </div>
+        //    <div className="filtro_qtdPlayers">
+        //    <p className="titleFiltro">Qtd de Players</p>
+        //    <div className="container_input_qtd">
+        //      <input type="text" value={10} className="input_qtd_players"></input>
+        //      <div className="container_valor">
+        //      <HiMinusSm className="valor"/>
+        //      <BsPlus className="valor"/>
+        //      </div>
+        //      </div>
+        //    </div>
 
            
-           <div className="filtro_rank">
-           <p className="titleFiltro">Rank</p>
-           {jogos.rank.map((rank) => (
-                <React.Fragment key={jogos.id}>
-                <Tag text={rank}/>
-                </React.Fragment>
-              ))}
-             </div>
+        //    <div className="filtro_rank">
+        //    <p className="titleFiltro">Rank</p>
+        //    {jogos.rank.map((rank) => (
+        //         <React.Fragment key={jogos.id}>
+        //         <Tag text={rank}/>
+        //         </React.Fragment>
+        //       ))}
+        //      </div>
 
-          <div className="filtro_descricao">
-           <p className="titleFiltro">Descrição</p>
-            <textarea class="my-textarea"></textarea>
-          </div>
+        //   <div className="filtro_descricao">
+        //    <p className="titleFiltro">Descrição</p>
+        //     <textarea class="my-textarea"></textarea>
+        //   </div>
 
-            <div className="filtro_horario">
-              <form>
-          <p className="titleFiltro">Quando?</p>
-          <label><input type="radio" name='quando'checked value='agora'/> Agora</label>
-          <label><input type="radio" name='quando' value='agendado'/> Apartir de <span>______________________</span> <BsFillCalendarWeekFill className="iconCalendario"/></label>
-          </form>
-          </div>
+        //     <div className="filtro_horario">
+        //       <form>
+        //   <p className="titleFiltro">Quando?</p>
+        //   <label><input type="radio" name='quando'checked value='agora'/> Agora</label>
+        //   <label><input type="radio" name='quando' value='agendado'/> Apartir de <span>______________________</span> <BsFillCalendarWeekFill className="iconCalendario"/></label>
+        //   </form>
+        //   </div>
 
 
-        </div>
-        </Modal>
+        // </div>
+        // </Modal>
+
         // <Modal title="Filtrar por" icon={<BsFilterLeft/>} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort/>} textButton='Filtrar'>
         // <div className="container_filtro">
           
@@ -128,7 +129,8 @@ function Teste() {
         //   </div>
         // </div>
         // </Modal>
-        // <Notification/>
+         <Notification/>
+        
         // <Modal
         //   onClose={handleCloseModal}
         //   title="Notificações"

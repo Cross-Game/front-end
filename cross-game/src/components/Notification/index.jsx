@@ -50,12 +50,27 @@ function Notification() {
     console.log(selectedOption);
   };
 
+  function clearAll(){
+    var selectFilter = selectedOption;
+    response.map()
+    // TO DO Marcar todas as notificações do filtro como lidas 
+  }
+
+  function aceitarAmizade(){
+    // TODO Aceitar amizade
+  }
+
+  function recusarAmizade(){
+    // TODO Recusar amizade
+  }
+
   return (
     <Modal
       title="Notificações"
       clearAll={true}
       icon={<MdNotificationsActive />}
       ativarBotao={false}
+      onClear={()=> clearAll()}
     >
       <div>
         <div className="subtitle">
@@ -92,8 +107,8 @@ function Notification() {
                   time={moment(notification.date).format('HH:mm')}
                   temFooter={true}
                 >
-                  <Tag text="Aceitar" />
-                  <Tag text="Recusar" />
+                  <Tag text="Aceitar" onClick={()=> aceitarAmizade()}/>
+                  <Tag text="Recusar" onClick={()=> recusarAmizade()}/>
                 </CardNotification>
               )}
 

@@ -5,7 +5,7 @@ import "./style.css";
 import Button from '../Button'
 
 function Modal(props) {
-  const { onClose, title, clearAll, icon, children, textButton, iconButton, ativarBotao, temFooter } = props;
+  const { onClose, title, clearAll, icon, children, textButton, iconButton, ativarBotao, temFooter, onClear } = props;
   
   return (
     <div className="modal">
@@ -19,7 +19,7 @@ function Modal(props) {
 
             <div className="group">
             {clearAll && (
-            <div className="clear-all">
+            <div className="clear-all" onClick={onClear} >
               <span>Limpar tudo</span>
               <RiDeleteBinLine />
             </div>

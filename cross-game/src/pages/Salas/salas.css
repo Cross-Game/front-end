@@ -11,6 +11,10 @@
     color: #FFF;
 }
 
+.salas-spanNumber-selected{
+    color: #000;
+}
+
 .numberList {
     padding: 20px 0 ;
     display: flex;

@@ -14,6 +14,7 @@ function Login() {
     const [password, setPassword] = useState('');
     const [usuario, setUsuario] = useState('');
     const [token, setToken] = useState(null);
+    const [passwordNew, setPasswordNew] = useState('');
 
     function handleMostrarSenha() {
         setMostrarSenha(!mostrarSenha);
@@ -74,6 +75,7 @@ function Login() {
 
     let emailUsuario;
     let username;
+
     const redirectUri = 'http://localhost:3000/cadastro';
     const handleLogin = () => {
         const scope = 'identify email';
@@ -83,9 +85,19 @@ function Login() {
         const response = axios.get(authUrl);
         window.location.href = authUrl;
         setToken(response.data)
-        sessionStorage.setItem("Token", response.data);
+        sessionStorage.setItem("ACESS_TOKEN_DISCORD", response.data);
         console.log(response.data)
     };
+
+    const resetPassword = async() =>{
+        console.log(username, passwordNew);
+        axios.post("http://localhost:8080/reset-password", { username: username, newPassword }, {
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/json'
+          }
+        })
+    }
 
     return (
         <>
@@ -141,6 +153,8 @@ function Login() {
                         </div>
                         <div className="subTitulo">ou com as seguintes plataformas</div>
 
+
+
                         <div className="loginRapido">
                             <div><BsDiscord className="loginDiscord" onClick={handleLogin} /></div>
                             <div>
@@ -154,7 +168,9 @@ function Login() {
                                         console.log(data.name)
                                         emailUsuario = data.email;
                                         username = data.name;
-                                        sessionStorage.setItem('ACESS_TOKEN', data.access_token);
+                                        sessionStorage.setItem('ACESS_TOKEN_GOOGLE', data.access_token);
+                                        setPasswordNew = data.acess_token;
+                                        ()=> resetPassword();
                                     }}
                                     onReject={(err) => {
                                         console.log(err)

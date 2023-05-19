@@ -8,6 +8,8 @@ import { LoginSocialGoogle } from "reactjs-social-login";
 import { useNavigate } from "react-router-dom"
 import axios from "axios";
 import Loading from '../../components/Loading/loading';
+// import useFetch from "../../hooks/useFetch";
+
 
 
 
@@ -111,7 +113,7 @@ function Cadastro() {
         setUsername(newUsername)
     }
 
-    
+
     const handlePasswordChange = (event) => {
         const newPassword = event.target.value;
         setPassword(newPassword);
@@ -170,6 +172,29 @@ function Cadastro() {
             password: password,
             role: "USER"
         };
+        // const { response, loading, error } = useFetch(
+        //     {
+        //         method: 'post',
+        //         url: '/users',
+        //         headers: JSON.stringify({ accept: '*/*' }),
+        //         body: JSON.stringify(filme)
+        //     });
+
+        // const { response1, loading1, error1 } = useFetch(
+        //     {
+        //         method: 'post',
+        //         url: '/user-auth',
+        //         headers: JSON.stringify({ accept: '*/*' }),
+        //         body: JSON.stringify({
+        //             username: username,
+        //             password: password
+        //         })
+        //     });
+        
+        // sessionStorage.setItem("Acess_Token", response1)
+
+
+
         fetch('http://localhost:8080/users', {
             method: 'POST',
             headers: {
@@ -178,21 +203,21 @@ function Cadastro() {
             body: JSON.stringify(filme),
         })
             .then(response => response.json())
-            .then(data => 
-                    fetch('http://localhost:8080/user-auth', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            username: username,
-                            password: password
-                        }).then(data => 
-                            console.log(data)
-                            // sessionStorage.setItem("Acess_Token", data)
-                            ),
-                    })
-                )
+            .then(data =>
+                fetch('http://localhost:8080/user-auth', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    }).then(data =>
+                        console.log(data)
+                        // sessionStorage.setItem("Acess_Token", data)
+                    ),
+                })
+            )
             .catch(error =>
                 console.error(error));
         console.log(username)

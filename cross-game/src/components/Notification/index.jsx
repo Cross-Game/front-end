@@ -12,6 +12,9 @@ import { MdGroups as MdGroups } from 'react-icons/md';
 import { HiClock as HiClock } from 'react-icons/hi';
 import useFetch from "../../hooks/useFetch";
 import moment from 'moment';
+import axios from 'axios';
+import { USERID, TOKEN } from '../../data/constants';
+
 
 function Notification() {
   const [notificacoes, setNotificacoes] = useState([]);
@@ -20,16 +23,6 @@ function Notification() {
   useEffect(() => {
     setNotificacoes(response);
   }, []);
-
-
-  // var idUser = 1;
-  // useFetch({
-  //   url: `notifies/${idUser}`,
-  //   method: 'GET',
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   }
-  // })
 
 
   const [selectedOption, setSelectedOption] = useState('hoje');
@@ -56,13 +49,35 @@ function Notification() {
     // TO DO Marcar todas as notificações do filtro como lidas 
   }
 
-  function aceitarAmizade(){
-    // TODO Aceitar amizade
+  function aceitarAmizade(nicknameFriend) {
+    axios.patch(`http://localhost:8080/friends/confirming-friend-request/${USERID}/${nicknameFriend}`, {}, {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`
+      }
+    })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
-  function recusarAmizade(){
-    // TODO Recusar amizade
+  function recusarAmizade(nicknameFriend){
+    axios.delete(`http://localhost:8080/friends/declining-friend-request/${USERID}/${nicknameFriend}`, {}, {
+      headers: {
+        Authorization: `Bearer ${TOKEN}` 
+      }
+    })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
+
+
 
   return (
     <Modal
@@ -107,7 +122,7 @@ function Notification() {
                   time={moment(notification.date).format('HH:mm')}
                   temFooter={true}
                 >
-                  <Tag text="Aceitar" onClick={()=> aceitarAmizade()}/>
+                  <Tag text="Aceitar" onClick={()=> aceitarAmizade(notification.user.name)}/>
                   <Tag text="Recusar" onClick={()=> recusarAmizade()}/>
                 </CardNotification>
               )}

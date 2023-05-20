@@ -12,6 +12,8 @@ import Button from "../../components/Button";
 import Option from "../Teste/Option/index";
 import { RiCloseLine } from "react-icons/ri";
 import "./salas.css";
+import axios from "axios";
+import { USERID, TOKEN } from '../../data/constants.js'
 
 
 function Salas() {
@@ -19,13 +21,14 @@ function Salas() {
     const [adminSala, setAdminSala] = useState(true);
 
     const [showModalCriarSala, setShowModalCriarSala] = useState(false);
-    const [showModalCalendario, setShowModalCalendario] = useState(true);
+    const [showModalCalendario, setShowModalCalendario] = useState(false);
     const [showModalSala, setShowModalSala] = useState(false);
     const [showModalConvidar, setShowModalConvidar] = useState(false);
-    const [showModalFeedback, setShowModalFeedback] = useState(false);
+    const [showModalFeedback, setShowModalFeedback] = useState(true);
 
-    const [ratingHabilidade, setRatingHabilidade] = useState(null);
-    const [ratingComportamento, setRatingComportamento] = useState(null);
+    const [ratingHabilidade, setRatingHabilidade] = useState(0);
+    const [ratingComportamento, setRatingComportamento] = useState(0);
+    const [comentarioFeedback, setComentarioFeedback] = useState('');
 
 
     const [jogoSelecionado, setJogoSelecionado] = useState("");
@@ -101,14 +104,14 @@ function Salas() {
     }
 
     function handleInputFocus(e) {
-        const label = e.target.parentNode;
-        label.classList.add('salas-whiteText');
-      }
+      const label = e.target.parentNode;
+      label.classList.add('salas-whiteText');
+    }
       
-      function handleInputBlur(e) {
-        const label = e.target.parentNode;
-        label.classList.remove('salas-whiteText');
-      }
+    function handleInputBlur(e) {
+      const label = e.target.parentNode;
+      label.classList.remove('salas-whiteText');
+    }
 
 
 
@@ -134,12 +137,46 @@ function Salas() {
         return () => clearInterval(interval);
       }, []);
 
+
+    const [resetAvaliacao, setResetAvaliacao] = useState(false);
+    function limparModalFeedback() {
+      setRatingHabilidade(0);
+      setRatingComportamento(0);
+      setComentarioFeedback('');
+      console.log("Limpando Modal Feedback")
+      setResetAvaliacao(!resetAvaliacao);
+    }
+
+    function enviarFeedback() {
+      console.log("Chamei enviar feedback")
+      axios.post(`http://localhost:8080/feedbacks/${USERID}`, 
+      {
+        userGivenFeedback: jogadorSelecionado.nome,
+        behavior: ratingComportamento,
+        skill: ratingHabilidade,
+        feedbackText: comentarioFeedback
+      }, 
+      {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`
+        }
+      })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+
+    
+
     return (
         <div>
           <button onClick={handleOpenModal}>Open Modal Criar sala</button>
           {showModalCriarSala && (
     
-            <Modal title="Criar uma sala" icon={<MdGroups/>} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort/>} textButton='Criar' onClose={()=> setShowModalCriarSala(false)}>
+            <Modal title="Criar uma sala" icon={<MdGroups/>} clearAll={true} temFooter={true} ativarBotao={true} iconButton={<BsArrowRightShort/>} textButton='Criar' onClose={()=> setShowModalCriarSala(false)}>
               <div className="container_filtro">
                  <div className="filtro_jogos">
                <p className="titleFiltro">Escolha um Jogo</p>
@@ -293,7 +330,7 @@ function Salas() {
         )}
 
         {showModalFeedback && (
-            <Modal title='Feedback' icon={<MdFeedback/>} clearAll={true}  temFooter='true' ativarBotao='true' textButton="Enviar avaliação" iconButton={<BsArrowRightShort/>} onClose={()=> setShowModalFeedback(false)}>
+            <Modal title='Feedback' icon={<MdFeedback/>} clearAll={true}  temFooter='true' ativarBotao='true' textButton="Enviar avaliação" iconButton={<BsArrowRightShort/>} onClose={()=> setShowModalFeedback(false)} onClear={() => limparModalFeedback()} onClickButton={enviarFeedback}>
               <UserProfile 
                 nome={jogadorSelecionado.nome}   
                 img={jogadorSelecionado.foto}  
@@ -303,12 +340,12 @@ function Salas() {
 
                 <div className="salas-modalFeedback-avaliacao ">
                   Habilidade
-                  <Avaliacao setRating={setRatingHabilidade}/> 
+                  <Avaliacao initialValue={ratingHabilidade} setRating={setRatingHabilidade} key={`habilidade-${resetAvaliacao}`}/>
                 </div>
 
                 <div className="salas-modalFeedback-avaliacao ">
                   Comportamento
-                  <Avaliacao setRating={setRatingComportamento} />
+                  <Avaliacao initialValue={ratingComportamento} setRating={setRatingComportamento} key={`comportamento-${resetAvaliacao}`}/>
                 </div>
                   
 
@@ -316,7 +353,7 @@ function Salas() {
 
                 <div className="salas-modalFeedback-avaliacao-comentario">
                   <span>Comentário</span>
-                  <textarea className="my-textarea"></textarea>
+                  <textarea className="my-textarea" value={comentarioFeedback} onChange={(e) => setComentarioFeedback(e.target.value)}></textarea>
                 </div>
             </Modal>
         )}
@@ -358,19 +395,27 @@ function UserProfile(props){
   )
 }
 
-const Avaliacao = ({ setRating }) => {
-  const [avaliacao, setAvaliacao] = useState(0);
-  const [tempAvaliacao, setTempAvaliacao] = useState(0);
+const Avaliacao = ({ initialValue, setRating, reset }) => {
+  var [avaliacao, setAvaliacao] = useState(initialValue);
+  var [tempAvaliacao, setTempAvaliacao] = useState(0);
+
+  useEffect(() => {
+    if (reset) {
+      setAvaliacao(0);
+    }
+  }, [reset]);
+
 
   const handleClick = (value) => {
     if (value === avaliacao) {
       setAvaliacao(0);
-      setRating(null);
+      setRating(0);
     } else {
       setAvaliacao(value);
       setRating(value);
     }
   };
+
 
   const handleMouseEnter = (value) => {
     setTempAvaliacao(value);

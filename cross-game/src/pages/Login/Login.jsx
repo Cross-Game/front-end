@@ -18,6 +18,7 @@ function Login() {
 
     function handleMostrarSenha() {
         setMostrarSenha(!mostrarSenha);
+        
     }
 
     const handleUsuarioChange = (event) => {
@@ -55,6 +56,7 @@ function Login() {
             console.log(response)
             sessionStorage.setItem('ACESS_TOKEN', response.data.encodedToken);
             setToken(response.data.encodedToken)
+            decodificarToken();
             console.log("Sucesso ao realizar login: ", response.data.encodedToken);
             mudarToast('sucesso', 'Login realizado!');
 
@@ -77,6 +79,7 @@ function Login() {
     let username;
 
     const redirectUri = 'http://localhost:3000/cadastro';
+
     const handleLogin = () => {
         const scope = 'identify email';
         const responseType = 'code';
@@ -90,14 +93,44 @@ function Login() {
     };
 
     const resetPassword = async() =>{
-        console.log(username, passwordNew);
-        axios.post("http://localhost:8080/reset-password", { username: username, newPassword }, {
+        setUsuario(sessionStorage.getItem("NICKNAME"))
+        axios.post("http://localhost:8080/reset-password", {  username: usuario}, {
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'Content-Type': 'application/json'
           }
-        })
+        }
+        )
+        .then((response) => {
+            if (response.status === 200) {
+              console.log(response)
+              passwordNew = sessionStorage.getItem("ACESS_TOKEN");
+              realizarLogin();
+            } else {
+              console.error('Erro ao resetar senha: status', response.status);
+              mudarToast('erro', 'Erro ao resetar senha');
+            }
+          })
+          .catch((error) => {
+            console.error('Erro ao resetar senha:', error);
+          });
     }
+
+        // Função para decodificar a parte dos dados (payload) do token
+        const decodificarToken = () => {
+            const token = sessionStorage.getItem("ACESS_TOKEN")
+          try {
+            const partesToken = token.split('.');
+            const payloadBase64 = partesToken[1];
+            const payloadDecodificado = JSON.parse(atob(payloadBase64));
+            sessionStorage.setItem(("ID"), payloadDecodificado.id)
+            sessionStorage.setItem(("ROLE"), payloadDecodificado.role)
+            sessionStorage.setItem(("NICKNAME"), payloadDecodificado.sub)
+          } catch (error) {
+            console.error('Erro ao decodificar o token:', error);
+          }
+        };
+    
 
     return (
         <>
@@ -165,12 +198,14 @@ function Login() {
                                     acess_type="offline"
                                     onResolve={({ providor, data }) => {
                                         console.log(data);
-                                        console.log(data.name)
                                         emailUsuario = data.email;
                                         username = data.name;
                                         sessionStorage.setItem('ACESS_TOKEN_GOOGLE', data.access_token);
+                                        sessionStorage.setItem('ACESS_TOKEN', data.access_token);
+                                        sessionStorage.setItem('NICKNAME', data.name)
+                                        sessionStorage.setItem('EMAIL', data.email)
                                         setPasswordNew = data.acess_token;
-                                        ()=> resetPassword();
+                                        resetPassword();
                                     }}
                                     onReject={(err) => {
                                         console.log(err)
@@ -200,9 +235,7 @@ function Login() {
         )}
 
             </div>
-        </>
-
-        
+        </>       
     )
 }
 

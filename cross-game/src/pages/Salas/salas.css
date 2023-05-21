@@ -51,3 +51,11 @@
     font-size: 12px;
     color: #7A7A7A;
 }
+
+.filtro_rank .tag {
+    margin-top: 10px;
+}
+
+.filtro_rank .tag_selected {
+    margin-top: 10px;
+}

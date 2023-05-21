@@ -4,17 +4,19 @@ import 'react-input-range/lib/css/index.css';
 import './style.css';
 
 function RangeBar(props) {
-  const [values, setValues] = useState({ min: props.min, max: props.max });
+  const { min, max, values, onChange } = props;
 
   const handleChange = (newValues) => {
-    setValues(newValues);
+    if (onChange) {
+      onChange(newValues);
+    }
   };
 
   return (
     <div className="slider-container">
       <InputRange
-        minValue={props.min}
-        maxValue={props.max}
+        minValue={min}
+        maxValue={max}
         value={values}
         onChange={handleChange}
         formatLabel={(value) => `${value}`}

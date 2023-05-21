@@ -16,7 +16,7 @@ function NavBar() {
         <>
             <nav className="navbar">
                 <div className="logo">
-                    <div className="img">
+                    <div className="imgNavbar">
                         <img src={iconLogo} alt="" />
                     </div>
                 </div>

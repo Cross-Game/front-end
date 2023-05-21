@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
-import "./style.css";
+import "./home.css";
 import NavBar from './NavBar/navbar.jsx';
 import ItemSection from './ItemSection/index'
 import userIcon from '../../assets/index-page/userExplainSection.svg'
@@ -23,25 +23,29 @@ import axios from 'axios';
 
 function Home() {
   const [noticies, setNoticies] = useState([]);
+  const [teste, setTeste] = useState(false)
 
-  let config = {
-    method: 'get',
-    maxBodyLength: 5,
-    url: 'https://newsapi.org/v2/everything?q=games&apiKey=6ac810e80de24125838316d999b45fc0',
-    headers: {
-      'Authorization': 'Basic dXNlcjp1c2Vy'
-    }
-  };
 
-  axios.request(config)
-    .then((response) => {
-      console.log(JSON.stringify());
-      setNoticies(response.data.articles)
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  useEffect(() => {
+    let config = {
+      method: 'get',
+      url: 'https://newsapi.org/v2/everything?q=games&pageSize=10&apiKey=3fb0a50ddad34afba1de6566711173b2',
+      headers: {
+        'Authorization': 'Basic dXNlcjp1c2Vy'
+      }
+    };
 
+    axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        setNoticies(response.data.articles)
+        setTeste(true)
+      })
+      .catch((error) => {
+        console.log(error);
+        setTeste(false)
+      });
+  }, []);
 
 
   return (
@@ -181,11 +185,18 @@ function Home() {
       <div className="noticiesContent">
         <AwesomeSlider >
           {
-            noticies.map((element) => (
-              <div data-src={element.urlToImage} />
-            ))
+
+            teste ?
+              noticies.map((element, index) => (
+                
+                <div className="imgNoticies" data-src={element.urlToImage} />
+            
+              ))
+              // setando imagem de erro quando der erro na api
+              : <div className="imgNoticies" data-src={medalDiamante} />
           }
         </AwesomeSlider>
+
       </div>
 
 

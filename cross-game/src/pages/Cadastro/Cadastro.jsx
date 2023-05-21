@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from "react";
 import "./Cadastro.css";
-import { BsArrowLeftShort, BsArrowRightShort, BsDiscord, BsFillEyeFill, BsFillEyeSlashFill, BsGoogle, BsPersonCircle } from "react-icons/bs";
+import { BsDiscord, BsArrowLeftShort, BsArrowRightShort, BsFillEyeFill, BsFillEyeSlashFill, BsGoogle, BsPersonCircle } from "react-icons/bs";
 import { GiCrossShield, GiCrenulatedShield, GiCrossedAxes, GiCrownedSkull, GiEyeShield } from "react-icons/gi";
 import { SiValorant } from "react-icons/si";
-import { LoginSocialGoogle } from "reactjs-social-login"
+import { LoginSocialGoogle } from "reactjs-social-login";
+import { useNavigate } from "react-router-dom"
 import axios from "axios";
+import Loading from '../../components/Loading/loading';
+// import useFetch from "../../hooks/useFetch";
+
+
 
 
 
@@ -24,24 +30,72 @@ function Cadastro() {
     const [validadoSenha, setvalidadoSenha] = useState(false);
     const [validadoEmail, setValidadoEmail] = useState(false);
     const [email, setEmail] = useState('');
+    const [username, setUsername] = useState()
     const [password, setPassword] = useState();
-    let username;
-    let emailUsuario;
-
     const [selectedIcon, setSelectedIcon] = useState(<BsPersonCircle className="iconAvatar" />);
-    const [token, setToken] = useState(null);
-    const clientId = '1102730864972009612';
-    const redirectUri = 'http://localhost:3000/cadastro';
-    
+    const CLIENT_ID = "1102730864972009612";
+    const REDIRECT_URI = "http://localhost:3000/cadastro";
+    const SCOPE = "identify email";
+    const RESPONSE_TYPE = "code";
+    const currentUrl = new URL(window.location.href);
+    const queryParams = new URLSearchParams(currentUrl.search);
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        setTimeout(() => {
+
+            if (!(queryParams.get("code") == null)) {
+                setAtivarProximo({ display: 'none' });
+                setAtivarAnterior({ display: '' });
+                handleCallback()
+            }
+        }, 1);
+    }, []);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 3000);
+    }, []);
+
     const handleLogin = () => {
-        const scope = 'identify email';
-        const responseType = 'code';
-        const authUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&permissions=76832&scope=${scope}&response_type=${responseType}&redirect_uri=${redirectUri}`;
-        const response = axios.get(authUrl);
-        window.location.href = authUrl;
-        setToken(response.data)
-        sessionStorage.setItem("Token", response.data);
-        console.log(response.data)
+        const url = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=${RESPONSE_TYPE}&scope=${encodeURIComponent(SCOPE)}`;
+        window.location.href = url;
+
+    };
+
+    const handleCallback = async () => {
+        const data = {
+            code: queryParams.get("code"),
+            redirect_uri: "http://localhost:3000/cadastro",
+            grant_type: "authorization_code",
+            client_id: CLIENT_ID,
+            client_secret: "Xrn0whYArSqBySPDGZbVGJlZj0sAL903"
+        };
+
+        try {
+            const headersPost = {
+                "Content-Type": "application/x-www-form-urlencoded",
+            };
+            const body = Object.keys(data)
+                .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+                .join("&");
+            const response = await axios.post("https://discord.com/api/oauth2/token", body, { headersPost });
+            const userResponse = await axios.get("https://discord.com/api/users/@me", {
+                headers: {
+                    authorization: `Bearer ${response.data.access_token}`,
+                },
+            });
+            setEmail(userResponse.data.email);
+            setUsername(userResponse.data.username);
+            setPassword(response.data.access_token);
+            console.log(userResponse.data.email);
+            console.log(userResponse.data.username);
+            console.log(response.data.access_token);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     const handleSelectIcon = (icon) => {
@@ -54,6 +108,12 @@ function Cadastro() {
         validateEmail(newEmail);
     };
 
+    const handleUser = (event) => {
+        const newUsername = event.target.value;
+        setUsername(newUsername)
+    }
+
+
     const handlePasswordChange = (event) => {
         const newPassword = event.target.value;
         setPassword(newPassword);
@@ -62,16 +122,16 @@ function Cadastro() {
 
     const validatePassword = (password) => {
         // Lógica para validar a senha
-        const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{12,}$/;
 
         if (!passwordRegex.test(password)) {
             setShowModalSenha(true);
-            setvalidadoSenha(false)
-            setValidationMessageSenha('A senha deve ter pelo menos 8 caracteres, 1 numero, 1 letra maiúscula, 1 letra minúscula e 1 caractere especial.');
+            setvalidadoSenha(false);
+            setValidationMessageSenha('A senha deve ter pelo menos 12 caracteres, 1 numero, 1 letra maiúscula, 1 letra minúscula e 1 caractere especial.');
         } else {
             setShowModalSenha(false);
             setValidationMessageSenha('');
-            setvalidadoSenha(true)
+            setvalidadoSenha(true);
         }
     };
 
@@ -100,17 +160,75 @@ function Cadastro() {
             setAtivarProximo({ display: 'none' });
             setAtivarAnterior({ display: '' });
         }
+        handleCallback()
+        console.log(queryParams.get("code"))
     }
-
-
 
     function cadastrar() {
 
+        const filme = {
+            username: username,
+            email: email,
+            password: password,
+            role: "USER"
+        };
+        // const { response, loading, error } = useFetch(
+        //     {
+        //         method: 'post',
+        //         url: '/users',
+        //         headers: JSON.stringify({ accept: '*/*' }),
+        //         body: JSON.stringify(filme)
+        //     });
+
+        // const { response1, loading1, error1 } = useFetch(
+        //     {
+        //         method: 'post',
+        //         url: '/user-auth',
+        //         headers: JSON.stringify({ accept: '*/*' }),
+        //         body: JSON.stringify({
+        //             username: username,
+        //             password: password
+        //         })
+        //     });
+        
+        // sessionStorage.setItem("Acess_Token", response1)
+
+
+
+        fetch('http://localhost:8080/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(filme),
+        })
+            .then(response => response.json())
+            .then(data =>
+                fetch('http://localhost:8080/user-auth', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    }).then(data =>
+                        console.log(data)
+                        // sessionStorage.setItem("Acess_Token", data)
+                    ),
+                })
+            )
+            .catch(error =>
+                console.error(error));
+        console.log(username)
     }
 
     function voltar() {
         setAtivarProximo({ display: '' });
         setAtivarAnterior({ display: 'none' });
+        setEmail('');
+        setUsername('');
+        setPassword('');
     }
 
     const selecionarJogo = (indice) => {
@@ -134,9 +252,11 @@ function Cadastro() {
 
     return (
         <>
-            <div className="container">
-                <div className="botaoVoltar" >
-                    <p><BsArrowLeftShort className="arrowVoltarInicio" />Voltar</p>
+            {isLoading ? (
+                <Loading />
+            ) : <div className="container">
+                <div className="botaoVoltar" onClick={() => navigate("/")}>
+                    <p>Voltar</p>
                 </div>
                 <form className="cardCadastro" style={ativarProximo}>
                     <div className="img">
@@ -158,14 +278,14 @@ function Cadastro() {
                                 value={email}
                                 onChange={handleEmailChange} />
                             {showModalEmail && (
-                                <div className="modal">
-                                    <div className="modal-content">
+                                <div className="modalForm">
+                                    <div className="modal-content-none">
                                         <p>{validationMessageEmail}</p>
                                     </div>
                                 </div>
                             )}
                             <label htmlFor="">Usuário</label>
-                            <input type="text" placeholder="HOmonster" />
+                            <input type="text" placeholder="HOmonster" value={username} onChange={handleUser} />
 
                             <label htmlFor="">Senha</label>
                             <input
@@ -198,11 +318,13 @@ function Cadastro() {
                                     client_id={'885530994482-00qe1f2qo6m0htsqeprvua1tthf2kqdt.apps.googleusercontent.com'}
                                     scope="openid profile email"
                                     discoveryDocs="claims_supported"
-                                    acess_type="offline"
+                                    acess_type="online"
                                     onResolve={({ providor, data }) => {
-                                        console.log(data.name)
-                                        emailUsuario = data.email;
-                                        username = data.name;
+                                        setEmail(data.email);
+                                        setUsername(data.name);
+                                        setPassword(data.access_token);
+                                        setAtivarProximo({ display: 'none' });
+                                        setAtivarAnterior({ display: '' });
                                     }}
                                     onReject={(err) => {
                                         console.log(err)
@@ -219,7 +341,7 @@ function Cadastro() {
                     <div>Selecione o icone do seu perfil</div>
                     <div className="iconsEscolha">
                         <GiCrossShield className="iconEscolhaAvatar"
-                            onClick={() => handleSelectIcon(<GiCrossShield className="iconAvatar" />)} />
+                            onClick={() => handleSelectIcon(<GiCrossShield className='iconAvatar' />)} />
 
                         <GiCrenulatedShield className="iconEscolhaAvatar"
                             onClick={() => handleSelectIcon(<GiCrenulatedShield className="iconAvatar" />)} />
@@ -258,7 +380,7 @@ function Cadastro() {
                     </div>
                 </form>
             </div>
-        </>
+            }</>
     )
 }
 

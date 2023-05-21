@@ -1,8 +1,3 @@
-body {
-    background: linear-gradient(45deg, rgb(01, 01, 01), rgb(43, 43, 43));
-    font-family: "Krona One";
-}
-
 .container {
     height: 100vh;
     display: flex;
@@ -125,7 +120,7 @@ input {
     font-size: small;
 }
 
-.modal {
+.modalForm {
     border: 1px solid red;
     border-radius: 8px;
     background-color: #fff;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from '../../components/Modal';
-import { FaAmazon as FaAmazon } from 'react-icons/fa';
-import { FaSearch as FaSearch } from 'react-icons/fa';
+import { FaAmazon } from 'react-icons/fa';
+import { FaSearch } from 'react-icons/fa';
 import Button from '../../components/Button'
 
 function Teste() {

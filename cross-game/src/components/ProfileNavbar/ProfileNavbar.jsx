@@ -40,16 +40,16 @@ function ProfileJogo(props) {
                     <div className="profileJogoCenter" >
 
                         <div style={props.profiles} className="profileJogoButtonNvigation"
-                            onClick={() => navigate("/profilejogo")}
+                            onClick={() => navigate("/profile")}
                         >Profiles</div>
                         <div style={props.interesses} className="profileJogoButtonNvigation"
-                            onClick={() => navigate("/interesse")}
+                            onClick={() => navigate("/profile/interesse")}
                         > Interesses</div>
                         <div style={props.feedbacks} className="profileJogoButtonNvigation"
-                            onClick={() => navigate("/feedback")}
+                            onClick={() => navigate("/profile/feedback")}
                         >Feedbacks</div>
                         <div style={props.plataformas} className="profileJogoButtonNvigation"
-                            onClick={() => navigate("/plataforma")}
+                            onClick={() => navigate("/profile/plataforma")}
                         >Plataformas</div>
 
 

@@ -2,6 +2,7 @@ import React from "react";
 import ProfileNavbar from "../../../components/ProfileNavbar/ProfileNavbar";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import "./Feedback.css";
+import imgUserProfile from "../../../assets/index-page/testeImg.png"
 
 
 function ProfileJogo() {
@@ -11,28 +12,24 @@ function ProfileJogo() {
             <>
                 <div className="ProfileFeedbackContainer">
                     <div className="ProfileFeedbackCard">
-                        <h4>Feedback</h4>
-                    </div>
-                    <div className="ProfileFeedbackCard">
-                        <h4>Feedback</h4>
-                    </div>
-                    <div className="ProfileFeedbackCard">
-                        <h4>Feedback</h4>
-                    </div>
-                    <div className="ProfileFeedbackCard">
-                        <h4>Feedback</h4>
-                    </div>
-                    <div className="ProfileFeedbackCard">
-                        <h4>Feedback</h4>
-                    </div>
-                    <div className="ProfileFeedbackCard">
-                        <h4>Feedback</h4>
-                    </div>
-                    <div className="ProfileFeedbackCard">
-                        <h4>Feedback</h4>
-                    </div>
-                    <div className="ProfileFeedbackCard">
-                        <h4>Feedback</h4>
+                        <div className="ProfileFeedbackCardTop">
+                            <div className="ProfileFeedbackCardTopFistChild">
+                                <img src={imgUserProfile} alt="" />
+                                <span>Mauricio Maxuel</span>
+                            </div>
+                            <div>Estrelas</div>
+                        </div>
+                        <div className="ProfileFeedbackCardCenter">
+                            <span>Descrição do Feedback deskmcklsdmclkscdsc scdcsdcsd scdcsd scsdcsd sdcscw dsadasd sdasda sdasdasd asdsad adasd adsda sdasda dada sdasd asdasda d</span>
+                        </div>
+                        <div className="ProfileFeedbackCardBottom">
+                            <div>Comportamento
+                                <span>5</span>
+                            </div>
+                            <div>Habilidade
+                                <span>3</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </>

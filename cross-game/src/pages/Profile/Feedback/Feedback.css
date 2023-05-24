@@ -2,42 +2,40 @@
     display: none;
   }
 .ProfileFeedbackContainer{
-    width: 80%;
+    width: auto;
     height: 420px;
-    position: fixed;
+    margin-top: 10px;
+    position: absolute;
     overflow-y: scroll;
     scroll-behavior: smooth;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-evenly;
     flex-wrap: wrap;
 }
 
 .ProfileFeedbackCard {
-    width: 390px;
-    height: 154px;
-    margin: 20px 20px 0 0;
+    width: 490px;
+    height: 254px;
+    padding: 20px;
+    margin-top: 30px;
     background: #000;
     position: relative;
     display: flex;
     place-content: center;
-    place-items: center;
+    flex-direction: column;
     overflow: hidden;
     border-radius: 20px;
   }
   
-  .ProfileFeedbackCard h4 {
-    z-index: 1;
-    color: white;
-    font-size: 1em;
-  }
   
   .ProfileFeedbackCard::before {
     content: '';
     position: absolute;
-    width: 420px;
+    width: 200px;
+    margin: 0 0 0 150px;
     background-image: linear-gradient(180deg, rgb(0, 255, 170), rgb(72, 255, 48));
-    height: 50%;
+    height: 1000px;
     animation: rotBGimg 3s linear infinite;
     transition: all 0.2s linear;
   }
@@ -60,3 +58,97 @@
     inset: 3px;
     border-radius: 15px;
   }  
+
+.ProfileFeedbackCardTop{
+  width: auto;
+  height: auto;
+  z-index: 1;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ProfileFeedbackCardTopFistChild{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ProfileFeedbackCardTop img{
+  width: 70px;
+  height: auto;
+  z-index: 1;
+  color: #fff;
+}
+
+.ProfileFeedbackCardTop div{
+  width: auto;
+  height: auto;
+  z-index: 1;
+  color: #fff;
+}
+
+.ProfileFeedbackCardTop span{
+  width: auto;
+  height: 20px;
+  font-size: small;
+  z-index: 1;
+  color: #fff;
+}
+
+.ProfileFeedbackCardCenter{
+  height: 50px;
+  width: auto;
+  padding: 20px;
+  margin: 20px 0;
+  z-index: 1;
+  overflow: hidden;
+  overflow-y: scroll;
+  border: 2px solid rgb(207, 207, 207);
+  color: #fff;
+  font-size: smaller;
+  font-weight: 100;
+  border-radius: 20px;
+}
+
+.ProfileFeedbackCardBottom{
+  z-index: 1;
+  display: flex;
+  justify-content: space-around;
+  width: auto;
+  height: 40px;
+  padding: 2px;
+  align-items: center;
+  color: #fff;
+}
+
+.ProfileFeedbackCardBottom div:first-child{
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 5px;
+  width: 200px;
+  height: 30px;
+  font-size: small;
+  color: #fff;
+  background-color: rgba(255, 0, 0, 0.373);
+  border-radius: 20px;
+}
+
+.ProfileFeedbackCardBottom div:last-child{
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-items: center;
+  padding-top: 5px;
+  width: 200px;
+  height: 30px;
+  font-size: small;
+  color: #fff;
+  background-color: rgba(0, 0, 255, 0.373);
+  border-radius: 20px;
+}

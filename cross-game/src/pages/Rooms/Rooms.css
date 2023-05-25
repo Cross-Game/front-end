@@ -1,5 +1,53 @@
+:root {
+    --wi: 80vw;
+}
+
 .containerRooms {
-    width: 100vw;
     display: flex;
+    width: 100vw;
     background-image: linear-gradient(150deg, #070707, #434343);
+    background-color: #00FF33;
+}
+
+.bodyRooms {
+    width: 100%;
+    min-width: 50vw;
+}
+
+.topDiv {
+    width: 100%;
+    height: 50%;
+    /* background-color: red; */
+}
+
+.inputDiv {
+    width: 90%;
+    height: 20%;
+    background-color: #070707;
+}
+
+.bottomDiv {
+    width: 100%;
+    height: 50%;
+}
+
+.divRoomsAllContainer {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    overflow-x: scroll;
+    align-items: center;
+    padding-left: 2%;
+    gap: 3%;
+    box-sizing: border-box;
+}
+
+.divRoomsAllContainer::-webkit-scrollbar {
+    width: 1px;
+    height: 15px;
+}
+
+.divRoomsAllContainer::-webkit-scrollbar-thumb {
+    background-color: #696969;
+    border-radius: 20px;
 }

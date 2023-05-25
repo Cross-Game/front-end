@@ -31,7 +31,7 @@ body {
     height: 120vh;
 }
 
-.home-explanatoryContent .container {
+.home-explanatoryContent .home-container {
     width: 80%;
     height: 80%;
     display: flex;
@@ -296,7 +296,7 @@ body {
     height: 100vh;
 }
 
-.home-medalsContent .container {
+.home-medalsContent .home-container {
     width: 80%;
     height: 80%;
     display: flex;
@@ -350,7 +350,7 @@ body {
 }
 
 .home-medalIconContainer img {
-    width: 80%;
+    width: 60%;
 }
 
 .home-prata {
@@ -413,24 +413,24 @@ seção para noticias - não finalizada */
     width: 10%;
 }
 
-.home-awssld{
+.awssld{
     height: 80%;
 }
 
-.home-awssld__content{
+.awssld__content{
     height: 100%;
     padding: 1%;
 }
 
-.home-awssld__box {
+.awssld__box {
     height: 50px;
 }
 
-.home-awssld--active{
+.awssld--active{
     height: 100%;
 }
 
-.home-awssld__bar {
+.awssld__bar {
     background-color: transparent   ;
 }
 

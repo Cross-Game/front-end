@@ -1,11 +1,10 @@
-.subtitle {
+.notification-subtitle {
     display: flex;
     margin-top: -15px;
     margin-bottom: 15px;
   }
   
-  
-  .cardNotification {
+  .notification-cardNotification {
     background-color: #4F4F4F;
     margin: 10px 0;
     padding: 10px;
@@ -13,35 +12,35 @@
     cursor: pointer;
   }
   
-  .cardNotification:hover {
+  .notification-cardNotification:hover {
     background-color: #585858;
   }
   
-  .content {
+  .notification-content {
     display: flex;
   }
   
-  .icon {
+  .notification-icon {
     width: auto;
     height: auto;
   }
   
-  .group-body {
+  .notification-group-body {
     margin: 0 10px;
   }
   
   
-  .title-notification {
+  .notification-title-notification {
     font-size: 10px;
     margin-bottom: 5px;
   }
   
-  .message {
+  .notification-message {
     font-size: 8px;
     font-family: 'Krona One'
   }
   
-  .datetime {
+  .notification-datetime {
     display: flex;
     flex-direction: column-reverse;
     /* margin: auto; */
@@ -53,7 +52,7 @@
     width: 60px;
   }
   
-  .cardNotification-footer {
+  .notification-cardNotification-footer {
     margin: 10px 10px 0px 10px;
     display: flex;
   }

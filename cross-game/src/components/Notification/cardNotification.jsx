@@ -18,20 +18,20 @@ function CardNotification(props) {
     };
 
     return (
-        <div className="cardNotification"  onClick={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            <div className="content">
-            {icon && <span className="icon">{icon}</span>}
-                <div className="group-body">
-                    <p className="title-notification">{title}</p>
-                    <p className="message">{message}</p>
+        <div className="notification-cardNotification"  onClick={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            <div className="notification-content">
+            {icon && <span className="notification-icon">{icon}</span>}
+                <div className="notification-group-body">
+                    <p className="notification-title-notification">{title}</p>
+                    <p className="notification-message">{message}</p>
                 </div>
-                <div className="datetime">
+                <div className="notification-datetime">
                 <p>{date}</p> <br></br>
                 <p>{time}</p>
                 </div>
             </div>
             {temFooter &&  hover &&(
-            <div className="cardNotification-footer">{children}
+            <div className="notification-cardNotification-footer">{children}
             </div>
             )}
         </div>

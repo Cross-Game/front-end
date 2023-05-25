@@ -88,7 +88,7 @@ function Notification() {
       onClear={()=> clearAll()}
     >
       <div>
-        <div className="subtitle">
+        <div className="notification-subtitle">
           <Tag
             temCursor="true"
             text="Hoje"
@@ -109,7 +109,7 @@ function Notification() {
           />
         </div>
 
-        <div className="container">
+        <div className="notification-container">
           {filteredNotifications.map((notification) => (
             <React.Fragment key={notification.id}>
 

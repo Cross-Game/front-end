@@ -1,0 +1,311 @@
+body {
+    background: linear-gradient(45deg, rgb(01, 01, 01), rgb(43, 43, 43));
+    font-family: "Krona One";
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+}
+
+.botaoVoltar p {
+    display: flex;
+    align-items: center;
+    width: 40%;
+    border: 1px solid #00ff03;
+    border-radius: 20px;
+    padding: 20% 10% 15% 40%;
+    margin: -20px 0 0 -20px;
+    box-shadow: 3px 3px 4px rgba(255, 255, 255, 0.3);
+    color: #00ff03;
+    cursor: pointer;
+}
+
+.botaoVoltar p:hover {
+    display: flex;
+    align-items: center;
+    width: 40%;
+    border: 1px solid #00ff03;
+    border-radius: 20px;
+    padding: 21% 10% 15% 41%;
+    margin: -20px 0 0 -20px;
+    box-shadow: 3px 3px 4px rgba(255, 255, 255, 0.3);
+    color: #00ff03;
+    cursor: pointer;
+}
+
+.botaoVoltar {
+    display: flex;
+    align-items: flex-start;
+}
+
+.arrowVoltarInicio {
+    width: 30%;
+    height: 30%;
+    margin-right: 10%;
+}
+
+.arrowVoltarInicio:hover {
+    width: 30%;
+    height: 30%;
+    margin-right: 10%;
+}
+
+.cardLogin {
+    align-self: center;
+    width: 70%;
+    height: 75%;
+    border: 1px solid #fff;
+    border-radius: 20px;
+    display: flex;
+}
+
+.voltar {
+    border: 1px solid #00ff03;
+    border-radius: 20px;
+    padding: 20% 10% 15% 40%;
+    margin: -20px 0 0 -20px;
+    box-shadow: 3px 3px 4px rgba(255, 255, 255, 0.3);
+    color: #00ff03;
+    cursor: pointer;
+}
+
+.voltar:hover {
+    border: 1px solid #00ff03;
+    border-radius: 20px;
+    padding: 20.1% 10% 15% 41%;
+    margin: -20px 0 0 -20px;
+    box-shadow: 3px 3px 4px rgba(255, 255, 255, 0.3);
+    color: #00ff03;
+    cursor: pointer;
+}
+
+.imgLogin {
+    background-image: url("./assets/imgLogin2.png");
+    opacity: 0.6;
+    background-size: cover;
+    border-radius: 0 20px 20px 0 ;
+    width: 60%;
+}
+
+.tituloImg {
+    position: absolute;
+    color: #fff;
+    margin: 2% 35%;
+}
+
+.tituloImg p {
+    font-weight: lighter;
+    font-size: xx-small;
+    font-weight: normal;
+    margin-bottom: 5%;
+    white-space: nowrap;
+}
+
+.tituloImg h1 {
+    font-size: xx-large;
+    white-space: nowrap;
+}
+
+
+.cardFormLogin {
+    width: 50%;
+    border-radius: 20px 0 0 20px;
+    background-color: #00ff0330;
+    border-right: 1px solid #fff;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.tituloLogin {
+    display: flex;
+    align-items: center;
+    font-weight: 100;
+    font-size: large;
+    margin: 5%;
+}
+
+.inputsForm {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    font-weight: 100;
+    font-size: small;
+}
+
+input {
+    margin: 10px 0;
+    padding: 5px;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    color: #083700;
+    font-family: "Krona One";
+    font-size: small;
+}
+
+.botaoCadastro {
+    margin-top: 20px;
+    width: 60%;
+    height: 30px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #00FF33;
+    color: #000;
+    border: 1px solid #00FF33;
+    cursor: pointer;
+}
+.botaoCadastro:hover {
+    margin-top: 20px;
+    width: 60%;
+    height: 30px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #00FF33;
+    color: #000;
+    border: 0.1px solid #000;
+    cursor: pointer;
+}
+
+.arrowProximo {
+    width: 25px;
+    height: 25px;
+    padding-left: 20px;
+}
+
+.subTitulo {
+    margin-top: 40px;
+    font-family: "Krona One";
+    font-weight: 100;
+    font-size: xx-small;
+}
+
+.loginRapido {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 60%;
+}
+.loginDiscord {
+    width: 60%;
+    height: 60%;
+    padding: 10px;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.loginGoogle {
+    width: 60%;
+    height: 60%;
+    padding: 10px;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.subInputs {
+    margin: 7.5% 0;
+    display: flex;
+    font-size: 8px;
+    justify-content: space-between;
+}
+
+a {
+    cursor: pointer;
+}
+
+.title {
+    font-size: medium;
+    color: #00FF33;
+    opacity: 1;
+}
+
+.subtitle {
+    font-size: large;
+    color: #00FF33;
+    opacity: 1;
+}
+
+.divWelcome {
+    margin-top: 42px;
+    margin-left: 50px;
+    opacity: 1;
+}
+
+.show-password {
+    width: 100%;
+    height: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: #00ff03;
+    cursor: pointer;
+    margin-left: 2px;
+}
+
+.iconPassword {
+    padding-bottom: 35px;
+}
+
+
+@media only screen and (max-width: 500px) {
+    .botaoVoltar {
+        display: flex;
+        align-items: flex-start;
+        width: 30%;
+    }
+}
+
+@media only screen and (max-width: 1100px) {
+    .tituloImg {
+        display: none;
+    }
+
+    .cardCadastro {
+        width: 60%;
+        height: auto;
+        border-radius: 20px;
+        flex-direction: column;
+
+    }
+    .cardFormLogin {
+        width: 100%;
+        border-radius: 20px;
+    }
+
+    .img {
+        display: none;
+    }
+
+    .cardFormCadastro {
+        width: 100%;
+        border-radius: 20px;
+        border-left: none;
+    }
+
+    .inputCadastro {
+        width: 60%;
+    }
+
+    .botaoCadastro {
+        width: 60%;
+    }
+
+
+    .loginDiscord,
+    .loginGoogle {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .botaoVoltar {
+        display: flex;
+        align-items: flex-start;
+        width: 30%;
+    }
+
+}

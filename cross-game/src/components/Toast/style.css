@@ -1,0 +1,61 @@
+.toast {
+    font-family: 'Krona One';
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.5rem;
+    /* bottom: 0.01rem;
+    right: 0.01rem;
+    padding: 0.5rem 1.5rem 0.3rem 1.5rem; */
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    z-index: 9999;
+
+  }
+  
+  .toast--sucesso {
+    background-color: #00ff00;
+    box-shadow: 0 0 0.25rem #00ff0070;;
+    color: #000;
+  }
+  
+  .toast--erro {
+    background-color: #e91418;
+    box-shadow: 0 0 0.25rem #dd0a0d70;
+    color: #000;
+  }
+  
+  .toast--carregando {
+    background-color: #e0e0e0;
+    box-shadow: 0 0 0.25rem #e0e0e070;
+    color: #000000;
+  }
+  
+  .toast-icon-wrapper {
+    margin-right: 0.5rem;
+  }
+  
+  .toast-icon {
+    color: black;
+    font-size: 16px;
+  }
+  
+  .toast-icon--spin {
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .toast-message {
+    font-size: 13px;
+    text-align: left;
+    max-width: 20rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

@@ -9,6 +9,7 @@ import Interesse from './pages/Profile/Interesse/Interesse.jsx';
 import Feedback from './pages/Profile/Feedback/Feedback.jsx';
 import Plataforma from './pages/Profile/Plataforma/Plataforma.jsx';
 
+import Login from './pages/Login/Login.jsx';
 
 function routes() {
     return (
@@ -16,6 +17,7 @@ function routes() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/cadastro" element={<Cadastro />} />
+                <Route path="/login" element={<Login/>}/>
                 <Route path="/teste" element={<Teste />} />
                 <Route path="/rooms" element={<Rooms />} />
                 <Route path="/profilejogo" element={<ProfileJogo />} />

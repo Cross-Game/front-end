@@ -299,9 +299,9 @@ function Cadastro() {
                                 <span className="iconPassword" onClick={handleMostrarSenha}>{mostrarSenha ? <BsFillEyeSlashFill /> : <BsFillEyeFill />}</span>
                             </span>
                             {showModaSenha && (
-                                <div className="modalForm">
-                                    <div className="modal-content-none">
-                                        <p>{validationMessageSenha}</p>
+                                <div className="modal">
+                                    <div className="modal-content">
+                                        {/* <p>{validhandleLoginationMessageSenha}</p> */}
                                     </div>
                                 </div>
                             )}

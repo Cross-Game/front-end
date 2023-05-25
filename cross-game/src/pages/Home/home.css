@@ -3,7 +3,7 @@ body {
     width: 98.7vw;
 }
 
-.bannerContainer {
+.home-bannerContainer {
     width: 100%;
     height: 100vh;
     background-image: url(../../assets/index-page/banner.svg);
@@ -16,13 +16,13 @@ body {
     justify-content: space-around;
 }
 
-.bannerContainer h2 {
+.home-bannerContainer h2 {
     margin-top: 40%;
     font-size: 1.8rem;
     color: #FFFFFF;    ;
 }
 
-.explanatoryContent {
+.home-explanatoryContent {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,7 +31,7 @@ body {
     height: 120vh;
 }
 
-.explanatoryContent .container {
+.home-explanatoryContent .container {
     width: 80%;
     height: 80%;
     display: flex;
@@ -39,14 +39,14 @@ body {
     justify-content: space-between;
 }
 
-.itensExplainContainer {
+.home-itensExplainContainer {
     width: 100%;
     height: 75%;
     display: flex;
     justify-content: space-between;
 }
 
-.leftGroup {
+.home-leftGroup {
     width: 22%;
     height: 100%;
     display: flex;
@@ -54,7 +54,7 @@ body {
     justify-content: space-between;
 }
 
-.findPlayersContainer {
+.home-findPlayersContainer {
     width: 100%;
     height: 30%;
     display: flex;
@@ -65,22 +65,22 @@ body {
     cursor: pointer;
 }
 
-.findPlayersContainer div {
+.home-findPlayersContainer div {
     display: none;
 }
 
-.findPlayersContainer:hover img {
+.home-findPlayersContainer:hover img {
     display: none;
 }
 
-.findPlayersContainer:hover div {
+.home-findPlayersContainer:hover div {
     display: block;
     margin-left: 10%;
     color: #000;
 }
 
 
-.discordContainer {
+.home-discordContainer {
     width: 100%;
     height: 60%;
     display: flex;
@@ -90,7 +90,7 @@ body {
     cursor: pointer;
 }
 
-.discordContainer div {
+.home-discordContainer div {
     display: none;
     color: #fff;
     font-size: 1.8rem;
@@ -98,16 +98,16 @@ body {
     line-height: 120%;
 }
 
-.discordContainer:hover img {
+.home-discordContainer:hover img {
     display: none;
 
 }
 
-.discordContainer:hover div {
+.home-discordContainer:hover div {
     display: block;
 }
 
-.midGroup {
+.home-midGroup {
     width: 50%;
     height: 100%;
     display: flex;
@@ -115,7 +115,7 @@ body {
     justify-content: space-between;
 }
 
-.friendsContainer {
+.home-friendsContainer {
     width: 100%;
     height: 30%;
     background-color: #000;
@@ -125,28 +125,28 @@ body {
     cursor: pointer;
 }
 
-.friendsContainer div {
+.home-friendsContainer div {
     display: none;
 
 }
 
-.friendsContainer:hover img {
+.home-friendsContainer:hover img {
     display: none;
 }
 
-.friendsContainer:hover div {
+.home-friendsContainer:hover div {
     display: block;
     color: #fff;
 }
 
-.bottomMidContainer {
+.home-bottomMidContainer {
     width: 100%;
     height: 60%;
     display: flex;
     justify-content: space-between;
 }
 
-.leftBottomMidContainer {
+.home-leftBottomMidContainer {
     width: 45%;
     height: 100%;
     display: flex;
@@ -154,7 +154,7 @@ body {
     justify-content: space-between;
 }
 
-.calendarContainer {
+.home-calendarContainer {
     width: 100%;
     height: 45%;
     display: flex;
@@ -164,22 +164,22 @@ body {
     cursor: pointer;
 }
 
-.calendarContainer div {
+.home-calendarContainer div {
     display: none;
 
 }
 
-.calendarContainer:hover img {
+.home-calendarContainer:hover img {
     display: none;
 }
 
-.calendarContainer:hover div {
+.home-calendarContainer:hover div {
     display: block;
     margin-left: 10%;
     color: #000;
 }
 
-.chatContainer {
+.home-chatContainer {
     width: 100%;
     height: 45%;
     display: flex;
@@ -189,21 +189,21 @@ body {
     cursor: pointer;
 }
 
-.chatContainer div {
+.home-chatContainer div {
     display: none;
     width: 80%;
 }
 
-.chatContainer:hover img {
+.home-chatContainer:hover img {
     display: none;
 }
 
-.chatContainer:hover div {
+.home-chatContainer:hover div {
     display: block;
     color: #000;
 }
 
-.platformsContainer {
+.home-platformsContainer {
     width: 45%;
     height: 100%;
     display: flex;
@@ -214,22 +214,22 @@ body {
     cursor: pointer;
 }
 
-.platformsContainer div {
+.home-platformsContainer div {
     display: none;
 
 }
 
-.platformsContainer:hover img {
+.home-platformsContainer:hover img {
     display: none;
 }
 
-.platformsContainer:hover div {
+.home-platformsContainer:hover div {
     display: block;
     margin-left: 10%;
     color: #fff;
 }
 
-.rightGroup {
+.home-rightGroup {
     width: 22%;
     height: 100%;
     display: flex;
@@ -237,7 +237,7 @@ body {
     justify-content: space-between;
 }
 
-.riotContainer {
+.home-riotContainer {
     width: 100%;
     height: 60%;
     background-color: #FF4654;
@@ -247,23 +247,23 @@ body {
     cursor: pointer;
 }
 
-.riotContainer div {
+.home-riotContainer div {
     display: none;
     width: 70%;
     font-size: 1.5rem;
     line-height: 120%;
 }
 
-.riotContainer:hover img {
+.home-riotContainer:hover img {
     display: none;
 }
 
-.riotContainer:hover div {
+.home-riotContainer:hover div {
     display: block;
     color: #fff;
 }
 
-.avaliationContainer {
+.home-avaliationContainer {
     width: 100%;
     height: 30%;
     display: flex;
@@ -273,22 +273,22 @@ body {
     cursor: pointer;
 }
 
-.avaliationContainer div {
+.home-avaliationContainer div {
     display: none;
     width: 70%;
 }
 
-.avaliationContainer:hover img {
+.home-avaliationContainer:hover img {
     display: none;
 }
 
-.avaliationContainer:hover div {
+.home-avaliationContainer:hover div {
     display: block;
     color: #000;
 }
 
 
-.medalsContent {
+.home-medalsContent {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -296,7 +296,7 @@ body {
     height: 100vh;
 }
 
-.medalsContent .container {
+.home-medalsContent .container {
     width: 80%;
     height: 80%;
     display: flex;
@@ -304,14 +304,14 @@ body {
     justify-content: space-between;
 }
 
-.medalsContainer {
+.home-medalsContainer {
     width: 100%;
     height: 75%;
     display: flex;
     justify-content: space-between;
 }
 
-.itensMedalsContainer {
+.home-itensMedalsContainer {
     width: 23%;
     height: 70%;
     display: flex;
@@ -319,25 +319,25 @@ body {
     justify-content: space-between;
 }
 
-.itensMedalsContainer :nth-last-child() {
+.home-itensMedalsContainer :nth-last-child() {
     justify-content: center;
     align-items: center;
 }
 
-.itensMedalsContainer p {
+.home-itensMedalsContainer p {
     color: #7A7A7A;
     padding-left: 2%;
     margin-bottom: 3%;
     font-size: 0.8rem;
 }
 
-.itensMedalsContainer h2 {
+.home-itensMedalsContainer h2 {
     color: #FFFFFF;
     padding-left: 2%;
     font-size: 1.4rem;
 }
 
-.medalIconContainer {
+.home-medalIconContainer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -349,42 +349,42 @@ body {
     cursor: pointer;
 }
 
-.medalIconContainer img {
+.home-medalIconContainer img {
     width: 80%;
 }
 
-.prata {
+.home-prata {
     border: solid #7F7F7F 5px;
 }
 
-.prata:hover {
+.home-prata:hover {
     background-color: #7F7F7F;
     border: solid #7F7F7F 5px;
 }
 
-.ouro {
+.home-ouro {
     border: solid #BF9E01 5px;
 }
 
-.ouro:hover {
+.home-ouro:hover {
     background-color: #BF9E01;
     border: solid #BF9E01 5px;
 }
 
-.diamante {
+.home-diamante {
     border: solid #6FFBFF 5px;
 }
 
-.diamante:hover {
+.home-diamante:hover {
     background-color: #6FFBFF;
     border: solid #6FFBFF 5px;
 }
 
-.mestre {
+.home-mestre {
     border: solid #A11B11 5px;
 }
 
-.mestre:hover {
+.home-mestre:hover {
     background-color: #A11B11;
     border: solid #A11B11 5px;
 }
@@ -392,7 +392,7 @@ body {
 /* 
 seção para noticias - não finalizada */
 
-.noticiesContent {
+.home-noticiesContent {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -400,7 +400,7 @@ seção para noticias - não finalizada */
     height: 50vh;
 }
 
-.noticiesContainer{
+.home-noticiesContainer{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -409,28 +409,28 @@ seção para noticias - não finalizada */
     background-color: green;
 }
 
-.imgNoticies img{
+.home-imgNoticies img{
     width: 10%;
 }
 
-.awssld{
+.home-awssld{
     height: 80%;
 }
 
-.awssld__content{
+.home-awssld__content{
     height: 100%;
     padding: 1%;
 }
 
-.awssld__box {
+.home-awssld__box {
     height: 50px;
 }
 
-.awssld--active{
+.home-awssld--active{
     height: 100%;
 }
 
-.awssld__bar {
+.home-awssld__bar {
     background-color: transparent   ;
 }
 
@@ -438,7 +438,7 @@ seção para noticias - não finalizada */
 
 /*  */
 
-.contactContent {
+.home-contactContent {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -446,7 +446,7 @@ seção para noticias - não finalizada */
     height: 100vh;
 }
 
-.contactContent .container {
+.home-contactContent .container {
     width: 80%;
     height: 80%;
     display: flex;
@@ -455,7 +455,7 @@ seção para noticias - não finalizada */
     flex-direction: column;
 }
 
-.contactContainerCard {
+.home-contactContainerCard {
     width: 85%;
     height: 60%;
     border-radius: 15px 100px 15px 100px;
@@ -469,7 +469,7 @@ seção para noticias - não finalizada */
     /* justify-content: center; */
 }
 
-.contactContainerCard .content {
+.home-contactContainerCard .content {
     width: 70%;
     height: 60%;
     margin-left: 10%;
@@ -478,19 +478,19 @@ seção para noticias - não finalizada */
     justify-content: space-between;
 }
 
-.contactContainerCard .content h2 {
+.home-contactContainerCard .content h2 {
     color: #FFFFFF;
     font-size: 1.5rem;
 }
 
-.inputsContact {
+.home-inputsContact {
     width: 100%;
     height: 65%;
     display: flex;
 }
 
 
-.search-wrapper {
+.home-search-wrapper {
     width: 100%;
     border-radius: 40px;
     background: transparent;
@@ -498,7 +498,7 @@ seção para noticias - não finalizada */
 
 /* Form text input */
 
-.search-wrapper input {
+.home-search-wrapper input {
     padding-left: 20px;
     width: 80%;
     height: 20%;
@@ -513,26 +513,26 @@ seção para noticias - não finalizada */
     color: #FFFFFF;
 }
 
-.search-wrapper input:focus {
+.home-search-wrapper input:focus {
     outline: 0;
     background: #2E312D;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.8) inset;
 }
 
-.search-wrapper input::-webkit-input-placeholder {
+.home-search-wrapper input::-webkit-input-placeholder {
     color: #fff;
     font-weight: normal;
     padding-left: 20px;
 }
 
-.search-wrapper input:-moz-placeholder {
+.home-search-wrapper input:-moz-placeholder {
 
     color: #fff;
     font-weight: normal;
     font-style: italic;
 }
 
-.search-wrapper input:-ms-input-placeholder {
+.home-search-wrapper input:-ms-input-placeholder {
     color: #fff;
     font-weight: normal;
     font-style: italic;
@@ -540,7 +540,7 @@ seção para noticias - não finalizada */
 }
 
 /* Form submit button */
-.search-wrapper button {
+.home-search-wrapper button {
     overflow: visible;
     position: relative;
     float: right;
@@ -559,11 +559,11 @@ seção para noticias - não finalizada */
     top: 11.5%;
 }
 
-.search-wrapper button:hover {
+.home-search-wrapper button:hover {
     background-color: #1AFF00;
 }
 
-.reservedRights {
+.home-reservedRights {
     width: 100%;
     height: 10%;
     display: flex;

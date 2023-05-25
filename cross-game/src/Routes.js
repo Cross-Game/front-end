@@ -10,6 +10,7 @@ import Feedback from './pages/Profile/Feedback/Feedback.jsx';
 import Plataforma from './pages/Profile/Plataforma/Plataforma.jsx';
 
 import Login from './pages/Login/Login.jsx';
+import Salas from './pages/Salas/salas.jsx';
 
 function routes() {
     return (
@@ -24,6 +25,7 @@ function routes() {
                 <Route path="/interesse" element={<Interesse />} />
                 <Route path="/feedback" element={<Feedback />} />
                 <Route path="/plataforma" element={<Plataforma />} />
+                <Route path="salas" element={<Salas />} />
             </Routes>
         </BrowserRouter>
     );

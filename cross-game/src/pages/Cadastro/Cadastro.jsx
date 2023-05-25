@@ -261,7 +261,7 @@ function Cadastro() {
                 <form className="cardCadastro" style={ativarProximo}>
                     <div className="img">
                     </div>
-                    <div className="tituloImg">
+                    <div className="tituloImgCadastro">
                         <p>Constinue sua jornada conosco</p>
                         <h1>Seja Bem Vindo !</h1>
                     </div>

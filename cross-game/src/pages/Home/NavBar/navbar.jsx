@@ -6,7 +6,7 @@ import instagram from "../../../assets/index-page/Instagram.svg"
 import youtube from "../../../assets/index-page/Youtube.svg"
 import { BiGroup } from "react-icons/bi"
 import "@fontsource/krona-one";
-// import "./style.css"
+import "./style.css"
 import { useNavigate } from "react-router-dom"
 
 function NavBar() {

@@ -24,10 +24,10 @@ function ProfileJogo() {
                         </div>
                         <div className="ProfileFeedbackCardBottom">
                             <div>Comportamento
-                                <span>5</span>
+                                <span className="ProfileFeedbackValor" >5</span>
                             </div>
                             <div>Habilidade
-                                <span>3</span>
+                                <span className="ProfileFeedbackValor" >3</span>
                             </div>
                         </div>
                     </div>

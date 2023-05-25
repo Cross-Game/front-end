@@ -1,4 +1,4 @@
-.navbar {
+.navbar-navbar {
     box-sizing: border-box;
     font-size: small;
     position: absolute;
@@ -12,25 +12,25 @@
     margin-top: 2%;
 }
 
-.logo {
+.navbar-logo {
     width: 15%;
 }
 
-.esquerdaLogo {
+.navbar-esquerdaLogo {
     width: 85%;
 }
 
-.imgNavbar {
+.navbar-imgNavbar {
     display: flex;
     justify-content: center;
     padding-top: 10px;
 }
 
-.linhaVertical {
+.navbar-linhaVertical {
     border: 1px solid #000;
 }
 
-.navBarDireitaCima {
+.navbar-navBarDireitaCima {
     height: 30%;
     display: flex;
     align-items: center;
@@ -38,18 +38,18 @@
     margin: 0% 10% 0% 0%;
 }
 
-.linhaDireitaMeio {
+.navbar-linhaDireitaMeio {
     border: 1px solid #000;
     margin-left: 1%;
     width: 97%;
 }
 
-.navBarDireitaBaixo {
+.navbar-navBarDireitaBaixo {
     height: 70%;
     display: flex;
 }
 
-.nomeGrupo {
+.navbar-nomeGrupo {
     color: #00ff03;
     display: flex;
     align-items: center;
@@ -61,7 +61,7 @@
     /* background-color: red; */
 }
 
-.redeSocial {
+.navbar-redeSocial {
     color: #7A7A7A;
     display: flex;
     align-items: center;
@@ -71,17 +71,17 @@
     height: 100%;
 }
 
-span {
+.navbar-span {
     width: 25px;
     height: 25px;
 }
 
-.iconeNavBar {
+.navbar-iconeNavBar {
     width: 32px;
     height: 35px;
 }
 
-.baixoEsquerda {
+.navbar-baixoEsquerda {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -89,7 +89,7 @@ span {
     color: #fff;
 }
 
-.baixoMeio {
+.navbar-baixoMeio {
     width: 30%;
     border-left: 1px solid black;
     display: flex;
@@ -97,14 +97,14 @@ span {
     justify-content: space-around;
 }
 
-.baixoDireita {
+.navbar-baixoDireita {
     width: 40%;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
 }
 
-.buttonLink {
+.navbar-buttonLink {
     display: flex;
     box-sizing: border-box;
     border: 2px solid #00FF33;
@@ -120,7 +120,7 @@ span {
     transition: 100ms;
 }
 
-.buttonLink:hover {
+.navbar-buttonLink:hover {
     box-sizing: border-box;
     border: 2px solid #00FF33;
     background: #00FF33;
@@ -129,18 +129,18 @@ span {
     cursor: pointer;
 }
 
-.linkPages {
+.navbar-linkPages {
     color: #7A7A7A;
     font-size: 1rem;
 }
 
-.linkPages:hover span{
+.navbar-linkPages:hover span{
     width: 100%;
     margin-bottom: 5px;
     border-bottom: 3px solid green ;
 }
 
-.linkPages:hover{
+.navbar-linkPages:hover{
     color: #fff;
     cursor: pointer;
 }

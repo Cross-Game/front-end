@@ -2,6 +2,7 @@ import React from "react";
 import ProfileNavbar from "../../../components/ProfileNavbar/ProfileNavbar"
 import "./ProfileJogo.css"
 import Sidebar from "../../../components/Sidebar/Sidebar"
+import { AiFillPlusCircle } from "react-icons/ai";
 
 function ProfileJogo() {
     function adicionar() {
@@ -9,7 +10,10 @@ function ProfileJogo() {
             <>
                 <div className="ProfileJogoMiniContainer">
                     <div className="ProfileJogoContainerButtonAdicionar">
-                        <span className="ProfileJogoButtonAdicionar">Adicionar</span>
+                        <span className="ProfileJogoButtonAdicionar">
+                            Adicionar
+                            <AiFillPlusCircle className="ProfileIconAdicionar" />
+                        </span>
                     </div>
                 </div>
             </>

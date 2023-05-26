@@ -5,7 +5,7 @@ function CardPlataforma(props) {
 
     return (
         <>
-            <div class="container noselect">
+            <div class="containerPlataforma noselect">
                 <div class="canvas">
                     <div class="tracker tr-1"></div>
                     <div class="tracker tr-2"></div>

@@ -4,14 +4,30 @@ import Home from "./pages/Home/index.jsx";
 import Cadastro from './pages/Cadastro/Cadastro.jsx';
 import Teste from './pages/Teste/index.jsx';
 import NotFound from './pages/PagNotFound/NotFound.jsx';
+import Rooms  from './pages/Rooms/Rooms.jsx';
+import ProfileJogo from './pages/Profile/ProfileJogo/ProfileJogo.jsx';
+import Interesse from './pages/Profile/Interesse/Interesse.jsx';
+import Feedback from './pages/Profile/Feedback/Feedback.jsx';
+import Plataforma from './pages/Profile/Plataforma/Plataforma.jsx';
+
+import Login from './pages/Login/Login.jsx';
+import Salas from './pages/Salas/salas.jsx';
+
 function routes() {
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/cadastro" element={<Cadastro />} />
+                <Route path="/login" element={<Login/>}/>
                 <Route path="/teste" element={<Teste />} />
                 <Route path="*" element={<NotFound />} />
+                <Route path="/rooms" element={<Rooms />} />
+                <Route path="/profilejogo" element={<ProfileJogo />} />
+                <Route path="/interesse" element={<Interesse />} />
+                <Route path="/feedback" element={<Feedback />} />
+                <Route path="/plataforma" element={<Plataforma />} />
+                <Route path="salas" element={<Salas />} />
             </Routes>
         </BrowserRouter>
     );

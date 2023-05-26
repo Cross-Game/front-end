@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
-import "./style.css";
+import "./home.css";
 import NavBar from './NavBar/navbar.jsx';
 import ItemSection from './ItemSection/index'
 import userIcon from '../../assets/index-page/userExplainSection.svg'
@@ -23,77 +23,77 @@ import axios from 'axios';
 
 function Home() {
   const [noticies, setNoticies] = useState([]);
-
   const [teste, setTeste] = useState(false)
 
-  let config = {
-    method: 'get',
-    maxBodyLength: 5,
-    url: 'https://newsapi.org/v2/everything?q=games&pageSize=20&apiKey=6ac810e80de24125838316d999b45fc0',
-    headers: {
-      'Authorization': 'Basic dXNlcjp1c2Vy'
-    }
-  };
 
-  axios.request(config)
-    .then((response) => {
-      console.log(JSON.stringify());
-      setNoticies(response.data.articles)
-      setTeste(true)
-    })
-    .catch((error) => {
-      console.log(error);
-      setTeste(false)
-    });
+  useEffect(() => {
+    let config = {
+      method: 'get',
+      url: 'https://newsapi.org/v2/everything?q=games&pageSize=10&apiKey=3fb0a50ddad34afba1de6566711173b2',
+      headers: {
+        'Authorization': 'Basic dXNlcjp1c2Vy'
+      }
+    };
 
+    axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        setNoticies(response.data.articles)
+        setTeste(true)
+      })
+      .catch((error) => {
+        console.log(error);
+        setTeste(false)
+      });
+  }, []);
 
 
   return (
     <>
-      <section className='bannerContainer'>
+      <section className='home-bannerContainer'>
         <NavBar />
 
         <h2>UMA EQUIPE FORTE COMEÇA AQUI !</h2>
 
       </section>
 
-      <div className='explanatoryContent'>
-        <div className='container'>
+      <div className='home-explanatoryContent'>
+        <div className='home-container'>
           <ItemSection section="Vantagens" text="Faça amigos e crie partidas épicas" />
-          <div className='itensExplainContainer'>
-            <div className='leftGroup'>
+          <div className='home-itensExplainContainer'>
+            <div className='home-leftGroup'>
 
-              <div className='findPlayersContainer'>
+              <div className='home-findPlayersContainer'>
                 <img src={userIcon} alt="" />
                 <div>Conheça novos players e faça amizades incríveis</div>
               </div>
-              <div className='discordContainer'>
+              <div className='home-discordContainer'>
                 <img src={discordIcon} alt="" />
                 <div>Faça login de forma rápida com o discord</div>
               </div>
 
             </div>
-            <div className='midGroup'>
+            <div className='home-midGroup'>
 
-              <div className='friendsContainer'>
+              <div className='home-friendsContainer'>
                 <img src={friendIcon} alt="" />
                 <div>Crie salas com seus amigos</div>
               </div>
 
-              <div className='bottomMidContainer'>
+              <div className='home-bottomMidContainer'>
 
-                <div className='leftBottomMidContainer'>
-                  <div className='calendarContainer'>
+                <div className='home-leftBottomMidContainer'>
+                  <div className='home-calendarContainer'>
                     <img src={calendarIcon} alt="" />
                     <div>Agende partidas com seus amigos</div>
                   </div>
-                  <div className='chatContainer'>
+                  <div className='home-chatContainer'>
                     <img src={chatIcon} alt="" />
                     <div>Converse e conheça jogadores através do chat</div>
                   </div>
                 </div>
 
-                <div className='platformsContainer'>
+                <div className='home-platformsContainer'>
                   <img src={xboxIcon} alt="" />
                   <img src={playIcon} alt="" />
                   <img src={pcIcon} alt="" />
@@ -103,13 +103,13 @@ function Home() {
               </div>
             </div>
 
-            <div className='rightGroup'>
-              <div className='riotContainer'>
+            <div className='home-rightGroup'>
+              <div className='home-riotContainer'>
                 <img src={riotIcon} alt="" />
                 <div>Adicione seu perfil
                   da Riot Games</div>
               </div>
-              <div className='avaliationContainer'>
+              <div className='home-avaliationContainer'>
                 <img src={likeIcon} alt="" />
                 <div>Avalie os jogadores, e ganhe recompensas</div>
               </div>
@@ -119,11 +119,11 @@ function Home() {
       </div>
 
 
-      <div className='medalsContent'>
-        <div className="container">
+      <div className='home-medalsContent'>
+        <div className="home-container">
           <ItemSection section="Conquiste sua patente" text="Imagine uma em seu perfil" />
-          <div className="medalsContainer">
-            <div className="itensMedalsContainer ">
+          <div className="home-medalsContainer">
+            <div className="home-itensMedalsContainer ">
               <div>
                 <p>
                   NÍVEL
@@ -132,12 +132,12 @@ function Home() {
                   Prata
                 </h2>
               </div>
-              <div className="medalIconContainer prata">
+              <div className="home-medalIconContainer home-prata">
                 <img src={medalPrata} alt="" />
               </div>
             </div>
 
-            <div className="itensMedalsContainer ">
+            <div className="home-itensMedalsContainer ">
               <div>
                 <p>
                   NÍVEL
@@ -146,12 +146,12 @@ function Home() {
                   Ouro
                 </h2>
               </div>
-              <div className="medalIconContainer ouro">
+              <div className="home-medalIconContainer home-ouro">
                 <img src={medalOuro} alt="" />
               </div>
             </div>
 
-            <div className="itensMedalsContainer ">
+            <div className="home-itensMedalsContainer ">
               <div>
                 <p>
                   NÍVEL
@@ -160,12 +160,12 @@ function Home() {
                   Diamante
                 </h2>
               </div>
-              <div className="medalIconContainer diamante">
+              <div className="home-medalIconContainer home-diamante">
                 <img src={medalDiamante} alt="" />
               </div>
             </div>
 
-            <div className="itensMedalsContainer ">
+            <div className="home-itensMedalsContainer ">
               <div>
                 <p>
                   NÍVEL
@@ -174,7 +174,7 @@ function Home() {
                   Mestre
                 </h2>
               </div>
-              <div className="medalIconContainer mestre">
+              <div className="home-medalIconContainer home-mestre">
                 <img src={medalMestre} alt="" />
               </div>
             </div>
@@ -182,29 +182,31 @@ function Home() {
         </div>
       </div>
       {/* noticies */}
-      <div className="noticiesContent">
+      <div className="home-noticiesContent">
         <AwesomeSlider >
           {
-            teste ?
-              noticies.map((element) => (
-                <div className="imgNoticies" data-src={element.urlToImage} />
-              ))
 
+            teste ?
+              noticies.map((element, index) => (
+                
+                <div className="home-imgNoticies" data-src={element.urlToImage} />
+            
+              ))
               // setando imagem de erro quando der erro na api
-              : <div className="imgNoticies" data-src={medalDiamante} />
+              : <div className="home-imgNoticies" data-src={medalDiamante} />
           }
         </AwesomeSlider>
 
       </div>
 
 
-      <div className="contactContent">
-        <div className="container">
-          <div className="contactContainerCard">
-            <div className="content">
+      <div className="home-contactContent">
+        <div className="home-container">
+          <div className="home-contactContainerCard">
+            <div className="home-content">
               <h2>Entre em Contato</h2>
-              <div className="inputsContact">
-                <form className="search-wrapper cf">
+              <div className="home-inputsContact">
+                <form className="home-search-wrapper cf">
                   <input type="text" placeholder="Email" />
                   <input type="text" placeholder="Mensagem" />
                   <button type="submit">Enviar</button>
@@ -212,7 +214,7 @@ function Home() {
               </div>
             </div>
           </div>
-          <div className="reservedRights">
+          <div className="home-reservedRights">
             <h3> © 2022 Todos os direitos reservados à Cross Game </h3>
           </div>
         </div>

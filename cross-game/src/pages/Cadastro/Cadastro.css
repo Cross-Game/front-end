@@ -1,8 +1,3 @@
-body {
-    background: linear-gradient(45deg, rgb(01, 01, 01), rgb(43, 43, 43));
-    font-family: "Krona One";
-}
-
 .container {
     height: 100vh;
     display: flex;
@@ -70,20 +65,20 @@ body {
     width: 52%;
 }
 
-.tituloImg {
+.tituloImgCadastro {
     position: absolute;
     color: #fff;
     margin: 2% 3%;
 }
 
-.tituloImg p {
+.tituloImgCadastro p {
     font-weight: lighter;
     font-size: xx-small;
     font-weight: normal;
     margin-bottom: 5%;
 }
 
-.tituloImg h1 {
+.tituloImgCadastro h1 {
     font-size: xx-large;
 }
 
@@ -125,7 +120,7 @@ input {
     font-size: small;
 }
 
-.modal {
+.modalForm {
     border: 1px solid red;
     border-radius: 8px;
     background-color: #fff;
@@ -216,7 +211,7 @@ input {
 }
 
 .iconPassword {
-    padding-bottom: 13%;
+    padding-bottom: 35px;
 }
 
 .estiloEstadoSenha {
@@ -413,7 +408,7 @@ input {
 @media only screen and (max-width: 1100px) {
 
     /* Adicione suas regras CSS aqui para telas menores que 768px */
-    .tituloImg {
+    .tituloImgCadastro {
         display: none;
     }
 

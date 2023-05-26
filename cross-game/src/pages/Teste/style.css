@@ -1,0 +1,390 @@
+
+/*MODAL JOGADOR*/
+.container_filtro {
+    display: flex;
+    font-size: 12px;
+    color: #7a7a7a;
+    flex-wrap: wrap
+}
+
+.filtro_nivel {
+    display: flex;
+    width: auto;
+    margin-bottom: 20px;
+}
+
+.opcoesNivel{
+    margin:1vw;
+    display: flex;
+    justify-content: space-between;
+    width: 150px;
+}
+p.titleFiltro {
+    padding: 0 15px 15px 0;
+}
+
+.container_sliders{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.filtro_comportamento {
+    width: 200px;
+}
+
+.filtro_habilidade {
+    width: 200px;
+}
+
+/*MODAL SALA*/
+
+.filtro_rank {
+    width: 100%;
+    margin-top: 20px;
+    margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.filtro_level {
+    width: 380px;
+    margin-top: 20px;
+}
+
+.filtro_qtdPlayers {
+    width: auto;
+    margin-top: 20px;
+    margin-right: 3vw;
+}
+
+.input_qtd_players {
+    border-radius: 25px;
+    width: 30px;
+    border: 0;
+    padding: 5px;
+    text-align: center;
+    font-size: 9px;
+    font-family: 'Krona One';
+}
+
+.input_qtd_players:focus, .input_qtd_players:hover {
+    outline: 2px solid #19FF00;
+    background-color: #0b5a02;
+    color: #fff;
+}
+
+.container_input_qtd {
+    display: flex;
+}
+
+.container_valor {
+    margin-left: 10px;
+}
+
+.valor{
+    color: #7A7A7A;
+    font-size: 25px;
+}
+
+.valor:hover {
+    color: #a0a0a0;
+}
+
+.valor:active {
+    color: #19FF00;
+}
+
+.filtro_descricao {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.filtro_horario {
+    margin-top: 20px;
+}
+
+input[type=radio] {
+    outline: none;
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #7A7A7A;
+}
+
+input[type=radio]:hover{
+    cursor: pointer;
+    color: #0b5a02;
+    background-color: #0b5a02;
+    border: 2px solid #19FF00;
+    box-shadow: 0 0 0.3rem #19FF00;
+}
+
+input[type=radio]:checked {
+    color: white;
+    border-color:#19FF00;
+    background-color: #19FF00;
+    animation: ripple 0.2s linear forwards;   
+    box-shadow: 0 0 0.3rem #19FF00;
+}
+
+input[type=radio]:focus {
+    border: 2px solid #19FF00;
+    box-shadow: 0 0 0.3rem #19FF00;
+} 
+
+label {
+    margin-right: 10px;
+}
+
+label:hover {
+    color: white;
+}
+
+
+.iconCalendario{
+    margin-left: 5px;
+}
+
+.iconCalendario:hover {
+    color: #19FF00;
+}
+/* Estilos gerais para o textarea */
+.my-textarea {
+    font-family: 'Krona One';
+    width: 98%;
+    font-size: 9px;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: #7A7A7A;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    resize: none; /* impede a redimensionamento da área de texto */
+  }
+  
+  /* Estilos quando o textarea está focado */
+  .my-textarea:focus, .my-textarea:hover {
+    background-color: #0b5a02;
+    outline: solid 2px #19FF00;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    color: #fff;
+  }
+  
+  /* Estilos para a borda inferior */
+  .my-textarea::after {
+    content: "";
+    display: block;
+    height: 2px;
+    background-color: #ccc;
+    position: relative;
+    top: -2px;
+    left: 0;
+    right: 0;
+    z-index: 1;
+  }
+  
+  /* Estilos para o texto do placeholder */
+  .my-textarea::placeholder {
+    color: #aaa;
+    font-style: italic;
+  }
+  
+  /* Estilos para o contador de caracteres */
+  .char-counter {
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+    text-align: right;
+  }
+
+  .salas-whiteText {
+    color: #fff;
+  }
+
+  .salas-ModalSalaFooter button{
+    padding: 7px 10px;
+    border-radius: 3px;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.7s ease-out, 0.2s;
+    font-family: 'Krona One';
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+    margin-top: 5px;
+  }
+
+  .salas-botaoClose {
+    background-color: #999;
+  }
+
+  .salas-botaoClose:hover {
+    color: #fff;
+    background-color: #ff3033;
+}
+
+
+.salas-botaoCadeado--public {
+    background-color: #0b5a02;
+    box-shadow: 0 0 0.3rem #0b5a02;
+  }
+  
+.salas-botaoCadeado--private {
+    background-color: #a30d0f;
+    box-shadow: 0 0 0.3rem #a30d0f;
+  }
+
+.salas-botaoCadeado:hover {
+    color: #fff;
+  }
+
+  .salas-botaoCadeado--public:hover {
+    background-color: #19FF00;
+  }
+  
+  .salas-botaoCadeado--private:hover {
+    background-color: #ff3033;
+  }
+
+  .salas-ModalSalaFooter span {
+    margin-left: 5px;
+  }
+
+  .salas-ModalSalaFooter {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .salas-group-userAvatar {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .salas-userAvatar__image{
+    width: 60px;
+    height: 60px;
+    border-radius: 25px;
+  }
+
+  .salas-userAvatar__name {
+    margin-top: 10px;
+    font-size: 9px;
+    color: #999;
+  }
+
+  .salas-convidados {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+.salas-groupLink {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 10px;
+    margin-top: 15px;
+}
+  
+.salas-groupLink svg {
+    width: 17px;
+    height: 17px;
+}
+
+ #salas-linkSala {
+    margin:  0 10px;
+}
+
+.salas-userAvatar__image:hover +  .salas-userAvatar__name{
+    color: #19FF00;
+    text-shadow: 0 0 0.3rem #19FF00;
+}
+
+.salas-userAvatar__name:hover{
+    color: #19FF00;
+    text-shadow: 0 0 0.3rem #19FF00;
+}
+
+.salas-span-idsala-modalsubtitle {
+    font-size: 10px;
+    color: #7a7a7a;
+    /* padding-bottom: 7px;
+    display: flex; */
+}
+.salas-subtitleModalSala {
+    margin-bottom: 10px;
+    margin-left: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: -15px;
+}
+
+.salas-ModalSalaFooter {
+    margin-top: 10px;
+}
+
+.salas-group-tagsModalSala {
+  display: flex;
+  padding: 7px 0;
+}
+
+.salas-group-buttonsFooter {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.salas-jogador-selecionado-icons {
+  display: flex;
+  flex-direction: column;
+  color: #7a7a7a;
+  margin-left: -5px;
+}
+
+
+.icon-jogadorSelecionado:hover {
+  color: #19FF00;
+}
+
+.salas-jogador-selecionado-icons svg {
+  width: 12px;
+  height: 12px;
+}
+
+.salas-modalFeedback-avaliacao {
+  font-size: 10px;
+  color: #7A7A7A;
+  display: flex;
+  /* margin: auto; */
+  width: 50%;
+  flex-direction: column;
+  margin-top: 20px;
+  /* justify-content: center; */
+}
+
+.salas-group-avaliacao {
+  display: flex;
+  flex-wrap: wrap
+}
+.estrelinhas {
+  display: flex;
+  margin-top: 10px;
+  /* margin-left: 20px; */
+  margin-bottom: 20px;
+}
+
+.salas-modalFeedback-avaliacao-comentario {
+  width: 98%;
+  font-size: 10px;
+  color: #7A7A7A;
+}
+
+.salas-modalFeedback-avaliacao-comentario span {
+  margin-bottom: 10px;
+  display: flex;
+}

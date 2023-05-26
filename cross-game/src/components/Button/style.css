@@ -23,3 +23,13 @@
   justify-content: center;
   margin-left: 8px;
 }
+
+.button:hover{
+    background-color: #25ff0d;
+    box-shadow: 0 0 0.3rem #25ff0d;
+    cursor: pointer;
+}
+
+.button:active{
+  box-shadow: 0 0 0.3rem #000000;
+}

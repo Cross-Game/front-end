@@ -1,0 +1,5 @@
+.containerRooms {
+    width: 100vw;
+    display: flex;
+    background-image: linear-gradient(150deg, #070707, #434343);
+}

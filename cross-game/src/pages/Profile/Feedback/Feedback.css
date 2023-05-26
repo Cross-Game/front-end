@@ -15,10 +15,10 @@
 }
 
 .ProfileFeedbackCard {
-    width: 490px;
-    height: 254px;
+    width: 450px;
+    height: 244px;
     padding: 20px;
-    margin: 30px;
+    margin: 20px;
     background: #000;
     position: relative;
     display: flex;

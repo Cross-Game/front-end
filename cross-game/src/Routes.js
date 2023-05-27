@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/index.jsx";
 import Cadastro from './pages/Cadastro/Cadastro.jsx';
 import Teste from './pages/Teste/index.jsx';
+import NotFound from './pages/PagNotFound/NotFound.jsx';
 import Rooms  from './pages/Rooms/Rooms.jsx';
 import ProfileJogo from './pages/Profile/ProfileJogo/ProfileJogo.jsx';
 import Interesse from './pages/Profile/Interesse/Interesse.jsx';
@@ -20,6 +21,7 @@ function routes() {
                 <Route path="/cadastro" element={<Cadastro />} />
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/teste" element={<Teste />} />
+                <Route path="*" element={<NotFound />} />
                 <Route path="/rooms" element={<Rooms />} />
                 <Route path="/profilejogo" element={<ProfileJogo />} />
                 <Route path="/interesse" element={<Interesse />} />

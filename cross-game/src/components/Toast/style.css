@@ -52,10 +52,9 @@
   }
   
   .toast-message {
-    font-size: 13px;
+    font-size: 11px;
     text-align: left;
-    max-width: 20rem;
-    white-space: nowrap;
+    max-width: 22rem;
     overflow: hidden;
     text-overflow: ellipsis;
   }

@@ -1,16 +1,13 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import "./Cadastro.css";
-import { BsDiscord, BsArrowLeftShort, BsArrowRightShort, BsFillEyeFill, BsFillEyeSlashFill, BsGoogle, BsPersonCircle } from "react-icons/bs";
-import { GiCrossShield, GiCrenulatedShield, GiCrossedAxes, GiCrownedSkull, GiEyeShield } from "react-icons/gi";
-import { SiValorant } from "react-icons/si";
+import { BsDiscord, BsArrowRightShort, BsFillEyeFill, BsFillEyeSlashFill, BsGoogle, BsPersonCircle } from "react-icons/bs";
 import { LoginSocialGoogle } from "reactjs-social-login";
 import { useNavigate } from "react-router-dom"
 import axios from "axios";
 import Loading from '../../components/Loading/loading';
-import Toast from "../../components/Toast";
-// import useFetch from "../../hooks/useFetch";
-
+import imagemLol from '../Cadastro/assets/leagueOfLegendsWallpapers.jpg'
+import imagemValorant from '../Cadastro/assets/Fade 1.jpg'
+import imagemTeamF from '../Cadastro/assets/teamFight.png'
 
 
 
@@ -43,10 +40,6 @@ function Cadastro() {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
 
-    const [showToast, setShowToast] = useState(false);
-    const [toastMessage, setToastMessage] = useState('');
-    const [toastType, setToastType] = useState('erro');
-
     useEffect(() => {
         setTimeout(() => {
 
@@ -61,7 +54,7 @@ function Cadastro() {
     useEffect(() => {
         setTimeout(() => {
             setIsLoading(false);
-        }, 3000);
+        }, 2000);
     }, []);
 
     const handleLogin = () => {
@@ -125,20 +118,13 @@ function Cadastro() {
         validatePassword(newPassword);
     };
 
-    function mudarToast(tipo, mensagem) {
-        setShowToast(true);
-        setToastType(tipo.toLowerCase());
-        setToastMessage(mensagem);
-      }
-
     const validatePassword = (password) => {
         // Lógica para validar a senha
         const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{12,}$/;
 
         if (!passwordRegex.test(password)) {
-            //setShowModalSenha(true);
+            setShowModalSenha(true);
             setvalidadoSenha(false);
-            mudarToast('erro', "A senha deve conter pelo menos 12 caracteres sendo: 1 número, 1 letra maiúscula, 1 letra minúscula e 1 caractere especial.");
             setValidationMessageSenha('A senha deve ter pelo menos 12 caracteres, 1 numero, 1 letra maiúscula, 1 letra minúscula e 1 caractere especial.');
         } else {
             setShowModalSenha(false);
@@ -152,9 +138,8 @@ function Cadastro() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!emailRegex.test(email)) {
-
+            setShowModalEmail(true);
             setValidadoEmail(false)
-            mudarToast('erro', 'O email deve conter @ e "."');
             setValidationMessageEmail('O email esta sem o @ ou "."');
         } else {
             setShowModalEmail(false);
@@ -178,7 +163,7 @@ function Cadastro() {
     }
 
     function cadastrar() {
-        mudarToast('carregando', 'Requisição solicitada');
+
         const filme = {
             username: username,
             email: email,
@@ -206,6 +191,8 @@ function Cadastro() {
         
         // sessionStorage.setItem("Acess_Token", response1)
 
+
+
         fetch('http://localhost:8080/users', {
             method: 'POST',
             headers: {
@@ -231,7 +218,6 @@ function Cadastro() {
             )
             .catch(error =>
                 console.error(error));
-                mudarToast('erro', 'Erro ao realizar cadastro.');
         console.log(username)
     }
 
@@ -264,14 +250,6 @@ function Cadastro() {
 
     return (
         <>
-        {showToast && (
-          <Toast
-            type={toastType}
-            message={toastMessage}
-            onClose={() => setShowToast(false)}
-          />
-        )}
-
             {isLoading ? (
                 <Loading />
             ) : <div className="container">
@@ -281,7 +259,7 @@ function Cadastro() {
                 <form className="cardCadastro" style={ativarProximo}>
                     <div className="img">
                     </div>
-                    <div className="tituloImgCadastro">
+                    <div className="tituloImg">
                         <p>Constinue sua jornada conosco</p>
                         <h1>Seja Bem Vindo !</h1>
                     </div>
@@ -305,7 +283,7 @@ function Cadastro() {
                                 </div>
                             )}
                             <label htmlFor="">Usuário</label>
-                            <input type="text" placeholder="HOmonster" value={username} onChange={handleUser} />
+                            <input type="text" placeholder="usuario" value={username} onChange={handleUser} />
 
                             <label htmlFor="">Senha</label>
                             <input
@@ -319,9 +297,9 @@ function Cadastro() {
                                 <span className="iconPassword" onClick={handleMostrarSenha}>{mostrarSenha ? <BsFillEyeSlashFill /> : <BsFillEyeFill />}</span>
                             </span>
                             {showModaSenha && (
-                                <div className="modal">
-                                    <div className="modal-content">
-                                        {/* <p>{validhandleLoginationMessageSenha}</p> */}
+                                <div className="modalForm">
+                                    <div className="modal-content-none">
+                                        <p>{validationMessageSenha}</p>
                                     </div>
                                 </div>
                             )}
@@ -357,53 +335,27 @@ function Cadastro() {
                     </div>
                 </form>
                 <form className="cardCadastroTwo" style={ativarAnterio}>
-                    {selectedIcon}
-                    <div>Selecione o icone do seu perfil</div>
-                    <div className="iconsEscolha">
-                        <GiCrossShield className="iconEscolhaAvatar"
-                            onClick={() => handleSelectIcon(<GiCrossShield className='iconAvatar' />)} />
-
-                        <GiCrenulatedShield className="iconEscolhaAvatar"
-                            onClick={() => handleSelectIcon(<GiCrenulatedShield className="iconAvatar" />)} />
-
-                        <GiEyeShield className="iconEscolhaAvatar"
-                            onClick={() => handleSelectIcon(<GiEyeShield className="iconAvatar" />)} />
-
-                        <GiCrossedAxes className="iconEscolhaAvatar"
-                            onClick={() => handleSelectIcon(<GiCrossedAxes className="iconAvatar" />)} />
-
-                        <GiCrownedSkull className="iconEscolhaAvatar"
-                            onClick={() => handleSelectIcon(<GiCrownedSkull className="iconAvatar" />)} />
-
-                    </div>
-                    <div>Selecione um jogo você irá jogar:</div>
+                    <div className="selecioneJogo">Selecione um jogo você irá jogar:</div>
                     <div className="containerJogos">
-                        <div className="contornoJogo" style={valorant ? bordaJogo : { border: '1px solid #000' }} onClick={() => selecionarJogo(1)}>
-                            <SiValorant className="valorant" />
+                        <div className="contornoJogo"  style={valorant ? bordaJogo : { border: '1px solid #000' }} onClick={() => selecionarJogo(1)}>
+                            <img src={imagemValorant} className="imagemVal" alt="" />
+                            
                         </div>
                         <div className="contornoJogo" style={lol ? bordaJogo : { border: '1px solid #000' }} onClick={() => selecionarJogo(2)}>
-                            <span className="leagueOfLegends"></span>
+                            <img src={imagemLol} className="imagemLol" alt="" />
+                            
                         </div>
                         <div className="contornoJogo" style={tft ? bordaJogo : { border: '1px solid #000' }} onClick={() => selecionarJogo(3)}>
-                            <span className="teamfightTactics"></span>
+                            <img src={imagemTeamF} className="imagemTf" alt="" />
+                            
                         </div>
                     </div>
-                    <div className="inputUsername">
-                        <label htmlFor="username" className="labelUsername">
-                            Digite o seu Username do jogo:
-                        </label>
-                        <input type="text" id="username" className="inputUsernameEstilo" placeholder="HOmonster" />
-                    </div>
                     <div className="botoes">
-                        <div onClick={voltar} className="botaoVoltarCadastro" ><BsArrowLeftShort className="arrowFinalVoltar" />Voltar</div>
-                        <div onClick={cadastrar} className="botaoCadastrar">Cadastrar<BsArrowRightShort className="arrowFinalCadastrar" /></div>
+                        <div onClick={cadastrar} className="botaoCadastrar">Prosseguir</div>
                     </div>
                 </form>
             </div>
-            }
-            </>
-
-            
+            }</>
     )
 }
 

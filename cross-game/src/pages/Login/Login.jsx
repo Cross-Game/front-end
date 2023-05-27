@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import "./Login.css"
-import { BsDiscord, BsGoogle, BsArrowRightShort,  BsArrowLeftShort, BsFillEyeSlashFill, BsFillEyeFill } from "react-icons/bs";
+import { BsDiscord, BsGoogle, BsArrowRightShort, BsArrowLeftShort, BsFillEyeSlashFill, BsFillEyeFill } from "react-icons/bs";
 import axios from "axios";
 import Toast from "../../components/Toast";
 import { LoginSocialGoogle } from "reactjs-social-login";
@@ -152,7 +152,6 @@ function Login() {
       <div className="container">
         <div className="botaoVoltar" onClick={() => navigate("/")}>
           <p>
-            <BsArrowLeftShort className="arrowVoltarInicio" />
             Voltar
           </p>
         </div>
@@ -164,7 +163,7 @@ function Login() {
               <label htmlFor="usuario">Usuário</label>
               <input
                 type="text"
-                placeholder="HOmonster"
+                placeholder="usuario"
                 id="usuario"
                 name="usuario"
                 value={usuario}
@@ -174,7 +173,7 @@ function Login() {
               <label htmlFor="password">Senha</label>
               <input
                 type={mostrarSenha ? 'text' : 'password'}
-                placeholder="********"
+                placeholder="⁕⁕⁕⁕⁕⁕⁕⁕"
                 value={password}
                 id="password"
                 name="password"
@@ -191,7 +190,7 @@ function Login() {
                 <a onClick={() => navigate('/cadastro')}>Não possui conta?</a>
               </div>
             </div>
-            
+
             <div className="botaoCadastro">
               <div onClick={realizarLogin}>Entrar</div>
               <BsArrowRightShort className="arrowProximo" />
@@ -218,7 +217,7 @@ function Login() {
           </div>
 
           <div className="imgLogin"></div>
-          <div className="tituloImg">
+          <div className="tituloImgLogin">
             <p>Continue sua jornada conosco</p>
             <h1>Seja Bem Vindo !</h1>
           </div>

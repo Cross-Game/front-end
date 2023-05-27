@@ -23,7 +23,7 @@
      transform: scale(0.8);
      filter: blur(50px);
      background: var(--background);
-     transition: opacity .5s;
+     transition: opacity .2s;
     }
     
     .cardPcInfo {

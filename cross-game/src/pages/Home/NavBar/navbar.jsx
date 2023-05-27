@@ -1,5 +1,6 @@
 import React from "react";
 import iconLogo from "../../../assets/index-page/Union.png"
+import ImFacebook, { ImFacebook2 } from "react-icons/im"
 import facebook from "../../../assets/index-page/Facebook.svg"
 import discord from "../../../assets/index-page/Discord.svg"
 import instagram from "../../../assets/index-page/Instagram.svg"
@@ -8,6 +9,8 @@ import { BiGroup } from "react-icons/bi"
 import "@fontsource/krona-one";
 import "./style.css"
 import { useNavigate } from "react-router-dom"
+import { BsDiscord } from "react-icons/bs";
+import { RiFacebookBoxFill, RiInstagramFill, RiYoutubeFill } from "react-icons/ri";
 
 function NavBar() {
 
@@ -25,10 +28,10 @@ function NavBar() {
                     <div className="navbar-navBarDireitaCima">
                         <div className="navbar-nomeGrupo">Cross Game</div>
                         <div className="navbar-redeSocial">Nos acompanhe na redes sociais
-                            <span className="navbar-span"><img src={facebook} alt="" /></span>
-                            <span className="navbar-span"><img src={discord} alt="" /></span>
-                            <span className="navbar-span"><img src={instagram} alt="" /></span>
-                            <span className="navbar-span"><img src={youtube} alt="" /></span>
+                            <span className="navbar-span"><RiFacebookBoxFill/></span>
+                            <span className="navbar-span"><BsDiscord/></span>
+                            <span className="navbar-span"><RiInstagramFill/></span>
+                            <span className="navbar-span"><RiYoutubeFill/></span>
                         </div>
                     </div>
                     <div className="navbar-linhaDireitaMeio"></div>
@@ -53,7 +56,7 @@ function NavBar() {
 
                         <div className="navbar-baixoDireita">
                             <div>
-                                <button className="navbar-buttonLink">Entrar</button>
+                                <button className="navbar-buttonLink" onClick={() => navigate("/login")}>Entrar</button>
                             </div>
                             <div>
                                 <button className="navbar-buttonLink" onClick={() => navigate("/cadastro")}>Cadastrar-se</button>

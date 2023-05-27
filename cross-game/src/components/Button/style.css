@@ -1,0 +1,35 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #19FF00;
+  color: #000;
+  border: none;
+  border-radius: 25px;
+  font-family: 'Krona One', sans-serif;
+  font-size: 12px;
+  padding: 1vh 2vw;
+  cursor: pointer;
+}
+
+
+.text {
+  padding-right: 8px;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+}
+
+.button:hover{
+    background-color: #25ff0d;
+    box-shadow: 0 0 0.3rem #25ff0d;
+    cursor: pointer;
+}
+
+.button:active{
+  box-shadow: 0 0 0.3rem #000000;
+}

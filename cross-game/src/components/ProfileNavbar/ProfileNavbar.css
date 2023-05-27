@@ -1,0 +1,156 @@
+* .profileJogoTop{
+    color: #fff;
+}
+
+* .profileJogoCenter{
+    color: #737373;
+}
+
+.profileJogoContainer {
+    display: flex;
+}
+
+.profileJogoCore {
+    width: 100%;
+    margin-left: 2%;
+}
+/*topo da tela inicio*/
+.profileJogoTop {
+    width: 100%;
+    height: 10%;
+    margin: 40px 0 30px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profileJogoDataUser{
+    display: flex;
+    align-items: center;
+    height: 70px;
+}
+
+.profileJogoEditProfileUser{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 20px;
+}
+
+.profileJogoEditProfileUser :first-child{
+    font-size: small;
+}
+
+.profileJogoEditProfileUser :last-child{
+    font-size: x-small;
+    display: flex;
+    align-items: center;
+    color: #0f3;
+    cursor: pointer;
+}
+
+.profileJogoIconEditProfile{
+    margin-top: 5px;
+    height: auto;
+    width: 100px;
+}
+
+.iconTiEdit{
+    height: 20px;
+    width: auto;
+}
+
+/*Lado Direito da navbarProfile*/
+.profileJogoDetailsUser{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 40%;
+}
+
+.profileJogoMedalUser{
+    height: 70px;
+    width: auto;
+}
+
+.profileJogoXpUser{
+    font-size: x-small;
+    width: 50%;
+    height: auto;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.profileJogoBarsNiveis{
+    width: 90%;
+    height: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profileJogoBarNivelUm{
+    margin-top: 5px;
+    width: 22%;
+    height: 5px;
+    background-color: #0f3;
+}
+.profileJogoBarNivelDois{
+    margin-top: 5px;
+    width: 22%;
+    height: 5px;
+    background-color: #0f3;
+}
+.profileJogoBarNivelTres{
+    margin-top: 5px;
+    width: 22%;
+    height: 5px;
+    background-color: #0f3;
+}
+.profileJogoBarNivelQuatro{
+    margin-top: 5px;
+    width: 22%;
+    height: 5px;
+    background-color: #737373;
+}
+
+.profileJogoIconNotificacao{
+    height: 30px;
+    width: auto;
+    cursor: pointer;
+    color: #0f3;
+    box-shadow: 0px 0px 4px #0f3; 
+    border-radius: 50%;
+    padding: 8px;
+}
+
+/*topo da tela fim*/
+
+.profileJogoCenter{
+    width: 100%;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-evenly;
+    border-top:1px solid #737373;
+    border-bottom:1px solid #737373;
+}
+
+.profileJogoButtonNvigation{
+
+    background-color: none;
+    border-bottom: 2px solid rgba(0, 255, 51, 0);
+    cursor: pointer;
+}
+
+.profileJogoButtonNvigation:hover{
+    border-bottom: 2px solid #0f3;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+
+/*Fim buttons navegação*/

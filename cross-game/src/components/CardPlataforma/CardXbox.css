@@ -1,0 +1,64 @@
+.cardXbox {
+    /* --background: linear-gradient(to left, #f7ba2b 0%, #ea5358 100%);*/
+    --background: linear-gradient(to left, #33ff339c 0%, #33ff339c 46%, #33ff339c 100%);
+     width: 190px;
+     height: 254px;
+     padding: 5px;
+     border-radius: 1rem;
+     overflow: visible;
+     background: var(--background);
+     position: relative;
+     z-index: 1;
+    }
+    
+    .cardXbox::after {
+     position: absolute;
+     content: "";
+     top: 30px;
+     left: 0;
+     right: 0;
+     z-index: -1;
+     height: 100%;
+     width: 100%;
+     transform: scale(0.8);
+     filter: blur(50px);
+     background: var(--background);
+     transition: opacity .2s;
+    }
+    
+    .cardXboxInfo {
+     --color: #181818;
+     background: var(--color);
+     color: var(--color);
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-direction: column;
+     width: 100%;
+     height: 100%;
+     overflow: visible;
+     border-radius: .7rem;
+    }
+    
+    .cardXbox .cardXboxTitulo {
+     font-weight: bold;
+     letter-spacing: .1em;
+    }
+ 
+    .cardXboxIcone{
+     margin-bottom: 20px;
+    height: 60px;
+    }
+    
+    /*Hover*/
+    .cardXbox:hover::after {
+     opacity: 0;
+    }
+    
+    .cardXbox:hover .cardXboxTitulo {
+     color:  #33ff339c;
+     transition: color 1s;
+    }
+ 
+ 
+    

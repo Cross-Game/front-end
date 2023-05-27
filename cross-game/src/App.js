@@ -1,9 +1,14 @@
-import Home from './pages/Home';
+import Routes from "./Routes"
+import React from 'react';
 
 function App() {
+
+
+  
+
   return (
     <>
-      <Home />
+      <Routes />
     </>
   );
 }

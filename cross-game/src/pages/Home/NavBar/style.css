@@ -1,0 +1,158 @@
+.navbar-navbar {
+    box-sizing: border-box;
+    font-size: small;
+    position: absolute;
+    width: 80%;
+    height: 18%;
+    background: #2E312D;
+    border: 1px solid #000000;
+    backdrop-filter: blur(2px);
+    border-radius: 0px 70px;
+    display: flex;
+    margin-top: 2%;
+}
+
+.navbar-logo {
+    width: 15%;
+}
+
+.navbar-esquerdaLogo {
+    width: 85%;
+}
+
+.navbar-imgNavbar {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}
+
+.navbar-linhaVertical {
+    border: 1px solid #000;
+}
+
+.navbar-navBarDireitaCima {
+    height: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0% 10% 0% 0%;
+}
+
+.navbar-linhaDireitaMeio {
+    border: 1px solid #000;
+    margin-left: 1%;
+    width: 97%;
+}
+
+.navbar-navBarDireitaBaixo {
+    height: 70%;
+    display: flex;
+}
+
+.navbar-nomeGrupo {
+    color: #00ff03;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left:1% ;
+    height: 100%;
+    width: 90%;
+    
+    /* background-color: red; */
+}
+
+.navbar-redeSocial {
+    color: #7A7A7A;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    /* background-color: red; */
+    height: 100%;
+}
+
+.navbar-span {
+    width: 25px;
+    height: 25px;
+}
+
+.navbar-iconeNavBar {
+    width: 32px;
+    height: 35px;
+}
+
+.navbar-baixoEsquerda {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    color: #fff;
+}
+
+.navbar-baixoMeio {
+    width: 30%;
+    border-left: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.navbar-baixoDireita {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.navbar-buttonLink {
+    display: flex;
+    box-sizing: border-box;
+    border: 2px solid #00FF33;
+    background: none;
+    border-radius: 15px;
+    padding: 10%;
+    min-width: 100px;
+    justify-content: center;
+    color: #fff;
+    width: max-content;
+    cursor: pointer;
+    font-family: "Krona One";
+    transition: 100ms;
+}
+
+.navbar-buttonLink:hover {
+    box-sizing: border-box;
+    border: 2px solid #00FF33;
+    background: #00FF33;
+    border-radius: 15px;
+    color: #000;
+    cursor: pointer;
+}
+
+.navbar-linkPages {
+    color: #7A7A7A;
+    font-size: 1rem;
+}
+
+.navbar-linkPages:hover span{
+    width: 100%;
+    margin-bottom: 5px;
+    border-bottom: 3px solid green ;
+}
+
+.navbar-linkPages:hover{
+    color: #fff;
+    cursor: pointer;
+}
+
+.navbar-span svg{
+    margin-right: 7px;
+    width: 22px;
+    height: 22px;
+}
+
+.navbar-span svg:hover{
+    text-shadow: 0 0 0.2rem #00ff03;
+    color: #00FF33;
+    cursor: pointer;
+}

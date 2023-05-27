@@ -26,7 +26,7 @@ function Sidebar() {
                             <h3>Perfil</h3>
                         </NavLink>
 
-                        <NavLink to={"/"} className={({ isActive }) =>
+                        <NavLink to={"/dashboard"} className={({ isActive }) =>
                             isActive ? isOpen ? "itemSideBar itemSidebarActive" : "itemSideBar itemSideBarClose itemSidebarActive" : isOpen ? "itemSideBar" : "itemSideBar itemSideBarClose"}>
                             <FaChartLine className='iconSideBar' />
                             <h3>Dashboard</h3>

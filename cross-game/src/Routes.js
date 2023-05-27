@@ -8,6 +8,7 @@ import ProfileJogo from './pages/Profile/ProfileJogo/ProfileJogo.jsx';
 import Interesse from './pages/Profile/Interesse/Interesse.jsx';
 import Feedback from './pages/Profile/Feedback/Feedback.jsx';
 import Plataforma from './pages/Profile/Plataforma/Plataforma.jsx';
+import Dashboard from './pages/Dashboard/Dashboard.jsx';
 
 
 function routes() {
@@ -18,6 +19,7 @@ function routes() {
                 <Route path="/cadastro" element={<Cadastro />} />
                 <Route path="/teste" element={<Teste />} />
                 <Route path="/rooms" element={<Rooms />} />
+                <Route path='/dashboard' element={<Dashboard />}/>
                 <Route path='/profile' >
                     <Route path='' element={<ProfileJogo />} />
                     <Route path='interesse' element={<Interesse />} />

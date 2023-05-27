@@ -7,11 +7,11 @@
     margin-left: 2%;
 }
 .DashboardSuperior{
-    margin: 48px 0 4% 0 ;
+    margin: 48px 0 40px 0 ;
     color: #fff;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; 
 }
 .DashboardSpanMeusInsights{
     width: auto;

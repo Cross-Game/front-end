@@ -2,9 +2,12 @@ import React from "react";
 import "./Plataforma.css";
 import ProfileNavbar from "../../../components/ProfileNavbar/ProfileNavbar"
 import Sidebar from "../../../components/Sidebar/Sidebar"
-import CardPlataforma from "../../../components/CardPlataforma/CardPlataforma";
+import CardPlay from "../../../components/CardPlataforma/CardPlaystation";
+import CardXbox from "../../../components/CardPlataforma/CardXbox";
+import CardPc from "../../../components/CardPlataforma/CardPc";
+import CardMobile from "../../../components/CardPlataforma/CardMobile";
 import { AiFillPlusCircle } from "react-icons/ai";
-import Play from "./assets/Play.png"
+
 
 function ProfileJogo() {
     function adicionar() {
@@ -19,7 +22,14 @@ function ProfileJogo() {
                     </div>
                 </div>
                 <div className="ProfilePlataformaContainer">
-                    <CardPlataforma img={Play}/>
+                <CardPlay/>
+                <CardXbox/>
+                <CardPc/>
+                <CardMobile/>
+                
+                
+                
+                   
                 </div>
             </>
         )

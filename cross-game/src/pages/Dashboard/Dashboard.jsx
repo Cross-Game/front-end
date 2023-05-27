@@ -64,9 +64,9 @@ function Dashboard() {
                             <div className="DashboardTableItens">
                                 <div className="DashboardTableCollum">
                                     <div className="DashboardTableName">
-                                        <p>Nome:</p>
-                                        <p>Data:</p>
-                                        <p>Menbros:</p>
+                                        <p>Nome</p>
+                                        <p>Data</p>
+                                        <p>Membros</p>
                                     </div>
                                     <hr width="100%" color="#000"/>
                                     <div className="DashboardTableData">

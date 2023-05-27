@@ -8,6 +8,7 @@ import { LoginSocialGoogle } from "reactjs-social-login";
 import { useNavigate } from "react-router-dom"
 import axios from "axios";
 import Loading from '../../components/Loading/loading';
+import Toast from "../../components/Toast";
 // import useFetch from "../../hooks/useFetch";
 
 
@@ -41,6 +42,10 @@ function Cadastro() {
     const queryParams = new URLSearchParams(currentUrl.search);
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
+
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastType, setToastType] = useState('erro');
 
     useEffect(() => {
         setTimeout(() => {
@@ -120,13 +125,20 @@ function Cadastro() {
         validatePassword(newPassword);
     };
 
+    function mudarToast(tipo, mensagem) {
+        setShowToast(true);
+        setToastType(tipo.toLowerCase());
+        setToastMessage(mensagem);
+      }
+
     const validatePassword = (password) => {
         // Lógica para validar a senha
         const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{12,}$/;
 
         if (!passwordRegex.test(password)) {
-            setShowModalSenha(true);
+            //setShowModalSenha(true);
             setvalidadoSenha(false);
+            mudarToast('erro', "A senha deve conter pelo menos 12 caracteres sendo: 1 número, 1 letra maiúscula, 1 letra minúscula e 1 caractere especial.");
             setValidationMessageSenha('A senha deve ter pelo menos 12 caracteres, 1 numero, 1 letra maiúscula, 1 letra minúscula e 1 caractere especial.');
         } else {
             setShowModalSenha(false);
@@ -140,8 +152,9 @@ function Cadastro() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!emailRegex.test(email)) {
-            setShowModalEmail(true);
+
             setValidadoEmail(false)
+            mudarToast('erro', 'O email deve conter @ e "."');
             setValidationMessageEmail('O email esta sem o @ ou "."');
         } else {
             setShowModalEmail(false);
@@ -165,7 +178,7 @@ function Cadastro() {
     }
 
     function cadastrar() {
-
+        mudarToast('carregando', 'Requisição solicitada');
         const filme = {
             username: username,
             email: email,
@@ -193,8 +206,6 @@ function Cadastro() {
         
         // sessionStorage.setItem("Acess_Token", response1)
 
-
-
         fetch('http://localhost:8080/users', {
             method: 'POST',
             headers: {
@@ -220,6 +231,7 @@ function Cadastro() {
             )
             .catch(error =>
                 console.error(error));
+                mudarToast('erro', 'Erro ao realizar cadastro.');
         console.log(username)
     }
 
@@ -252,6 +264,14 @@ function Cadastro() {
 
     return (
         <>
+        {showToast && (
+          <Toast
+            type={toastType}
+            message={toastMessage}
+            onClose={() => setShowToast(false)}
+          />
+        )}
+
             {isLoading ? (
                 <Loading />
             ) : <div className="container">
@@ -380,7 +400,10 @@ function Cadastro() {
                     </div>
                 </form>
             </div>
-            }</>
+            }
+            </>
+
+            
     )
 }
 

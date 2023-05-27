@@ -150,7 +150,7 @@ function Login() {
   return (
     <>
       <div className="container">
-        <div className="botaoVoltar">
+        <div className="botaoVoltar" onClick={() => navigate("/")}>
           <p>
             <BsArrowLeftShort className="arrowVoltarInicio" />
             Voltar

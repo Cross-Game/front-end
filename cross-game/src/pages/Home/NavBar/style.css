@@ -144,3 +144,15 @@
     color: #fff;
     cursor: pointer;
 }
+
+.navbar-span svg{
+    margin-right: 7px;
+    width: 22px;
+    height: 22px;
+}
+
+.navbar-span svg:hover{
+    text-shadow: 0 0 0.2rem #00ff03;
+    color: #00FF33;
+    cursor: pointer;
+}

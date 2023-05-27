@@ -446,7 +446,7 @@ seção para noticias - não finalizada */
     height: 100vh;
 }
 
-.home-contactContent .container {
+.home-contactContent .home-container {
     width: 80%;
     height: 80%;
     display: flex;
@@ -469,7 +469,7 @@ seção para noticias - não finalizada */
     /* justify-content: center; */
 }
 
-.home-contactContainerCard .content {
+.home-contactContainerCard .home-content {
     width: 70%;
     height: 60%;
     margin-left: 10%;
@@ -478,7 +478,7 @@ seção para noticias - não finalizada */
     justify-content: space-between;
 }
 
-.home-contactContainerCard .content h2 {
+.home-contactContainerCard .home-content h2 {
     color: #FFFFFF;
     font-size: 1.5rem;
 }
@@ -526,7 +526,6 @@ seção para noticias - não finalizada */
 }
 
 .home-search-wrapper input:-moz-placeholder {
-
     color: #fff;
     font-weight: normal;
     font-style: italic;
@@ -557,6 +556,7 @@ seção para noticias - não finalizada */
     text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);
     left: -18.5%;
     top: 11.5%;
+    font-family: "Krona One";
 }
 
 .home-search-wrapper button:hover {
@@ -564,9 +564,23 @@ seção para noticias - não finalizada */
 }
 
 .home-reservedRights {
+    color: #fff;
     width: 100%;
     height: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.awssld__bullets button:hover{
+    background-color: #19FF33;
+    color: #19FF33;
+    box-shadow: 0 0 0.2rem #19FF00;
+}
+
+.awssld__bullets .awssld__bullets--active{
+    background-color: #19FF33;
+    color: #19FF33;
+    box-shadow: #19FF00;
+    box-shadow: 0 0 0.2rem #19FF00;
 }

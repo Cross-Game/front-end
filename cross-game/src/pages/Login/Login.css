@@ -111,12 +111,13 @@ body {
 .cardFormLogin {
     width: 50%;
     border-radius: 20px 0 0 20px;
-    background-color: #00ff0330;
+    background-color: #000;
     border-right: 1px solid #fff;
     color: #fff;
     display: flex;
     align-items: center;
     flex-direction: column;
+    justify-content: center;
 }
 
 .tituloLogin {
@@ -200,6 +201,12 @@ input {
     border-radius: 10px;
     cursor: pointer;
 }
+
+.loginDiscord:hover {
+    color: #00ff03;
+    border: 2px solid #00ff03;
+    box-shadow: 0 0 0.1rem #00ff03;
+}
 .loginGoogle {
     width: 60%;
     height: 60%;
@@ -207,6 +214,12 @@ input {
     border: 2px solid #fff;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.loginGoogle:hover {
+    color: #00ff03;
+    border: 2px solid #00ff03;
+    box-shadow: 0 0 0.1rem #00ff03;
 }
 .subInputs {
     margin: 7.5% 0;
@@ -249,7 +262,8 @@ a {
 }
 
 .iconPassword {
-    padding-bottom: 35px;
+    padding-bottom: 6.5vh;
+    padding-right: 10px;
 }
 
 

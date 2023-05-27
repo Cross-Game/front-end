@@ -23,10 +23,14 @@ function routes() {
                 <Route path="/teste" element={<Teste />} />
                 <Route path="*" element={<NotFound />} />
                 <Route path="/rooms" element={<Rooms />} />
-                <Route path="/profilejogo" element={<ProfileJogo />} />
-                <Route path="/interesse" element={<Interesse />} />
-                <Route path="/feedback" element={<Feedback />} />
-                <Route path="/plataforma" element={<Plataforma />} />
+                <Route path='/profile' >
+                    <Route path='' element={<ProfileJogo />} />
+                    <Route path='interesse' element={<Interesse />} />
+                    <Route path='feedback' element={<Feedback />} />
+                    <Route path='plataforma' element={<Plataforma />} />
+                </Route>
+                <Route path='/dashboard' element={<Dashboard />}/>
+                <Route path='/salas' element={<Salas />}/>
             </Routes>
         </BrowserRouter>
     );

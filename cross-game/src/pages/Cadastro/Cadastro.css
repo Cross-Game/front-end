@@ -65,32 +65,33 @@
     width: 52%;
 }
 
-.tituloImg {
+.tituloImgCadastro {
     position: absolute;
     color: #fff;
     margin: 2% 3%;
 }
 
-.tituloImg p {
+.tituloImgCadastro p {
     font-weight: lighter;
     font-size: xx-small;
     font-weight: normal;
     margin-bottom: 5%;
 }
 
-.tituloImg h1 {
+.tituloImgCadastro h1 {
     font-size: xx-large;
 }
 
 .cardFormCadastro {
     width: 50%;
     border-radius: 0 20px 20px 0;
-    background-color: #00ff0330;
+    background-color: #141414;
     border-left: 1px solid #fff;
     color: #fff;
     display: flex;
     align-items: center;
     flex-direction: column;
+    justify-content: center;
 }
 
 .tituloCadastro {
@@ -211,7 +212,8 @@ input {
 }
 
 .iconPassword {
-    padding-bottom: 13%;
+    padding-bottom: 6.5vh;
+    padding-right: 10px;
 }
 
 .estiloEstadoSenha {
@@ -408,7 +410,7 @@ input {
 @media only screen and (max-width: 1100px) {
 
     /* Adicione suas regras CSS aqui para telas menores que 768px */
-    .tituloImg {
+    .tituloImgCadastro {
         display: none;
     }
 

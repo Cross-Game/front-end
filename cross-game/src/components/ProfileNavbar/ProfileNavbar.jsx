@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ProfileNavbar.css"
 import { TiEdit } from "react-icons/ti";
 import { TbBellRingingFilled } from "react-icons/tb";
 import imgUserProfile from "../../assets/index-page/testeImg.png"
 import medalUserProfile from "../../assets/index-page/medalOuro.svg"
 import { useNavigate } from "react-router-dom"
+import { MdNotificationsActive } from "react-icons/md";
+import Notification from "../Notification";
 
 
 function ProfileJogo(props) {
     const navigate = useNavigate();
+    const [showModalNotification, setShowModalNotification] = useState(false);
 
     return (
         <>
@@ -34,7 +37,7 @@ function ProfileJogo(props) {
                                     <div className="profileJogoBarNivelQuatro"></div>
                                 </div>
                             </div>
-                            <TbBellRingingFilled className="profileJogoIconNotificacao" />
+                            <MdNotificationsActive className="profileJogoIconNotificacao" onClick={()=> setShowModalNotification(true)}/>
                         </div>
                     </div>
                     <div className="profileJogoCenter" >
@@ -60,7 +63,11 @@ function ProfileJogo(props) {
                 </div>
             </div>
 
+        {showModalNotification && (
+            <Notification onClose={()=> setShowModalNotification(false)}/>
+        )}
         </>
+
     )
 }
 

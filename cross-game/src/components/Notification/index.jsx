@@ -16,7 +16,8 @@ import axios from 'axios';
 import { USERID, TOKEN } from '../../data/constants';
 
 
-function Notification() {
+function Notification(props) {
+  const { onClose } = props;
   const [notificacoes, setNotificacoes] = useState([]);
   const [filteredNotifications, setFilteredNotifications] = useState([])
 
@@ -109,6 +110,7 @@ function Notification() {
       icon={<MdNotificationsActive />}
       ativarBotao={false}
       onClear={() => clearAll()}
+      onClose={onClose}
     >
       <div>
         <div className="notification-subtitle">

@@ -408,37 +408,3 @@ margin-right: 120px;
 display: flex;
 margin: 10px 10px 0px 0;
 }
-
-.ModalCadastrarInteresse-interesses {
-display: flex;
-flex-wrap: wrap;
-margin-top: 10px;
-margin-bottom: 20px;
-width: 100%;
-}
-
-.ModalCadastrarInteresse-categorias {
-display: flex;
-flex-wrap: wrap;
-margin-top: 10px;
-}
-
-.ModalCadastrarInteresse-categorias .tag {
-margin-top: 10px;
-}
-
-.ModalCadastrarInteresse-categorias .tag_selected {
-margin-top: 10px;
-}
-
-.ModalCadastrarInteresse-interesses .tag {
-margin-top: 10px;
-}
-
-.ModalCadastrarInteresse-interesses .tag_selected {
-margin-top: 10px;
-}
-
-.ModalCadastrarInteresse-body {
-max-width: 32vw;
-}

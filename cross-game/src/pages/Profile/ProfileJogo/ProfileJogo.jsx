@@ -6,7 +6,7 @@ import { AiFillPlusCircle, AiOutlineDelete } from "react-icons/ai";
 import UserProfile from "../../../components/UserProfile";
 import Modal from "../../../components/Modal";
 import { RiFileEditFill } from "react-icons/ri";
-import { BsArrowRightShort, BsCheck } from "react-icons/bs";
+import { BsArrowRightShort, BsCheck, BsPersonBadge } from "react-icons/bs";
 import Tag from "../../../components/Tag";
 import { jogos as listaJogos } from "../../../utils/jogos";
 import { MdGamepad } from "react-icons/md";
@@ -167,7 +167,7 @@ function ProfileJogo() {
                 </div>
 
                 {showModalAdicionarPerfilJogo && (
-                    <Modal title="Perfil de Jogo" icon={<MdGamepad />} temFooter={true} ativarBotao={true} textButton="Cadastrar" iconButton={<BsCheck />} onClose={()=> setShowModalAdicionarPerfilJogo(false)}>
+                    <Modal title="Perfil de Jogo" icon={<BsPersonBadge />} temFooter={true} ativarBotao={true} textButton="Cadastrar" iconButton={<BsCheck />} onClose={()=> setShowModalAdicionarPerfilJogo(false)}>
                         <div className="modalEditarPerfil-container">
                             <UserProfile nome={"Nome"} img={<BsArrowRightShort/>} />
 

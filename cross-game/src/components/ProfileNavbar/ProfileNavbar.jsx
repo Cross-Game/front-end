@@ -7,11 +7,20 @@ import medalUserProfile from "../../assets/index-page/medalOuro.svg"
 import { useNavigate } from "react-router-dom"
 import { MdNotificationsActive } from "react-icons/md";
 import Notification from "../Notification";
+import UserProfile from "../UserProfile";
+import Modal from "../Modal";
+import { RiFileEditFill } from "react-icons/ri";
+import { BsArrowRightShort, BsCheck } from "react-icons/bs";
 
 
 function ProfileJogo(props) {
     const navigate = useNavigate();
     const [showModalNotification, setShowModalNotification] = useState(false);
+    const [showModalEditarPerfil, setShowModalEditarPerfil] = useState(false);
+
+    function changeAvatar(){
+        console.log("To Do")
+    }
 
     return (
         <>
@@ -23,7 +32,7 @@ function ProfileJogo(props) {
                             <img src={imgUserProfile} alt="" />
                             <div className="profileJogoEditProfileUser">
                                 <div id="nameUsername">Mauricio Maxuel</div>
-                                <div className="profileJogoIconEditProfile"><TiEdit className="iconTiEdit" />Editar Perfil</div>
+                                <div className="profileJogoIconEditProfile" onClick={() => setShowModalEditarPerfil(true)}><RiFileEditFill className="iconTiEdit" />Editar Perfil</div>
                             </div>
                         </div>
                         <div className="profileJogoDetailsUser">
@@ -37,7 +46,7 @@ function ProfileJogo(props) {
                                     <div className="profileJogoBarNivelQuatro"></div>
                                 </div>
                             </div>
-                            <MdNotificationsActive className="profileJogoIconNotificacao" onClick={()=> setShowModalNotification(true)}/>
+                            <MdNotificationsActive className="profileJogoIconNotificacao" onClick={() => setShowModalNotification(true)} />
                         </div>
                     </div>
                     <div className="profileJogoCenter" >
@@ -63,9 +72,25 @@ function ProfileJogo(props) {
                 </div>
             </div>
 
-        {showModalNotification && (
-            <Notification onClose={()=> setShowModalNotification(false)}/>
-        )}
+            {showModalNotification && (
+                <Notification onClose={() => setShowModalNotification(false)} />
+            )}
+
+            {showModalEditarPerfil && (
+                <Modal title="Editar Perfil" icon={<RiFileEditFill />} temFooter={true} ativarBotao={true} textButton="Editar" iconButton={<BsCheck />} onClose={()=> setShowModalEditarPerfil(false)}>
+                    <div className="modalEditarPerfil-container">
+                        <UserProfile nome={"Nome"} img={<BsArrowRightShort />} onClick={changeAvatar} />
+                        <label>Usuário</label>
+                        <input type="text"></input>
+                        <label>E-mail</label>
+                        <input type="text"></input>
+                        <label>Nova Senha</label>
+                        <input type="text"></input>
+                        <label>Confirmar Senha</label>
+                        <input type="text"></input>
+                    </div>
+                </Modal>
+            )}
         </>
 
     )

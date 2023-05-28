@@ -387,19 +387,3 @@ color: #7A7A7A;
 margin-bottom: 10px;
 display: flex;
 }
-
-.modalEditarPerfil-container {
-display: flex;
-flex-direction: column;
-}
-
-.modalEditarPerfil-container label {
-font-size: 13px;
-margin-top: 20px;
-}
-
-.modalEditarPerfil-container input {
-font-size: 9px;
-width: 100%;
-margin-right: 120px;
-}

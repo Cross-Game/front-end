@@ -1,15 +1,15 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "../../assets/global.css";
-import { MdNotificationsActive as MdNotificationsActive } from 'react-icons/md';
+import { MdNotificationsActive } from 'react-icons/md';
 import "../Notification/notification.css";
 import Modal from "../Modal";
 import Tag from "../Tag";
 import CardNotification from "./cardNotification";
 import Button from "../Button";
-import { BsPersonHeart as BsPersonHeart } from 'react-icons/bs';
+import { BsPersonHeart } from 'react-icons/bs';
 import { BsFillCalendarFill } from 'react-icons/bs';
-import { MdGroups as MdGroups } from 'react-icons/md';
-import { HiClock as HiClock } from 'react-icons/hi';
+import { MdGroups } from 'react-icons/md';
+import { HiClock } from 'react-icons/hi';
 import useFetch from "../../hooks/useFetch";
 import moment from 'moment';
 import axios from 'axios';
@@ -18,35 +18,58 @@ import { USERID, TOKEN } from '../../data/constants';
 
 function Notification() {
   const [notificacoes, setNotificacoes] = useState([]);
-  const response = [{ "id": 1, "notificationType": "GROUP", "message": "Atenção! Problema detectado.", "description": "Foi identificado um problema no sistema que pode afetar a sua experiência. Por favor, aguarde enquanto trabalhamos para solucioná-lo.", "date": "2023-05-01T10:30:00", "user": { "id": 1, "name": "João da Silva" } }, { "id": 2, "notificationType": "EVENT", "message": "Novo recurso disponível!", "description": "Acabamos de adicionar uma nova funcionalidade ao sistema. Acesse a página de recursos para mais informações.", "date": "2023-04-30T15:20:00", "user": { "id": 2, "name": "Maria Souza" } }, { "id": 3, "notificationType": "FRIEND_REQUEST", "message": "Aviso importante!", "description": "Atenção! Fique atento às mudanças na política de privacidade que entrarão em vigor no próximo mês. Consulte as atualizações na página de privacidade.", "date": "2022-05-01T10:30:00", "user": { "id": 3, "name": "José Santos" } }];
+  const [filteredNotifications, setFilteredNotifications] = useState([])
 
   useEffect(() => {
-    setNotificacoes(response);
+    const obterMensagens = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/notifies/${USERID}`, {
+          headers: {
+            Authorization: `Bearer ${TOKEN}`
+          }
+        });
+        if (response.status === 200) {
+          setNotificacoes(response.data);
+          filtrarNotificacoes();
+        }
+      } catch (error) {
+        console.error('Erro ao buscar mensagens:', error);
+      }
+    };
+
+    obterMensagens();
   }, []);
+
 
 
   const [selectedOption, setSelectedOption] = useState('hoje');
 
-  const filteredNotifications = useMemo(() => {
+  function filtrarNotificacoes() {
     switch (selectedOption) {
       case 'hoje':
-        return notificacoes.filter(notification => moment(notification.date).isSame(moment(), 'day'));
+        setFilteredNotifications(notificacoes.filter(notification => moment(notification.date).isSame(moment(), 'day')));
+        break;
       case 'ultimos7dias':
-        return notificacoes.filter(notification => moment(notification.date).isBetween(moment().subtract(7, 'days'), moment()));
+        setFilteredNotifications(notificacoes.filter(notification => moment(notification.date).isBetween(moment().subtract(7, 'days'), moment())));
+        break;
       default:
-        return notificacoes;
+        setFilteredNotifications(notificacoes);
     }
-  }, [selectedOption, notificacoes]);
+  }
+
+  useEffect(() => {
+    filtrarNotificacoes()
+  }, [notificacoes, selectedOption])
 
   const handleClick = (selectedOption) => {
     setSelectedOption(selectedOption)
+    filtrarNotificacoes();
     console.log(selectedOption);
+    console.log(filteredNotifications)
   };
 
-  function clearAll(){
-    var selectFilter = selectedOption;
-    response.map()
-    // TO DO Marcar todas as notificações do filtro como lidas 
+  function clearAll() {
+    // TO DO: Marcar todas as notificações do filtro como lidas 
   }
 
   function aceitarAmizade(nicknameFriend) {
@@ -63,10 +86,10 @@ function Notification() {
       });
   }
 
-  function recusarAmizade(nicknameFriend){
+  function recusarAmizade(nicknameFriend) {
     axios.delete(`http://localhost:8080/friends/declining-friend-request/${USERID}/${nicknameFriend}`, {}, {
       headers: {
-        Authorization: `Bearer ${TOKEN}` 
+        Authorization: `Bearer ${TOKEN}`
       }
     })
       .then(response => {
@@ -77,7 +100,7 @@ function Notification() {
       });
   }
 
-
+ 
 
   return (
     <Modal
@@ -85,78 +108,85 @@ function Notification() {
       clearAll={true}
       icon={<MdNotificationsActive />}
       ativarBotao={false}
-      onClear={()=> clearAll()}
+      onClear={() => clearAll()}
     >
       <div>
         <div className="notification-subtitle">
           <Tag
-            temCursor="true"
+            temCursor={true}
             text="Hoje"
             onClick={() => handleClick('hoje')}
-            isSelected={selectedOption === 'hoje' ? true : false}
+            isSelected={selectedOption === 'hoje'}
           />
           <Tag
-            temCursor="true"
+            temCursor={true}
             text="Últimos 7 dias"
             onClick={() => handleClick('ultimos7dias')}
-            isSelected={selectedOption === 'ultimos7dias' ? true : false}
+            isSelected={selectedOption === 'ultimos7dias'}
           />
           <Tag
             temCursor={true}
             text="Todas"
             onClick={() => handleClick('todas')}
-            isSelected={selectedOption === 'todas' ? true : false}
+            isSelected={selectedOption === 'todas'}
           />
         </div>
 
         <div className="notification-container">
-          {filteredNotifications.map((notification) => (
-            <React.Fragment key={notification.id}>
+  {filteredNotifications.length === 0 ? (
+      <></>
+  ) : (
+    filteredNotifications.map((notification) => (
+      <React.Fragment key={notification.id}>
+        {notification.type === 'FRIEND_REQUEST' && (
+          <CardNotification
+            key={notification.id}
+            title={notification.description}
+            icon={<BsPersonHeart />}
+            message={notification.message}
+            date={moment(notification.date).format('DD/MM/YYYY')}
+            time={moment(notification.date).format('HH:mm')}
+            temFooter={true}
+          >
+            <Tag text="Aceitar" onClick={() => aceitarAmizade(notification.description)} />
+            <Tag text="Recusar" onClick={() => recusarAmizade(notification.description)} />
+          </CardNotification>      
+        )
+        }
 
-              {notification.notificationType === 'FRIEND_REQUEST' && (
-                <CardNotification
-                  title={notification.user.name}
-                  icon={<BsPersonHeart />}
-                  message={notification.message}
-                  date={moment(notification.date).format('DD/MM/YYYY')}
-                  time={moment(notification.date).format('HH:mm')}
-                  temFooter={true}
-                >
-                  <Tag text="Aceitar" onClick={()=> aceitarAmizade(notification.user.name)}/>
-                  <Tag text="Recusar" onClick={()=> recusarAmizade()}/>
-                </CardNotification>
-              )}
+        {notification.type === 'EVENT' && (
+          <CardNotification
+            key={notification.id}
+            title={notification.description}
+            icon={<HiClock />}
+            message={notification.message}
+            date={moment(notification.date).format('DD/MM/YYYY')}
+            time={moment(notification.date).format('HH:mm')}
+            temFooter={false}
+          />
+        )}
 
-              {notification.notificationType === 'EVENT' && (
-                <CardNotification
-                  title={notification.user.name}
-                  icon={<HiClock />}
-                  message={notification.message}
-                  date={moment(notification.date).format('DD/MM/YYYY')}
-                  time={moment(notification.date).format('HH:mm')}
-                  temFooter={false}
-                />
-              )}
-
-              {notification.notificationType === 'GROUP' && (
-                <CardNotification
-                  title={notification.user.name}
-                  icon={<MdGroups />}
-                  message={notification.message}
-                  date={moment(notification.date).format('DD/MM/YYYY')}
-                  time={moment(notification.date).format('HH:mm')}
-                  temFooter={false}
-                />
-              )}
-
-            </React.Fragment>
-          ))}
-        </div>
+        {notification.type === 'GROUP' && (
+          <CardNotification
+            key={notification.id}
+            title={notification.description}
+            icon={<MdGroups />}
+            message={notification.message}
+            date={moment(notification.date).format('DD/MM/YYYY')}
+            time={moment(notification.date).format('HH:mm')}
+            temFooter={false}
+          />
+        )
+        }
+      </React.Fragment>
+    ))
+  )}
+</div>
+          
       </div>
-          </Modal >
-        );
+    </Modal>
+  );
 }
 
+
 export default Notification;
-
-

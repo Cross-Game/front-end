@@ -151,7 +151,7 @@ const  changeAvatar = () => {
         //   </div>
         // </div>
         // </Modal>
-        //  <Notification/>
+          <Notification/>
        
        
         // <Modal title="Editar Perfil" icon={<RiFileEditFill/> } temFooter={true} ativarBotao={true} textButton="Editar" iconButton={<BsCheck/>}>
@@ -193,54 +193,9 @@ const  changeAvatar = () => {
       // </Modal>
      
 
-<Modal title="Interesses" icon={<MdOutlineInterests/>} temFooter={true} ativarBotao={true} textButton="Adicionar" iconButton={<BsCheck/>} clearAll={true} onClear={limparInteresses} onClick={cadastrarInteresse}>
-  <div className="ModalCadastrarInteresse-body">
-     <UserProfile nome={"Nome"} img={<BsArrowRightShort/>} onClick={changeAvatar}/>
-  Interesse
-  <div className="ModalCadastrarInteresse-interesses">
-    {interesses.map((interesse) => (
-      <React.Fragment key={interesse.id}>
-        <Tag 
-          text={interesse.nome}
-          isSelected={interesseSelecionado === interesse.nome ? true : false}
-          onClick={() => setInteresseSelecionado(interesse.nome)}
-        />
-      </React.Fragment>
-    ))}
-  </div>
-  Categoria
-  <div className="ModalCadastrarInteresse-categorias">
-    {interesses &&
-      interesses.find((interesse) => interesse.nome === interesseSelecionado)?.categorias.map((categoria, index) => (
-        <React.Fragment key={categoria}>
-          <Tag 
-            text={categoria} 
-            isSelected={categoriaSelecionada === categoria ? true : false}
-            onClick={() => setCategoriaSelecionada(categoria)}
-          />
-        </React.Fragment>
-      ))
-    }
-  </div>
-  </div>
-</Modal>
+
      
 
-       
-        // <Modal
-        //   onClose={handleCloseModal}
-        //   title="Notificações"
-        //   clearAll={true}
-        //   icon={<MdNotificationsActive />}
-        //   ativarBotao={true}
-        //   textButton="Action"
-        //   iconButton={<FaSearch/>}
-        // >
-        //     <div>Teste</div>
-        //     <div>
-        //     <p>Aqui fica o conteudo</p>
-        //     </div>
-        // </Modal>
       )}
         <Button text="Search" icon={<FaSearch />} />
     </div>

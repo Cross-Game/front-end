@@ -23,6 +23,8 @@
   .notification-icon {
     width: auto;
     height: auto;
+    align-items: center;
+    display: flex;
   }
   
   .notification-group-body {

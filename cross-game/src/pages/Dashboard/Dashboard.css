@@ -1,0 +1,130 @@
+.DashboardContainer{
+    display: flex;
+    color: #0f3;
+}
+.DashboardNavegacao{
+    width: 100%;
+    margin-left: 2%;
+}
+.DashboardSuperior{
+    margin: 48px 0 40px 0 ;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+.DashboardSpanMeusInsights{
+    width: auto;
+    height: 25px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 0.5px solid rgba(0, 255, 51, 0.308);
+}
+.DashboardCenter{
+    display: flex;
+    justify-content: space-between;
+}
+.DashboardContainerEsquerda{
+    width: 500px;
+    height: 450px;
+    border-radius: 20px;
+    background-color: #000;
+    position: relative;
+}
+.DashboardGrafico{
+    
+    width: 225px;
+    padding: 20px 15px;
+    height: 30px;
+    color: #fff;
+}
+.DashboardGraficoPrimeiro{
+    height: 20px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 0.5px solid rgba(0, 255, 51, 0.308);
+}
+
+.DashboardGraficoSegundo{
+    padding-top: 10px;
+    font-size: xx-small;
+}
+.DashboardTabela{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+.DashboardTableTittle{
+    display: flex;
+    justify-content: center;
+    align-items: flex;
+    flex-direction: column;
+    width: 80%;
+    gap: 10px;
+    margin: 20px;
+}
+.DashboardTableTittlePrimeiro {
+    color: #fff;
+    width: 166px;
+    height: 20px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 0.5px solid rgba(0, 255, 51, 0.308);
+}
+.DashboardTableTittleSegundo {
+    color: #fff;
+    font-size: xx-small;
+}
+
+.DashboardTableItens{
+    width: 80%;
+    height: 300px;
+    padding: 10px;
+    color: #000;
+    margin: 0 20px;
+    border: 1px solid #737373;
+    background-color: #fff;
+    border-radius: 20px;
+    overflow: scroll;
+}
+.DashboardTableCollum{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    margin: 5px 0;
+}
+.DashboardTableName{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    font-weight: 600;
+    text-shadow: 0 0 5px #fff;
+    margin: 5px 5px;
+    font-size: smaller;
+}
+
+.DashboardTableName p{
+    width: 100%;
+    text-align: center;
+}
+
+.DashboardTableData{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    padding: 5px 5px;
+    font-size: x-small;
+}
+
+.DashboardTableData p{
+    width: 100%;
+    text-align: center;
+}

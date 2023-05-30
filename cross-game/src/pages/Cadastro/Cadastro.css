@@ -65,33 +65,32 @@
     width: 52%;
 }
 
-.tituloImgCadastro {
+.tituloImg {
     position: absolute;
     color: #fff;
     margin: 2% 3%;
 }
 
-.tituloImgCadastro p {
+.tituloImg p {
     font-weight: lighter;
     font-size: xx-small;
     font-weight: normal;
     margin-bottom: 5%;
 }
 
-.tituloImgCadastro h1 {
+.tituloImg h1 {
     font-size: xx-large;
 }
 
 .cardFormCadastro {
     width: 50%;
     border-radius: 0 20px 20px 0;
-    background-color: #141414;
+    background-color: #000;
     border-left: 1px solid #fff;
     color: #fff;
     display: flex;
     align-items: center;
     flex-direction: column;
-    justify-content: center;
 }
 
 .tituloCadastro {
@@ -212,8 +211,7 @@ input {
 }
 
 .iconPassword {
-    padding-bottom: 6.5vh;
-    padding-right: 10px;
+    padding-bottom: 13%;
 }
 
 .estiloEstadoSenha {
@@ -231,7 +229,7 @@ input {
     height: 80%;
     border: 1px solid #fff;
     border-radius: 20px;
-    background-color: #00ff0330;
+    background-color: #000;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -239,50 +237,54 @@ input {
     color: #fff;
 }
 
-.iconAvatar {
-    width: 10%;
-    height: 15%;
-    margin: 3%;
-
-    padding: 10px;
+.selecioneJogo{
+    padding: 30px;
     color: #fff;
-    box-shadow: 0px 0px 10px #000;
-    border-radius: 40px;
-}
-
-.iconEscolhaAvatar {
-    height: 70%;
-    width: 10%;
-    margin: 0 2%;
-    padding: 10px;
-    box-shadow: 0px 0px 10px #000;
-    border-radius: 30px;
-    color: #fff;
-    cursor: pointer;
-}
-
-.iconsEscolha {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 60%;
-    margin: 2% 5% 2% 5%;
-    color: #000;
 }
 
 .containerJogos {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 60%;
+    width: 100vw;
+    height: 40vh;
+    border-radius: 10px;
     margin: 2% 0 2% 0;
     color: #000;
+    margin-bottom: 30px;
+}
+
+.imagemLol{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.imagemVal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.imagemTf{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
 }
 
 .contornoJogo {
     border: 1px solid #fff;
     background-color: #000;
-    border-radius: 5px;
+    border-radius: 10px;
     height: 100%;
     width: 15%;
     margin: 2.3%;
@@ -290,88 +292,15 @@ input {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+
 }
 
-.valorant {
-    color: #fff;
-    width: 50%;
-    height: 50%;
-}
 
-.leagueOfLegends {
-    color: #fff;
-    width: 50%;
-    height: 50%;
-    background-image: url('./assets/LOL.png');
-    background-size: cover;
-    background-color: #fff;
-    border-radius: 10px;
-    padding-bottom: 5px;
-}
 
-.teamfightTactics {
-    color: #fff;
-    width: 50%;
-    height: 50%;
-    background-image: url('./assets/iconTFT.png');
-    background-size: cover;
-    background-color: #fff;
-    border-radius: 10px;
-    padding-bottom: 5px;
-}
 
-.inputUsername {
-    margin-top: 1%;
-    width: 47%;
-    height: 10%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: column;
-}
 
-.labelUsername {
-    font-size: x-small;
-}
-
-.inputUsernameEstilo {
-    width: 100%;
-}
-
-.botoes {
-    width: 45%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 2%;
-    padding: 1%;
-}
-
-.botaoVoltarCadastro {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #00FF33;
-    color: #000;
-    border: 1px solid #00FF33;
-    border-radius: 10px;
-}
-
-.botaoVoltarCadastro:hover {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #00FF33;
-    color: #000;
-    border: 0.1px solid #000;
-    border-radius: 10px;
-    cursor: pointer;
-}
 
 .botaoCadastrar {
-    width: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -381,10 +310,10 @@ input {
     border-radius: 10px;
     margin-left: 5%;
     cursor: pointer;
+    padding: 15px 50px;
 }
 
 .botaoCadastrar:hover {
-    width: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -393,28 +322,19 @@ input {
     border: 0.1px solid #000;
     border-radius: 10px;
     margin-left: 5%;
+    cursor: pointer;
+    padding: 15px 50px;
 }
 
-.arrowFinalVoltar {
-    width: 15%;
-    height: 15%;
-    margin: 0 5%;
-}
-
-.arrowFinalCadastrar {
-    width: 15%;
-    height: 15%;
-    margin: 0 5%;
-}
 
 @media only screen and (max-width: 1100px) {
 
     /* Adicione suas regras CSS aqui para telas menores que 768px */
-    .tituloImgCadastro {
+    .tituloImg {
         display: none;
     }
 
-    .cardCadastro {
+    .imagemLolCadastro {
         width: 60%;
         height: auto;
         border-radius: 20px;
@@ -446,6 +366,7 @@ input {
         width: 100%;
         margin-bottom: 10px;
     }
+
     .botaoVoltar {
         display: flex;
         align-items: flex-start;
@@ -469,7 +390,7 @@ input {
         color: #fff;
     }
 
-    
+
 }
 
 @media only screen and (max-width: 500px) {
@@ -480,191 +401,90 @@ input {
     }
 
     .cardCadastroTwo {
-    align-self: center;
-    margin-top: 2%;
-    margin-left: 5%;
-    width: 60%;
-    height: 100%;
-    border: 1px solid #00ff03;
-    border-radius: 20px;
-    background-color: #00ff0330;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
-    color: #fff;
-}
+        align-self: center;
+        margin-top: 2%;
+        margin-left: 5%;
+        width: 60%;
+        height: 100%;
+        border: 1px solid #00ff03;
+        border-radius: 20px;
+        background-color: #00ff0330;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        color: #fff;
+    }
 
-.iconAvatar {
-    width: 10%;
-    height: 15%;
-    margin: 3%;
 
-    padding: 10px;
-    color: #fff;
-    box-shadow: 0px 0px 10px #000;
-    border-radius: 40px;
-}
+    .containerJogos {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 60%;
+        margin: 5% 0 5% 0;
+        color: #000;
+    }
 
-.iconEscolhaAvatar {
-    height: 70%;
-    width: 10%;
-    margin: 0 2%;
-    padding: 10px;
-    box-shadow: 0px 0px 10px #000;
-    border-radius: 30px;
-    color: #fff;
-    cursor: pointer;
-}
+    .contornoJogo {
+        border: 1px solid #fff;
+        background-color: #000;
+        border-radius: 5px;
+        height: 100%;
+        width: 15%;
+        margin: 2.3%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
 
-.iconsEscolha {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 60%;
-    margin: 2% 5% 2% 5%;
-    color: #000;
-}
+    .botoes {
+        width: 100%;
+        height: 20%;
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        margin-top: 2%;
+        padding: 1%;
+    }
 
-.containerJogos {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 60%;
-    margin: 5% 0 5% 0;
-    color: #000;
-}
+    .botaoCadastrar {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #00FF33;
+        color: #000;
+        border: 1px solid #00FF33;
+        border-radius: 10px;
+        cursor: pointer;
+    }
 
-.contornoJogo {
-    border: 1px solid #fff;
-    background-color: #000;
-    border-radius: 5px;
-    height: 100%;
-    width: 15%;
-    margin: 2.3%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
+    .botaoCadastrar:hover {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #00FF33;
+        color: #000;
+        border: 0.1px solid #000;
+        border-radius: 10px;
+        margin-left: 5%;
+    }
 
-.valorant {
-    color: #fff;
-    width: 50%;
-    height: 50%;
-}
+    .arrowFinalVoltar {
+        width: 15%;
+        height: 85%;
+        margin: 0 5%;
+    }
 
-.leagueOfLegends {
-    color: #fff;
-    width: 50%;
-    height: 50%;
-    background-image: url('./assets/LOL.png');
-    background-size: cover;
-    background-color: #fff;
-    border-radius: 10px;
-    padding-bottom: 5px;
-}
+    .arrowFinalCadastrar {
+        width: 15%;
+        height: 85%;
+        margin: 0 1%;
+    }
 
-.teamfightTactics {
-    color: #fff;
-    width: 50%;
-    height: 50%;
-    background-image: url('./assets/iconTFT.png');
-    background-size: cover;
-    background-color: #fff;
-    border-radius: 10px;
-    padding-bottom: 5px;
-}
 
-.inputUsername {
-    margin-top: 1%;
-    width: 47%;
-    height: 10%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.labelUsername {
-    font-size: x-small;
-}
-
-.inputUsernameEstilo {
-    width: 100%;
-}
-
-.botoes {
-    width: 100%;
-    height: 20%;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    margin-top: 2%;
-    padding: 1%;
-}
-
-.botaoVoltarCadastro {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #00FF33;
-    color: #000;
-    border: 1px solid #00FF33;
-    border-radius: 10px;
-    margin-left: 5%;
-}
-
-.botaoVoltarCadastro:hover {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #00FF33;
-    color: #000;
-    border: 0.1px solid #000;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.botaoCadastrar {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #00FF33;
-    color: #000;
-    border: 1px solid #00FF33;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.botaoCadastrar:hover {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #00FF33;
-    color: #000;
-    border: 0.1px solid #000;
-    border-radius: 10px;
-    margin-left: 5%;
-}
-
-.arrowFinalVoltar {
-    width: 15%;
-    height: 85%;
-    margin: 0 5%;
-}
-
-.arrowFinalCadastrar {
-    width: 15%;
-    height: 85%;
-    margin: 0 1%;
-}
-
-    
 }

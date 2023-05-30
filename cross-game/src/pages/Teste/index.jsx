@@ -4,18 +4,26 @@ import { FaAmazon as FaAmazon } from 'react-icons/fa';
 import { FaSearch as FaSearch } from 'react-icons/fa';
 import Button from '../../components/Button'
 import Tag from '../../components/Tag'
-import { MdGroups, MdNotificationsActive as MdNotificationsActive } from 'react-icons/md';
+import { MdGroups, MdNotificationsActive as MdNotificationsActive, MdOutlineInterests } from 'react-icons/md';
 import Notification from '../../components/Notification';
-import { BsArrowRightShort, BsFileMinus, BsFileMinusFill, BsFillCalendarFill, BsFillCalendarWeekFill, BsFilterLeft, BsPlus } from "react-icons/bs";
+import { BsArrowRightShort, BsCheck, BsFileMinus, BsFileMinusFill, BsFillCalendarFill, BsFillCalendarWeekFill, BsFilterLeft, BsPlus } from "react-icons/bs";
 import "./style.css"
 import Option from "./Option";
 import RangeBar from "../../components/RangeBar";
 import { HiMinusSm } from "react-icons/hi";
 import { jogos as listaJogos } from "../../utils/jogos";
+import { interesses as listaInteresses } from "../../utils/interesses";
+import { RiFileEditFill } from "react-icons/ri";
+import IDUSER from "../../data/constants.js";
+
 
 
 function Teste() {
-  const [jogos, setJogos] = useState(listaJogos)
+  const [jogoSelecionado, setJogoSelecionado] = useState("");
+  const [jogos, setJogos] = useState(listaJogos);
+  const [interesses,setInteresses] = useState(listaInteresses);
+  const [interesseSelecionado, setInteresseSelecionado] = useState("");
+  const [categoriaSelecionada, setCategoriaSelecionada] = useState("");
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = () => {
@@ -25,6 +33,19 @@ function Teste() {
   const handleCloseModal = () => {
     setShowModal(false);
   };
+
+const  changeAvatar = () => {
+  console.log("TO DO")
+  }
+
+  function limparInteresses(){
+    setCategoriaSelecionada("");
+    setInteresseSelecionado("");
+  }
+
+  function cadastrarInteresse(){
+    console.log("To DO")
+  }
 
   return (
     <div>
@@ -89,7 +110,7 @@ function Teste() {
 
         // <Modal title="Filtrar por" icon={<BsFilterLeft/>} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort/>} textButton='Filtrar'>
         // <div className="container_filtro">
-          
+         
         //   <div className="filtro_jogos">
         //   <p className="titleFiltro">Meus Jogos</p>
         //   <div className="jogos">
@@ -100,7 +121,7 @@ function Teste() {
         //      ))}
         //      </div>
         //   </div>
-          
+         
         //   <div className="filtro_level">
         //   <p className="titleFiltro">Level</p>
         //     <RangeBar min='0' max='100' />
@@ -130,8 +151,82 @@ function Teste() {
         //   </div>
         // </div>
         // </Modal>
-         <Notification/>
-        
+        //  <Notification/>
+       
+       
+        // <Modal title="Editar Perfil" icon={<RiFileEditFill/> } temFooter={true} ativarBotao={true} textButton="Editar" iconButton={<BsCheck/>}>
+        //   <div className="modalEditarPerfil-container">
+        //   <UserProfile nome={"Nome"} img={<BsArrowRightShort/>} onClick={changeAvatar}/>
+        //   <label>Usuário</label>
+        //   <input type="text"></input>
+        //   <label>E-mail</label>
+        //   <input type="text"></input>
+        //   <label>Nova Senha</label>
+        //   <input type="text"></input>
+        //   <label>Confirmar Senha</label>
+        //   <input type="text"></input>
+        //   </div>
+        // </Modal>
+
+      //   <Modal title="Cadastrar perfil de jogo" icon={<RiFileEditFill/> } temFooter={true} ativarBotao={true} textButton="Cadastrar" iconButton={<BsCheck/>}>
+      //   <div className="modalEditarPerfil-container">
+      //   <UserProfile nome={"Nome"} img={<BsArrowRightShort/>} onClick={changeAvatar}/>
+       
+      //   <label>Jogo</label>
+       
+      //   <div className="modalCadastrarProfileJogo-jogos">
+      //     {jogos.map((jogo) => (
+      //       <React.Fragment key={jogo.id}>
+      //           <Tag
+      //           text={jogo.nome}
+      //           isSelected={jogoSelecionado === jogo.nome ? true : false}
+      //           onClick={() => setJogoSelecionado(jogo.nome)}/>
+      //           </React.Fragment>
+      //       ))}
+      //     </div>
+
+      //   <label>Username</label>
+      //   <input type="text"></input>
+      //   <label>GameID</label>
+      //   <input type="text"></input>
+      //   </div>
+      // </Modal>
+     
+
+<Modal title="Interesses" icon={<MdOutlineInterests/>} temFooter={true} ativarBotao={true} textButton="Adicionar" iconButton={<BsCheck/>} clearAll={true} onClear={limparInteresses} onClick={cadastrarInteresse}>
+  <div className="ModalCadastrarInteresse-body">
+     <UserProfile nome={"Nome"} img={<BsArrowRightShort/>} onClick={changeAvatar}/>
+  Interesse
+  <div className="ModalCadastrarInteresse-interesses">
+    {interesses.map((interesse) => (
+      <React.Fragment key={interesse.id}>
+        <Tag 
+          text={interesse.nome}
+          isSelected={interesseSelecionado === interesse.nome ? true : false}
+          onClick={() => setInteresseSelecionado(interesse.nome)}
+        />
+      </React.Fragment>
+    ))}
+  </div>
+  Categoria
+  <div className="ModalCadastrarInteresse-categorias">
+    {interesses &&
+      interesses.find((interesse) => interesse.nome === interesseSelecionado)?.categorias.map((categoria, index) => (
+        <React.Fragment key={categoria}>
+          <Tag 
+            text={categoria} 
+            isSelected={categoriaSelecionada === categoria ? true : false}
+            onClick={() => setCategoriaSelecionada(categoria)}
+          />
+        </React.Fragment>
+      ))
+    }
+  </div>
+  </div>
+</Modal>
+     
+
+       
         // <Modal
         //   onClose={handleCloseModal}
         //   title="Notificações"
@@ -152,5 +247,17 @@ function Teste() {
   );
 }
 
-export default Teste;
 
+function UserProfile(props){
+  const { img, nome } = props;
+ 
+  return (
+    <div className="salas-group-userAvatar" >
+      <img className="salas-userAvatar__image" src={img} />
+      <span className="salas-userAvatar__name">{nome}</span>
+    </div>
+
+  )
+}
+
+export default Teste;

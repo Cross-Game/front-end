@@ -39,18 +39,6 @@ body {
     align-items: flex-start;
 }
 
-.arrowVoltarInicio {
-    width: 30%;
-    height: 30%;
-    margin-right: 10%;
-}
-
-.arrowVoltarInicio:hover {
-    width: 30%;
-    height: 30%;
-    margin-right: 10%;
-}
-
 .cardLogin {
     align-self: center;
     width: 70%;
@@ -88,13 +76,13 @@ body {
     width: 60%;
 }
 
-.tituloImg {
+.tituloImgLogin {
     position: absolute;
     color: #fff;
     margin: 2% 35%;
 }
 
-.tituloImg p {
+.tituloImgLogin p {
     font-weight: lighter;
     font-size: xx-small;
     font-weight: normal;
@@ -102,7 +90,7 @@ body {
     white-space: nowrap;
 }
 
-.tituloImg h1 {
+.tituloImgLogin h1 {
     font-size: xx-large;
     white-space: nowrap;
 }
@@ -262,7 +250,7 @@ a {
 }
 
 .iconPassword {
-    padding-bottom: 6.5vh;
+    padding-bottom: 7vh;
     padding-right: 10px;
 }
 

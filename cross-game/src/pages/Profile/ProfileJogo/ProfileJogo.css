@@ -1,37 +1,144 @@
-.ProfileJogoMiniContainer{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.ProfileJogoMiniContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.ProfileJogoContainerButtonAdicionar{
-    color: #fff;
-    display: flex;
-    justify-content: flex-end;
-    width: 80%;
+.ProfileJogoContainerButtonAdicionar {
+  color: #fff;
+  display: flex;
+  justify-content: flex-end;
+  width: 80%;
 }
 
-.ProfileJogoButtonAdicionar{
-    width: 150px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #0f3;
-    border-radius: 20px;
-    margin-top: 20px;
-    cursor: pointer ;
+.ProfileJogoButtonAdicionar {
+  width: 150px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #0f3;
+  border-radius: 20px;
+  margin-top: 20px;
+  cursor: pointer;
 }
 
-.ProfileJogoButtonAdicionar:hover{
-    width: 150px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #0f3;
-    border-radius: 20px;
-    margin-top: 20px;
-    background-color: #0f3;
-    color: #000;
+.ProfileJogoButtonAdicionar {
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: 1px solid #0f3;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  background: transparent;
+  color: #fff;
+  overflow: hidden;
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+.ProfileJogoButtonAdicionar:hover {
+  background: #0f3;
+  color: #000;
+  box-shadow: 0 0 10px 1px rgba(0, 255, 51, 0.733);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+.ProfileJogoButtonAdicionar:hover::before {
+  -webkit-animation: sh02 0.5s 0s linear;
+  -moz-animation: sh02 0.5s 0s linear;
+  animation: sh02 0.5s 0s linear;
+}
+
+.ProfileJogoButtonAdicionar::before {
+  content: '';
+  display: block;
+  width: 0px;
+  height: 86%;
+  position: absolute;
+  top: 7%;
+  left: 0%;
+  opacity: 0;
+  background: #fff;
+  box-shadow: 0 0 50px 30px #fff;
+  -webkit-transform: skewX(-20deg);
+  -moz-transform: skewX(-20deg);
+  -ms-transform: skewX(-20deg);
+  -o-transform: skewX(-20deg);
+  transform: skewX(-20deg);
+}
+
+@keyframes sh02 {
+  from {
+    opacity: 0;
+    left: 0%;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    left: 100%;
+  }
+}
+
+.ProfileJogoButtonAdicionar:active {
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: box-shadow 0.2s ease-in;
+  -moz-transition: box-shadow 0.2s ease-in;
+  transition: box-shadow 0.2s ease-in;
+}
+
+.ProfileJogoCardContainer {
+  height: 300px;
+  margin-top: 15px;
+  border-radius: 20px;
+  padding: 15px;
+  border: 2px solid #737373;
+  overflow: hidden;
+  overflow-y: scroll;
+  color: #fff;
+  font-size: small;
+}
+
+.ProfileJogoCardUsername{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding: 20px;
+  gap: 14%;
+  margin-bottom: 10px;
+  border-radius: 10px 0 10px 0;
+  border: 1px solid #fff;
+}
+.ProfileJogoCardUsername:hover{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding: 20px;
+  gap: 14%;
+  margin-bottom: 10px;
+  border-radius: 10px 0 10px 0;
+  border: 1px solid #737373;
+  background-color: #7373733b;
+}
+
+.ProfileJogoEstiloParagrafo{
+  text-transform: uppercase;
+  font-size: smaller;
+  font-weight: 900;
+}
+
+.ProfileJogoEstiloIcon{
+  height: 30px;
+  width: auto;
 }

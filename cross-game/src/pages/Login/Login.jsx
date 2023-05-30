@@ -60,7 +60,7 @@ function Login() {
           mudarToast('sucesso', 'Login realizado!');
 
           setTimeout(() => {
-            navigate('/perfil');
+            navigate('/profile');
           }, 2000);
         } else {
           console.error('Erro ao realizar login: status', response.status);
@@ -88,7 +88,7 @@ function Login() {
     console.log("Método para Reset de Senha");
     axios
       .patch(
-        "http://localhost:8080/update-password-by-username-email",
+        "http://localhost:8080/users/update-password-by-username-email",
         {
           username: usuario,
           email: email,
@@ -102,9 +102,10 @@ function Login() {
         }
       )
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === 201) {
           console.log(response);
           realizarLogin();
+          console.log("Chamei realizar login")
         } else {
           console.error("Erro ao resetar senha: status", response.status);
           mudarToast("erro", "Erro ao resetar senha");
@@ -191,8 +192,8 @@ function Login() {
               </div>
             </div>
 
-            <div className="botaoCadastro">
-              <div onClick={realizarLogin}>Entrar</div>
+            <div className="botaoCadastro" onClick={realizarLogin}>
+              <div>Entrar</div>
               <BsArrowRightShort className="arrowProximo" />
             </div>
             <div className="subTitulo">ou com as seguintes plataformas</div>

@@ -10,11 +10,11 @@ function Login() {
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const navigate = useNavigate();
 
-  const [password, setPassword] = useState();
-  const [usuario, setUsuario] = useState();
-  const [token, setToken] = useState(null);
-  const [passwordNew, setPasswordNew] = useState("");
-  const [email, setEmail] = useState();
+  var [password, setPassword] = useState("");
+  var [usuario, setUsuario] = useState("");
+  var [token, setToken] = useState(null);
+  var [passwordNew, setPasswordNew] = useState("");
+  var [email, setEmail] = useState();
 
   function handleMostrarSenha() {
     setMostrarSenha(!mostrarSenha);
@@ -23,11 +23,13 @@ function Login() {
   const handleUsuarioChange = (event) => {
     const newUser = event.target.value;
     setUsuario(newUser);
+    sessionStorage.setItem("NICKNAME", newUser);
   };
 
   const handlePasswordChange = (event) => {
     const newPassword = event.target.value;
     setPassword(newPassword);
+    sessionStorage.setItem("ACESS_TOKEN", newPassword);
   };
 
   const [showToast, setShowToast] = useState(false);
@@ -39,39 +41,6 @@ function Login() {
     setToastType(tipo.toLowerCase());
     setToastMessage(mensagem);
   }
-
-  const realizarLogin = async () => {
-    mudarToast('carregando', 'Requisição solicitada');
-    console.log(usuario, password);
-    axios
-      .post("http://localhost:8080/user-auth", { username: usuario, password }, {
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-          'Content-Type': 'application/json'
-        }
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          console.log(response);
-          sessionStorage.setItem('ACESS_TOKEN', response.data.encodedToken);
-          setToken(response.data.encodedToken);
-          decodificarToken();
-          console.log("Sucesso ao realizar login: ", response.data.encodedToken);
-          mudarToast('sucesso', 'Login realizado!');
-
-          setTimeout(() => {
-            navigate('/profile');
-          }, 2000);
-        } else {
-          console.error('Erro ao realizar login: status', response.status);
-          mudarToast('erro', 'Erro ao realizar login');
-        }
-      })
-      .catch((error) => {
-        console.error('Erro ao realizar login:', error);
-        mudarToast('erro', 'Erro ao realizar login');
-      });
-  };
 
 
   const redirectUri = 'http://localhost:3000/cadastro';
@@ -86,7 +55,9 @@ function Login() {
 
   const resetPassword = async (usuario, email, password) => {
     console.log("Método para Reset de Senha");
-    axios
+    await setUsuario(usuario);
+    await setPassword(password);
+    await axios
       .patch(
         "http://localhost:8080/users/update-password-by-username-email",
         {
@@ -104,8 +75,8 @@ function Login() {
       .then((response) => {
         if (response.status === 201) {
           console.log(response);
-          realizarLogin();
           console.log("Chamei realizar login")
+          realizarLogin();
         } else {
           console.error("Erro ao resetar senha: status", response.status);
           mudarToast("erro", "Erro ao resetar senha");
@@ -141,11 +112,52 @@ function Login() {
     sessionStorage.setItem("ACESS_TOKEN", data.access_token);
     sessionStorage.setItem("NICKNAME", data.name);
     sessionStorage.setItem("EMAIL", data.email);
+    console.log("Salvei dados do Google [Email, NovaSenha, Usuario]")
     resetPassword(data.name, data.email, data.access_token);
   };
 
   const handleGoogleLoginReject = (err) => {
     console.log(err);
+  };
+
+  const realizarLogin = async () => {
+    console.log("Realizando Login...")
+    mudarToast('carregando', 'Requisição solicitada');
+    console.log(usuario, password);
+    var usuarioTeste = await sessionStorage.getItem("NICKNAME")
+    var passwordTeste = await sessionStorage.getItem("ACESS_TOKEN")
+    await axios
+      .post("http://localhost:8080/user-auth", { username: usuarioTeste, password: passwordTeste }, {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response);
+          sessionStorage.setItem('ACESS_TOKEN', response.data.encodedToken);
+          setToken(response.data.encodedToken);
+          decodificarToken();
+          console.log("Sucesso ao realizar login: ", response.data.encodedToken);
+          mudarToast('sucesso', 'Login realizado!');
+
+          setTimeout(() => {
+            navigate('/profile');
+          }, 2000);
+        } 
+        else if (response.status === 404){
+          mudarToast("erro", 'Por favor, realize seu cadastro!')
+        }
+       else {
+          console.error('Erro ao realizar login: status', response.status);
+          mudarToast('erro', 'Erro ao realizar login');
+        }
+      })
+      .catch((error) => {
+        console.error('Erro ao realizar login:', error);
+        mudarToast('erro', 'Erro ao realizar login');
+      });
   };
 
   return (

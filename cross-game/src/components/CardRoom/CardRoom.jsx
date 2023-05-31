@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./CardRoom.css"
-import { Link } from 'react-router-dom';
+import { Link, redirect, useNavigate } from 'react-router-dom';
 
 function CardRoom(props) {
+    
+    const handleEnterRoom = () => {
+        // Redirecionar para a sala apenas se o redirecionamento não estiver ocorrendo a partir da URL
+        if (!window.location.pathname.includes("/rooms/")) {
+            // Aqui você pode adicionar qualquer lógica adicional antes de redirecionar para a sala
+            // ...
+            // Redirecionar para a sala
+            window.location.href = `/rooms/${props.idGroup}`;
+        }
+    };
+
     return (
         <>
 
@@ -47,16 +58,19 @@ function CardRoom(props) {
                             <p>{props.descricao}</p>
                         </div>
                         <div className="buttonRoomDivContainer">
-                            <Link className="buttonEnterRoom" to={`${props.idchat}`}>
+                            {/* <Link className="buttonEnterRoom" to={`${1}`}> */}
+                            {/* <IsClickedRoom idGroup={props.idGroup} />
+                             */}
+                            <div onClick={handleEnterRoom} className="buttonEnterRoom">
                                 Entrar
-                            </Link>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            {/*  */}
         </>
     )
 }
+
 
 export default CardRoom;

@@ -194,12 +194,12 @@ function Cadastro() {
                 }).then(res => res.json())
                 .then(data =>
                     sessionStorage.setItem("Acess_Token", data.encodedToken),
-                    window.location.assign("http://localhost:3000/profile")
+                    window.location.href = "http://localhost:3000/profile"
                 )
             )
             .catch(error =>
                 console.error(error));
-        console.log(username)
+        
     }
 
     function voltar() {

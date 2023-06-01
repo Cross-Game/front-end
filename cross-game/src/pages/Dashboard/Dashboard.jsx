@@ -3,9 +3,11 @@ import "./Dashboard.css";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { Chart } from "react-google-charts";
 import { TbBellRingingFilled } from "react-icons/tb";
+import { MdNotificationsActive } from "react-icons/md";
 
 
 function Dashboard() {
+    const [showModalNotification, setShowModalNotification] = useState(false);
 
     const chartOptions = {
         curveType: 'function',
@@ -49,7 +51,7 @@ function Dashboard() {
                 <div className="DashboardNavegacao">
                     <div className="DashboardSuperior">
                         <span className="DashboardSpanMeusInsights">Meus Insights</span>
-                        <TbBellRingingFilled className="profileJogoIconNotificacao" />
+                        <MdNotificationsActive className="profileJogoIconNotificacao" onClick={() => setShowModalNotification(true)}/>
                     </div>
                     <div className="DashboardCenter">
                         <div className="DashboardContainerEsquerda DashboardTabela">
@@ -161,6 +163,10 @@ function Dashboard() {
                     </div>
                 </div>
             </div>
+            
+            {showModalNotification && (
+                <Notification onClose={() => setShowModalNotification(false)} />
+            )}
         </>
     )
 

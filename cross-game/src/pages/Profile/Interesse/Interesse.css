@@ -1,10 +1,10 @@
-.ProfileIconAdicionar{
+.ProfileIconAdicionar {
     height: 25px;
     width: auto;
     margin-left: 10px;
 }
 
-.ProfileInteresseContainer{
+.ProfileInteresseContainer {
     display: flex;
     justify-content: flex-start;
     position: absolute;
@@ -14,13 +14,13 @@
     width: 80%;
 }
 
-.ProfileInteresseMiniContainer{
+.ProfileInteresseMiniContainer {
     width: 270px;
     height: auto;
     margin: 30px 10px 10px 0;
 }
 
-.ProfileInteresseCategoria{
+.ProfileInteresseCategoria {
     width: 250px;
     height: 60px;
     display: flex;
@@ -36,11 +36,11 @@
     border: 2px solid #000000;
 }
 
-.ProfileInteresseCategoria p{
+.ProfileInteresseCategoria p {
     margin: 0 20px;
 }
 
-.ProfileInteresseGenero{
+.ProfileInteresseGenero {
     width: 250px;
     height: 50px;
     display: flex;
@@ -56,11 +56,11 @@
     background-color: #0f0f0f;
 }
 
-.ProfileInteresseGenero p{
+.ProfileInteresseGenero p {
     margin: 0 0 0 20px;
 }
 
-.ProfileInteresseIconExcluir{
+.ProfileInteresseIconExcluir {
     width: 20px;
     height: auto;
     margin: 0 20px 0 0;
@@ -68,10 +68,44 @@
     cursor: pointer;
 }
 
-.ProfileInteresseIconExcluir:hover{
+.ProfileInteresseIconExcluir:hover {
     width: 20px;
     height: auto;
     margin: 0 20px 0 0;
     color: #0f3;
     cursor: pointer;
+}
+
+.ModalCadastrarInteresse-interesses {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.ModalCadastrarInteresse-categorias {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.ModalCadastrarInteresse-categorias .tag {
+    margin-top: 10px;
+}
+
+.ModalCadastrarInteresse-categorias .tag_selected {
+    margin-top: 10px;
+}
+
+.ModalCadastrarInteresse-interesses .tag {
+    margin-top: 10px;
+}
+
+.ModalCadastrarInteresse-interesses .tag_selected {
+    margin-top: 10px;
+}
+
+.ModalCadastrarInteresse-body {
+    max-width: 32vw;
 }

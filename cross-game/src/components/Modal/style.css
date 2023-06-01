@@ -24,6 +24,8 @@
     overflow: hidden;
     color: #fff;
     margin: 1vh 1vw;
+    z-index: 2;
+    box-shadow: 0rem 0rem 0.5rem #000000 ;
   }
   
   .modal-modal-header {
@@ -34,15 +36,17 @@
     justify-content: space-between;
   }
   
-  .modal-modal-header p.title{
+  .modal-modal-header p.modal-modal-title{
     margin: 0 10px;
     white-space: nowrap;
+    color: #fff;
   }
 
   .modal-modal-group {
     display: flex;
     align-items: flex-end;
     align-items: center;
+    color: #fff;
   }
   
   .modal-modal-clear-all {
@@ -54,6 +58,10 @@
     padding: 0 10px;
     white-space: nowrap;
   }
+
+.modal-modal-clear-all:hover {
+  color: #9b9b9b;
+}
 
   .modal-modal-clear-all svg {
     font-size: 14px;

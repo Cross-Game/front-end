@@ -67,10 +67,10 @@ function ProfileJogo() {
                         icon={<img src={imgPs} alt="playstation"/>}
                         /> 
                     <CardAddPlataforma 
-                        text="X-Box" 
+                        text="Xbox" 
                         color={"#33ff339c"} 
-                        isSelected={plataformasSelecionadas.includes("X-Box")} 
-                        onClick={() => handleClickPlataforma("X-Box")}
+                        isSelected={plataformasSelecionadas.includes("Xbox")} 
+                        onClick={() => handleClickPlataforma("Xbox")}
                         icon={<img src={imgXbox} alt="xbox"/>}
                         /> 
                     <CardAddPlataforma 

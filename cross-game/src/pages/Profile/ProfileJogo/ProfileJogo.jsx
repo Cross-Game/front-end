@@ -186,8 +186,6 @@ function ProfileJogo() {
 
                             <label>Username</label>
                             <input type="text"></input>
-                            <label>GameID</label>
-                            <input type="text"></input>
                         </div>
                     </Modal>
                 )}

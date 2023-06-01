@@ -170,26 +170,6 @@ function Cadastro() {
             password: password,
             role: "USER"
         };
-        // const { response, loading, error } = useFetch(
-        //     {
-        //         method: 'post',
-        //         url: '/users',
-        //         headers: JSON.stringify({ accept: '*/*' }),
-        //         body: JSON.stringify(filme)
-        //     });
-
-        // const { response1, loading1, error1 } = useFetch(
-        //     {
-        //         method: 'post',
-        //         url: '/user-auth',
-        //         headers: JSON.stringify({ accept: '*/*' }),
-        //         body: JSON.stringify({
-        //             username: username,
-        //             password: password
-        //         })
-        //     });
-        
-        // sessionStorage.setItem("Acess_Token", response1)
 
 
 
@@ -210,15 +190,16 @@ function Cadastro() {
                     body: JSON.stringify({
                         username: username,
                         password: password
-                    }).then(data =>
-                        console.log(data)
-                        // sessionStorage.setItem("Acess_Token", data)
-                    ),
-                })
+                    }),
+                }).then(res => res.json())
+                .then(data =>
+                    sessionStorage.setItem("Acess_Token", data.encodedToken),
+                    window.location.href = "http://localhost:3000/profile"
+                )
             )
             .catch(error =>
                 console.error(error));
-        console.log(username)
+        
     }
 
     function voltar() {
@@ -323,6 +304,7 @@ function Cadastro() {
                                         setPassword(data.access_token);
                                         setAtivarProximo({ display: 'none' });
                                         setAtivarAnterior({ display: '' });
+                                        console.log(data);
                                     }}
                                     onReject={(err) => {
                                         console.log(err)

@@ -88,7 +88,6 @@ function ProfileJogo(props) {
                 </Modal>
             )}
         </>
-
     )
 }
 

@@ -169,7 +169,7 @@ function ProfileJogo() {
                 {showModalAdicionarPerfilJogo && (
                     <Modal title="Perfil de Jogo" icon={<BsPersonBadge />} temFooter={true} ativarBotao={true} textButton="Cadastrar" iconButton={<BsCheck />} onClose={()=> setShowModalAdicionarPerfilJogo(false)}>
                         <div className="modalEditarPerfil-container">
-                            <UserProfile nome={"Nome"} img={<BsArrowRightShort/>} />
+                            {/* <UserProfile nome={"Nome"} img={<BsArrowRightShort/>} /> */}
 
                             <label>Jogo</label>
 

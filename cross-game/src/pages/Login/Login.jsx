@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Await, useNavigate } from 'react-router-dom';
 import "./Login.css"
 import { BsDiscord, BsGoogle, BsArrowRightShort, BsArrowLeftShort, BsFillEyeSlashFill, BsFillEyeFill } from "react-icons/bs";
 import axios from "axios";
@@ -15,6 +15,15 @@ function Login() {
   var [token, setToken] = useState(null);
   var [passwordNew, setPasswordNew] = useState("");
   var [email, setEmail] = useState();
+
+  const currentUrl = new URL(window.location.href);
+  const queryParams = new URLSearchParams(currentUrl.search);
+  const CLIENT_ID = "1102730864972009612";
+  const REDIRECT_URI = "http://localhost:3000/cadastro";
+  const SCOPE = "identify email";
+  const RESPONSE_TYPE = "code";
+  const [isLoading, setIsLoading] = useState(true);
+
 
   function handleMostrarSenha() {
     setMostrarSenha(!mostrarSenha);
@@ -43,7 +52,7 @@ function Login() {
   }
 
 
-  const redirectUri = 'http://localhost:3000/cadastro';
+  const redirectUri = 'http://localhost:3000/login';
 
   const handleLogin = () => {
     const scope = 'identify email';
@@ -52,6 +61,58 @@ function Login() {
     const authUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&permissions=76832&scope=${scope}&response_type=${responseType}&redirect_uri=${redirectUri}`;
     window.location.href = authUrl;
   };
+
+  const handleCallback = async () => {
+    const data = {
+      code: queryParams.get("code"),
+      redirect_uri: "http://localhost:3000/login",
+      grant_type: "authorization_code",
+      client_id: CLIENT_ID,
+      client_secret: "Xrn0whYArSqBySPDGZbVGJlZj0sAL903"
+    };
+
+    try {
+      const headersPost = {
+        "Content-Type": "application/x-www-form-urlencoded",
+      };
+      const body = Object.keys(data)
+        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+        .join("&");
+      const response = await axios.post("https://discord.com/api/oauth2/token", body, { headersPost });
+      const userResponse = await axios.get("https://discord.com/api/users/@me", {
+        headers: {
+          authorization: `Bearer ${response.data.access_token}`,
+        },
+      });
+      setEmail(userResponse.data.email);
+      setUsuario(userResponse.data.username);
+      setPassword(response.data.access_token);
+      await sessionStorage.setItem(("NICKNAME"), userResponse.data.username);
+      await sessionStorage.setItem(("ACESS_TOKEN"), response.data.access_token);
+      realizarLogin()
+
+      console.log(userResponse.data.email);
+      console.log(userResponse.data.username);
+      console.log(response.data.access_token);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+
+      if (!(queryParams.get("code") == null)) {
+        handleCallback()
+      }
+    }, 1);
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
 
   const resetPassword = async (usuario, email, password) => {
     console.log("Método para Reset de Senha");
@@ -145,11 +206,11 @@ function Login() {
           setTimeout(() => {
             navigate('/profile');
           }, 2000);
-        } 
-        else if (response.status === 404){
+        }
+        else if (response.status === 404) {
           mudarToast("erro", 'Por favor, realize seu cadastro!')
         }
-       else {
+        else {
           console.error('Erro ao realizar login: status', response.status);
           mudarToast('erro', 'Erro ao realizar login');
         }

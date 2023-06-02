@@ -1,0 +1,44 @@
+.ProfilePlataformaContainer{
+    width: 100%;
+    height: auto;
+    margin-top: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10%;
+}
+
+.ModalPlataforma-cadastrarPlataforma .cardPc {
+    width:  20vw;
+    height: 30vh;
+    margin: 10px;
+}
+
+.ModalPlataforma-cadastrarPlataforma .cardXbox {
+    width:  20vw;
+    height: 30vh;
+    margin: 10px;
+}
+
+.ModalPlataforma-cadastrarPlataforma .cardPlaystation {
+    width:  20vw;
+    height: 30vh;
+    margin: 10px;
+}
+
+.ModalPlataforma-cadastrarPlataforma .cardMobile {
+    width:  20vw;
+    height: 30vh;
+    margin: 10px;
+}
+
+
+
+.ModalPlataforma-cadastrarPlataforma {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    max-height: 70vh;   
+    margin: auto;
+    max-width: 80vw;
+}

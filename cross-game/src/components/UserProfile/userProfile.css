@@ -1,0 +1,28 @@
+.userProfile-group-userAvatar {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 15px;
+  }
+  
+  .userProfile-userAvatar__image{
+    width: 60px;
+    height: 60px;
+    border-radius: 25px;
+  }
+  
+  .userProfile-userAvatar__name {
+    margin-top: 10px;
+    font-size: 9px;
+    color: #999;
+  }
+
+  .userProfile-userAvatar__image:hover +  .userProfile-userAvatar__name{
+    color: #19FF00;
+    text-shadow: 0 0 0.3rem #19FF00;
+  }
+  
+  .userProfile-userAvatar__name:hover{
+    color: #19FF00;
+    text-shadow: 0 0 0.3rem #19FF00;
+  }

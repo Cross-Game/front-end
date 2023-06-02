@@ -1,0 +1,39 @@
+.tag {
+  font-family: "Krona One";
+  color: #fff;
+  font-size: 10px;
+  padding: 5px 10px;
+  display: flex;
+  background-color: #0b5a02;;
+  border-radius: 25px;
+  margin-right: 10px;
+  transition: all 0.4s opacity;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.tag:hover {
+  color: #000;
+  background-color: #19FF00;
+}
+
+.tag:active {
+  color: #000;
+  background-color: #19FF00;
+}
+
+.tag_selected {
+  font-family: "Krona One";
+  font-size: 10px;
+  padding: 5px 10px;
+  display: flex;
+  color: #000;
+  background-color: #19FF00;
+  border-radius: 25px;
+  margin-right: 10px;
+  transition: all 0.4s opacity;
+  align-items: center;
+  white-space: nowrap;
+}
+
+

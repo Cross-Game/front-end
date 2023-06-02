@@ -3,7 +3,7 @@ import "./style.css"
 
 function ItemSection(props) {
     return (
-        <div className='sectionTitle'>
+        <div className='home-sectionTitle'>
             <p>
                 {props.section}
             </p>

@@ -1,4 +1,4 @@
-.sectionTitle {
+.home-sectionTitle {
     display: flex;
     flex-direction: column;
     padding-left: 3%;
@@ -10,12 +10,12 @@
     border-left: 5px solid #00FF33;
 }
 
-.sectionTitle p {
+.home-sectionTitle p {
     color: #b8b8b8;
     font-size: 0.9rem;
 }
 
-.sectionTitle h2 {
+.home-sectionTitle h2 {
     color: #fff;
     font-size: 1.5rem;
 }

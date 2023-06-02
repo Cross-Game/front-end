@@ -1,13 +1,13 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import "./Cadastro.css";
-import { BsDiscord, BsArrowLeftShort, BsArrowRightShort, BsFillEyeFill, BsFillEyeSlashFill, BsGoogle, BsPersonCircle } from "react-icons/bs";
-import { GiCrossShield, GiCrenulatedShield, GiCrossedAxes, GiCrownedSkull, GiEyeShield } from "react-icons/gi";
-import { SiValorant } from "react-icons/si";
+import { BsDiscord, BsArrowRightShort, BsFillEyeFill, BsFillEyeSlashFill, BsGoogle, BsPersonCircle } from "react-icons/bs";
 import { LoginSocialGoogle } from "reactjs-social-login";
 import { useNavigate } from "react-router-dom"
 import axios from "axios";
 import Loading from '../../components/Loading/loading';
+import imagemLol from '../Cadastro/assets/leagueOfLegendsWallpapers.jpg'
+import imagemValorant from '../Cadastro/assets/Fade 1.jpg'
+import imagemTeamF from '../Cadastro/assets/teamFight.png'
 
 
 
@@ -54,7 +54,7 @@ function Cadastro() {
     useEffect(() => {
         setTimeout(() => {
             setIsLoading(false);
-        }, 3000);
+        }, 2000);
     }, []);
 
     const handleLogin = () => {
@@ -111,7 +111,7 @@ function Cadastro() {
         setUsername(newUsername)
     }
 
-    
+
     const handlePasswordChange = (event) => {
         const newPassword = event.target.value;
         setPassword(newPassword);
@@ -170,6 +170,29 @@ function Cadastro() {
             password: password,
             role: "USER"
         };
+        // const { response, loading, error } = useFetch(
+        //     {
+        //         method: 'post',
+        //         url: '/users',
+        //         headers: JSON.stringify({ accept: '*/*' }),
+        //         body: JSON.stringify(filme)
+        //     });
+
+        // const { response1, loading1, error1 } = useFetch(
+        //     {
+        //         method: 'post',
+        //         url: '/user-auth',
+        //         headers: JSON.stringify({ accept: '*/*' }),
+        //         body: JSON.stringify({
+        //             username: username,
+        //             password: password
+        //         })
+        //     });
+        
+        // sessionStorage.setItem("Acess_Token", response1)
+
+
+
         fetch('http://localhost:8080/users', {
             method: 'POST',
             headers: {
@@ -178,21 +201,21 @@ function Cadastro() {
             body: JSON.stringify(filme),
         })
             .then(response => response.json())
-            .then(data => 
-                    fetch('http://localhost:8080/user-auth', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            username: username,
-                            password: password
-                        }).then(data => 
-                            console.log(data)
-                            // sessionStorage.setItem("Acess_Token", data)
-                            ),
-                    })
-                )
+            .then(data =>
+                fetch('http://localhost:8080/user-auth', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    }).then(data =>
+                        console.log(data)
+                        // sessionStorage.setItem("Acess_Token", data)
+                    ),
+                })
+            )
             .catch(error =>
                 console.error(error));
         console.log(username)
@@ -260,7 +283,7 @@ function Cadastro() {
                                 </div>
                             )}
                             <label htmlFor="">Usuário</label>
-                            <input type="text" placeholder="HOmonster" value={username} onChange={handleUser} />
+                            <input type="text" placeholder="usuario" value={username} onChange={handleUser} />
 
                             <label htmlFor="">Senha</label>
                             <input
@@ -312,46 +335,23 @@ function Cadastro() {
                     </div>
                 </form>
                 <form className="cardCadastroTwo" style={ativarAnterio}>
-                    {selectedIcon}
-                    <div>Selecione o icone do seu perfil</div>
-                    <div className="iconsEscolha">
-                        <GiCrossShield className="iconEscolhaAvatar"
-                            onClick={() => handleSelectIcon(<GiCrossShield className='iconAvatar' />)} />
-
-                        <GiCrenulatedShield className="iconEscolhaAvatar"
-                            onClick={() => handleSelectIcon(<GiCrenulatedShield className="iconAvatar" />)} />
-
-                        <GiEyeShield className="iconEscolhaAvatar"
-                            onClick={() => handleSelectIcon(<GiEyeShield className="iconAvatar" />)} />
-
-                        <GiCrossedAxes className="iconEscolhaAvatar"
-                            onClick={() => handleSelectIcon(<GiCrossedAxes className="iconAvatar" />)} />
-
-                        <GiCrownedSkull className="iconEscolhaAvatar"
-                            onClick={() => handleSelectIcon(<GiCrownedSkull className="iconAvatar" />)} />
-
-                    </div>
-                    <div>Selecione um jogo você irá jogar:</div>
+                    <div className="selecioneJogo">Selecione um jogo você irá jogar:</div>
                     <div className="containerJogos">
-                        <div className="contornoJogo" style={valorant ? bordaJogo : { border: '1px solid #000' }} onClick={() => selecionarJogo(1)}>
-                            <SiValorant className="valorant" />
+                        <div className="contornoJogo"  style={valorant ? bordaJogo : { border: '1px solid #000' }} onClick={() => selecionarJogo(1)}>
+                            <img src={imagemValorant} className="imagemVal" alt="" />
+                            
                         </div>
                         <div className="contornoJogo" style={lol ? bordaJogo : { border: '1px solid #000' }} onClick={() => selecionarJogo(2)}>
-                            <span className="leagueOfLegends"></span>
+                            <img src={imagemLol} className="imagemLol" alt="" />
+                            
                         </div>
                         <div className="contornoJogo" style={tft ? bordaJogo : { border: '1px solid #000' }} onClick={() => selecionarJogo(3)}>
-                            <span className="teamfightTactics"></span>
+                            <img src={imagemTeamF} className="imagemTf" alt="" />
+                            
                         </div>
                     </div>
-                    <div className="inputUsername">
-                        <label htmlFor="username" className="labelUsername">
-                            Digite o seu Username do jogo:
-                        </label>
-                        <input type="text" id="username" className="inputUsernameEstilo" placeholder="HOmonster" />
-                    </div>
                     <div className="botoes">
-                        <div onClick={voltar} className="botaoVoltarCadastro" ><BsArrowLeftShort className="arrowFinalVoltar" />Voltar</div>
-                        <div onClick={cadastrar} className="botaoCadastrar">Cadastrar<BsArrowRightShort className="arrowFinalCadastrar" /></div>
+                        <div onClick={cadastrar} className="botaoCadastrar">Prosseguir</div>
                     </div>
                 </form>
             </div>

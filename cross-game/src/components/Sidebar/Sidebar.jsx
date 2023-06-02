@@ -20,13 +20,13 @@ function Sidebar() {
                         <FaChevronLeft onClick={toggle} className={isOpen ? 'retractableSidebar' : 'retractableSidebar retractableSidebarClose'} />
                     </div>
                     <div className="sidebarItensContainer">
-                        <NavLink to={"/"} className={({ isActive }) =>
+                        <NavLink to={"/profile"} className={({ isActive }) =>
                             isActive ? isOpen ? "itemSideBar itemSidebarActive" : "itemSideBar itemSideBarClose itemSidebarActive" : isOpen ? "itemSideBar" : "itemSideBar itemSideBarClose"}>
                             <FaUser className='iconSideBar' />
                             <h3>Perfil</h3>
                         </NavLink>
 
-                        <NavLink to={"/"} className={({ isActive }) =>
+                        <NavLink to={"/dashboard"} className={({ isActive }) =>
                             isActive ? isOpen ? "itemSideBar itemSidebarActive" : "itemSideBar itemSideBarClose itemSidebarActive" : isOpen ? "itemSideBar" : "itemSideBar itemSideBarClose"}>
                             <FaChartLine className='iconSideBar' />
                             <h3>Dashboard</h3>

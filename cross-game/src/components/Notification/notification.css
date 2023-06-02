@@ -1,0 +1,60 @@
+.notification-subtitle {
+    display: flex;
+    margin-top: -15px;
+    margin-bottom: 15px;
+  }
+  
+  .notification-cardNotification {
+    background-color: #4F4F4F;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .notification-cardNotification:hover {
+    background-color: #585858;
+  }
+  
+  .notification-content {
+    display: flex;
+  }
+  
+  .notification-icon {
+    width: auto;
+    height: auto;
+    align-items: center;
+    display: flex;
+  }
+  
+  .notification-group-body {
+    margin: 0 10px;
+  }
+  
+  
+  .notification-title-notification {
+    font-size: 10px;
+    margin-bottom: 5px;
+  }
+  
+  .notification-message {
+    font-size: 8px;
+    font-family: 'Krona One'
+  }
+  
+  .notification-datetime {
+    display: flex;
+    flex-direction: column-reverse;
+    /* margin: auto; */
+    margin-left: auto;
+    font-size: 7px;
+    font-family: 'Krona One';
+    font-weight: 200;
+    align-items: flex-end;
+    width: 60px;
+  }
+  
+  .notification-cardNotification-footer {
+    margin: 10px 10px 0px 10px;
+    display: flex;
+  }

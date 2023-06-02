@@ -1,9 +1,6 @@
 .chatRoomContainerMessages {
   width: 100vw;
   display: flex;
-
-  /* height: 100vw; */
-  /* margin: 0 auto; */
 }
 
 .divPainelControllerContainer {
@@ -59,11 +56,216 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: red;
+  z-index: 2;
 }
 
 .divInformationOfFilter {
-  
+  width: 100%;
+  height: 12%;
+  display: flex;
+  align-items: center;
+  gap: 2%;
+  font-size: 0.8rem;
+  padding-left: 5%;
+}
+
+.chatRoomFilterContainer {
+  border-radius: 20px;
+  padding: 1.5%;
+  color: white;
+}
+
+.gameFilter {
+  background-color: #00FF33;
+}
+
+.greenFilter {
+  background-color: rgba(0, 255, 51, 0.1);
+}
+
+/* Players on room */
+.playersOnRoomChatRoom {
+  gap: 4%;
+  width: 98%;
+  height: 50%;
+  overflow-y: scroll;
+  min-width: 50px;
+  padding: 1%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.playersOnRoomChatRoom::-webkit-scrollbar {
+  width: 0.4rem;
+}
+
+.playersOnRoomChatRoom::-webkit-scrollbar-track {
+  background: #1e1e24;
+}
+
+.playersOnRoomChatRoom::-webkit-scrollbar-thumb {
+  background: #0e7825;
+  border-radius: 10px;
+}
+
+/*  */
+
+/* ind */
+.portraitUserContainer {
+  position: relative;
+  width: 30%;
+  height: 40%;
+  min-height: 40%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.divPortraitUserImg {
+  width: 90%;
+  max-width: 100px;
+  height: 75%;
+  min-height: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.divPortraitUserImg img {
+  width: 90%;
+  /* min-height: 50px; */
+}
+
+.divProtraitUserName {
+  display: flex;
+  width: 100%;
+  max-width: 100px;
+  margin-top: 5%;
+  word-break: break-all;
+  /* height: 25%; */
+  justify-content: center;
+  align-items: center;
+  font-size: 0.7rem;
+  color: white;
+}
+
+.portraitUserContainerEdit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 3%;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  height: 115px;
+  position: absolute;
+  border-radius: 0 20px 20px 0;
+  background-color: rgba(54, 54, 54, 0.368);
+  width: 45%;
+  right: 0;
+  transition: opacity 0.2s ease, height 0.3s ease;
+}
+
+.portraitUserContainer:hover .portraitUserContainerEdit {
+  opacity: 1;
+  height: 115px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 3%;
+}
+
+.optionsPortraitUsersDivs {
+  width: 70%;
+  height: 27%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.optionsPortraitUsersDivs img {
+  width: 50%;
+  filter: invert(20%);
+  transition: 300ms;
+}
+
+.optionsPortraitUsersDivs:hover img {
+  filter: invert(0%);
+}
+
+/*  */
+.divPainelControllOfAdminGroup {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  width: 100%;
+  height: 37%;
+}
+
+
+.divPainelControllOfAdminGroupContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 40%;
+  margin-bottom: 5%;
+}
+
+.divPrivateRoomSet {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.1% 3%;
+  background-color: green;
+  border-radius: 5px;
+  font-size: 0.7rem;
+  width: 7%;
+  cursor: pointer;
+  transition: 300ms;
+  color: white;
+}
+
+.divPrivateRoomSetWithText {
+  width: 30%;
+}
+
+.divPrivateRoomSetIsLocked {
+  background-color: #D40000;
+}
+
+.divPrivateRoomSetNotLocked {
+  background-color: #00FF33;
+}
+
+.divPrivateRoomSetText {
+  word-break: keep-all;
+}
+
+.divinviteFriendsToRoom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+  width: 60%;
+  background-color: #00FF33;
+  padding: 2.5% 0 2.5% 0;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 300ms;
+}
+
+.divinviteFriendsToRoom:hover {
+  background-color: #1ac13c;
+}
+
+.divinviteFriendsToRoom img {
+  margin-left: 5%;
+  transform: rotate(180deg);
+  filter: invert(100%);
 }
 
 .chatRoomContainerMessages .chatRoomContainerMessagesBox {
@@ -74,12 +276,11 @@
   width: 100%;
   gap: 2%;
   background-color: rgb(40, 37, 53);
-  /* background-color: red; */
 }
 
 .mainBodyChatRoom {
-  height: 100vh;
-  /* margin: -10vh 0 0vh; */
+  height: 90vh;
+  margin: -10vh 0 0vh;
   gap: 3%;
   overflow-y: scroll;
   display: flex;
@@ -105,7 +306,6 @@
   bottom: 0;
   background-color: rgb(24, 23, 23);
   width: 71%;
-  /* max-width: 600px; */
   display: flex;
   font-size: 1.5rem;
 }
@@ -143,19 +343,16 @@
   cursor: not-allowed;
 }
 
-
-
 .message {
   display: flex;
   justify-content: baseline;
   align-items: center;
-  max-width: 60vh;
+  max-width: 100vh;
   word-wrap: break-word;
-  /* background-color: red; */
 }
 
 .messageText {
-  max-width: 50vh;
+  max-width: 80vh;
   line-height: 20px;
   border-radius: 0px 25px 25px 25px;
   position: relative;
@@ -180,16 +377,17 @@
 
 .sent {
   flex-direction: row-reverse;
-  /* align-items: center; */
+  /* width: 100vw; */
+  max-width: 160vh;
 }
 
 .sent .messageText {
   color: white;
-  background: #0b93f6;
-  align-self: center;
+  background: rgba(122, 122, 122, 0.5);
+  /* align-self: center; */
+  border-radius: 25px 0px 25px 25px;
 }
 
-.received .messageText {
-  background: #e5e5ea;
-  color: black;
-}
+/* .received .messageText {
+
+} */

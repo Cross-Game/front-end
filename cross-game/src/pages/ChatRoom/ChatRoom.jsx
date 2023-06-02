@@ -1,6 +1,6 @@
 import { getAuth, signInAnonymously } from "firebase/auth";
 import { addDoc, and, collection, limit, or, orderBy, query, serverTimestamp, where } from "firebase/firestore";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuthState, useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import "./ChatRoom.css";
@@ -11,12 +11,63 @@ import { Link, NavLink, redirect, useNavigate, useParams } from "react-router-do
 import enviarIcon from "./assets/enviarIcon.svg"
 import imgTest from "../../assets/index-page/medalDiamante.svg"
 import iconBack from "./assets/arrow-right.svg"
+import iconLockYes from "./assets/lockYes.svg"
+import iconLockNo from "./assets/lockNo.svg"
+import iconClose from "./assets/closeIcon.svg"
+import iconChatNormal from "./assets/chatNormalIcon.svg"
+import iconChatAddIconUser from "./assets/chatAddUserIcon.svg"
 
-
-const auth = getAuth(app);
+// const auth = getAuth(app);
 // const auth = signInAnonymously();
 
 export const ChatRoom = () => {
+
+  let testeUsers = [
+    {
+      id: 1,
+      nomeUser: "limbo",
+      imgUser: imgTest
+    }, {
+      id: 2,
+      nomeUser: "mayra",
+      imgUser: imgTest
+    }, {
+      id: 3,
+      nomeUser: "teste",
+      imgUser: imgTest
+    }, {
+      id: 4,
+      nomeUser: "teste2",
+      imgUser: imgTest
+    }, {
+      id: 2,
+      nomeUser: "mayra",
+      imgUser: imgTest
+    }, {
+      id: 3,
+      nomeUser: "teste",
+      imgUser: imgTest
+    }, {
+      id: 4,
+      nomeUser: "teste2",
+      imgUser: imgTest
+    }, {
+      id: 2,
+      nomeUser: "mayra",
+      imgUser: imgTest
+    }, {
+      id: 3,
+      nomeUser: "teste",
+      imgUser: imgTest
+    }, {
+      id: 4,
+      nomeUser: "teste2",
+      imgUser: imgTest
+    }
+  ]
+
+  const [usersRoom, setUsersRoom] = useState(testeUsers);
+
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -48,24 +99,129 @@ export const ChatRoom = () => {
             <ExitFromRoom />
             <div className="chatRoomHeaderNameId">
               <h2 className="chatRoomHeaderName">Teste</h2>
-              <p className="chatRoomHeaderId">Id: 5</p>
+              <p className="chatRoomHeaderId">Id: {id}</p>
             </div>
           </div>
           <div className="divPainelAllInformationRoom">
-
             <div className="divInformationOfFilter">
-              
-            </div>
 
+              <div className="chatRoomFilterContainer gameFilter">
+                Valorant
+              </div>
+
+              <div className="chatRoomFilterContainer greenFilter">
+                Ranking Gold
+              </div>
+
+              <div className="chatRoomFilterContainer greenFilter">
+                Level 50
+              </div>
+            </div>
+            <div className="playersOnRoomChatRoom">
+
+              {!(usersRoom.length == 0) ? usersRoom.map((users) => (
+                <PortraitUsers nomeUser={users.nomeUser} />
+              ))
+                :
+                "Teste sem Participantes"
+              }
+
+            </div>
+            <div className="divPainelControllOfAdminGroup">
+              <div className="divPainelControllOfAdminGroupContainer">
+                <LockButton />
+                <div className="divinviteFriendsToRoom">
+                  Convide seus amigos <img src={iconBack} alt="" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <section className="chatRoomContainerMessagesBox">{<ChatBox idGroup={id} />}</section>
+        <section className="chatRoomContainerMessagesBox">
+          {<ChatBox idGroup={id} />}
+        </section>
       </div>
     </>
   );
 };
 
+export const PortraitUsers = (props) => {
+  let id = 1
+  return (
+    <>
+      <div className="portraitUserContainer">
+        <div className="divPortraitUserImg">
+          <img src={imgTest} alt="" />
+        </div>
+        <div className="divProtraitUserName">
+          {props.nomeUser == null || String.toString(props.nomeUser).trim === "" ? null : props.nomeUser}
+        </div>
+
+        <div className="portraitUserContainerEdit">
+          {id == 1 ?
+            <div className="optionsPortraitUsersDivs">
+              <img src={iconClose} alt="" />
+            </div>
+            : null}
+          <div className="optionsPortraitUsersDivs">
+            <img src={iconChatNormal} alt="" />
+          </div>
+          <div className="optionsPortraitUsersDivs">
+            <img src={iconChatAddIconUser} alt="" />
+          </div>
+        </div>
+
+      </div>
+    </>
+  )
+}
+
+export const LockButton = () => {
+  const [isPrivate, setIsPrivate] = useState(false);
+  const [showElement, setShowElement] = useState(false);
+
+  const handleMouseEnter = () => {
+    setShowElement(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowElement(false);
+  };
+
+  const handleClick = () => {
+    setIsPrivate(!isPrivate);
+  };
+
+
+  return (
+    <>
+
+
+      <div
+        className={showElement === true && isPrivate === true ?
+          "divPrivateRoomSet divPrivateRoomSetWithText divPrivateRoomSetIsLocked" :
+          showElement === false && isPrivate === true ?
+            "divPrivateRoomSet divPrivateRoomSetIsLocked"
+            : showElement === true && isPrivate === false ?
+              "divPrivateRoomSet divPrivateRoomSetWithText divPrivateRoomSetNotLocked"
+              : "divPrivateRoomSet divPrivateRoomSetNotLocked"
+        }
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleClick}
+      >
+        <img src={isPrivate ? iconLockYes : iconLockNo} alt="" />
+        {
+          showElement &&
+          <div className="divPrivateRoomSetText">{isPrivate ? "Abrir Sala" : "Fechar sala"}</div>
+        }
+      </div >
+    </>
+  )
+}
+
 export const ChatBox = (props) => {
+
   const idGroup = Number(props.idGroup);
   const dummy = useRef()
   const messagesRef = collection(databaseApp, "messages");
@@ -85,9 +241,10 @@ export const ChatBox = (props) => {
     e.preventDefault();
     // const { } = auth.currentUser;
     // const { photoURL, uid } = auth.currentUser;
+    const uid = 2;
     await addDoc(messagesRef, {
       text: formValue,
-      // uid,
+      uid,
       // photoURL,
       idGroup,
       createdAt: serverTimestamp()
@@ -116,19 +273,18 @@ export const ChatBox = (props) => {
 };
 
 export const ChatMessage = (props) => {
-  const { text } = props.message;
+  const { uid, text } = props.message;
   // const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
+  const messageClass = uid === 1 ? 'sent' : 'received';
   return (
-    <div className="message">
-      {/* <div className={`message ${messageClass}`}> */}
+    // <div className="message">
+    <div className={`message ${messageClass}`}>
       {/* <img src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} /> */}
       <img className="messageImgChatRoom" src={imgTest} />
       <p className="messageText">{text}</p>
     </div>
   );
 };
-
-
 
 export const ExitFromRoom = () => {
   const navigate = useNavigate();

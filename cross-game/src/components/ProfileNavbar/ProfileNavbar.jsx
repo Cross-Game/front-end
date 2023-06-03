@@ -32,7 +32,7 @@ function ProfileJogo(props) {
                             <img src={imgUserProfile} alt="" />
                             <div className="profileJogoEditProfileUser">
                                 <div id="nameUsername">Mauricio Maxuel</div>
-                                <div className="profileJogoIconEditProfile" onClick={() => setShowModalEditarPerfil(true)}><RiFileEditFill className="iconTiEdit" />Editar Perfil</div>
+                                <div className="profileJogoIconEditProfile" onClick={() => setShowModalEditarPerfil(true)}><RiFileEditFill className="iconTiEdit" />Editar Foto</div>
                             </div>
                         </div>
                         <div className="profileJogoDetailsUser">
@@ -77,13 +77,10 @@ function ProfileJogo(props) {
             )}
 
             {showModalEditarPerfil && (
-                <Modal title="Editar Perfil" icon={<RiFileEditFill />} temFooter={true} ativarBotao={true} textButton="Editar" iconButton={<BsCheck />} onClose={()=> setShowModalEditarPerfil(false)}>
+                <Modal title="Editar Foto" icon={<RiFileEditFill />} temFooter={true} ativarBotao={true} textButton="Editar" iconButton={<BsCheck />} onClose={()=> setShowModalEditarPerfil(false)}>
                     <div className="modalEditarPerfil-container">
                         <UserProfile nome={"Nome"} img={<BsArrowRightShort />} onClick={changeAvatar} />
-                        <label>Usuário</label>
-                        <input type="text"></input>
-                        <label>E-mail</label>
-                        <input type="text"></input>
+                        <div></div>
                     </div>
                 </Modal>
             )}

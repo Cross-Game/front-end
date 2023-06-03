@@ -1,4 +1,5 @@
 .DashboardContainer{
+    background-image: linear-gradient(150deg, #070707, #434343);
     display: flex;
     color: #0f3;
 }

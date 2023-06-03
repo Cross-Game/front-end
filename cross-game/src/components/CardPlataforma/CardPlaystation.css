@@ -1,8 +1,8 @@
 .cardPlaystation {
    /* --background: linear-gradient(to left, #f7ba2b 0%, #ea5358 100%);*/
     --background: linear-gradient(to left, rgb(65, 88, 208) 0%, rgb(65, 88, 208) 46%, rgb(65, 88, 208) 100%);
-    width: 190px;
-    height: 254px;
+    width: 18vw;
+    height: 40vh;
     padding: 5px;
     border-radius: 1rem;
     overflow: visible;

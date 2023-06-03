@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/index.jsx";
 import Cadastro from './pages/Cadastro/Cadastro.jsx';
 import Teste from './pages/Teste/index.jsx';
-import Rooms  from './pages/Rooms/Rooms.jsx';
+import { ChatRoom } from './pages/ChatRoom/ChatRoom.jsx';
+
+import Rooms from './pages/Rooms/Rooms.jsx';
 import ProfileJogo from './pages/Profile/ProfileJogo/ProfileJogo.jsx';
 import Interesse from './pages/Profile/Interesse/Interesse.jsx';
 import Feedback from './pages/Profile/Feedback/Feedback.jsx';
@@ -14,12 +16,13 @@ import Login from './pages/Login/Login.jsx';
 import Salas from './pages/Salas/salas.jsx';
 
 function routes() {
+
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/cadastro" element={<Cadastro />} />
-                <Route path="/login" element={<Login/>}/>
+                <Route path="/login" element={<Login />} />
                 <Route path="/teste" element={<Teste />} />
                 <Route path="*" element={<NotFound />} />
                 <Route path="/rooms" element={<Rooms />} />
@@ -29,8 +32,9 @@ function routes() {
                     <Route path='feedback' element={<Feedback />} />
                     <Route path='plataforma' element={<Plataforma />} />
                 </Route>
-                <Route path='/dashboard' element={<Dashboard />}/>
-                <Route path='/salas' element={<Salas />}/>
+                <Route path='/dashboard' element={<Dashboard />} />
+                <Route path='/salas' element={<Salas />} />
+                <Route path="/rooms/:id" element={<ChatRoom />} />
             </Routes>
         </BrowserRouter>
     );

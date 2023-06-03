@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Dashboard.css";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { Chart } from "react-google-charts";
 import { TbBellRingingFilled } from "react-icons/tb";
 import { MdNotificationsActive } from "react-icons/md";
+import Notification from "../../components/Notification"
 
 
 function Dashboard() {

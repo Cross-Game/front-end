@@ -1,91 +1,158 @@
 import React, { useState } from "react";
-import "./ProfileNavbar.css"
-import { TiEdit } from "react-icons/ti";
-import { TbBellRingingFilled } from "react-icons/tb";
-import imgUserProfile from "../../assets/index-page/testeImg.png"
-import medalUserProfile from "../../assets/index-page/medalOuro.svg"
-import { useNavigate } from "react-router-dom"
+import "./ProfileNavbar.css";
+import imgUserProfile from "../../assets/index-page/testeImg.png";
+import medalUserProfile from "../../assets/index-page/medalOuro.svg";
+import { useNavigate } from "react-router-dom";
 import { MdNotificationsActive } from "react-icons/md";
 import Notification from "../Notification";
 import UserProfile from "../UserProfile";
 import Modal from "../Modal";
 import { RiFileEditFill } from "react-icons/ri";
 import { BsArrowRightShort, BsCheck } from "react-icons/bs";
-
+import { USERID } from "../../data/constants";
+import axios from "axios";
 
 function ProfileJogo(props) {
-    const navigate = useNavigate();
-    const [showModalNotification, setShowModalNotification] = useState(false);
-    const [showModalEditarPerfil, setShowModalEditarPerfil] = useState(false);
+  const navigate = useNavigate();
+  const [showModalNotification, setShowModalNotification] = useState(false);
+  const [showModalEditarPerfil, setShowModalEditarPerfil] = useState(false);
+  const [image, setImage] = useState(null);
 
-    function changeAvatar(){
-        console.log("To Do")
+  const changeAvatar = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("picture", image);
+
+      await axios.patch(
+        `http://localhost:8080/user/${USERID}/picture`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("Image uploaded successfully");
+      // Faça qualquer outra ação necessária após o upload da imagem
+    } catch (error) {
+      console.error("Error uploading image", error);
     }
+  };
 
-    return (
-        <>
-            <div className="profileJogoContainer">
-                {props.sidebar}
-                <div className="profileJogoCore">
-                    <div className="profileJogoTop">
-                        <div className="profileJogoDataUser">
-                            <img src={imgUserProfile} alt="" />
-                            <div className="profileJogoEditProfileUser">
-                                <div id="nameUsername">Mauricio Maxuel</div>
-                                <div className="profileJogoIconEditProfile" onClick={() => setShowModalEditarPerfil(true)}><RiFileEditFill className="iconTiEdit" />Editar Foto</div>
-                            </div>
-                        </div>
-                        <div className="profileJogoDetailsUser">
-                            <img className="profileJogoMedalUser" src={medalUserProfile} alt="" />
-                            <div className="profileJogoXpUser">
-                                <div className="profileJogoNivelUser">Nivel: <span>Diamante</span></div>
-                                <div className="profileJogoBarsNiveis">
-                                    <div className="profileJogoBarNivelUm"></div>
-                                    <div className="profileJogoBarNivelDois"></div>
-                                    <div className="profileJogoBarNivelTres"></div>
-                                    <div className="profileJogoBarNivelQuatro"></div>
-                                </div>
-                            </div>
-                            <MdNotificationsActive className="profileJogoIconNotificacao" onClick={() => setShowModalNotification(true)} />
-                        </div>
-                    </div>
-                    <div className="profileJogoCenter" >
+  const handleImageChange = (event) => {
+    setImage(event.target.files[0]);
+  };
 
-                        <div style={props.profiles} className="profileJogoButtonNvigation"
-                            onClick={() => navigate("/profile")}
-                        >Profiles</div>
-                        <div style={props.interesses} className="profileJogoButtonNvigation"
-                            onClick={() => navigate("/profile/interesse")}
-                        > Interesses</div>
-                        <div style={props.feedbacks} className="profileJogoButtonNvigation"
-                            onClick={() => navigate("/profile/feedback")}
-                        >Feedbacks</div>
-                        <div style={props.plataformas} className="profileJogoButtonNvigation"
-                            onClick={() => navigate("/profile/plataforma")}
-                        >Plataformas</div>
-
-
-                    </div>
-                    <div>
-                        {props.adicionar}
-                    </div>
+  return (
+    <>
+      <div className="profileJogoContainer">
+        {props.sidebar}
+        <div className="profileJogoCore">
+          <div className="profileJogoTop">
+            <div className="profileJogoDataUser">
+              <img src={imgUserProfile} alt="" />
+              <div className="profileJogoEditProfileUser">
+                <div id="nameUsername">Mauricio Maxuel</div>
+                <div
+                  className="profileJogoIconEditProfile"
+                  onClick={() => setShowModalEditarPerfil(true)}
+                >
+                  <RiFileEditFill className="iconTiEdit" />
+                  Editar Perfil
                 </div>
+              </div>
             </div>
+            <div className="profileJogoDetailsUser">
+              <img
+                className="profileJogoMedalUser"
+                src={medalUserProfile}
+                alt=""
+              />
+              <div className="profileJogoXpUser">
+                <div className="profileJogoNivelUser">
+                  Nivel: <span>Diamante</span>
+                </div>
+                <div className="profileJogoBarsNiveis">
+                  <div className="profileJogoBarNivelUm"></div>
+                  <div className="profileJogoBarNivelDois"></div>
+                  <div className="profileJogoBarNivelTres"></div>
+                  <div className="profileJogoBarNivelQuatro"></div>
+                </div>
+              </div>
+              <MdNotificationsActive
+                className="profileJogoIconNotificacao"
+                onClick={() => setShowModalNotification(true)}
+              />
+            </div>
+          </div>
+          <div className="profileJogoCenter">
+            <div
+              style={props.profiles}
+              className="profileJogoButtonNvigation"
+              onClick={() => navigate("/profile")}
+            >
+              Profiles
+            </div>
+            <div
+              style={props.interesses}
+              className="profileJogoButtonNvigation"
+              onClick={() => navigate("/profile/interesse")}
+            >
+              Interesses
+            </div>
+            <div
+              style={props.feedbacks}
+              className="profileJogoButtonNvigation"
+              onClick={() => navigate("/profile/feedback")}
+            >
+              Feedbacks
+            </div>
+            <div
+              style={props.plataformas}
+              className="profileJogoButtonNvigation"
+              onClick={() => navigate("/profile/plataforma")}
+            >
+              Plataformas
+            </div>
+          </div>
+          <div>{props.adicionar}</div>
+        </div>
+      </div>
 
-            {showModalNotification && (
-                <Notification onClose={() => setShowModalNotification(false)} />
-            )}
+      {showModalNotification && (
+        <Notification onClose={() => setShowModalNotification(false)} />
+      )}
 
-            {showModalEditarPerfil && (
-                <Modal title="Editar Foto" icon={<RiFileEditFill />} temFooter={true} ativarBotao={true} textButton="Editar" iconButton={<BsCheck />} onClose={()=> setShowModalEditarPerfil(false)}>
-                    <div className="modalEditarPerfil-container">
-                        <UserProfile nome={"Nome"} img={<BsArrowRightShort />} onClick={changeAvatar} />
-                        <div></div>
-                    </div>
-                </Modal>
-            )}
-        </>
-    )
+      {showModalEditarPerfil && (
+        <Modal
+          title="Editar Perfil"
+          icon={<RiFileEditFill />}
+          temFooter={true}
+          ativarBotao={true}
+          textButton="Editar"
+          iconButton={<BsCheck />}
+          onClose={() => setShowModalEditarPerfil(false)}
+        >
+          <div className="modalEditarPerfil-container">
+            <UserProfile
+              nome={"Nome"}
+              img={<BsArrowRightShort />}
+              onClick={changeAvatar}
+            />
+            <div>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+              <button onClick={changeAvatar}>Upload</button>
+            </div>
+          </div>
+        </Modal>
+      )}
+    </>
+  );
 }
 
 export default ProfileJogo;

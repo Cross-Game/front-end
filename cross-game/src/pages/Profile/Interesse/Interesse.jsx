@@ -117,7 +117,7 @@ function ProfileJogo() {
                 {showModalAdicionarInteresse && (
                     <Modal title="Interesses" icon={<MdOutlineInterests />} temFooter={true} ativarBotao={true} textButton="Adicionar" iconButton={<BsCheck />} clearAll={true} onClear={limparInteresses} onClick={cadastrarInteresse} onClose={()=> setShowModalAdicionarInteresse(false)}>
                         <div className="ModalCadastrarInteresse-body">
-                            <UserProfile nome={"Nome"} img={<BsArrowRightShort />} />
+                            {/* <UserProfile nome={"Nome"} img={<BsArrowRightShort />} /> */}
                             
                             Interesse
                             <div className="ModalCadastrarInteresse-interesses">

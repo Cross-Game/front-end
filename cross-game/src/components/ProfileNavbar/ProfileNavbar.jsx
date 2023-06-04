@@ -84,15 +84,10 @@ function ProfileJogo(props) {
                         <input type="text"></input>
                         <label>E-mail</label>
                         <input type="text"></input>
-                        <label>Nova Senha</label>
-                        <input type="text"></input>
-                        <label>Confirmar Senha</label>
-                        <input type="text"></input>
                     </div>
                 </Modal>
             )}
         </>
-
     )
 }
 

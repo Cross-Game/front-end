@@ -193,7 +193,6 @@ function Cadastro() {
                     }),
                 }).then(res => res.json())
                 .then(data =>
-                    sessionStorage.setItem("Acess_Token", data.encodedToken),
                     window.location.href = "http://localhost:3000/login"
                 )
             )

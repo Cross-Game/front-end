@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import "./style.css"
 import { NavLink } from "react-router-dom";
 import { FaUser, FaChartLine, FaUserPlus, FaUsers, FaDoorClosed, FaChevronLeft } from "react-icons/fa";
-import imgProfileMock from '../../assets/index-page/medalOuro.svg'
 
 function Sidebar() {
 
@@ -29,9 +28,8 @@ function Sidebar() {
                 <div className={isOpen ? "sidebarContent" : "sidebarContent sidebarContentClose"}>
 
                     <div className="sidebarProfileContainer">
-                        <div className={isOpen ? "sideBarProfileInformation" : "sideBarProfileInformation sideBarProfileInformationClose"}>
-                            <img src={imgProfileMock} alt="" />
-                            <h3>{"Mauricio"}</h3>
+                        <div className={"sideBarProfileInformation"}>
+                            <h3>{sessionStorage.getItem("NICKNAME")}</h3>
                         </div>
                         <FaChevronLeft onClick={toggle} className={isOpen ? 'retractableSidebar' : 'retractableSidebar retractableSidebarClose'} />
                     </div>

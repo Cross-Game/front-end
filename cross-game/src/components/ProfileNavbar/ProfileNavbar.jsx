@@ -31,7 +31,7 @@ function ProfileJogo(props) {
                         <div className="profileJogoDataUser">
                             <img src={imgUserProfile} alt="" />
                             <div className="profileJogoEditProfileUser">
-                                <div id="nameUsername">Mauricio Maxuel</div>
+                                <div id="nameUsername">{sessionStorage.getItem("NICKNAME")}</div>
                                 <div className="profileJogoIconEditProfile" onClick={() => setShowModalEditarPerfil(true)}><RiFileEditFill className="iconTiEdit" />Editar Perfil</div>
                             </div>
                         </div>

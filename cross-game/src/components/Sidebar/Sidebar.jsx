@@ -1,10 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./style.css"
 import { NavLink } from "react-router-dom";
 import { FaUser, FaChartLine, FaUserPlus, FaUsers, FaDoorClosed, FaChevronLeft } from "react-icons/fa";
 import imgProfileMock from '../../assets/index-page/medalOuro.svg'
 
 function Sidebar() {
+
+    useEffect(() => {
+        if (sessionStorage.getItem("ACESS_TOKEN_GOOGLE") === null) {
+            window.location.href = "http://localhost:3000/login";
+        }
+    }, []);
+
+    const logout = () => {
+        sessionStorage.removeItem("ID", )
+        sessionStorage.removeItem("ACESS_TOKEN")
+        sessionStorage.removeItem("ACESS_TOKEN_GOOGLE")
+        sessionStorage.removeItem("EMAIL")
+        sessionStorage.removeItem("ROLE")
+        sessionStorage.removeItem("NICKNAME")
+    }
+
     const [isOpen, setIsOpen] = useState(true);
     const toggle = () => setIsOpen(!isOpen);
     return (
@@ -45,7 +61,7 @@ function Sidebar() {
                         </NavLink>
                     </div>
                     <div className={isOpen ? "sidebarLogoutContainer" : "sidebarLogoutContainer sidebarLogoutContainerClose"}>
-                        <NavLink to={"/"} className={({ isActive, isPending }) =>
+                        <NavLink onClick={logout} to={"/"}  className={({ isActive, isPending }) =>
                             isPending ? "" : isActive ? "" : isOpen ? "logoutSidebar" : "logoutSidebar logoutSidebarClose"}>
                             <FaDoorClosed className='iconSideBar' />
                             <h3>Sair</h3>

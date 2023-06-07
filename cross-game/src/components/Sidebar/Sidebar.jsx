@@ -6,7 +6,7 @@ import { FaUser, FaChartLine, FaUserPlus, FaUsers, FaDoorClosed, FaChevronLeft }
 function Sidebar() {
 
     useEffect(() => {
-        if (sessionStorage.getItem("ACESS_TOKEN_GOOGLE") === null) {
+        if (sessionStorage.getItem("ACESS_TOKEN") === null) {
             window.location.href = "http://localhost:3000/login";
         }
     }, []);

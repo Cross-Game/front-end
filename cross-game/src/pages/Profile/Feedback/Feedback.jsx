@@ -16,7 +16,7 @@ function ProfileJogo() {
                 Authorization: 'Bearer ' + sessionStorage.getItem("ACESS_TOKEN")
             }
         };
-        axios.get(`http://localhost:8080/feedbacks/1`, config)
+        axios.get(`http://localhost:8080/feedbacks/${sessionStorage.getItem("ID")}`, config)
             .then(response => {
                 setFeedback(response.data)
                 console.log(response.data)

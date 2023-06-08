@@ -6,6 +6,8 @@ import axios from "axios";
 import Toast from "../../components/Toast";
 import { LoginSocialGoogle } from "reactjs-social-login";
 import { updateConstants } from "../../data/constants";
+import {currentURL} from "../../data/constants"
+
 
 function Login() {
   const [mostrarSenha, setMostrarSenha] = useState(false);
@@ -121,7 +123,7 @@ function Login() {
     await setPassword(password);
     await axios
       .patch(
-        `${currentUrl}/users/update-password-by-username-email`,
+        `${currentURL}/users/update-password-by-username-email`,
         {
           username: usuario,
           email: email,
@@ -189,7 +191,7 @@ function Login() {
     var usuarioTeste = await sessionStorage.getItem("NICKNAME")
     var passwordTeste = await sessionStorage.getItem("ACESS_TOKEN")
     await axios
-      .post(`${currentUrl}/user-auth`, { username: usuarioTeste, password: passwordTeste }, {
+      .post(`${currentURL}/user-auth`, { username: usuarioTeste, password: passwordTeste }, {
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
           'Content-Type': 'application/json'

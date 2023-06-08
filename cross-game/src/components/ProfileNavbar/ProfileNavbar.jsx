@@ -16,7 +16,7 @@ function ProfileJogo(props) {
   const navigate = useNavigate();
   const [showModalNotification, setShowModalNotification] = useState(false);
   const [showModalEditarPerfil, setShowModalEditarPerfil] = useState(false);
-  const [imageData, setImageData] = useState('');
+  const [imageData, setImageData] = useState(sessionStorage.getItem("IMAGEM"));
 
   useEffect(() => {
 
@@ -35,8 +35,8 @@ function ProfileJogo(props) {
           ''  
           )
       );
-      console.log(base64Image)
-      setImageData(base64Image);
+      
+      sessionStorage.setItem("IMAGEM", base64Image)
     }).catch((error) => {
       console.error('Erro ao obter a imagem do perfil:', error);
     });

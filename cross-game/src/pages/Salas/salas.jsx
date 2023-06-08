@@ -247,7 +247,7 @@ function Salas() {
                 <textarea className="my-textarea" value={descricaoSalaCriar} onChange={(e) => setDescricaoSalaCriar(e.target.value)}></textarea>
               </div>
     
-                <div className="filtro_horario">
+              <div className="filtro_horario">
               <form>
               <p className="titleFiltro">Quando?</p>
               <label><input type="radio" name='quando' value='agora' onFocus={handleInputFocus} onBlur={handleInputBlur} checked/> Agora</label>

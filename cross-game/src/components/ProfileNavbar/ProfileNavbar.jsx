@@ -44,81 +44,55 @@ function ProfileJogo(props) {
     setImage(event.target.files[0]);
   };
 
-  return (
-    <>
-      <div className="profileJogoContainer">
-        {props.sidebar}
-        <div className="profileJogoCore">
-          <div className="profileJogoTop">
-            <div className="profileJogoDataUser">
-              <img src={imgUserProfile} alt="" />
-              <div className="profileJogoEditProfileUser">
-                <div id="nameUsername">Mauricio Maxuel</div>
-                <div
-                  className="profileJogoIconEditProfile"
-                  onClick={() => setShowModalEditarPerfil(true)}
-                >
-                  <RiFileEditFill className="iconTiEdit" />
-                  Editar Perfil
+    return (
+        <>
+            <div className="profileJogoContainer">
+                {props.sidebar}
+                <div className="profileJogoCore">
+                    <div className="profileJogoTop">
+                        <div className="profileJogoDataUser">
+                            <img src={imgUserProfile} alt="" />
+                            <div className="profileJogoEditProfileUser">
+                                <div id="nameUsername">{sessionStorage.getItem("NICKNAME")}</div>
+                                <div className="profileJogoIconEditProfile" onClick={() => setShowModalEditarPerfil(true)}><RiFileEditFill className="iconTiEdit" />Editar Perfil</div>
+                            </div>
+                        </div>
+                        <div className="profileJogoDetailsUser">
+                            <img className="profileJogoMedalUser" src={medalUserProfile} alt="" />
+                            <div className="profileJogoXpUser">
+                                <div className="profileJogoNivelUser">Nivel: <span>Diamante</span></div>
+                                <div className="profileJogoBarsNiveis">
+                                    <div className="profileJogoBarNivelUm"></div>
+                                    <div className="profileJogoBarNivelDois"></div>
+                                    <div className="profileJogoBarNivelTres"></div>
+                                    <div className="profileJogoBarNivelQuatro"></div>
+                                </div>
+                            </div>
+                            <MdNotificationsActive className="profileJogoIconNotificacao" onClick={() => setShowModalNotification(true)} />
+                        </div>
+                    </div>
+                    <div className="profileJogoCenter" >
+
+                        <div style={props.profiles} className="profileJogoButtonNvigation"
+                            onClick={() => navigate("/profile")}
+                        >Profiles</div>
+                        <div style={props.interesses} className="profileJogoButtonNvigation"
+                            onClick={() => navigate("/profile/interesse")}
+                        > Interesses</div>
+                        <div style={props.feedbacks} className="profileJogoButtonNvigation"
+                            onClick={() => navigate("/profile/feedback")}
+                        >Feedbacks</div>
+                        <div style={props.plataformas} className="profileJogoButtonNvigation"
+                            onClick={() => navigate("/profile/plataforma")}
+                        >Plataformas</div>
+
+
+                    </div>
+                    <div>
+                        {props.adicionar}
+                    </div>
                 </div>
-              </div>
             </div>
-            <div className="profileJogoDetailsUser">
-              <img
-                className="profileJogoMedalUser"
-                src={medalUserProfile}
-                alt=""
-              />
-              <div className="profileJogoXpUser">
-                <div className="profileJogoNivelUser">
-                  Nivel: <span>Diamante</span>
-                </div>
-                <div className="profileJogoBarsNiveis">
-                  <div className="profileJogoBarNivelUm"></div>
-                  <div className="profileJogoBarNivelDois"></div>
-                  <div className="profileJogoBarNivelTres"></div>
-                  <div className="profileJogoBarNivelQuatro"></div>
-                </div>
-              </div>
-              <MdNotificationsActive
-                className="profileJogoIconNotificacao"
-                onClick={() => setShowModalNotification(true)}
-              />
-            </div>
-          </div>
-          <div className="profileJogoCenter">
-            <div
-              style={props.profiles}
-              className="profileJogoButtonNvigation"
-              onClick={() => navigate("/profile")}
-            >
-              Profiles
-            </div>
-            <div
-              style={props.interesses}
-              className="profileJogoButtonNvigation"
-              onClick={() => navigate("/profile/interesse")}
-            >
-              Interesses
-            </div>
-            <div
-              style={props.feedbacks}
-              className="profileJogoButtonNvigation"
-              onClick={() => navigate("/profile/feedback")}
-            >
-              Feedbacks
-            </div>
-            <div
-              style={props.plataformas}
-              className="profileJogoButtonNvigation"
-              onClick={() => navigate("/profile/plataforma")}
-            >
-              Plataformas
-            </div>
-          </div>
-          <div>{props.adicionar}</div>
-        </div>
-      </div>
 
       {showModalNotification && (
         <Notification onClose={() => setShowModalNotification(false)} />

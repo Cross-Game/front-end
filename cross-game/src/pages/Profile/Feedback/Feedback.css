@@ -162,3 +162,14 @@
   justify-content: center;
   align-items: center;
 }
+
+.ProfileFeedbackValidacao{
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: medium;
+  text-align: center;
+}

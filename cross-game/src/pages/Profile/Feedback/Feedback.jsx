@@ -30,7 +30,7 @@ function ProfileJogo() {
         return (
             <>
                 <div className="ProfileFeedbackContainer" id="FeedbackUsername">
-                    {feedback.map((feedbackItem, index) => (
+                    {feedback.length > 0 ? feedback.map((feedbackItem, index) => (
                     <div className="ProfileFeedbackCard" key={index}>
                         <div className="ProfileFeedbackCardTop">
                             <div className="ProfileFeedbackCardTopFistChild">
@@ -51,7 +51,7 @@ function ProfileJogo() {
                             </div>
                         </div>
                     </div>
-                ))}
+                )) : <p className="ProfileFeedbackValidacao">Nenhum Feedback encontrado para o usuário.</p>}
                 </div>
             </>
         )

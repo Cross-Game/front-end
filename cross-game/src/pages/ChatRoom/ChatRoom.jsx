@@ -85,7 +85,7 @@ export const ChatRoom = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [showModalConvidar, setShowModalConvidar] = useState(true);
+  const [showModalConvidar, setShowModalConvidar] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {

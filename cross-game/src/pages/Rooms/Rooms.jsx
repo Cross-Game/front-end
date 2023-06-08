@@ -3,6 +3,7 @@ import './Rooms.css'
 import Sidebar from '../../components/Sidebar/Sidebar';
 import CardRoom from '../../components/CardRoom/CardRoom';
 import axios from "axios"
+import { currentURL } from '../../data/constants';
 // import { useHistory } from 'react-router-dom';
 // import { use } from 'react-router-dom';
 
@@ -13,7 +14,7 @@ function Rooms() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get('http://localhost:8081/team-rooms');
+                const res = await axios.get(`${currentURL}/team-rooms`);
                 setRooms(res.data);
                 setIsLoading(false);
             } catch (error) {
@@ -34,14 +35,14 @@ function Rooms() {
                             <input type="text" className='inputRooms' placeholder='Buscar salas' />
                         </div>
                         <div className="divRoomsAllContainer">
-                            {rooms == [] || rooms.length == 0 || null || undefined ?
+                            {rooms === [] || rooms.length === 0 || null || undefined ?
 
                                 <NothingContentRooms
                                     text1={"Não temos nenhuma sala pública"}
                                     text2={"Seja o primeiro a criar"}
                                     isInteractive={true}
                                 />
-                                
+
                                 : rooms.map((element) => (
                                     <React.Fragment key={element.id}>
                                         <CardRoom nomeEquipe={element.roomName} faltantes={element.capacity} gameName={element.gameName} rankGame={element.rankGame} levelGame={element.levelGame} descricao={element.description} isClick={false} idGroup={element.id} />

@@ -9,7 +9,7 @@ import UserProfile from "../UserProfile";
 import Modal from "../Modal";
 import { RiFileEditFill } from "react-icons/ri";
 import { BsArrowRightShort, BsCheck } from "react-icons/bs";
-import { USERID } from "../../data/constants";
+import { USERID, currentURL } from "../../data/constants";
 import axios from "axios";
 import Toast from "../Toast";
 import medalPrata from '../../assets/index-page/medalPrata.svg'
@@ -30,7 +30,7 @@ function ProfileJogo(props) {
       formData.append("picture", image);
 
       await axios.patch(
-        `http://localhost:8080/user/${USERID}/picture`,
+        `${currentURL}/user/${USERID}/picture`,
         formData,
         {
           headers: {

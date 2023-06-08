@@ -121,7 +121,7 @@ function Login() {
     await setPassword(password);
     await axios
       .patch(
-        "http://localhost:8080/users/update-password-by-username-email",
+        `${currentUrl}/users/update-password-by-username-email`,
         {
           username: usuario,
           email: email,
@@ -189,7 +189,7 @@ function Login() {
     var usuarioTeste = await sessionStorage.getItem("NICKNAME")
     var passwordTeste = await sessionStorage.getItem("ACESS_TOKEN")
     await axios
-      .post("http://localhost:8080/user-auth", { username: usuarioTeste, password: passwordTeste }, {
+      .post(`${currentUrl}/user-auth`, { username: usuarioTeste, password: passwordTeste }, {
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
           'Content-Type': 'application/json'

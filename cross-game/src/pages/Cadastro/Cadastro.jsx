@@ -9,6 +9,7 @@ import imagemLol from '../Cadastro/assets/leagueOfLegendsWallpapers.jpg'
 import imagemValorant from '../Cadastro/assets/Fade 1.jpg'
 import imagemTeamF from '../Cadastro/assets/teamFight.png'
 
+import {currentURL} from "../../data/constants"
 
 
 
@@ -173,7 +174,7 @@ function Cadastro() {
 
 
 
-        fetch(`${currentUrl}/users`, {
+        fetch(`${currentURL}/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -182,7 +183,7 @@ function Cadastro() {
         })
             .then(response => response.json())
             .then(data =>
-                fetch(`${currentUrl}/user-auth`, {
+                fetch(`${currentURL}/user-auth`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -193,11 +194,13 @@ function Cadastro() {
                     }),
                 }).then(res => res.json())
                     .then(data =>
+                        console.log(currentURL),
                         window.location.href = "http://localhost:3000/login"
                     )
             )
             .catch(error =>
-                console.error(error));
+                console.error(error),
+                console.log(currentURL));
 
     }
 

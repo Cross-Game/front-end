@@ -6,8 +6,9 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import "./ChatRoom.css";
 import { app, databaseApp } from "../../data/firebaseConfig";
 import { Link, NavLink, redirect, useNavigate, useParams } from "react-router-dom";
-
-
+import { TOKEN } from "../../data/constants";
+import { USERID } from "../../data/constants";
+import axios from "axios";
 
 import enviarIcon from "./assets/enviarIcon.svg"
 import imgTest from "../../assets/index-page/medalDiamante.svg"
@@ -18,11 +19,14 @@ import iconClose from "./assets/closeIcon.svg"
 import iconChatNormal from "./assets/chatNormalIcon.svg"
 import iconChatAddIconUser from "./assets/chatAddUserIcon.svg"
 import Button from "../../components/Button";
-import { BsArrowRightShort, BsPersonFillAdd } from "react-icons/bs";
+import { BsArrowRightShort, BsFillChatLeftTextFill, BsFillStarFill, BsPersonFillAdd } from "react-icons/bs";
 import UserProfile from "../../components/UserProfile";
 import Modal from "../../components/Modal";
 import { HiLink } from "react-icons/hi";
-import { MdContentCopy } from "react-icons/md";
+import { MdContentCopy, MdFeedback, MdOutlineFeedback } from "react-icons/md";
+import { RiCloseLine } from "react-icons/ri";
+
+
 
 // const auth = getAuth(app);
 // const auth = signInAnonymously();
@@ -184,6 +188,45 @@ export const ChatRoom = () => {
 
 export const PortraitUsers = (props) => {
   let id = 1  /* TODO: id logado  */
+
+  const [showModalFeedback, setShowModalFeedback] = useState(false);
+  
+  const [jogadorSelecionado, setJogadorSelecionado] = useState({id: 1,nome: 'João Silva',foto: 'https://example.com/joao_silva.jpg',idade: 27,posicao: 'Atacante',pais: 'Brasil'},);
+  const [ratingHabilidade, setRatingHabilidade] = useState(0);
+  const [ratingComportamento, setRatingComportamento] = useState(0);
+  const [comentarioFeedback, setComentarioFeedback] = useState('');
+
+  const [resetAvaliacao, setResetAvaliacao] = useState(false);
+  function limparModalFeedback() {
+    setRatingHabilidade(0);
+    setRatingComportamento(0);
+    setComentarioFeedback('');
+    console.log("Limpando Modal Feedback")
+    setResetAvaliacao(!resetAvaliacao);
+  }
+
+  function enviarFeedback() {
+    console.log("Chamei enviar feedback")
+    axios.post(`http://localhost:8080/feedbacks/${USERID}`, 
+    {
+      userGivenFeedback: jogadorSelecionado.nome,
+      behavior: ratingComportamento,
+      skill: ratingHabilidade,
+      feedbackText: comentarioFeedback
+    }, 
+    {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`
+      }
+    })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+  
   return (
     <>
       <div className="portraitUserContainer">
@@ -197,18 +240,46 @@ export const PortraitUsers = (props) => {
         <div className="portraitUserContainerEdit"> {/* TODO: alterar abaixo para verificar se usuario logado é owner da sala */}
           {id === 1 ?
             <div className="optionsPortraitUsersDivs">
-              <img src={iconClose} alt="" />
+              <RiCloseLine/>
             </div>
             : null}
           <div className="optionsPortraitUsersDivs">
-            <img src={iconChatNormal} alt="" />
+            <BsFillChatLeftTextFill/>
           </div>
-          <div className="optionsPortraitUsersDivs">
-            <img src={iconChatAddIconUser} alt="" />
+          <div className="optionsPortraitUsersDivs" onClick={()=> setShowModalFeedback(true)}>
+            <MdOutlineFeedback/>
           </div>
         </div>
-
       </div>
+
+      {showModalFeedback && (
+            <Modal title='Feedback' icon={<MdFeedback/>} clearAll={true}  temFooter='true' ativarBotao='true' textButton="Enviar avaliação" iconButton={<BsArrowRightShort/>} onClose={()=> setShowModalFeedback(false)} onClear={() => limparModalFeedback()} onClickButton={enviarFeedback}>
+              <UserProfile 
+                nome={jogadorSelecionado.nome}   
+                img={jogadorSelecionado.foto}  
+                />
+
+                <div className="salas-group-avaliacao">
+
+                <div className="salas-modalFeedback-avaliacao ">
+                  Habilidade
+                  <Avaliacao initialValue={ratingHabilidade} setRating={setRatingHabilidade} key={`habilidade-${resetAvaliacao}`}/>
+                </div>
+
+                <div className="salas-modalFeedback-avaliacao ">
+                  Comportamento
+                  <Avaliacao initialValue={ratingComportamento} setRating={setRatingComportamento} key={`comportamento-${resetAvaliacao}`}/>
+                </div>
+                  
+
+                </div>
+
+                <div className="salas-modalFeedback-avaliacao-comentario">
+                  <span>Comentário</span>
+                  <textarea className="my-textarea" value={comentarioFeedback} onChange={(e) => setComentarioFeedback(e.target.value)}></textarea>
+                </div>
+            </Modal>
+        )}
     </>
   )
 }
@@ -337,6 +408,65 @@ export const ExitFromRoom = () => {
     </>
   )
 }
+
+const Avaliacao = ({ initialValue, setRating, reset }) => {
+  var [avaliacao, setAvaliacao] = useState(initialValue);
+  var [tempAvaliacao, setTempAvaliacao] = useState(0);
+
+  useEffect(() => {
+    if (reset) {
+      setAvaliacao(0);
+    }
+  }, [reset]);
+
+
+  const handleClick = (value) => {
+    if (value === avaliacao) {
+      setAvaliacao(0);
+      setRating(0);
+    } else {
+      setAvaliacao(value);
+      setRating(value);
+    }
+  };
+
+
+  const handleMouseEnter = (value) => {
+    setTempAvaliacao(value);
+  };
+
+  const handleMouseLeave = () => {
+    setTempAvaliacao(0);
+  };
+
+  const getStarColor = (index) => {
+    if (index < tempAvaliacao || index < avaliacao) {
+      return "#19FF00";
+    } else {
+      return "#e4e5e9";
+    }
+  };
+
+  return (
+    <div className="estrelinhas">
+      {[...Array(5)].map((_, index) => {
+        const value = index + 1;
+        return (
+          <BsFillStarFill
+            key={value}
+            onClick={() => handleClick(value)}
+            color={getStarColor(index)}
+            size={14}
+            style={{ marginRight: 5, cursor: "pointer" }}
+            onMouseEnter={() => handleMouseEnter(value)}
+            onMouseLeave={() => handleMouseLeave()}
+          />
+        );
+      })}
+    </div>
+  );
+};
+
 
 //   export const SignIn = () => {
 //     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);

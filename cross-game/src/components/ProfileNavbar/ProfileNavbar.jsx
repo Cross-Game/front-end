@@ -1,26 +1,48 @@
 import React, { useState } from "react";
-import "./ProfileNavbar.css"
-import { TiEdit } from "react-icons/ti";
-import { TbBellRingingFilled } from "react-icons/tb";
-import imgUserProfile from "../../assets/index-page/testeImg.png"
-import medalUserProfile from "../../assets/index-page/medalOuro.svg"
-import { useNavigate } from "react-router-dom"
+import "./ProfileNavbar.css";
+import imgUserProfile from "../../assets/index-page/testeImg.png";
+import medalUserProfile from "../../assets/index-page/medalOuro.svg";
+import { useNavigate } from "react-router-dom";
 import { MdNotificationsActive } from "react-icons/md";
 import Notification from "../Notification";
 import UserProfile from "../UserProfile";
 import Modal from "../Modal";
 import { RiFileEditFill } from "react-icons/ri";
 import { BsArrowRightShort, BsCheck } from "react-icons/bs";
-
+import { USERID } from "../../data/constants";
+import axios from "axios";
 
 function ProfileJogo(props) {
-    const navigate = useNavigate();
-    const [showModalNotification, setShowModalNotification] = useState(false);
-    const [showModalEditarPerfil, setShowModalEditarPerfil] = useState(false);
+  const navigate = useNavigate();
+  const [showModalNotification, setShowModalNotification] = useState(false);
+  const [showModalEditarPerfil, setShowModalEditarPerfil] = useState(false);
+  const [image, setImage] = useState(null);
 
-    function changeAvatar(){
-        console.log("To Do")
+  const changeAvatar = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("picture", image);
+
+      await axios.patch(
+        `http://localhost:8080/user/${USERID}/picture`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("Image uploaded successfully");
+      // Faça qualquer outra ação necessária após o upload da imagem
+    } catch (error) {
+      console.error("Error uploading image", error);
     }
+  };
+
+  const handleImageChange = (event) => {
+    setImage(event.target.files[0]);
+  };
 
     return (
         <>
@@ -31,7 +53,7 @@ function ProfileJogo(props) {
                         <div className="profileJogoDataUser">
                             <img src={imgUserProfile} alt="" />
                             <div className="profileJogoEditProfileUser">
-                                <div id="nameUsername">Mauricio Maxuel</div>
+                                <div id="nameUsername">{sessionStorage.getItem("NICKNAME")}</div>
                                 <div className="profileJogoIconEditProfile" onClick={() => setShowModalEditarPerfil(true)}><RiFileEditFill className="iconTiEdit" />Editar Perfil</div>
                             </div>
                         </div>
@@ -72,28 +94,39 @@ function ProfileJogo(props) {
                 </div>
             </div>
 
-            {showModalNotification && (
-                <Notification onClose={() => setShowModalNotification(false)} />
-            )}
+      {showModalNotification && (
+        <Notification onClose={() => setShowModalNotification(false)} />
+      )}
 
-            {showModalEditarPerfil && (
-                <Modal title="Editar Perfil" icon={<RiFileEditFill />} temFooter={true} ativarBotao={true} textButton="Editar" iconButton={<BsCheck />} onClose={()=> setShowModalEditarPerfil(false)}>
-                    <div className="modalEditarPerfil-container">
-                        <UserProfile nome={"Nome"} img={<BsArrowRightShort />} onClick={changeAvatar} />
-                        <label>Usuário</label>
-                        <input type="text"></input>
-                        <label>E-mail</label>
-                        <input type="text"></input>
-                        <label>Nova Senha</label>
-                        <input type="text"></input>
-                        <label>Confirmar Senha</label>
-                        <input type="text"></input>
-                    </div>
-                </Modal>
-            )}
-        </>
-
-    )
+      {showModalEditarPerfil && (
+        <Modal
+          title="Editar Perfil"
+          icon={<RiFileEditFill />}
+          temFooter={true}
+          ativarBotao={true}
+          textButton="Editar"
+          iconButton={<BsCheck />}
+          onClose={() => setShowModalEditarPerfil(false)}
+        >
+          <div className="modalEditarPerfil-container">
+            <UserProfile
+              nome={"Nome"}
+              img={<BsArrowRightShort />}
+              onClick={changeAvatar}
+            />
+            <div>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+              <button onClick={changeAvatar}>Upload</button>
+            </div>
+          </div>
+        </Modal>
+      )}
+    </>
+  );
 }
 
 export default ProfileJogo;

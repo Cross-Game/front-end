@@ -9,6 +9,7 @@
     align-items: center;
     justify-content: flex-start;
     flex-wrap: wrap;
+    font-size: x-small
 }
 
 .ProfileFeedbackCard {
@@ -70,6 +71,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: x-small
 }
 
 .ProfileFeedbackCardTop img{
@@ -103,8 +105,9 @@
   overflow: hidden;
   overflow-y: scroll;
   border: 2px solid rgb(207, 207, 207);
-  color: #fff;
-  font-size: smaller;
+  color: rgb(255, 255, 255);
+  font-size: small;
+  white-space: wrap;
   font-weight: 100;
   border-radius: 20px;
 }
@@ -151,9 +154,19 @@
   font-weight: 700;
   font-size: small;
   color: rgb(255, 255, 255);
-  background-color: #000;
   border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.ProfileFeedbackValidacao{
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: medium;
+  text-align: center;
 }

@@ -6,33 +6,8 @@
     align-items: center;
     justify-content: flex-start;
     gap: 10%;
+    justify-content: space-evenly;
 }
-
-.ModalPlataforma-cadastrarPlataforma .cardPc {
-    width:  20vw;
-    height: 30vh;
-    margin: 10px;
-}
-
-.ModalPlataforma-cadastrarPlataforma .cardXbox {
-    width:  20vw;
-    height: 30vh;
-    margin: 10px;
-}
-
-.ModalPlataforma-cadastrarPlataforma .cardPlaystation {
-    width:  20vw;
-    height: 30vh;
-    margin: 10px;
-}
-
-.ModalPlataforma-cadastrarPlataforma .cardMobile {
-    width:  20vw;
-    height: 30vh;
-    margin: 10px;
-}
-
-
 
 .ModalPlataforma-cadastrarPlataforma {
     display: flex;
@@ -41,4 +16,100 @@
     max-height: 70vh;   
     margin: auto;
     max-width: 80vw;
+}
+
+
+.ModalPlataforma-cadastrarPlataforma .cardPc {
+    width:  20vw;
+    height: 30vh;
+    margin: 10px;
+    --background: 0;
+}
+
+.ModalPlataforma-cadastrarPlataforma .cardXbox {
+    width:  20vw;
+    height: 30vh;
+    margin: 10px;
+    --background: 0;
+}
+
+.ModalPlataforma-cadastrarPlataforma .cardPlaystation {
+    width:  20vw;
+    height: 30vh;
+    margin: 10px;
+    --background: 0;
+}
+
+.ModalPlataforma-cadastrarPlataforma .cardMobile {
+    width:  20vw;
+    height: 30vh;
+    margin: 10px;
+    --background: 0;
+}
+
+
+.ModalPlataforma-cadastrarPlataforma .cardPc:active {
+    width:  20vw;
+    height: 30vh;
+    margin: 10px;
+    --background: linear-gradient(to left, #880c0c 0%, #880c0c 46%, #880c0c 100%);
+}
+
+.ModalPlataforma-cadastrarPlataforma .cardXbox:active {
+    width:  20vw;
+    height: 30vh;
+    margin: 10px;
+    --background: linear-gradient(to left, #33ff339c 0%, #33ff339c 46%, #33ff339c 100%);
+}
+
+.ModalPlataforma-cadastrarPlataforma .cardPlaystation:active {
+    width:  20vw;
+    height: 30vh;
+    margin: 10px;
+    --background: linear-gradient(to left, rgb(65, 88, 208) 0%, rgb(65, 88, 208) 46%, rgb(65, 88, 208) 100%);
+}
+
+.ModalPlataforma-cadastrarPlataforma .cardMobile:active {
+    width:  20vw;
+    height: 30vh;
+    margin: 10px;
+    --background: linear-gradient(to left, #5d1969 0%, #5d1969 46%, #5d1969 100%);
+}
+
+.plataforma-cardAddPlataforma {
+    width:  20vw;
+    height: 30vh;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #181818;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 0.3vw 0.5vh;
+}
+
+.plataforma-cardAddPlataforma:hover {
+    box-shadow: 0 0 0.2rem #fff;
+}
+
+.plataforma-cardAddPlataforma-selected {
+    width:  19.8vw;
+    height: 29.5vh;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #181818;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.plataforma-cardAddPlataforma-icon img{
+    width: 40px;
+    height: 40px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }

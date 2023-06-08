@@ -93,30 +93,17 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 5px;
 }
 
-.profileJogoBarNivelUm {
+.profileJogoBarAtivo {
     margin-top: 5px;
     width: 22%;
     height: 5px;
     background-color: #0f3;
 }
 
-.profileJogoBarNivelDois {
-    margin-top: 5px;
-    width: 22%;
-    height: 5px;
-    background-color: #0f3;
-}
-
-.profileJogoBarNivelTres {
-    margin-top: 5px;
-    width: 22%;
-    height: 5px;
-    background-color: #0f3;
-}
-
-.profileJogoBarNivelQuatro {
+.profileJogoBarDesativado {
     margin-top: 5px;
     width: 22%;
     height: 5px;
@@ -137,7 +124,7 @@
 
 .profileJogoCenter {
     width: 100%;
-    padding: 20px 0;
+    padding: 17.5px 0;
     display: flex;
     justify-content: space-evenly;
     border-top: 1px solid #737373;
@@ -145,13 +132,14 @@
 }
 
 .profileJogoButtonNvigation {
-
+    padding-bottom: 5px;
     background-color: none;
     border-bottom: 2px solid rgba(0, 255, 51, 0);
     cursor: pointer;
 }
 
 .profileJogoButtonNvigation:hover {
+    padding-bottom: 5px;
     border-bottom: 2px solid #0f3;
     cursor: pointer;
     transition: 0.3s ease-in-out;

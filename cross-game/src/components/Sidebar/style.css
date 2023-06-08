@@ -41,6 +41,7 @@
     color: white;
     white-space: wrap;
     overflow: hidden;
+    justify-content: center;
 }
 
 .sideBarProfileInformationClose h3 {

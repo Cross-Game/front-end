@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { MdNotificationsActive } from "react-icons/md";
 import Notification from "../Notification";
 import UserProfile from "../UserProfile";
-import Modal from "../Modal";
+import ModalNotification from "../ModalNotification";
 import { RiFileEditFill } from "react-icons/ri";
 import { BsArrowRightShort, BsCheck } from "react-icons/bs";
 import { USERID } from "../../data/constants";
@@ -99,7 +99,7 @@ function ProfileJogo(props) {
       )}
 
       {showModalEditarPerfil && (
-        <Modal
+        <ModalNotification
           title="Editar Perfil"
           icon={<RiFileEditFill />}
           temFooter={true}
@@ -123,7 +123,7 @@ function ProfileJogo(props) {
               <button onClick={changeAvatar}>Upload</button>
             </div>
           </div>
-        </Modal>
+        </ModalNotification>
       )}
     </>
   );

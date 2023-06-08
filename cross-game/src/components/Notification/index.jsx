@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "../../assets/global.css";
 import { MdNotificationsActive } from 'react-icons/md';
 import "../Notification/notification.css";
-import Modal from "../Modal";
+import ModalNotification from "../ModalNotification";
 import Tag from "../Tag";
 import CardNotification from "./cardNotification";
 import Button from "../Button";
@@ -101,10 +101,10 @@ function Notification(props) {
       });
   }
 
- 
+
 
   return (
-    <Modal
+    <ModalNotification
       title="Notificações"
       clearAll={true}
       icon={<MdNotificationsActive />}
@@ -135,58 +135,58 @@ function Notification(props) {
         </div>
 
         <div className="notification-container">
-  {filteredNotifications.length === 0 ? (
-      <></>
-  ) : (
-    filteredNotifications.map((notification) => (
-      <React.Fragment key={notification.id}>
-        {notification.type === 'FRIEND_REQUEST' && (
-          <CardNotification
-            key={notification.id}
-            title={notification.description}
-            icon={<BsPersonHeart />}
-            message={notification.message}
-            date={moment(notification.date).format('DD/MM/YYYY')}
-            time={moment(notification.date).format('HH:mm')}
-            temFooter={true}
-          >
-            <Tag text="Aceitar" onClick={() => aceitarAmizade(notification.description)} />
-            <Tag text="Recusar" onClick={() => recusarAmizade(notification.description)} />
-          </CardNotification>      
-        )
-        }
+          {filteredNotifications.length === 0 ? (
+            <></>
+          ) : (
+            filteredNotifications.map((notification) => (
+              <React.Fragment key={notification.id}>
+                {notification.type === 'FRIEND_REQUEST' && (
+                  <CardNotification
+                    key={notification.id}
+                    title={notification.description}
+                    icon={<BsPersonHeart />}
+                    message={notification.message}
+                    date={moment(notification.date).format('DD/MM/YYYY')}
+                    time={moment(notification.date).format('HH:mm')}
+                    temFooter={true}
+                  >
+                    <Tag text="Aceitar" onClick={() => aceitarAmizade(notification.description)} />
+                    <Tag text="Recusar" onClick={() => recusarAmizade(notification.description)} />
+                  </CardNotification>
+                )
+                }
 
-        {notification.type === 'EVENT' && (
-          <CardNotification
-            key={notification.id}
-            title={notification.description}
-            icon={<HiClock />}
-            message={notification.message}
-            date={moment(notification.date).format('DD/MM/YYYY')}
-            time={moment(notification.date).format('HH:mm')}
-            temFooter={false}
-          />
-        )}
+                {notification.type === 'EVENT' && (
+                  <CardNotification
+                    key={notification.id}
+                    title={notification.description}
+                    icon={<HiClock />}
+                    message={notification.message}
+                    date={moment(notification.date).format('DD/MM/YYYY')}
+                    time={moment(notification.date).format('HH:mm')}
+                    temFooter={false}
+                  />
+                )}
 
-        {notification.type === 'GROUP' && (
-          <CardNotification
-            key={notification.id}
-            title={notification.description}
-            icon={<MdGroups />}
-            message={notification.message}
-            date={moment(notification.date).format('DD/MM/YYYY')}
-            time={moment(notification.date).format('HH:mm')}
-            temFooter={false}
-          />
-        )
-        }
-      </React.Fragment>
-    ))
-  )}
-</div>
-          
+                {notification.type === 'GROUP' && (
+                  <CardNotification
+                    key={notification.id}
+                    title={notification.description}
+                    icon={<MdGroups />}
+                    message={notification.message}
+                    date={moment(notification.date).format('DD/MM/YYYY')}
+                    time={moment(notification.date).format('HH:mm')}
+                    temFooter={false}
+                  />
+                )
+                }
+              </React.Fragment>
+            ))
+          )}
+        </div>
+
       </div>
-    </Modal>
+    </ModalNotification>
   );
 }
 

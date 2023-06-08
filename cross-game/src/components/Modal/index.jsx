@@ -1,16 +1,42 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { RiCloseLine, RiDeleteBinLine } from "react-icons/ri";
 import "../../assets/global.css";
 import "./style.css";
-import Button from '../Button';
+import Button from "../Button";
 
 function Modal(props) {
-  const { onClose, title, clearAll, icon, children, textButton, iconButton, ativarBotao, temFooter, onClear, onClickButton } = props;
+  const {
+    onClose,
+    title,
+    clearAll,
+    icon,
+    children,
+    textButton,
+    iconButton,
+    ativarBotao,
+    temFooter,
+    onClear,
+    onClickButton,
+  } = props;
+
+  const modalRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        onClose();
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
 
   return (
     <div className="modal-modal">
-      <div className="modal-overlay" onClick={onClose} />
-      <div className="modal-modal-content">
+      <div className="modal-modal-content" ref={modalRef}>
         <div className="modal-modal-header">
           <div className="modal-modal-group">
             {icon && icon}

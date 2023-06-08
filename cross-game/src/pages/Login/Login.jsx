@@ -5,6 +5,7 @@ import { BsDiscord, BsGoogle, BsArrowRightShort, BsArrowLeftShort, BsFillEyeSlas
 import axios from "axios";
 import Toast from "../../components/Toast";
 import { LoginSocialGoogle } from "reactjs-social-login";
+import { updateConstants } from "../../data/constants";
 
 function Login() {
   const [mostrarSenha, setMostrarSenha] = useState(false);
@@ -202,7 +203,7 @@ function Login() {
           decodificarToken();
           console.log("Sucesso ao realizar login: ", response.data.encodedToken);
           mudarToast('sucesso', 'Login realizado!');
-
+          updateConstants();
           setTimeout(() => {
             navigate('/profile');
           }, 2000);

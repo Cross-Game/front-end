@@ -1,27 +1,27 @@
 export const interesses = [
     {
       id: 1,
-      nome: "Comida",
-      categorias: ["BRASILEIRA", "CAFES", "CHINESA", "COREANA", "FAST_FOOD", "INDIANA", "ITALIANA", "JAPONESA", "MEXICANA"]
+      nome: "Comidas",
+      categorias: ["Brasileira", "Cafes", "Chinesa", "Coreana", "Fast Food", "Indiana", "Italiana", "Japonesa", "Mexicana"]
     },
     {
       id: 2,
       nome: "Estilo de Jogos",
-      categorias: ["BATTLE_ROYALE", "CARD_GAME", "FIGHTING_GAME", "FPS", "MMORPG", "MOBA", "RPG", "RTS"]
+      categorias: ["Battle Royale", "Cartas", "FPS", "Luta", "MMORPG", "MOBA", "RPG", "RTS"]
     },
     {
       id: 3,
       nome: "Filmes",
-      categorias: ["ACTION", "ADVENTURE", "ANIMATION", "COMEDY", "CRIME", "DOCUMENTARY", "DRAMA", "FANTASY", "HORROR", "ROMANCE", "SCI_FI", "THRILLER"]
+      categorias: ["Ação", "Animação", "Aventura", "Comedia", "Criminal", "Documentário", "Drama", "Fantasia", "Ficção Científica", "Romance", "Suspense", "Terror"]
     },
     {
         id: 4,
         nome: "Músicas",
-        categorias: ["Rock", "Pop", "Hip Hop", "Eletrônica", "Sertanejo", "Funk", "Rap", "Indie"]
+        categorias: ["Eletrônica", "Funk", "Hip Hop", "Indie", "Pop", "Rap", "Rock", "Sertanejo"]
       },
     {
-      id: 4,
+      id: 5,
       nome: "Séries",
-      categorias: ["ACTION", "COMEDY", "DRAMA", "FANTASY", "HORROR", "MYSTERY", "ROMANCE", "SCI_FI", "THRILLER"]
+      categorias: ["Ação", "Comédia", "Drama", "Fantasia", "Ficção Científica", "Mistério", "Romance", "Suspense", "Terror"]
     }
 ];

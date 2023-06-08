@@ -6,6 +6,7 @@
     align-items: center;
     justify-content: flex-start;
     gap: 10%;
+    justify-content: space-evenly;
 }
 
 .ModalPlataforma-cadastrarPlataforma {

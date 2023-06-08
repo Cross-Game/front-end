@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/index.jsx";
 import Cadastro from './pages/Cadastro/Cadastro.jsx';
@@ -14,6 +14,7 @@ import Dashboard from './pages/Dashboard/Dashboard.jsx';
 import NotFound from './pages/PagNotFound/NotFound.jsx'
 import Login from './pages/Login/Login.jsx';
 import Salas from './pages/Salas/salas.jsx';
+import Users from './pages/Users/Users.jsx';
 
 function routes() {
 
@@ -24,8 +25,6 @@ function routes() {
                 <Route path="/cadastro" element={<Cadastro />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/teste" element={<Teste />} />
-                <Route path="*" element={<NotFound />} />
-                <Route path="/rooms" element={<Rooms />} />
                 <Route path='/profile' >
                     <Route path='' element={<ProfileJogo />} />
                     <Route path='interesse' element={<Interesse />} />
@@ -34,7 +33,10 @@ function routes() {
                 </Route>
                 <Route path='/dashboard' element={<Dashboard />} />
                 <Route path='/salas' element={<Salas />} />
+                <Route path="/rooms" element={<Rooms />} />
                 <Route path="/rooms/:id" element={<ChatRoom />} />
+                <Route path='/users' element={<Users />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </BrowserRouter>
     );

@@ -5,11 +5,7 @@ import { Link, redirect, useNavigate } from 'react-router-dom';
 function CardRoom(props) {
     
     const handleEnterRoom = () => {
-        // Redirecionar para a sala apenas se o redirecionamento não estiver ocorrendo a partir da URL
         if (!window.location.pathname.includes("/rooms/")) {
-            // Aqui você pode adicionar qualquer lógica adicional antes de redirecionar para a sala
-            // ...
-            // Redirecionar para a sala
             window.location.href = `/rooms/${props.idGroup}`;
         }
     };

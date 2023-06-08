@@ -8,6 +8,7 @@ import { app, databaseApp } from "../../data/firebaseConfig";
 import { Link, NavLink, redirect, useNavigate, useParams } from "react-router-dom";
 
 
+
 import enviarIcon from "./assets/enviarIcon.svg"
 import imgTest from "../../assets/index-page/medalDiamante.svg"
 import iconBack from "./assets/arrow-right.svg"
@@ -16,6 +17,12 @@ import iconLockNo from "./assets/lockNo.svg"
 import iconClose from "./assets/closeIcon.svg"
 import iconChatNormal from "./assets/chatNormalIcon.svg"
 import iconChatAddIconUser from "./assets/chatAddUserIcon.svg"
+import Button from "../../components/Button";
+import { BsArrowRightShort, BsPersonFillAdd } from "react-icons/bs";
+import UserProfile from "../../components/UserProfile";
+import Modal from "../../components/Modal";
+import { HiLink } from "react-icons/hi";
+import { MdContentCopy } from "react-icons/md";
 
 // const auth = getAuth(app);
 // const auth = signInAnonymously();
@@ -74,6 +81,8 @@ export const ChatRoom = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  const [showModalConvidar, setShowModalConvidar] = useState(true);
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       setIsVisible(true);
@@ -87,6 +96,12 @@ export const ChatRoom = () => {
   if (!isVisible) {
     return null;
   }
+
+  function copiarLinkSala(){
+    const link = document.getElementById("salas-linkSala").innerText;
+    navigator.clipboard.writeText(link);
+  }
+  
 
   return (
     <>
@@ -127,9 +142,7 @@ export const ChatRoom = () => {
             <div className="divPainelControllOfAdminGroup">
               <div className="divPainelControllOfAdminGroupContainer">
                 <LockButton />
-                <div className="divinviteFriendsToRoom">
-                  Convide seus amigos <img src={iconBack} alt="" />
-                </div>
+                <Button text="Convide seus amigos" icon={<BsArrowRightShort/>} onClick={() => setShowModalConvidar(true)}/>
               </div>
             </div>
           </div>
@@ -138,6 +151,33 @@ export const ChatRoom = () => {
           {<ChatBox idGroup={id} />}
         </section>
       </div>
+
+      {showModalConvidar && ( 
+          <Modal title='Convide seus amigos' icon={<BsPersonFillAdd/>} temFooter={false} onClose={()=> setShowModalConvidar(false)}>
+            <div className="salas-convidados">
+              <UserProfile nome='teste' img='teste'/>
+              <UserProfile nome='teste' img='teste'/>
+              <UserProfile nome='teste' img='teste'/>
+              <UserProfile nome='teste' img='teste'/>
+              <UserProfile nome='teste' img='teste'/>
+              <UserProfile nome='teste' img='teste'/>
+              <UserProfile nome='teste' img='teste'/>
+              <UserProfile nome='teste' img='teste'/>
+              <UserProfile nome='teste' img='teste'/>
+              <UserProfile nome='teste' img='teste'/>
+              <UserProfile nome='teste' img='teste'/>
+              <UserProfile nome='teste' img='teste'/>
+              <UserProfile nome='teste' img='teste'/>
+              <UserProfile nome='teste' img='teste'/>
+              
+            </div>
+            <div className="salas-groupLink" onClick={copiarLinkSala}>
+              <HiLink/>
+              <span className="salas-link"><a id="salas-linkSala">Aqui fica o link da sala</a></span>
+              <MdContentCopy/>
+            </div>
+          </Modal>
+        )}
     </>
   );
 };

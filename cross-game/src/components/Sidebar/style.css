@@ -171,3 +171,16 @@
 .logoutSidebarClose h3 {
     display: none;
 }
+
+.salas-convidados{
+    max-height: 30vh;
+    max-width: 40vw;
+    overflow-y: auto;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+}
+
+.salas-groupLink:hover{
+    color: #00FF33;
+}

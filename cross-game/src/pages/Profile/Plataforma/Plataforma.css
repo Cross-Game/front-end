@@ -18,6 +18,17 @@
     max-width: 80vw;
 }
 
+.ProfilePlataformaContainer{
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: medium;
+    text-align: center;
+  }
+
 
 .ModalPlataforma-cadastrarPlataforma .cardPc {
     width:  20vw;

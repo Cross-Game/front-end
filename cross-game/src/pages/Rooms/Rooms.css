@@ -1,5 +1,122 @@
 .containerRooms {
-    width: 100vw;
     display: flex;
-    background-image: linear-gradient(150deg, #070707, #434343);
+    width: 100vw;
+}
+
+.bodyRooms {
+    width: 100%;
+    min-width: 50vw;
+}
+
+.topDiv {
+    width: 100%;
+    height: 50%;
+    /* background-color: red; */
+}
+
+.inputDiv {
+    width: 90%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    gap: 3%;
+}
+
+.inputRooms {
+    background-color: transparent;
+    border: 1px solid #FFFFFF;
+    margin-left: 3%;
+    border-radius: 20px;
+    height: 40%;
+    color: #7A7A7A;
+    padding: 0.8% 0% 0.8% 5%;
+    font-size: 0.8rem;
+    width: 100%;
+}
+
+.divButtonCriarSala {
+    width: 30%;
+    height: 75%;
+    border-radius: 20px;
+    background-color: #000000;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 300ms;
+}
+
+.divButtonCriarSala:hover {
+    background-color: #0e0e0e;
+}
+
+.divButtonBuscaRapida {
+    width: 30%;
+    height: 75%;
+    border-radius: 20px;
+    background-color: #00FF33;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 300ms;
+}
+
+.divButtonBuscaRapida:hover {
+    background-color: #00c628;
+
+}
+
+
+
+.bottomDiv {
+    width: 100%;
+    height: 50%;
+}
+
+.divRoomsAllContainer {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    overflow-x: scroll;
+    align-items: center;
+    padding-left: 2%;
+    gap: 3%;
+    box-sizing: border-box;
+}
+
+.divRoomsAllContainer::-webkit-scrollbar {
+    width: 1px;
+    height: 15px;
+}
+
+.divRoomsAllContainer::-webkit-scrollbar-thumb {
+    background-color: #696969;
+    border-radius: 20px;
+}
+
+.nothingContentRooms {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10%;
+}
+
+.nothingContentRoomsH1 {
+    font-size: 1.3rem;
+    color: white;
+}
+
+.nothingContentRoomsP {
+    color: white;
+}
+
+.nothingContentRooms .divButtonCriarSala {
+    width: 20%;
+    height: 20%;
 }

@@ -111,21 +111,23 @@ function ProfileJogo() {
                 <div className="ProfilePlataformaContainer">
 
                     {plataformas.includes("PLAYSTATION") && (
-                    <CardPlay />
+                        <CardPlay />
                     )}
 
                     {plataformas.includes("XBOX") && (
-                    <CardXbox />
+                        <CardXbox />
                     )}
 
                     {plataformas.includes("DESKTOP") && (
-                    <CardPc />
+                        <CardPc />
                     )}
 
                     {plataformas.includes("MOBILE") && (
-                    <CardMobile />
+                        <CardMobile />
                     )}
-
+                    {!plataformas.includes("PLAYSTATION") && !plataformas.includes("XBOX") && !plataformas.includes("DESKTOP") && !plataformas.includes("MOBILE") && (
+                        <p className="ProfilePlataformaContainer">Nenhuma plataforma foi encontrada para o usuário.</p>
+                    )}
                 </div>
                 {showModalAdicionarPlataforma && (
                     <Modal title="Plataformas" icon={<BsGridFill />} temFooter={true} ativarBotao={true} textButton="Adicionar" iconButton={<BsCheck />} clearAll={true} onClear={limparPlataformas} onClickButton={cadastrarPlataforma} onClose={() => setShowModalAdicionarPlataforma(false)}>

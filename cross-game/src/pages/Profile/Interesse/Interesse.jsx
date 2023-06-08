@@ -158,17 +158,16 @@ function ProfileJogo() {
 
     useEffect(() => {
       setHasData(
-        listaComidas.length > 0 ||
-        listaJogos.length > 0 ||
-        listaMusicas.length > 0 ||
-        listaSeries.length > 0 ||
-        listaFilmes.length > 0
+        (listaComidas?.length ?? 0) > 0 ||
+        (listaJogos?.length ?? 0) > 0 ||
+        (listaMusicas?.length ?? 0) > 0 ||
+        (listaSeries?.length ?? 0) > 0 ||
+        (listaFilmes?.length ?? 0) > 0
       );
     }, [listaComidas, listaFilmes, listaJogos, listaMusicas, listaSeries]);
 
 
     function adicionar() {
-        if (hasData) {
             return (
 
                 <>
@@ -179,9 +178,11 @@ function ProfileJogo() {
                                 <AiFillPlusCircle className="ProfileIconAdicionar" /></span>
                         </div>
                     </div>
+
+                    {hasData && (
                     <div className="ProfileInteresseContainer">
 
-                    {listaComidas && listaComidas.length > 0 && (
+                        {listaComidas && listaComidas.length > 0 && (
                             <div className="ProfileInteresseMiniContainer">
                                 <div className="ProfileInteresseCategoria">
                                     <p>Comidas</p>
@@ -253,6 +254,7 @@ function ProfileJogo() {
 
 
                     </div>
+                    )}
 
                     {showModalAdicionarInteresse && (
                         <Modal title="Interesses" icon={<MdOutlineInterests />} temFooter={true} ativarBotao={true} textButton="Adicionar" iconButton={<BsCheck />} clearAll={true} onClear={limparInteresses} onClickButton={cadastrarInteresse} onClose={() => setShowModalAdicionarInteresse(false)}>
@@ -312,7 +314,7 @@ function ProfileJogo() {
                 </>
             )
         }
-    }
+    
 
 
     return (

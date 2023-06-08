@@ -22,10 +22,12 @@ import iconChatAddIconUser from "./assets/chatAddUserIcon.svg"
 
 export const ChatRoom = () => {
 
+  // TODO adicionar buscar dos jogadores da sala
+
   let testeUsers = [
     {
       id: 1,
-      nomeUser: "limbo",
+      nomeUser: "limbo782354823548",
       imgUser: imgTest
     }, {
       id: 2,
@@ -72,18 +74,13 @@ export const ChatRoom = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  // const [user] = useAuthState(auth);
-  // const [renderComponent, setRenderComponent] = useState(false);
-  // const navigate = useNavigate();
-
-
   useEffect(() => {
     const timeout = setTimeout(() => {
       setIsVisible(true);
     }, 500);
 
     if (!document.referrer || document.referrer === window.location.href) {
-      navigate("/rooms");
+      navigate("/notFound");
     }
   }, []);
 
@@ -119,11 +116,11 @@ export const ChatRoom = () => {
             </div>
             <div className="playersOnRoomChatRoom">
 
-              {!(usersRoom.length == 0) ? usersRoom.map((users) => (
+              {!(usersRoom.length === 0) ? usersRoom.map((users) => (
                 <PortraitUsers nomeUser={users.nomeUser} />
               ))
                 :
-                "Teste sem Participantes"
+                "Teste sem Participantes" // TODO adicionar div com estilo para sem participantes
               }
 
             </div>
@@ -146,7 +143,7 @@ export const ChatRoom = () => {
 };
 
 export const PortraitUsers = (props) => {
-  let id = 1
+  let id = 1  /* TODO: id logado  */
   return (
     <>
       <div className="portraitUserContainer">
@@ -157,8 +154,8 @@ export const PortraitUsers = (props) => {
           {props.nomeUser == null || String.toString(props.nomeUser).trim === "" ? null : props.nomeUser}
         </div>
 
-        <div className="portraitUserContainerEdit">
-          {id == 1 ?
+        <div className="portraitUserContainerEdit"> {/* TODO: alterar abaixo para verificar se usuario logado é owner da sala */}
+          {id === 1 ?
             <div className="optionsPortraitUsersDivs">
               <img src={iconClose} alt="" />
             </div>
@@ -237,6 +234,7 @@ export const ChatBox = (props) => {
   }, [messages]);
 
   const [formValue, setFormValue] = useState("");
+
   const sendMessage = async (e) => {
     e.preventDefault();
     // const { } = auth.currentUser;
@@ -275,9 +273,8 @@ export const ChatBox = (props) => {
 export const ChatMessage = (props) => {
   const { uid, text } = props.message;
   // const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
-  const messageClass = uid === 1 ? 'sent' : 'received';
+  const messageClass = uid === 5 ? 'sent' : 'received';  // TODO : id Logado
   return (
-    // <div className="message">
     <div className={`message ${messageClass}`}>
       {/* <img src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} /> */}
       <img className="messageImgChatRoom" src={imgTest} />
@@ -288,11 +285,7 @@ export const ChatMessage = (props) => {
 
 export const ExitFromRoom = () => {
   const navigate = useNavigate();
-
-  // requisição para retirar id da sala e depois mover ele para rooms
-
   function exit() {
-    // retira id da lista e redireciona ele para rooms
     navigate("/rooms", { replace: true })
   }
 

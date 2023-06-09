@@ -1,10 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./style.css"
 import { NavLink } from "react-router-dom";
 import { FaUser, FaChartLine, FaUserPlus, FaUsers, FaDoorClosed, FaChevronLeft } from "react-icons/fa";
-import imgProfileMock from '../../assets/index-page/medalOuro.svg'
 
 function Sidebar() {
+
+    useEffect(() => {
+        if (sessionStorage.getItem("ACESS_TOKEN") === null) {
+            window.location.href = "http://localhost:3000/login";
+        }
+    }, []);
+
+    const logout = () => {
+        sessionStorage.removeItem("ID", )
+        sessionStorage.removeItem("ACESS_TOKEN")
+        sessionStorage.removeItem("ACESS_TOKEN_GOOGLE")
+        sessionStorage.removeItem("EMAIL")
+        sessionStorage.removeItem("ROLE")
+        sessionStorage.removeItem("NICKNAME")
+    }
+
     const [isOpen, setIsOpen] = useState(true);
     const toggle = () => setIsOpen(!isOpen);
     return (
@@ -13,9 +28,8 @@ function Sidebar() {
                 <div className={isOpen ? "sidebarContent" : "sidebarContent sidebarContentClose"}>
 
                     <div className="sidebarProfileContainer">
-                        <div className={isOpen ? "sideBarProfileInformation" : "sideBarProfileInformation sideBarProfileInformationClose"}>
-                            <img src={imgProfileMock} alt="" />
-                            <h3>{"Mauricio"}</h3>
+                        <div className={"sideBarProfileInformation"}>
+                            <h3>{sessionStorage.getItem("NICKNAME")}</h3>
                         </div>
                         <FaChevronLeft onClick={toggle} className={isOpen ? 'retractableSidebar' : 'retractableSidebar retractableSidebarClose'} />
                     </div>
@@ -32,7 +46,7 @@ function Sidebar() {
                             <h3>Dashboard</h3>
                         </NavLink>
 
-                        <NavLink to={"/"} className={({ isActive }) =>
+                        <NavLink to={"/users"} className={({ isActive }) =>
                             isActive ? isOpen ? "itemSideBar itemSidebarActive" : "itemSideBar itemSideBarClose itemSidebarActive" : isOpen ? "itemSideBar" : "itemSideBar itemSideBarClose"}>
                             <FaUserPlus className='iconSideBar' />
                             <h3>Jogadores</h3>
@@ -45,7 +59,7 @@ function Sidebar() {
                         </NavLink>
                     </div>
                     <div className={isOpen ? "sidebarLogoutContainer" : "sidebarLogoutContainer sidebarLogoutContainerClose"}>
-                        <NavLink to={"/"} className={({ isActive, isPending }) =>
+                        <NavLink onClick={logout} to={"/"}  className={({ isActive, isPending }) =>
                             isPending ? "" : isActive ? "" : isOpen ? "logoutSidebar" : "logoutSidebar logoutSidebarClose"}>
                             <FaDoorClosed className='iconSideBar' />
                             <h3>Sair</h3>

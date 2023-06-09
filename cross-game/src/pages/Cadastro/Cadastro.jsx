@@ -9,6 +9,7 @@ import imagemLol from '../Cadastro/assets/leagueOfLegendsWallpapers.jpg'
 import imagemValorant from '../Cadastro/assets/Fade 1.jpg'
 import imagemTeamF from '../Cadastro/assets/teamFight.png'
 
+import {currentURL} from "../../data/constants"
 
 
 
@@ -173,7 +174,7 @@ function Cadastro() {
 
 
 
-        fetch('http://localhost:8080/users', {
+        fetch(`${currentURL}/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -182,7 +183,7 @@ function Cadastro() {
         })
             .then(response => response.json())
             .then(data =>
-                fetch('http://localhost:8080/user-auth', {
+                fetch(`${currentURL}/user-auth`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -192,14 +193,15 @@ function Cadastro() {
                         password: password
                     }),
                 }).then(res => res.json())
-                .then(data =>
-                    sessionStorage.setItem("Acess_Token", data.encodedToken),
-                    window.location.href = "http://localhost:3000/profile"
-                )
+                    .then(data =>
+                        console.log(currentURL),
+                        window.location.href = "http://localhost:3000/login"
+                    )
             )
             .catch(error =>
-                console.error(error));
-        
+                console.error(error),
+                console.log(currentURL));
+
     }
 
     function voltar() {
@@ -319,17 +321,17 @@ function Cadastro() {
                 <form className="cardCadastroTwo" style={ativarAnterio}>
                     <div className="selecioneJogo">Selecione um jogo você irá jogar:</div>
                     <div className="containerJogos">
-                        <div className="contornoJogo"  style={valorant ? bordaJogo : { border: '1px solid #000' }} onClick={() => selecionarJogo(1)}>
+                        <div className="contornoJogo" style={valorant ? bordaJogo : { border: '1px solid #000' }} onClick={() => selecionarJogo(1)}>
                             <img src={imagemValorant} className="imagemVal" alt="" />
-                            
+
                         </div>
                         <div className="contornoJogo" style={lol ? bordaJogo : { border: '1px solid #000' }} onClick={() => selecionarJogo(2)}>
                             <img src={imagemLol} className="imagemLol" alt="" />
-                            
+
                         </div>
                         <div className="contornoJogo" style={tft ? bordaJogo : { border: '1px solid #000' }} onClick={() => selecionarJogo(3)}>
                             <img src={imagemTeamF} className="imagemTf" alt="" />
-                            
+
                         </div>
                     </div>
                     <div className="botoes">

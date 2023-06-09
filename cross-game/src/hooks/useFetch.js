@@ -18,7 +18,6 @@ import axios from 'axios';
 //       })
 //     });
 
-axios.defaults.baseURL = 'http://localhost:8080/';
 
 const useFetch = ({ url, method, body = null, headers = null }) => {
     const [response, setResponse] = useState(null);

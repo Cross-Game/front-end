@@ -3,6 +3,7 @@ import './Rooms.css'
 import Sidebar from '../../components/Sidebar/Sidebar';
 import CardRoom from '../../components/CardRoom/CardRoom';
 import axios from "axios"
+import { currentURL } from '../../data/constants';
 // import { useHistory } from 'react-router-dom';
 // import { use } from 'react-router-dom';
 
@@ -13,15 +14,15 @@ function Rooms() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-              const res = await axios.get('http://localhost:8081/team-rooms');
-              setRooms(res.data);
-              setIsLoading(false);
+                const res = await axios.get(`${currentURL}/team-rooms`);
+                setRooms(res.data);
+                setIsLoading(false);
             } catch (error) {
-              console.log(error);
-              setIsLoading(false);
+                console.log(error);
+                setIsLoading(false);
             }
-          };
-          fetchData();
+        };
+        fetchData();
     }, []);
 
     return (
@@ -34,11 +35,19 @@ function Rooms() {
                             <input type="text" className='inputRooms' placeholder='Buscar salas' />
                         </div>
                         <div className="divRoomsAllContainer">
-                            {rooms == [] || rooms.length == 0 || null || undefined ? <NothingContentRooms /> : rooms.map((element) => (
-                                <React.Fragment key={element.id}>
-                                    <CardRoom nomeEquipe={element.roomName} faltantes={element.capacity} gameName={element.gameName} rankGame={element.rankGame} levelGame={element.levelGame} descricao={element.description} isClick={false} idGroup={element.id} />
-                                </React.Fragment>
-                            ))}
+                            {rooms === [] || rooms.length === 0 || null || undefined ?
+
+                                <NothingContentRooms
+                                    text1={"Não temos nenhuma sala pública"}
+                                    text2={"Seja o primeiro a criar"}
+                                    isInteractive={true}
+                                />
+
+                                : rooms.map((element) => (
+                                    <React.Fragment key={element.id}>
+                                        <CardRoom nomeEquipe={element.roomName} faltantes={element.capacity} gameName={element.gameName} rankGame={element.rankGame} levelGame={element.levelGame} descricao={element.description} isClick={false} idGroup={element.id} />
+                                    </React.Fragment>
+                                ))}
                         </div>
                     </div>
                     <div className="bottomDiv">
@@ -53,6 +62,13 @@ function Rooms() {
                         </div>
                         <div className="divRoomsAllContainer">
                             <CardRoom nomeEquipe={"Teste"} faltantes={10} gameName={"Valorant"} rankGame={10} isClick={false} levelGame={10} idGroup={5} />
+                            <CardRoom nomeEquipe={"Teste"} faltantes={10} gameName={"Valorant"} rankGame={10} isClick={false} levelGame={10} idGroup={5} />
+                            <CardRoom nomeEquipe={"Teste"} faltantes={10} gameName={"Valorant"} rankGame={10} isClick={false} levelGame={10} idGroup={5} />
+                            <CardRoom nomeEquipe={"Teste"} faltantes={10} gameName={"Valorant"} rankGame={10} isClick={false} levelGame={10} idGroup={5} />
+                            <CardRoom nomeEquipe={"Teste"} faltantes={10} gameName={"Valorant"} rankGame={10} isClick={false} levelGame={10} idGroup={5} />
+                            <CardRoom nomeEquipe={"Teste"} faltantes={10} gameName={"Valorant"} rankGame={10} isClick={false} levelGame={10} idGroup={5} />
+                            <CardRoom nomeEquipe={"Teste"} faltantes={10} gameName={"Valorant"} rankGame={10} isClick={false} levelGame={10} idGroup={5} />
+                            <CardRoom nomeEquipe={"Teste"} faltantes={10} gameName={"Valorant"} rankGame={10} isClick={false} levelGame={10} idGroup={5} />
                         </div>
                     </div>
                 </div>
@@ -62,15 +78,15 @@ function Rooms() {
 }
 
 
-export const NothingContentRooms = () => {
+export const NothingContentRooms = (props) => {
     return (
         <>
             <div className='nothingContentRooms'>
-                <h1 className='nothingContentRoomsH1'>Não temos nenhuma sala pública </h1>
-                <p className='nothingContentRoomsP'>Seja o primeiro a criar</p>
-                <div className='divButtonCriarSala'>
+                <h1 className='nothingContentRoomsH1'>{props.text1} </h1>
+                <p className='nothingContentRoomsP'>{props.text2}</p>
+                {props.isInteractive && <div className='divButtonCriarSala'>
                     Criar sala
-                </div>
+                </div>}
             </div>
         </>
     )

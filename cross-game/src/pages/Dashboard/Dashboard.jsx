@@ -1,11 +1,64 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Dashboard.css";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { Chart } from "react-google-charts";
-import { TbBellRingingFilled } from "react-icons/tb";
+import { MdNotificationsActive } from "react-icons/md";
+import Notification from "../../components/Notification/index"
+import axios from "axios";
+import { currentURL } from "../../data/constants";
 
 
 function Dashboard() {
+    const [showModalNotification, setShowModalNotification] = useState(false);
+
+    const [dadosGrafico, setDadosGrafico] = useState([
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+    ])
+
+    const today = new Date();
+    const eightDaysAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+    const dateRange = [];
+    for (let i = 0; i < 8; i++) {
+        const currentDate = new Date(eightDaysAgo.getTime() + i * 24 * 60 * 60 * 1000);
+        const formattedDate = currentDate.toISOString().split('T')[0];
+        dateRange.push(formattedDate);
+    }
+
+    useEffect(() => {
+
+        const config = {
+            headers: {
+                Authorization: 'Bearer ' + sessionStorage.getItem("ACESS_TOKEN")
+            }
+        };
+        axios.get(`${currentURL}/friends/${sessionStorage.getItem("ID")}`, config)
+            .then(response => {
+                var contador = 0;
+                for (let j = 0; j < dateRange.length; j++) {
+                    for (let i = 0; i < response.data.length; i++) {
+                        if (response.data[i].friendshipStartDate === dateRange[j]) {
+                            contador++;
+                            setDadosGrafico(prevState => {
+                                const novoArray = [...prevState];
+                                novoArray[j] = contador;
+                                return novoArray;
+                            });
+                        }
+                    }
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, []);
 
     const chartOptions = {
         curveType: 'function',
@@ -32,15 +85,16 @@ function Dashboard() {
 
     const chartData = [
         ['Ano', 'Amigos', { role: "style" }],
-        ['D-7', 10, '#fff'],
-        ['D-6', 20, '#fff'],
-        ['D-5', 30, '#fff'],
-        ['D-4', 40, '#fff'],
-        ['D-3', 50, '#fff'],
-        ['D-2', 60, '#fff'],
-        ['D-1', 100, '#0f3'],
-        ['D-0', 70, '#fff'],
+        ['D-7', dadosGrafico[0], '#fff'],
+        ['D-6', dadosGrafico[1], '#fff'],
+        ['D-5', dadosGrafico[2], '#fff'],
+        ['D-4', dadosGrafico[3], '#fff'],
+        ['D-3', dadosGrafico[4], '#fff'],
+        ['D-2', dadosGrafico[5], '#fff'],
+        ['D-1', dadosGrafico[6], '#0f3'],
+        ['D-0', dadosGrafico[7], '#fff'],
     ];
+
 
     return (
         <>
@@ -49,7 +103,7 @@ function Dashboard() {
                 <div className="DashboardNavegacao">
                     <div className="DashboardSuperior">
                         <span className="DashboardSpanMeusInsights">Meus Insights</span>
-                        <TbBellRingingFilled className="profileJogoIconNotificacao" />
+                        <MdNotificationsActive className="profileJogoIconNotificacao" onClick={() => setShowModalNotification(true)} />
                     </div>
                     <div className="DashboardCenter">
                         <div className="DashboardContainerEsquerda DashboardTabela">
@@ -68,79 +122,79 @@ function Dashboard() {
                                         <p>Data</p>
                                         <p>Membros</p>
                                     </div>
-                                    <hr width="100%" color="#000"/>
+                                    <hr width="100%" color="#000" />
                                     <div className="DashboardTableData">
                                         <p>Cross Game</p>
                                         <p>03/02/2023</p>
                                         <p>06</p>
                                     </div>
-                                    <hr width="100%" color="#000"/>
+                                    <hr width="100%" color="#000" />
                                     <div className="DashboardTableData">
                                         <p>Cross Game</p>
                                         <p>03/02/2023</p>
                                         <p>06</p>
                                     </div>
-                                    <hr width="100%" color="#000"/>
+                                    <hr width="100%" color="#000" />
                                     <div className="DashboardTableData">
                                         <p>Cross Game</p>
                                         <p>03/02/2023</p>
                                         <p>06</p>
                                     </div>
-                                    <hr width="100%" color="#000"/>
+                                    <hr width="100%" color="#000" />
                                     <div className="DashboardTableData">
                                         <p>Cross Game</p>
                                         <p>03/02/2023</p>
                                         <p>06</p>
                                     </div>
-                                    <hr width="100%" color="#000"/>
+                                    <hr width="100%" color="#000" />
                                     <div className="DashboardTableData">
                                         <p>Cross Game</p>
                                         <p>03/02/2023</p>
                                         <p>06</p>
                                     </div>
-                                    <hr width="100%" color="#000"/>
+                                    <hr width="100%" color="#000" />
                                     <div className="DashboardTableData">
                                         <p>Cross Game</p>
                                         <p>03/02/2023</p>
                                         <p>06</p>
                                     </div>
-                                    <hr width="100%" color="#000"/>
+                                    <hr width="100%" color="#000" />
                                     <div className="DashboardTableData">
                                         <p>Cross Game</p>
                                         <p>03/02/2023</p>
                                         <p>06</p>
                                     </div>
-                                    <hr width="100%" color="#000"/>
+                                    <hr width="100%" color="#000" />
                                     <div className="DashboardTableData">
                                         <p>Cross Game</p>
                                         <p>03/02/2023</p>
                                         <p>06</p>
                                     </div>
-                                    <hr width="100%" color="#000"/>
+                                    <hr width="100%" color="#000" />
                                     <div className="DashboardTableData">
                                         <p>Cross Game</p>
                                         <p>03/02/2023</p>
                                         <p>06</p>
                                     </div>
-                                    <hr width="100%" color="#000"/>
+                                    <hr width="100%" color="#000" />
                                     <div className="DashboardTableData">
                                         <p>Cross Game</p>
                                         <p>03/02/2023</p>
                                         <p>06</p>
                                     </div>
-                                    <hr width="100%" color="#000"/>
+                                    <hr width="100%" color="#000" />
                                     <div className="DashboardTableData">
                                         <p>Cross Game</p>
                                         <p>03/02/2023</p>
                                         <p>06</p>
                                     </div>
-                                    <hr width="100%" color="#000"/>
+                                    <hr width="100%" color="#000" />
                                     <div className="DashboardTableData">
                                         <p>Cross Game</p>
                                         <p>03/02/2023</p>
                                         <p>06</p>
                                     </div>
-                                    <hr width="100%" color="#000"/>
+                                    <hr width="100%" color="#000" />
                                 </div>
                             </div>
                         </div>
@@ -161,6 +215,10 @@ function Dashboard() {
                     </div>
                 </div>
             </div>
+
+            {showModalNotification && (
+                <Notification onClose={() => setShowModalNotification(false)} />
+            )}
         </>
     )
 

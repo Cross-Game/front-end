@@ -39,8 +39,9 @@
     align-items: center;
     font-size: 0.7rem;
     color: white;
-    white-space: nowrap;
+    white-space: wrap;
     overflow: hidden;
+    justify-content: center;
 }
 
 .sideBarProfileInformationClose h3 {

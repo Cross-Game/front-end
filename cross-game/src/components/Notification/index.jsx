@@ -13,7 +13,7 @@ import { HiClock } from 'react-icons/hi';
 import useFetch from "../../hooks/useFetch";
 import moment from 'moment';
 import axios from 'axios';
-import { USERID, TOKEN } from '../../data/constants';
+import { USERID, TOKEN, currentURL } from '../../data/constants';
 
 
 function Notification(props) {
@@ -24,7 +24,7 @@ function Notification(props) {
   useEffect(() => {
     const obterMensagens = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/notifies/${USERID}`, {
+        const response = await axios.get(`${currentURL}/notifies/${USERID}`, {
           headers: {
             Authorization: `Bearer ${TOKEN}`
           }
@@ -74,7 +74,7 @@ function Notification(props) {
   }
 
   function aceitarAmizade(nicknameFriend) {
-    axios.patch(`http://localhost:8080/friends/confirming-friend-request/${USERID}/${nicknameFriend}`, {}, {
+    axios.patch(`${currentURL}/friends/confirming-friend-request/${USERID}/${nicknameFriend}`, {}, {
       headers: {
         Authorization: `Bearer ${TOKEN}`
       }
@@ -88,7 +88,7 @@ function Notification(props) {
   }
 
   function recusarAmizade(nicknameFriend) {
-    axios.delete(`http://localhost:8080/friends/declining-friend-request/${USERID}/${nicknameFriend}`, {}, {
+    axios.delete(`${currentURL}/friends/declining-friend-request/${USERID}/${nicknameFriend}`, {}, {
       headers: {
         Authorization: `Bearer ${TOKEN}`
       }
@@ -101,7 +101,7 @@ function Notification(props) {
       });
   }
 
- 
+
 
   return (
     <Modal
@@ -135,56 +135,56 @@ function Notification(props) {
         </div>
 
         <div className="notification-container">
-  {filteredNotifications.length === 0 ? (
-      <></>
-  ) : (
-    filteredNotifications.map((notification) => (
-      <React.Fragment key={notification.id}>
-        {notification.type === 'FRIEND_REQUEST' && (
-          <CardNotification
-            key={notification.id}
-            title={notification.description}
-            icon={<BsPersonHeart />}
-            message={notification.message}
-            date={moment(notification.date).format('DD/MM/YYYY')}
-            time={moment(notification.date).format('HH:mm')}
-            temFooter={true}
-          >
-            <Tag text="Aceitar" onClick={() => aceitarAmizade(notification.description)} />
-            <Tag text="Recusar" onClick={() => recusarAmizade(notification.description)} />
-          </CardNotification>      
-        )
-        }
+          {filteredNotifications.length === 0 ? (
+            <></>
+          ) : (
+            filteredNotifications.map((notification) => (
+              <React.Fragment key={notification.id}>
+                {notification.type === 'FRIEND_REQUEST' && (
+                  <CardNotification
+                    key={notification.id}
+                    title={notification.description}
+                    icon={<BsPersonHeart />}
+                    message={notification.message}
+                    date={moment(notification.date).format('DD/MM/YYYY')}
+                    time={moment(notification.date).format('HH:mm')}
+                    temFooter={true}
+                  >
+                    <Tag text="Aceitar" onClick={() => aceitarAmizade(notification.description)} />
+                    <Tag text="Recusar" onClick={() => recusarAmizade(notification.description)} />
+                  </CardNotification>
+                )
+                }
 
-        {notification.type === 'EVENT' && (
-          <CardNotification
-            key={notification.id}
-            title={notification.description}
-            icon={<HiClock />}
-            message={notification.message}
-            date={moment(notification.date).format('DD/MM/YYYY')}
-            time={moment(notification.date).format('HH:mm')}
-            temFooter={false}
-          />
-        )}
+                {notification.type === 'EVENT' && (
+                  <CardNotification
+                    key={notification.id}
+                    title={notification.description}
+                    icon={<HiClock />}
+                    message={notification.message}
+                    date={moment(notification.date).format('DD/MM/YYYY')}
+                    time={moment(notification.date).format('HH:mm')}
+                    temFooter={false}
+                  />
+                )}
 
-        {notification.type === 'GROUP' && (
-          <CardNotification
-            key={notification.id}
-            title={notification.description}
-            icon={<MdGroups />}
-            message={notification.message}
-            date={moment(notification.date).format('DD/MM/YYYY')}
-            time={moment(notification.date).format('HH:mm')}
-            temFooter={false}
-          />
-        )
-        }
-      </React.Fragment>
-    ))
-  )}
-</div>
-          
+                {notification.type === 'GROUP' && (
+                  <CardNotification
+                    key={notification.id}
+                    title={notification.description}
+                    icon={<MdGroups />}
+                    message={notification.message}
+                    date={moment(notification.date).format('DD/MM/YYYY')}
+                    time={moment(notification.date).format('HH:mm')}
+                    temFooter={false}
+                  />
+                )
+                }
+              </React.Fragment>
+            ))
+          )}
+        </div>
+
       </div>
     </Modal>
   );

@@ -1,20 +1,32 @@
-import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Await, useNavigate } from 'react-router-dom';
 import "./Login.css"
 import { BsDiscord, BsGoogle, BsArrowRightShort, BsArrowLeftShort, BsFillEyeSlashFill, BsFillEyeFill } from "react-icons/bs";
 import axios from "axios";
 import Toast from "../../components/Toast";
 import { LoginSocialGoogle } from "reactjs-social-login";
+import { updateConstants } from "../../data/constants";
+import {currentURL} from "../../data/constants"
+
 
 function Login() {
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const navigate = useNavigate();
 
-  const [password, setPassword] = useState();
-  const [usuario, setUsuario] = useState();
-  const [token, setToken] = useState(null);
-  const [passwordNew, setPasswordNew] = useState("");
-  const [email, setEmail] = useState();
+  var [password, setPassword] = useState("");
+  var [usuario, setUsuario] = useState("");
+  var [token, setToken] = useState(null);
+  var [passwordNew, setPasswordNew] = useState("");
+  var [email, setEmail] = useState();
+
+  const currentUrl = new URL(window.location.href);
+  const queryParams = new URLSearchParams(currentUrl.search);
+  const CLIENT_ID = "1102730864972009612";
+  const REDIRECT_URI = "http://localhost:3000/cadastro";
+  const SCOPE = "identify email";
+  const RESPONSE_TYPE = "code";
+  const [isLoading, setIsLoading] = useState(true);
+
 
   function handleMostrarSenha() {
     setMostrarSenha(!mostrarSenha);
@@ -23,11 +35,13 @@ function Login() {
   const handleUsuarioChange = (event) => {
     const newUser = event.target.value;
     setUsuario(newUser);
+    sessionStorage.setItem("NICKNAME", newUser);
   };
 
   const handlePasswordChange = (event) => {
     const newPassword = event.target.value;
     setPassword(newPassword);
+    sessionStorage.setItem("ACESS_TOKEN", newPassword);
   };
 
   const [showToast, setShowToast] = useState(false);
@@ -40,41 +54,8 @@ function Login() {
     setToastMessage(mensagem);
   }
 
-  const realizarLogin = async () => {
-    mudarToast('carregando', 'Requisição solicitada');
-    console.log(usuario, password);
-    axios
-      .post("http://localhost:8080/user-auth", { username: usuario, password }, {
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-          'Content-Type': 'application/json'
-        }
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          console.log(response);
-          sessionStorage.setItem('ACESS_TOKEN', response.data.encodedToken);
-          setToken(response.data.encodedToken);
-          decodificarToken();
-          console.log("Sucesso ao realizar login: ", response.data.encodedToken);
-          mudarToast('sucesso', 'Login realizado!');
 
-          setTimeout(() => {
-            navigate('/perfil');
-          }, 2000);
-        } else {
-          console.error('Erro ao realizar login: status', response.status);
-          mudarToast('erro', 'Erro ao realizar login');
-        }
-      })
-      .catch((error) => {
-        console.error('Erro ao realizar login:', error);
-        mudarToast('erro', 'Erro ao realizar login');
-      });
-  };
-
-
-  const redirectUri = 'http://localhost:3000/cadastro';
+  const redirectUri = 'http://localhost:3000/login';
 
   const handleLogin = () => {
     const scope = 'identify email';
@@ -84,11 +65,65 @@ function Login() {
     window.location.href = authUrl;
   };
 
+  const handleCallback = async () => {
+    const data = {
+      code: queryParams.get("code"),
+      redirect_uri: "http://localhost:3000/login",
+      grant_type: "authorization_code",
+      client_id: CLIENT_ID,
+      client_secret: "Xrn0whYArSqBySPDGZbVGJlZj0sAL903"
+    };
+
+    try {
+      const headersPost = {
+        "Content-Type": "application/x-www-form-urlencoded",
+      };
+      const body = Object.keys(data)
+        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+        .join("&");
+      const response = await axios.post("https://discord.com/api/oauth2/token", body, { headersPost });
+      const userResponse = await axios.get("https://discord.com/api/users/@me", {
+        headers: {
+          authorization: `Bearer ${response.data.access_token}`,
+        },
+      });
+      setEmail(userResponse.data.email);
+      setUsuario(userResponse.data.username);
+      setPassword(response.data.access_token);
+      await sessionStorage.setItem(("NICKNAME"), userResponse.data.username);
+      await sessionStorage.setItem(("ACESS_TOKEN"), response.data.access_token);
+      realizarLogin()
+
+      console.log(userResponse.data.email);
+      console.log(userResponse.data.username);
+      console.log(response.data.access_token);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+
+      if (!(queryParams.get("code") == null)) {
+        handleCallback()
+      }
+    }, 1);
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
   const resetPassword = async (usuario, email, password) => {
     console.log("Método para Reset de Senha");
-    axios
+    await setUsuario(usuario);
+    await setPassword(password);
+    await axios
       .patch(
-        "http://localhost:8080/update-password-by-username-email",
+        `${currentURL}/users/update-password-by-username-email`,
         {
           username: usuario,
           email: email,
@@ -102,8 +137,9 @@ function Login() {
         }
       )
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === 201) {
           console.log(response);
+          console.log("Chamei realizar login")
           realizarLogin();
         } else {
           console.error("Erro ao resetar senha: status", response.status);
@@ -140,11 +176,52 @@ function Login() {
     sessionStorage.setItem("ACESS_TOKEN", data.access_token);
     sessionStorage.setItem("NICKNAME", data.name);
     sessionStorage.setItem("EMAIL", data.email);
+    console.log("Salvei dados do Google [Email, NovaSenha, Usuario]")
     resetPassword(data.name, data.email, data.access_token);
   };
 
   const handleGoogleLoginReject = (err) => {
     console.log(err);
+  };
+
+  const realizarLogin = async () => {
+    console.log("Realizando Login...")
+    mudarToast('carregando', 'Requisição solicitada');
+    console.log(usuario, password);
+    var usuarioTeste = await sessionStorage.getItem("NICKNAME")
+    var passwordTeste = await sessionStorage.getItem("ACESS_TOKEN")
+    await axios
+      .post(`${currentURL}/user-auth`, { username: usuarioTeste, password: passwordTeste }, {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response);
+          sessionStorage.setItem('ACESS_TOKEN', response.data.encodedToken);
+          setToken(response.data.encodedToken);
+          decodificarToken();
+          console.log("Sucesso ao realizar login: ", response.data.encodedToken);
+          mudarToast('sucesso', 'Login realizado!');
+          updateConstants();
+          setTimeout(() => {
+            navigate('/profile');
+          }, 2000);
+        }
+        else if (response.status === 404) {
+          mudarToast("erro", 'Por favor, realize seu cadastro!')
+        }
+        else {
+          console.error('Erro ao realizar login: status', response.status);
+          mudarToast('erro', 'Erro ao realizar login');
+        }
+      })
+      .catch((error) => {
+        console.error('Erro ao realizar login:', error);
+        mudarToast('erro', 'Erro ao realizar login');
+      });
   };
 
   return (
@@ -191,8 +268,8 @@ function Login() {
               </div>
             </div>
 
-            <div className="botaoCadastro">
-              <div onClick={realizarLogin}>Entrar</div>
+            <div className="botaoCadastro" onClick={realizarLogin}>
+              <div>Entrar</div>
               <BsArrowRightShort className="arrowProximo" />
             </div>
             <div className="subTitulo">ou com as seguintes plataformas</div>

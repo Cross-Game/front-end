@@ -1,4 +1,10 @@
-const USERID = sessionStorage.getItem("ID");
-const TOKEN = sessionStorage.getItem("ACESS_TOKEN")
+var USERID = sessionStorage.getItem("ID");
+var TOKEN = sessionStorage.getItem("ACESS_TOKEN")
+let currentURL = "http://localhost:8081"
 
-export { USERID, TOKEN };
+export function updateConstants() {
+  USERID = sessionStorage.getItem("ID");
+  TOKEN = sessionStorage.getItem("ACESS_TOKEN")
+}
+
+export { USERID, TOKEN, currentURL };

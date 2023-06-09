@@ -181,3 +181,33 @@
 .ImgPerfilUsuario{
     border-radius: 100%;
 }
+.modalEditarPerfilInput{
+    width: 500px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalEditarPerfilButton{
+    width: 40%;
+    height: 30px;
+    border: none;
+    border-radius: 20px;
+    font-size: small;
+    font-family: 'Krona One';
+    font-weight: 200;
+    background-color: #19FF00;
+}
+
+.modalEditarPerfilButton:hover{
+    width: 40%;
+    height: 30px;
+    border: none;
+    border-radius: 20px;
+    font-size: small;
+    font-family: 'Krona One';
+    font-weight: 200;
+    background-color: #19FF00;
+    box-shadow: 0 0 5px #19FF00;
+}

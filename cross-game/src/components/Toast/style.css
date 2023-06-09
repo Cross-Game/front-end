@@ -11,24 +11,24 @@
     display: flex;
     align-items: center;
     z-index: 9999;
-
+    box-shadow: 0 0 1rem #000;
   }
   
   .toast--sucesso {
     background-color: #00ff00;
-    box-shadow: 0 0 0.25rem #00ff0070;;
+    box-shadow: 0 0 1rem #00ff0070;;
     color: #000;
   }
   
   .toast--erro {
     background-color: #e91418;
-    box-shadow: 0 0 0.25rem #dd0a0d70;
+    box-shadow: 0 0 1rem #dd0a0d70;
     color: #000;
   }
   
   .toast--carregando {
     background-color: #e0e0e0;
-    box-shadow: 0 0 0.25rem #e0e0e070;
+    box-shadow: 0 0 1rem #e0e0e070;
     color: #000000;
   }
   

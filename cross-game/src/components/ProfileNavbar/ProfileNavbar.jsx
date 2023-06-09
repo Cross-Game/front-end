@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
 import "./ProfileNavbar.css";
 import imgUserProfile from "../../assets/index-page/testeImg.png";
 import medalUserProfile from "../../assets/index-page/medalOuro.svg";
@@ -16,14 +16,14 @@ function ProfileJogo(props) {
   const navigate = useNavigate();
   const [showModalNotification, setShowModalNotification] = useState(false);
   const [showModalEditarPerfil, setShowModalEditarPerfil] = useState(false);
-  const [imageData, setImageData] = useState(sessionStorage.getItem("IMAGEM"));
+  const [imageData, setImageData] = useState();
   const fileInputRef = useRef(null);
-  
-  useEffect(() => {
-    
+
+  useLayoutEffect(() => {
+
     handleUpdateImage()
-    
-  }, [1000]);
+
+  }, []);
 
   const handleUpdateImage = () => {
     const config = {
@@ -41,11 +41,12 @@ function ProfileJogo(props) {
           ''
         )
       );
-        sessionStorage.setItem("IMAGEM", `data:image/jpeg;base64,${base64Image}`)
+      sessionStorage.setItem("IMAGEM", `data:image/jpeg;base64,${base64Image}`)
+      setImageData(sessionStorage.getItem("IMAGEM"))
     }).catch((error) => {
       console.error('Erro ao obter a imagem do perfil:', error);
     });
-    
+
   }
 
   const handleImageChange = async (event) => {
@@ -63,7 +64,9 @@ function ProfileJogo(props) {
     } catch (error) {
       console.error('Erro ao enviar a imagem:', error);
     }
-    window.location.reload()
+
+    setImageData(sessionStorage.getItem("IMAGEM"))
+    handleUpdateImage()
   };
 
   return (
@@ -126,7 +129,7 @@ function ProfileJogo(props) {
           icon={<RiFileEditFill />}
           temFooter={true}
           onClick={handleUpdateImage()}
-          ativarBotao={true}
+          ativarBotao={false}
           textButton="Atualizar"
           iconButton={<BsCheck />}
           onClose={() => setShowModalEditarPerfil(false)}
@@ -145,7 +148,7 @@ function ProfileJogo(props) {
                 onChange={handleImageChange}
               />
               <button className="modalEditarPerfilButton" onClick={() => { fileInputRef.current.click() }}>
-                Adicionar Foto
+                Alterar Foto
               </button>
             </div>
           </div>

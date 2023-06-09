@@ -16,6 +16,7 @@ import moment from 'moment';
 import { TOKEN, USERID } from '../../data/constants';
 import Button from '../../components/Button';
 import { Navigate, useNavigate } from 'react-router-dom';
+import Toast from '../../components/Toast';
 
 function Rooms() {
     const navigate = useNavigate();
@@ -129,13 +130,24 @@ function Rooms() {
 
     // [Modal] Filtro de Salas
     const [showModalFiltroSala, setShowModalFiltroSala] = useState(true);
-    
-    function limparFiltroSalas(){
+
+    function limparFiltroSalas() {
         setJogoSelecionado("");
         setRankSelecionado("");
         setMinLevel(1);
         setMaxLevel(100);
     }
+
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastType, setToastType] = useState('erro');
+
+    
+  function mudarToast(tipo, mensagem) {
+    setShowToast(true);
+    setToastType(tipo.toLowerCase());
+    setToastMessage(mensagem);
+  }
 
     useEffect(() => {
         const obterMeusJogos = async () => {
@@ -190,8 +202,9 @@ function Rooms() {
                     rankGame: rankSelecionado.toString(),
                     levelGame: minLevel,
                     description: descricaoSalaCriar.toString(),
-                    private: false,
-                    tokenAccess: ""
+                    isPrivate: false,
+                    tokenAccess: "",
+                    idUserAdmin: sessionStorage.getItem("ID")
                 },
                 {
                     headers: {
@@ -203,17 +216,16 @@ function Rooms() {
             );
 
             if (response.status === 200) {
-                console.log(response);
+                mudarToast("sucesso", "Sala criada!");
             }
-            else if (response.status === 204) {
-                console.log("Erro ao criar sala")
+            else if (response.status === 201) {
+                mudarToast("sucesso", "Sala criada!");
             }
             else {
-                console.error("Erro ao criar sala", response.status);
-                // mudarToast("erro", "Erro ao cadastrar plataformas");
+                mudarToast("erro", "Erro ao criar sala");
             }
         } catch (error) {
-            console.error("Erro ao criar sala", error);
+            mudarToast("erro", "Erro ao criar sala");
         }
     };
 
@@ -370,6 +382,14 @@ function Rooms() {
                 </Modal>
             )}
 
+            {showToast && (
+                <Toast
+                    type={toastType}
+                    message={toastMessage}
+                    onClose={() => setShowToast(false)}
+                />
+            )}
+
             {showModalCalendario && (
 
                 <Modal onClose={() => setShowModalCalendario(false)} title='Agendar partida' icon={<BsFillCalendarWeekFill />} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort />} textButton='Agendar' onClickButton={() => agendarSala()}>
@@ -385,7 +405,7 @@ function Rooms() {
             )}
 
             {showModalFiltroSala && (
-                <Modal title="Filtrar por" icon={<BsFilterLeft />} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort />} textButton='Filtrar' onClear={limparFiltroSalas} onClose={()=> setShowModalFiltroSala(false)}>
+                <Modal title="Filtrar por" icon={<BsFilterLeft />} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort />} textButton='Filtrar' onClear={limparFiltroSalas} onClose={() => setShowModalFiltroSala(false)}>
                     <div className="container_filtro">
 
                         <div className="filtro_jogos">

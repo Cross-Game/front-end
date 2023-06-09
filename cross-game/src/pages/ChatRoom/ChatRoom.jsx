@@ -129,7 +129,7 @@ export const ChatRoom = () => {
           setMeusAmigos([]);
         }
         else {
-           mudarToast("erro", "Erro ao obter amigos");
+          mudarToast("erro", "Erro ao obter amigos");
         }
       } catch (error) {
         console.error("Erro ao obterMeusAmigos:", error);
@@ -243,10 +243,10 @@ export const ChatRoom = () => {
         <Modal title='Convide seus amigos' icon={<BsPersonFillAdd />} temFooter={false} onClose={() => setShowModalConvidar(false)}>
           <div className="salas-convidados">
             {meusAmigos.map((amigo) => (
-              <UserProfile 
-                nome={amigo.username} 
+              <UserProfile
+                nome={amigo.username}
                 hasUserId={amigo.friendUserId}
-                key={amigo.id} 
+                key={amigo.id}
                 onClick={() => enviarConviteSala(amigo.friendUserId)}
               />
             ))}
@@ -275,7 +275,7 @@ export const PortraitUsers = (props) => {
 
   const [showModalFeedback, setShowModalFeedback] = useState(false);
 
-  const [jogadorSelecionado, setJogadorSelecionado] = useState({ id: 1, nome: 'João Silva', foto: 'https://example.com/joao_silva.jpg', idade: 27, posicao: 'Atacante', pais: 'Brasil' },);
+  const [jogadorSelecionado, setJogadorSelecionado] = useState({ id: 2, nome: 'João Silva', foto: 'https://example.com/joao_silva.jpg', idade: 27, posicao: 'Atacante', pais: 'Brasil' },);
   const [ratingHabilidade, setRatingHabilidade] = useState(0);
   const [ratingComportamento, setRatingComportamento] = useState(0);
   const [comentarioFeedback, setComentarioFeedback] = useState('');
@@ -289,11 +289,21 @@ export const PortraitUsers = (props) => {
     setResetAvaliacao(!resetAvaliacao);
   }
 
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('erro');
+
+  function mudarToast(tipo, mensagem) {
+    setShowToast(true);
+    setToastType(tipo.toLowerCase());
+    setToastMessage(mensagem);
+  }
+
   function enviarFeedback() {
     console.log("Chamei enviar feedback")
-    axios.post(`http://localhost:8080/feedbacks/${USERID}`,
+    axios.post(`http://localhost:8080/feedbacks/${jogadorSelecionado.id}`,
       {
-        userGivenFeedback: jogadorSelecionado.nome,
+        userGivenFeedback: sessionStorage.getItem("NICKNAME"),
         behavior: ratingComportamento,
         skill: ratingHabilidade,
         feedbackText: comentarioFeedback
@@ -305,9 +315,14 @@ export const PortraitUsers = (props) => {
       })
       .then(response => {
         console.log(response.data);
+        mudarToast("Sucesso", "Avaliação enviada")
+        setTimeout(function() {
+          setShowModalFeedback(false);
+        }, 1000);
       })
       .catch(error => {
         console.error(error);
+        mudarToast("erro", "Erro ao enviar avaliação")
       });
   }
 
@@ -340,7 +355,7 @@ export const PortraitUsers = (props) => {
         <Modal title='Feedback' icon={<MdFeedback />} clearAll={true} temFooter='true' ativarBotao='true' textButton="Enviar avaliação" iconButton={<BsArrowRightShort />} onClose={() => setShowModalFeedback(false)} onClear={() => limparModalFeedback()} onClickButton={enviarFeedback}>
           <UserProfile
             nome={jogadorSelecionado.nome}
-            img={jogadorSelecionado.foto}
+            hasUserId={jogadorSelecionado.id}
           />
 
           <div className="salas-group-avaliacao">
@@ -363,6 +378,14 @@ export const PortraitUsers = (props) => {
             <textarea className="my-textarea" value={comentarioFeedback} onChange={(e) => setComentarioFeedback(e.target.value)}></textarea>
           </div>
         </Modal>
+      )}
+
+      {showToast && (
+        <Toast
+          type={toastType}
+          message={toastMessage}
+          onClose={() => setShowToast(false)}
+        />
       )}
     </>
   )

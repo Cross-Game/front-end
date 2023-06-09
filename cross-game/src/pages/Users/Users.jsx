@@ -13,6 +13,7 @@ import Modal from '../../components/Modal';
 import { BsArrowRightShort, BsFilterLeft } from 'react-icons/bs';
 import Option from './Option';
 import RangeBar from '../../components/RangeBar';
+import Toast from '../../components/Toast';
 
 function Users() {
     const [usersGeneric, setUsersGeneric] = useState([]);
@@ -28,7 +29,7 @@ function Users() {
 
     const [currentValuesHabilidade, setCurrentValuesHabilidade] = useState({ min: minLevelHabilidade, max: maxLevelHabilidade });
     const [currentValuesComportamento, setCurrentValuesComportamento] = useState({ min: minLevelComportamento, max: maxLevelComportamento });
-    
+
     useEffect(() => {
         setCurrentValuesHabilidade({ min: minLevelHabilidade, max: maxLevelHabilidade });
     }, [minLevelHabilidade, maxLevelHabilidade]);
@@ -45,16 +46,30 @@ function Users() {
         setMaxLevelComportamento(newValues.max);
     };
 
-    function filtrarSalas(){
+    function filtrarSalas() {
+        setShowModalFiltroJogadores(true); // TODO Trocar para false
+        mudarToast("Sucesso", "Filtro aplicado.")
+        mudarToast("Erro", "Erro ao filtrar jogadores.")
         //TODO 
-        
     }
 
-    function limparModalFiltrarSalas(){
+    
+
+    function limparModalFiltrarSalas() {
         setMinLevelHabilidade(0);
         setMaxLevelHabilidade(5);
         setMinLevelComportamento(0);
         setMaxLevelComportamento(5);
+    }
+
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastType, setToastType] = useState('erro');
+
+    function mudarToast(tipo, mensagem) {
+        setShowToast(true);
+        setToastType(tipo.toLowerCase());
+        setToastMessage(mensagem);
     }
 
     // substituir ids, tokens e urls para dinamicos
@@ -141,7 +156,7 @@ function Users() {
             </div>
 
             {showModalFiltroJogadores && (
-                <Modal title="Filtrar por" icon={<BsFilterLeft />} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort />} textButton='Filtrar' onClose={()=> setShowModalFiltroJogadores(false)} onClickButton={()=> filtrarSalas} onClear={limparModalFiltrarSalas}>
+                <Modal title="Filtrar por" icon={<BsFilterLeft />} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort />} textButton='Filtrar' onClose={() => setShowModalFiltroJogadores(false)} onClickButton={filtrarSalas} onClear={limparModalFiltrarSalas}>
                     <div className="container_filtro">
                         {/* <div className="filtro_nivel">
                             <p className="titleFiltro">Nivel</p>
@@ -153,11 +168,19 @@ function Users() {
                             </div>
                         </div> */}
                         <div className="container_sliders">
-                            <div className="filtro_comportamento"><p className="titleFiltro">Comportamento</p> <RangeBar min='0' max='5' values={currentValuesComportamento} onChange={handleValuesChangeComportamento}/> </div>
+                            <div className="filtro_comportamento"><p className="titleFiltro">Comportamento</p> <RangeBar min='0' max='5' values={currentValuesComportamento} onChange={handleValuesChangeComportamento} /> </div>
                             <div className="filtro_habilidade"><p className="titleFiltro">Habilidade</p>  <RangeBar min='0' max='5' values={currentValuesHabilidade} onChange={handleValuesChangeHabilidade} /> </div>
                         </div>
                     </div>
                 </Modal>
+            )}
+
+            {showToast && (
+                <Toast
+                    type={toastType}
+                    message={toastMessage}
+                    onClose={() => setShowToast(false)}
+                />
             )}
 
         </div>

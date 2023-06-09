@@ -52,7 +52,6 @@ function Rooms() {
     const [nomeSalaCriar, setNomeSalaCriar] = useState("")
 
     function limparModalCriarSala() {
-        console.log("Limpando Modal Criar Sala");
         setQtdJogadoresSelecionados(5);
         setJogoSelecionado("");
         setRankSelecionado("");
@@ -129,7 +128,14 @@ function Rooms() {
     }
 
     // [Modal] Filtro de Salas
-    const [showModalFiltroSala, setShowModalFiltroSala] = useState(false);
+    const [showModalFiltroSala, setShowModalFiltroSala] = useState(true);
+    
+    function limparFiltroSalas(){
+        setJogoSelecionado("");
+        setRankSelecionado("");
+        setMinLevel(1);
+        setMaxLevel(100);
+    }
 
     useEffect(() => {
         const obterMeusJogos = async () => {
@@ -379,7 +385,7 @@ function Rooms() {
             )}
 
             {showModalFiltroSala && (
-                <Modal title="Filtrar por" icon={<BsFilterLeft />} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort />} textButton='Filtrar'>
+                <Modal title="Filtrar por" icon={<BsFilterLeft />} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort />} textButton='Filtrar' onClear={limparFiltroSalas} onClose={()=> setShowModalFiltroSala(false)}>
                     <div className="container_filtro">
 
                         <div className="filtro_jogos">
@@ -430,9 +436,6 @@ export const NothingContentRooms = (props) => {
             <div className='nothingContentRooms'>
                 <h1 className='nothingContentRoomsH1'>{props.text1} </h1>
                 <p className='nothingContentRoomsP'>{props.text2}</p>
-                {props.isInteractive && <div className='divButtonCriarSala'>
-                    Criar sala
-                </div>}
             </div>
         </>
     )

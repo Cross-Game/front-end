@@ -8,7 +8,7 @@ import { MdGroups, MdNotificationsActive as MdNotificationsActive, MdOutlineInte
 import Notification from '../../components/Notification';
 import { BsArrowRightShort, BsCheck, BsFileMinus, BsFileMinusFill, BsFillCalendarFill, BsFillCalendarWeekFill, BsFilterLeft, BsPlus } from "react-icons/bs";
 import "./style.css"
-import Option from "./Option";
+import Option from "../Users/Option";
 import RangeBar from "../../components/RangeBar";
 import { HiMinusSm } from "react-icons/hi";
 import { jogos as listaJogos } from "../../utils/jogos";

@@ -9,15 +9,55 @@ import iconHeart from "./assets/iconHeart.svg"
 import { NothingContentRooms } from '../Rooms/Rooms';
 import ChatWithUser from '../../components/ChatWithUser/ChatWithUser';
 import iconChatNormal from "../../pages/ChatRoom/assets/chatNormalIcon.svg"
+import Modal from '../../components/Modal';
+import { BsArrowRightShort, BsFilterLeft } from 'react-icons/bs';
+import Option from './Option';
+import RangeBar from '../../components/RangeBar';
 
 function Users() {
     const [usersGeneric, setUsersGeneric] = useState([]);
     const [friends, setFriends] = useState([]);
+    const [showModalFiltroJogadores, setShowModalFiltroJogadores] = useState(true);
 
+
+
+    var [minLevelHabilidade, setMinLevelHabilidade] = useState(0);
+    var [maxLevelHabilidade, setMaxLevelHabilidade] = useState(5);
+    var [minLevelComportamento, setMinLevelComportamento] = useState(0);
+    var [maxLevelComportamento, setMaxLevelComportamento] = useState(5);
+
+    const [currentValuesHabilidade, setCurrentValuesHabilidade] = useState({ min: minLevelHabilidade, max: maxLevelHabilidade });
+    const [currentValuesComportamento, setCurrentValuesComportamento] = useState({ min: minLevelComportamento, max: maxLevelComportamento });
+    
+    useEffect(() => {
+        setCurrentValuesHabilidade({ min: minLevelHabilidade, max: maxLevelHabilidade });
+    }, [minLevelHabilidade, maxLevelHabilidade]);
+    const handleValuesChangeHabilidade = (newValues) => {
+        setMinLevelHabilidade(newValues.min);
+        setMaxLevelHabilidade(newValues.max);
+    };
+
+    useEffect(() => {
+        setCurrentValuesComportamento({ min: minLevelComportamento, max: maxLevelComportamento });
+    }, [minLevelComportamento, maxLevelComportamento]);
+    const handleValuesChangeComportamento = (newValues) => {
+        setMinLevelComportamento(newValues.min);
+        setMaxLevelComportamento(newValues.max);
+    };
+
+    function filtrarSalas(){
+        //TODO 
+        
+    }
+
+    function limparModalFiltrarSalas(){
+        setMinLevelHabilidade(0);
+        setMaxLevelHabilidade(5);
+        setMinLevelComportamento(0);
+        setMaxLevelComportamento(5);
+    }
 
     // substituir ids, tokens e urls para dinamicos
-
-
     useEffect(() => {
         const obterUsuarios = async () => {
             try {
@@ -63,7 +103,7 @@ function Users() {
             <div className='bodyRooms'>
                 <div className="topDiv">
                     <div className="inputDiv">
-                        <input type="text" className='inputRooms' placeholder='Buscar pessoa' />
+                        <input type="text" className='inputRooms' placeholder='Buscar jogadores' />
                     </div>
                     <div className="divRoomsAllContainer">
                         {usersGeneric === [] || usersGeneric.length === 0 || null || undefined ?
@@ -82,7 +122,7 @@ function Users() {
                 </div>
                 <div className="bottomDiv">
                     <div className="inputDiv">
-                        <input type="text" className='inputRooms' placeholder='Buscar Amigos' />
+                        <input type="text" className='inputRooms' placeholder='Buscar amigos' />
                     </div>
                     <div className="divRoomsAllContainer">
                         {friends === [] || friends.length === 0 || null || undefined ?
@@ -91,14 +131,35 @@ function Users() {
                                 text2={"Adicione as pessoas para interagir e adicionar em grupos"}
                                 isInteractive={false}
                             />
-                            : friends.map((element) => (  
+                            : friends.map((element) => (
                                 <React.Fragment key={element.id}>
-                                    { <User friendshipState={element.friendshipState} idSender={4} idReceiver={element.friendUserId} username={element.username} />  /*TODO : id sender usuario cadastra-do */}
+                                    {<User friendshipState={element.friendshipState} idSender={4} idReceiver={element.friendUserId} username={element.username} />  /*TODO : id sender usuario cadastra-do */}
                                 </React.Fragment>
                             ))}
                     </div>
                 </div>
             </div>
+
+            {showModalFiltroJogadores && (
+                <Modal title="Filtrar por" icon={<BsFilterLeft />} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort />} textButton='Filtrar' onClose={()=> setShowModalFiltroJogadores(false)} onClickButton={()=> filtrarSalas} onClear={limparModalFiltrarSalas}>
+                    <div className="container_filtro">
+                        {/* <div className="filtro_nivel">
+                            <p className="titleFiltro">Nivel</p>
+                            <div className="opcoesNivel">
+                                <Option backgroundColor='#4D4D4D' />
+                                <Option backgroundColor='#604F00' />
+                                <Option backgroundColor='#052D4F' />
+                                <Option backgroundColor='#571618' />
+                            </div>
+                        </div> */}
+                        <div className="container_sliders">
+                            <div className="filtro_comportamento"><p className="titleFiltro">Comportamento</p> <RangeBar min='0' max='5' values={currentValuesComportamento} onChange={handleValuesChangeComportamento}/> </div>
+                            <div className="filtro_habilidade"><p className="titleFiltro">Habilidade</p>  <RangeBar min='0' max='5' values={currentValuesHabilidade} onChange={handleValuesChangeHabilidade} /> </div>
+                        </div>
+                    </div>
+                </Modal>
+            )}
+
         </div>
     );
 }

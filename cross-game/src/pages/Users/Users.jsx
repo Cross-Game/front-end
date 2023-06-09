@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { USERID, currentURL, TOKEN } from "../../data/constants";
 
 import Sidebar from '../../components/Sidebar/Sidebar'
 import './Users.css';
@@ -16,9 +17,10 @@ import RangeBar from '../../components/RangeBar';
 import Toast from '../../components/Toast';
 
 function Users() {
+    
     const [usersGeneric, setUsersGeneric] = useState([]);
     const [friends, setFriends] = useState([]);
-    const [showModalFiltroJogadores, setShowModalFiltroJogadores] = useState(true);
+    const [showModalFiltroJogadores, setShowModalFiltroJogadores] = useState(false);
 
 
 
@@ -76,9 +78,9 @@ function Users() {
     useEffect(() => {
         const obterUsuarios = async () => {
             try {
-                const response = await axios.get(`http://localhost:8081/users`, { //FIXME : urls tem de ser dinamica
+                const response = await axios.get(`${currentURL}/users`, {
                     headers: {
-                        Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJLYWthTG9weiIsInJvbGUiOiJBRE1JTiIsImlzT25saW5lIjp0cnVlLCJpZCI6NCwiZXhwIjoxNjg2MjUyMTc4LCJlbWFpbCI6ImthdGlhLmxvcGV6QGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiS2FrYUxvcHoifQ.lti4dopPu6_ZH1KouoqBpJewcFBRL--_ewo_Q8o1s8xcSUcGaeizJxNR_AZP8XD-emU6W1veX6dZMUXijptdJw` /* TODO bearer token do login*/
+                        Authorization: `Bearer ${TOKEN}`
                     }
                 });
                 if (response.status === 200) {
@@ -96,9 +98,9 @@ function Users() {
     useEffect(() => {
         const obterAmigos = async () => {
             try {
-                const response = await axios.get(`http://localhost:8081/friends/4`, {
+                const response = await axios.get(`${currentURL}/friends/${USERID}`, {
                     headers: {
-                        Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJLYWthTG9weiIsInJvbGUiOiJBRE1JTiIsImlzT25saW5lIjp0cnVlLCJpZCI6NCwiZXhwIjoxNjg2MjUyMTc4LCJlbWFpbCI6ImthdGlhLmxvcGV6QGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiS2FrYUxvcHoifQ.lti4dopPu6_ZH1KouoqBpJewcFBRL--_ewo_Q8o1s8xcSUcGaeizJxNR_AZP8XD-emU6W1veX6dZMUXijptdJw` /* TODO bearer token do login*/
+                        Authorization: `Bearer ${TOKEN}`
                     }
                 });
                 if (response.status === 200) {
@@ -127,7 +129,7 @@ function Users() {
                                 text2={"Adicione as pessoas para interagir e adicionar em grupos"}
                                 isInteractive={false}
                             />
-                            : usersGeneric.filter((user) => (user.id !== 4)) //TODO id do usuario cadastrado diferente para não listá-lo
+                            : usersGeneric.filter((user) => (user.id !== USERID))
                                 .map((element) => (
                                     <React.Fragment key={element.id}>
                                         <User username={element.username} />
@@ -148,7 +150,14 @@ function Users() {
                             />
                             : friends.map((element) => (
                                 <React.Fragment key={element.id}>
-                                    {<User friendshipState={element.friendshipState} idSender={4} idReceiver={element.friendUserId} username={element.username} />  /*TODO : id sender usuario cadastra-do */}
+                                    {
+                                        <User
+                                            friendshipState={element.friendshipState}
+                                            idSender={USERID}
+                                            idReceiver={element.friendUserId}
+                                            username={element.username}
+                                        />
+                                    }
                                 </React.Fragment>
                             ))}
                     </div>
@@ -201,7 +210,13 @@ export const User = (props) => {
     return (
         <>
             {isOpen &&
-                <ChatWithUser friendName={props.username} isOpen={isOpen} onCloseModal={closeModal} idSender={props.idSender} idReceiver={props.idReceiver} />
+                <ChatWithUser
+                    friendName={props.username}
+                    isOpen={isOpen}
+                    onCloseModal={closeModal}
+                    idSender={props.idSender}
+                    idReceiver={props.idReceiver}
+                />
             }
             <div className="divUserRoomCardContainer">
                 <div className="divLeftUser">
@@ -226,7 +241,11 @@ export const User = (props) => {
                 <div className="divRightUser">
                     <img className='imgForFriend' src={iconHeart} alt="" />
                     {props.friendshipState &&
-                        <button className='buttonOpenModalForMessagesWithUser' onClick={openModal}><img className='imgButtonChatForMeesageWithUser' src={iconChatNormal} alt="" /></button>
+                        <button
+                            className='buttonOpenModalForMessagesWithUser'
+                            onClick={openModal}>
+                            <img className='imgButtonChatForMeesageWithUser' src={iconChatNormal} alt="" />
+                        </button>
                     }
                 </div>
             </div>

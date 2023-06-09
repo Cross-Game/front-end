@@ -457,7 +457,7 @@ export const ChatBox = (props) => {
     e.preventDefault();
     // const { } = auth.currentUser;
     // const { photoURL, uid } = auth.currentUser;
-    const uid = 2;
+    const uid = USERID;
     await addDoc(messagesRef, {
       text: formValue,
       uid,
@@ -490,8 +490,7 @@ export const ChatBox = (props) => {
 
 export const ChatMessage = (props) => {
   const { uid, text } = props.message;
-  // const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
-  const messageClass = uid === 5 ? 'sent' : 'received';  // TODO : id Logado
+  const messageClass = uid === USERID ? 'sent' : 'received';
   return (
     <div className={`message ${messageClass}`}>
       {/* <img src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} /> */}

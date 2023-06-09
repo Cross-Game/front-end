@@ -5,6 +5,7 @@ import { Chart } from "react-google-charts";
 import { MdNotificationsActive } from "react-icons/md";
 import Notification from "../../components/Notification/index"
 import axios from "axios";
+import { currentURL } from "../../data/constants";
 
 
 function Dashboard() {
@@ -30,7 +31,7 @@ function Dashboard() {
         const formattedDate = currentDate.toISOString().split('T')[0];
         dateRange.push(formattedDate);
     }
-    
+
     useEffect(() => {
 
         const config = {
@@ -38,7 +39,7 @@ function Dashboard() {
                 Authorization: 'Bearer ' + sessionStorage.getItem("ACESS_TOKEN")
             }
         };
-        axios.get(`http://localhost:8080/friends/${sessionStorage.getItem("ID")}`, config)
+        axios.get(`${currentURL}/friends/${sessionStorage.getItem("ID")}`, config)
             .then(response => {
                 var contador = 0;
                 for (let j = 0; j < dateRange.length; j++) {
@@ -49,7 +50,7 @@ function Dashboard() {
                                 const novoArray = [...prevState];
                                 novoArray[j] = contador;
                                 return novoArray;
-                              });
+                            });
                         }
                     }
                 }

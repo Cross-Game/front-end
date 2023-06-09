@@ -25,6 +25,8 @@ import Modal from "../../components/Modal";
 import { HiLink } from "react-icons/hi";
 import { MdContentCopy, MdFeedback, MdOutlineFeedback } from "react-icons/md";
 import { RiCloseLine } from "react-icons/ri";
+import { getJogadorImagem } from "../../utils/getJogadorImagem";
+import Toast from "../../components/Toast";
 
 
 
@@ -79,6 +81,7 @@ export const ChatRoom = () => {
     }
   ]
 
+  const [meusAmigos, setMeusAmigos] = useState([]);
   const [usersRoom, setUsersRoom] = useState(testeUsers);
 
   const [isVisible, setIsVisible] = useState(false);
@@ -86,6 +89,10 @@ export const ChatRoom = () => {
   const { id } = useParams();
 
   const [showModalConvidar, setShowModalConvidar] = useState(false);
+
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('erro');
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -97,15 +104,91 @@ export const ChatRoom = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const obterMeusAmigos = async () => {
+      try {
+        console.log("Chamei obterMeusAmigos");
+        const response = await axios.get(
+          `http://localhost:8080/friends/${USERID}`,
+          {
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${TOKEN}`
+            },
+          }
+        );
+        if (response.status === 200) {
+          console.log(response);
+          var amigos = response.data.filter((amigo) => amigo.friendshipState === "SENDED"); // TODO Mudar para CONFIRMED
+          setMeusAmigos(amigos);
+          console.log("Amigos de vdd: ")
+          console.log(amigos)
+        }
+        else if (response.status === 204) {
+          setMeusAmigos([]);
+        }
+        else {
+           mudarToast("erro", "Erro ao obter amigos");
+        }
+      } catch (error) {
+        console.error("Erro ao obterMeusAmigos:", error);
+      }
+    };
+
+    obterMeusAmigos();
+  }, []);
+
   if (!isVisible) {
     return null;
   }
 
-  function copiarLinkSala(){
+  function copiarLinkSala() {
     const link = document.getElementById("salas-linkSala").innerText;
     navigator.clipboard.writeText(link);
   }
-  
+
+
+
+  function mudarToast(tipo, mensagem) {
+    setShowToast(true);
+    setToastType(tipo.toLowerCase());
+    setToastMessage(mensagem);
+  }
+
+
+  async function enviarConviteSala(idConvidado) {
+    try {
+      console.log("Enviar convite sala");
+      const response = await axios.post(
+        `http://localhost:8080/notifies/${idConvidado}`,
+        {
+          type: "GROUP",
+          message: "Te convidou para uma sala de ", // TODO Colocar o jogo;
+          description: "",
+        },
+        {
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        console.log(response);
+        mudarToast("sucesso", "Convite enviado!");
+      } else {
+        mudarToast("erro", "Erro ao enviar convite.");
+      }
+    } catch (error) {
+      console.error("Erro ao criar sala", error);
+      mudarToast("erro", "Erro ao enviar convite.");
+    }
+  }
+
+
 
   return (
     <>
@@ -146,7 +229,7 @@ export const ChatRoom = () => {
             <div className="divPainelControllOfAdminGroup">
               <div className="divPainelControllOfAdminGroupContainer">
                 <LockButton />
-                <Button text="Convide seus amigos" icon={<BsArrowRightShort/>} onClick={() => setShowModalConvidar(true)}/>
+                <Button text="Convide seus amigos" icon={<BsArrowRightShort />} onClick={() => setShowModalConvidar(true)} />
               </div>
             </div>
           </div>
@@ -156,32 +239,33 @@ export const ChatRoom = () => {
         </section>
       </div>
 
-      {showModalConvidar && ( 
-          <Modal title='Convide seus amigos' icon={<BsPersonFillAdd/>} temFooter={false} onClose={()=> setShowModalConvidar(false)}>
-            <div className="salas-convidados">
-              <UserProfile nome='teste' img='teste'/>
-              <UserProfile nome='teste' img='teste'/>
-              <UserProfile nome='teste' img='teste'/>
-              <UserProfile nome='teste' img='teste'/>
-              <UserProfile nome='teste' img='teste'/>
-              <UserProfile nome='teste' img='teste'/>
-              <UserProfile nome='teste' img='teste'/>
-              <UserProfile nome='teste' img='teste'/>
-              <UserProfile nome='teste' img='teste'/>
-              <UserProfile nome='teste' img='teste'/>
-              <UserProfile nome='teste' img='teste'/>
-              <UserProfile nome='teste' img='teste'/>
-              <UserProfile nome='teste' img='teste'/>
-              <UserProfile nome='teste' img='teste'/>
-              
-            </div>
-            <div className="salas-groupLink" onClick={copiarLinkSala}>
-              <HiLink/>
-              <span className="salas-link"><a id="salas-linkSala">Aqui fica o link da sala</a></span>
-              <MdContentCopy/>
-            </div>
-          </Modal>
-        )}
+      {showModalConvidar && (
+        <Modal title='Convide seus amigos' icon={<BsPersonFillAdd />} temFooter={false} onClose={() => setShowModalConvidar(false)}>
+          <div className="salas-convidados">
+            {meusAmigos.map((amigo) => (
+              <UserProfile 
+                nome={amigo.username} 
+                hasUserId={amigo.friendUserId}
+                key={amigo.id} 
+                onClick={() => enviarConviteSala(amigo.friendUserId)}
+              />
+            ))}
+          </div>
+          <div className="salas-groupLink" onClick={copiarLinkSala}>
+            <HiLink />
+            <span className="salas-link"><a id="salas-linkSala">Aqui fica o link da sala</a></span>
+            <MdContentCopy />
+          </div>
+        </Modal>
+      )}
+
+      {showToast && (
+        <Toast
+          type={toastType}
+          message={toastMessage}
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </>
   );
 };
@@ -190,8 +274,8 @@ export const PortraitUsers = (props) => {
   let id = 1  /* TODO: id logado  */
 
   const [showModalFeedback, setShowModalFeedback] = useState(false);
-  
-  const [jogadorSelecionado, setJogadorSelecionado] = useState({id: 1,nome: 'João Silva',foto: 'https://example.com/joao_silva.jpg',idade: 27,posicao: 'Atacante',pais: 'Brasil'},);
+
+  const [jogadorSelecionado, setJogadorSelecionado] = useState({ id: 1, nome: 'João Silva', foto: 'https://example.com/joao_silva.jpg', idade: 27, posicao: 'Atacante', pais: 'Brasil' },);
   const [ratingHabilidade, setRatingHabilidade] = useState(0);
   const [ratingComportamento, setRatingComportamento] = useState(0);
   const [comentarioFeedback, setComentarioFeedback] = useState('');
@@ -207,18 +291,18 @@ export const PortraitUsers = (props) => {
 
   function enviarFeedback() {
     console.log("Chamei enviar feedback")
-    axios.post(`http://localhost:8080/feedbacks/${USERID}`, 
-    {
-      userGivenFeedback: jogadorSelecionado.nome,
-      behavior: ratingComportamento,
-      skill: ratingHabilidade,
-      feedbackText: comentarioFeedback
-    }, 
-    {
-      headers: {
-        Authorization: `Bearer ${TOKEN}`
-      }
-    })
+    axios.post(`http://localhost:8080/feedbacks/${USERID}`,
+      {
+        userGivenFeedback: jogadorSelecionado.nome,
+        behavior: ratingComportamento,
+        skill: ratingHabilidade,
+        feedbackText: comentarioFeedback
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`
+        }
+      })
       .then(response => {
         console.log(response.data);
       })
@@ -226,7 +310,7 @@ export const PortraitUsers = (props) => {
         console.error(error);
       });
   }
-  
+
   return (
     <>
       <div className="portraitUserContainer">
@@ -240,46 +324,46 @@ export const PortraitUsers = (props) => {
         <div className="portraitUserContainerEdit"> {/* TODO: alterar abaixo para verificar se usuario logado é owner da sala */}
           {id === 1 ?
             <div className="optionsPortraitUsersDivs">
-              <RiCloseLine/>
+              <RiCloseLine />
             </div>
             : null}
           <div className="optionsPortraitUsersDivs">
-            <BsFillChatLeftTextFill/>
+            <BsFillChatLeftTextFill />
           </div>
-          <div className="optionsPortraitUsersDivs" onClick={()=> setShowModalFeedback(true)}>
-            <MdOutlineFeedback/>
+          <div className="optionsPortraitUsersDivs" onClick={() => setShowModalFeedback(true)}>
+            <MdOutlineFeedback />
           </div>
         </div>
       </div>
 
       {showModalFeedback && (
-            <Modal title='Feedback' icon={<MdFeedback/>} clearAll={true}  temFooter='true' ativarBotao='true' textButton="Enviar avaliação" iconButton={<BsArrowRightShort/>} onClose={()=> setShowModalFeedback(false)} onClear={() => limparModalFeedback()} onClickButton={enviarFeedback}>
-              <UserProfile 
-                nome={jogadorSelecionado.nome}   
-                img={jogadorSelecionado.foto}  
-                />
+        <Modal title='Feedback' icon={<MdFeedback />} clearAll={true} temFooter='true' ativarBotao='true' textButton="Enviar avaliação" iconButton={<BsArrowRightShort />} onClose={() => setShowModalFeedback(false)} onClear={() => limparModalFeedback()} onClickButton={enviarFeedback}>
+          <UserProfile
+            nome={jogadorSelecionado.nome}
+            img={jogadorSelecionado.foto}
+          />
 
-                <div className="salas-group-avaliacao">
+          <div className="salas-group-avaliacao">
 
-                <div className="salas-modalFeedback-avaliacao ">
-                  Habilidade
-                  <Avaliacao initialValue={ratingHabilidade} setRating={setRatingHabilidade} key={`habilidade-${resetAvaliacao}`}/>
-                </div>
+            <div className="salas-modalFeedback-avaliacao ">
+              Habilidade
+              <Avaliacao initialValue={ratingHabilidade} setRating={setRatingHabilidade} key={`habilidade-${resetAvaliacao}`} />
+            </div>
 
-                <div className="salas-modalFeedback-avaliacao ">
-                  Comportamento
-                  <Avaliacao initialValue={ratingComportamento} setRating={setRatingComportamento} key={`comportamento-${resetAvaliacao}`}/>
-                </div>
-                  
+            <div className="salas-modalFeedback-avaliacao ">
+              Comportamento
+              <Avaliacao initialValue={ratingComportamento} setRating={setRatingComportamento} key={`comportamento-${resetAvaliacao}`} />
+            </div>
 
-                </div>
 
-                <div className="salas-modalFeedback-avaliacao-comentario">
-                  <span>Comentário</span>
-                  <textarea className="my-textarea" value={comentarioFeedback} onChange={(e) => setComentarioFeedback(e.target.value)}></textarea>
-                </div>
-            </Modal>
-        )}
+          </div>
+
+          <div className="salas-modalFeedback-avaliacao-comentario">
+            <span>Comentário</span>
+            <textarea className="my-textarea" value={comentarioFeedback} onChange={(e) => setComentarioFeedback(e.target.value)}></textarea>
+          </div>
+        </Modal>
+      )}
     </>
   )
 }

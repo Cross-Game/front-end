@@ -134,6 +134,7 @@ const  changeAvatar = () => {
 
         // </div>
         // </Modal>
+        
         // <Modal title="Filtrar por" icon={<BsFilterLeft/>} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort/>} textButton='Filtrar'>
         // <div className="container_filtro">
         //   <div className="filtro_nivel">

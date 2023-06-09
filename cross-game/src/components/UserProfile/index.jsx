@@ -1,16 +1,57 @@
-import React from "react";
-import "../UserProfile/userProfile.css"
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { TOKEN } from '../../data/constants';
+import "../UserProfile/userProfile.css";
 
-function UserProfile(props){
-    const { img, nome } = props;
-   
-    return (
-      <div className="userProfile-group-userAvatar" >
-        <img className="userProfile-userAvatar__image" src={img} />
-        <span className="userProfile-userAvatar__name">{nome}</span>
-      </div>
-  
-    )
-  }
+const UserProfile = (props) => {
+  const { img, nome, hasUserId, onClick } = props;
+  const [profileImg, setProfileImg] = useState(img);
 
-  export default UserProfile;
+  useEffect(() => {
+    if (hasUserId) {
+      getJogadorImagem(hasUserId);
+    }
+  }, [hasUserId]);
+
+  const getJogadorImagem = async (jogadorId) => {
+    try {
+      const response = await axios.get(`/users/${jogadorId}/picture`, {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+        responseType: 'blob', // Indica que a resposta é um Blob
+      });
+
+      const blobData = response.data;
+      const imageUrl = await convertBlobToBase64(blobData);
+      setProfileImg(imageUrl);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const convertBlobToBase64 = (blob) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+
+      reader.onerror = reject;
+
+      reader.readAsDataURL(blob);
+    });
+  };
+
+  return (
+    <div className="userProfile-group-userAvatar" onClick={onClick}>
+      {profileImg && (
+        <img className="userProfile-userAvatar-image" src={profileImg}/>
+      )}
+      <span className="userProfile-userAvatar-name">{nome}</span>
+    </div>
+  );
+};
+
+export default UserProfile;

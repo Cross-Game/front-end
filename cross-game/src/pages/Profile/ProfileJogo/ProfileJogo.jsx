@@ -53,8 +53,30 @@ function ProfileJogo() {
     const [usernameRiot, setUsernameRiot] = useState("");
     const [listaProfile, setListaProfile] = useState([]);
 
-    function linkGameToUser(gameId, userId, userGameCreate) {
-        axios.post(`http://localhost:8080/${gameId}/${userId}`, userGameCreate, {
+    const linkGameToUser = () =>  {
+        let gameId = 0;
+     
+        if (jogoSelecionado == "League of Legends") {
+            gameId = 1;
+            
+        }
+        if (jogoSelecionado == "Teamfight Tactics") {
+            gameId = 2;
+            
+        }
+        if (jogoSelecionado == "Valorant") {
+            gameId = 3;
+           
+        }
+
+        const userGameCreate = {
+            isFavoriteGame: true,
+            userNickname: usernameRiot,
+            gamerId: "aleatorio",
+            gameFunction: selectedGameFunction,
+            skillLevel: selectedSkillLevel,
+        };
+        axios.post(`http://localhost:8080/user-games/${gameId}/${USERID}`, userGameCreate, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${TOKEN}`
@@ -64,8 +86,8 @@ function ProfileJogo() {
                 const updatedList = [...listaProfile, response.data];
                 setListaProfile(updatedList);
                 sessionStorage.setItem("LISTA_PROFILE", JSON.stringify(updatedList));
-                console.log(response.data);
-                console.log(jogoSelecionado);
+               console.log(response.data);
+               setShowModalAdicionarPerfilJogo(false)
             })
             .catch((error) => {
                 console.error(error);
@@ -80,11 +102,12 @@ function ProfileJogo() {
             },
         })
             .then((response) => {
-                const updatedList = [...listaProfile, response.data];
-                setListaProfile(updatedList);
-                sessionStorage.setItem("LISTA_PROFILE", JSON.stringify(updatedList));
-                console.log(response.data);
-                console.log(jogoSelecionado);
+                listaProfile.push(response.data);
+                sessionStorage.setItem("LISTA_PROFILE", listaProfile);
+                console.log(response.data)
+                console.log(jogoSelecionado)
+                linkGameToUser();
+
             })
             .catch((error) => {
                 console.error(error);
@@ -97,15 +120,8 @@ function ProfileJogo() {
     };
 
     const handleCadastrar = () => {
-        const gameId = 1; // Defina o ID do jogo
-        const userId = USERID; // Utilizando o ID do usuário do exemplo
-        const userGameCreate = {
-            username: usernameRiot,
-            gameFunction: selectedGameFunction,
-            skillLevel: selectedSkillLevel,
-        };
-        linkGameToUser(gameId, userId, userGameCreate);
-        console.log(linkGameToUser)
+        getProfile();
+        
     };
 
     function adicionar() {

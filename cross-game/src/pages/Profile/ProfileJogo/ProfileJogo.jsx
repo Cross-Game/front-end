@@ -12,6 +12,7 @@ import { jogos as listaJogos } from "../../../utils/jogos";
 import { MdGamepad } from "react-icons/md";
 import { USERID, TOKEN } from "../../../data/constants";
 import axios from "axios";
+import { useEffect } from "react";
 
 
 const levels = {
@@ -30,9 +31,6 @@ function ProfileJogo() {
     const handleCloseModal = () => {
         setShowModal(false);
     };
-
-
-
     const [showModalAdicionarPerfilJogo, setShowModalAdicionarPerfilJogo] = useState(false);
     const [jogoSelecionado, setJogoSelecionado] = useState("");
     const [jogos, setJogos] = useState(listaJogos);
@@ -40,9 +38,65 @@ function ProfileJogo() {
     const [selectedSkillLevel, setSelectedSkillLevel] = useState("");
     const [usernameRiot, setUsernameRiot] = useState("");
     const [listaProfile, setListaProfile] = useState([]);
-
     const levelOptions = Object.values(levels);
-    const linkGameToUser = () => {
+    let idRemoveProfile = 0;
+
+    useEffect(() => {
+        axios.get(`http://localhost:8080/user-games/${USERID}`, {
+            headers: {
+                Authorization: `Bearer ${TOKEN}`
+            },
+        })
+            .then((response) => {
+                console.log(response.data[0]);
+                idRemoveProfile = response.data[0].id
+                setUsernameRiot(response.data[0].userNickname)
+                setSelectedSkillLevel(response.data[0].skillLevel)
+                setSelectedGameFunction(response.data[0].gameFunction)
+                let idJogo = response.data[0].gameId;
+                axios.get(`http://localhost:8080/games/${idJogo}`, {
+                    headers: {
+                        Authorization: `Bearer ${TOKEN}`
+                    },
+                }).then((response) => {
+                    setJogoSelecionado(response.data.gameName)
+                })
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    })
+
+    function remove() {
+        axios.delete(`http://localhost:8080/user-games/${USERID}/${idRemoveProfile}`, {
+            headers: {
+                Authorization: `Bearer ${TOKEN}`
+            },
+        }).then((response) => {
+            console.log(response)
+            window.location.reload()
+        }).catch((error) => {
+            console.error(error);
+        })
+    }
+
+    function getProfile() {
+        axios.get(`http://localhost:8080/user-games/${USERID}/${usernameRiot}/${jogoSelecionado}`, {
+            headers: {
+                Authorization: `Bearer ${TOKEN}`
+            },
+        })
+            .then((response) => {
+                console.log(response)
+                linkGameToUser();
+            })
+            .catch((error) => {
+                console.error(error);
+                console.log(`Username não encontrado`);
+            });
+    }
+
+    function linkGameToUser() {
         let gameId = 0;
 
         if (jogoSelecionado == "League of Legends") {
@@ -64,6 +118,9 @@ function ProfileJogo() {
             gameFunction: selectedGameFunction,
             skillLevel: selectedSkillLevel,
         };
+        console.log(usernameRiot)
+        console.log(selectedGameFunction)
+        console.log(selectedSkillLevel)
         axios.post(`http://localhost:8080/user-games/${gameId}/${USERID}`, userGameCreate, {
             headers: {
                 'Content-Type': 'application/json',
@@ -80,23 +137,6 @@ function ProfileJogo() {
             })
             .catch((error) => {
                 console.error(error);
-                alert(`Erro ao vincular o jogo ao usuário`);
-            });
-    }
-
-    function getProfile() {
-        axios.get(`http://localhost:8080/user-games/${USERID}/${usernameRiot}`, {
-            headers: {
-                Authorization: `Bearer ${TOKEN}`
-            },
-        })
-            .then((response) => {
-                linkGameToUser();
-
-            })
-            .catch((error) => {
-                console.error(error);
-                alert(`Username: "${usernameRiot}" não encontrado`);
             });
     }
 
@@ -145,7 +185,9 @@ function ProfileJogo() {
                             </div>
                             <hr />
                             <div className="ProfileJogoCardRemover">
-                                <button className="ProfileJogoCardRemoverButton">Remover Profile</button>
+                                <button className="ProfileJogoCardRemoverButton" onClick={remove}>
+                                    Remover Profile
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -169,9 +211,8 @@ function ProfileJogo() {
                                     <React.Fragment key={jogo.id}>
                                         <Tag
                                             text={jogo.nome}
-                                            isSelected={jogoSelecionado === jogo.nome}
-                                            onClick={() => setJogoSelecionado(jogo.nome)}
-                                        />
+                                            isSelected={jogoSelecionado === jogo.nome ? true : false}
+                                            onClick={() => setJogoSelecionado(jogo.nome)} />
                                     </React.Fragment>
                                 ))}
                             </div>
@@ -181,19 +222,18 @@ function ProfileJogo() {
 
                             <label>Game Function</label>
                             <div className="modalCadastrarProfileJogo-jogos">
-                                {jogos.map((jogo) => (
-                                    <React.Fragment key={jogo.id}>
-                                        {jogo.gameFunction.map(funcao => (
+                                {jogos &&
+                                    jogos.find((jogo) => jogo.nome === jogoSelecionado)?.gameFunction.map((gameFunction, index) => (
+                                        <React.Fragment key={gameFunction} >
+                                            <br />
                                             <Tag
-                                                text={funcao}
-                                                isSelected={selectedGameFunction === funcao}
-                                                onClick={() => setSelectedGameFunction(funcao)}
+                                                text={gameFunction}
+                                                isSelected={selectedGameFunction === gameFunction ? true : false}
+                                                onClick={() => setSelectedGameFunction(gameFunction)}
                                             />
-                                        ))}
-                                    </React.Fragment>
-                                ))}
+                                        </React.Fragment>
+                                    ))}
                             </div>
-
                             <label>Skill Level</label>
                             <div className="modalCadastrarProfileJogo-jogos">
                                 {levelOptions.map((levelValue) => (

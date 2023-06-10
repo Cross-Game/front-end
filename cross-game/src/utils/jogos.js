@@ -9,12 +9,12 @@ export const jogos = [
         id: 2,
       nome: "Teamfight Tactics",
       rank: ["Ferro","Bronze","Prata","Ouro","Platina","Diamante","Mestre","Grão-Mestre","Desafiante"],
-      gameFunction: []
+      gameFunction: [ "SUPPORT"]
     },
     {
       id: 3,
       nome: "Valorant",
       rank: ["Ferro", "Bronze", "Prata","Ouro","Platina","Diamante","Imortal","Radiante"],
-      gameFunction: ["SUPPORT", "DUELIST", "INITIATOR", "CONTROLLER", "SUPPORT"]
+      gameFunction: ["SUPPORT", "DUELIST", "INITIATOR", "CONTROLLER"]
     }
   ];

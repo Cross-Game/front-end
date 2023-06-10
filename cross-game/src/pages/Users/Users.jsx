@@ -73,6 +73,7 @@ function Users() {
     const [listaOriginal, setListaOriginal] = useState([]);
 
     function filtrarJogadores() {
+        // TO DO basear filtros do interesse.
         try {
             // Verifica se a lista original já foi definida
             if (listaOriginal.length === 0) {

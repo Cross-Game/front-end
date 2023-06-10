@@ -26,13 +26,13 @@ function ProfileJogo() {
     const [showModalAdicionarPerfilJogo, setShowModalAdicionarPerfilJogo] = useState(false);
     const [jogoSelecionado, setJogoSelecionado] = useState("");
     const [jogos, setJogos] = useState(listaJogos);
+    const [usernameRiot, setUsernameRiot] = useState();
+    let listaProfile = [];
 
     function getProfile() {
-        
-        const username = "xaropinho"; 
 
         axios
-            .get(`http://localhost:8080/user-games/${USERID}/${username}`,
+            .get(`http://localhost:8080/user-games/${USERID}/${usernameRiot}`,
                 {
                     headers: {
                         Authorization: `Bearer ${TOKEN}`
@@ -40,24 +40,27 @@ function ProfileJogo() {
                 }
             )
             .then((response) => {
-                console.log(response.data);
+                listaProfile.push(response.data);
+                sessionStorage.setItem("LISTA_PROFILE", listaProfile);
+                console.log(response.data)
+                console.log(jogoSelecionado)
             })
             .catch((error) => {
                 console.error(error);
+                alert(`Username: "${usernameRiot}" não encontrado`)
             });
     };
 
+    const handleDelete = () => {
+        handleOpenModal();
+    };
+
+    function handleCadastrar() {
+        getProfile();
+    };
+
     function adicionar() {
-        const handleDelete = () => {
-            handleOpenModal();
-        };
-
-        const handleCadastrar = () => {
-            getProfile()
-            setShowModalAdicionarPerfilJogo(false);
-            
-        };
-
+        
         return (
             <>
                 <div className="ProfileJogoMiniContainer">
@@ -106,7 +109,7 @@ function ProfileJogo() {
                         textButton="Cadastrar"
                         iconButton={<BsCheck />}
                         onClose={() => setShowModalAdicionarPerfilJogo(false)}
-                        onButtonClick={handleCadastrar()}
+                        onClickButton={handleCadastrar}
                     >
                         <div className="modalEditarPerfil-container">
                             {/* <UserProfile nome={"Nome"} img={<BsArrowRightShort />} /> */}
@@ -126,7 +129,7 @@ function ProfileJogo() {
                             </div>
 
                             <label>Username</label>
-                            <input type="text" />
+                            <input type="text" onChange={(event) => setUsernameRiot(event.target.value)} />
                         </div>
                     </Modal>
                 )}

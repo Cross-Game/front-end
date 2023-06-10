@@ -17,6 +17,12 @@ import { BsArrowRightShort, BsFilterLeft } from 'react-icons/bs';
 import Option from './Option';
 import RangeBar from '../../components/RangeBar';
 import Toast from '../../components/Toast';
+import { FaSearch } from 'react-icons/fa';
+import { HiSearch } from 'react-icons/hi';
+import medalPrata from '../../assets/index-page/medalPrata.svg'
+import medalOuro from '../../assets/index-page/medalOuro.svg'
+import medalDiamante from '../../assets/index-page/medalDiamante.svg'
+import medalMestre from '../../assets/index-page/medalMestre.svg'
 
 function Users() {
 
@@ -50,14 +56,51 @@ function Users() {
         setMaxLevelComportamento(newValues.max);
     };
 
-    function filtrarSalas() {
-        setShowModalFiltroJogadores(true); // TODO Trocar para false
-        mudarToast("Sucesso", "Filtro aplicado.")
-        mudarToast("Erro", "Erro ao filtrar jogadores.")
-        //TODO 
+    const removeFriendsFromUsers = () => {
+        const usersWithoutFriends = usersGeneric.filter(user => {
+            // Verifica se o usuário não possui amigos com a flag CONFIRMED
+            return !friends.some(friend => friend.friendUserId === user.id && friend.friendshipState === 'CONFIRMED');
+        });
+
+        setUsersGeneric(usersWithoutFriends);
+    };
+
+
+    const [listaOriginal, setListaOriginal] = useState([]);
+
+    function filtrarJogadores() {
+        try {
+            // Verifica se a lista original já foi definida
+            if (listaOriginal.length === 0) {
+                setListaOriginal([...usersGeneric]);
+            }
+
+            const jogadoresFiltrados = listaOriginal.filter((jogador) => {
+                const habilidade = jogador.mediaHabilidade;
+                const comportamento = jogador.mediaComportamento;
+
+                if (
+                    habilidade >= minLevelHabilidade &&
+                    habilidade <= maxLevelHabilidade &&
+                    comportamento >= minLevelComportamento &&
+                    comportamento <= maxLevelComportamento
+                ) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
+            setUsersGeneric(jogadoresFiltrados);
+            setShowModalFiltroJogadores(false);
+            mudarToast("Sucesso", "Filtro aplicado.");
+        } catch (error) {
+            console.error("Erro ao filtrar jogadores:", error);
+            mudarToast("Erro", "Erro ao filtrar jogadores.");
+        }
     }
 
-    
+
 
     function limparModalFiltrarSalas() {
         setMinLevelHabilidade(0);
@@ -76,7 +119,14 @@ function Users() {
         setToastMessage(mensagem);
     }
 
-    // substituir ids, tokens e urls para dinamicos
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
     useEffect(() => {
         const obterUsuarios = async () => {
             try {
@@ -86,16 +136,103 @@ function Users() {
                     }
                 });
                 if (response.status === 200) {
-                    setUsersGeneric(response.data);
+                    const usuarios = response.data.map(async (usuario) => {
+                        const mediaFeedbacks = await obterMediaFeedback(usuario.id);
+                        const nivel = await obterQuantidadeAmigos(usuario.id);
+                        return {
+                            ...usuario,
+                            mediaComportamento: mediaFeedbacks.mediaComportamento,
+                            mediaHabilidade: mediaFeedbacks.mediaHabilidade,
+                            nivel: nivel,
+                        };
+                    });
+                    const usuariosComFeedbacks = await Promise.all(usuarios);
+                    const shuffledUsuarios = shuffleArray(usuariosComFeedbacks);
+                    setUsersGeneric(shuffledUsuarios);
                 }
             } catch (error) {
-                console.error('Erro ao buscar usuarios:', error);
+                console.error('Erro ao buscar usuários:', error);
+                mudarToast('Erro', 'Erro ao buscar jogadores.');
             }
         };
+
         obterUsuarios();
-        console.log("users", usersGeneric);
     }, []);
 
+
+    const obterQuantidadeAmigos = async (idUsuario) => {
+        try {
+            const response = await axios.get(`${currentURL}/friends/${idUsuario}`, {
+                headers: {
+                    Authorization: `Bearer ${TOKEN}`
+                }
+            });
+            if (response.status === 200) {
+                var contador = 0;
+                response.data.forEach(amigo => {
+                    if (amigo.friendshipState === 'CONFIRMED') { contador++ }
+                })
+
+                if (contador <= 5) {
+                    return "Prata" 
+                }
+                else if (contador <= 12) {
+                    return  "Ouro"
+                }
+                else if (contador <= 22) {
+                    return "Diamante" 
+                }
+                else {
+                    return "Mestre"
+                }
+            }
+            else if (response.status === 204) {
+                return "Prata" 
+            }
+        }
+        catch (error) {
+            console.error('Erro ao buscar quantidade de amigos', error);
+            mudarToast('Erro', 'Erro ao buscar quantidade de amigos.');
+            return "Prata"
+        }
+    };
+
+
+    const obterMediaFeedback = async (idUsuario) => {
+        try {
+            const response = await axios.get(`${currentURL}/feedbacks/${idUsuario}`, {
+                headers: {
+                    Authorization: `Bearer ${TOKEN}`
+                }
+            });
+            if (response.status === 200) {
+                const feedbacks = response.data;
+
+                const somaComportamento = feedbacks.reduce((total, jogador) => total + jogador.behavior, 0);
+                const mediaComportamento = somaComportamento / feedbacks.length;
+
+                const somaHabilidade = feedbacks.reduce((total, jogador) => total + jogador.skill, 0);
+                const mediaHabilidade = somaHabilidade / feedbacks.length;
+
+                return {
+                    mediaComportamento: Math.round(mediaComportamento),
+                    mediaHabilidade: Math.round(mediaHabilidade)
+                };
+            }
+            if (response.status === 204) {
+                return {
+                    mediaComportamento: 0,
+                    mediaHabilidade: 0
+                };
+            }
+        } catch (error) {
+            console.error('Erro ao buscar feedbacks:', error);
+            return {
+                mediaComportamento: 0,
+                mediaHabilidade: 0
+            };
+        }
+    };
 
     useEffect(() => {
         const obterAmigos = async () => {
@@ -107,6 +244,7 @@ function Users() {
                 });
                 if (response.status === 200) {
                     setFriends(response.data);
+                    // removeFriendsFromUsers();
                 }
             } catch (error) {
                 console.error('Erro ao buscar amigos:', error);
@@ -132,6 +270,8 @@ function Users() {
                 <div className="topDiv">
                     <div className="inputDiv">
                         <input type="text" className='inputRooms' placeholder='Buscar jogadores' />
+                        <BsFilterLeft className='salas-icon-filtro' onClick={() => setShowModalFiltroJogadores(true)} />
+                        <HiSearch className='salas-icon-search' />
                     </div>
                     <div className="divRoomsAllContainer">
                         {usersGeneric === [] || usersGeneric.length === 0 || null || undefined ?
@@ -144,19 +284,22 @@ function Users() {
                                 .map((element) => (
                                     idsFriendsPending.includes(element.id) ?
                                         <React.Fragment key={element.id}>
-                                            <User id={element.id} username={element.username} friendStatus={"pending"} />
+                                            <User id={element.id} username={element.username} friendStatus={"pending"} mediaComportamento={element.mediaComportamento} mediaHabilidade={element.mediaHabilidade} nivel={element.nivel} />
                                         </React.Fragment>
                                         :
                                         <React.Fragment key={element.id}>
-                                            <User id={element.id} username={element.username} friendStatus={"teste"} />
+                                            <User id={element.id} username={element.username} friendStatus={"teste"} mediaComportamento={element.mediaComportamento} mediaHabilidade={element.mediaHabilidade} nivel={element.nivel} />
                                         </React.Fragment>
                                 ))
                         }
                     </div>
                 </div>
+
                 <div className="bottomDiv">
                     <div className="inputDiv">
                         <input type="text" className='inputRooms' placeholder='Buscar amigos' />
+                        <BsFilterLeft className='salas-icon-filtro' onClick={() => setShowModalFiltroJogadores(true)} />
+                        <HiSearch className='salas-icon-search' />
                     </div>
                     <div className="divRoomsAllContainer">
                         {friends === [] || friends.length === 0 || null || undefined ?
@@ -176,6 +319,9 @@ function Users() {
                                                 idReceiver={element.friendUserId}
                                                 username={element.username}
                                                 friendStatus={"accepted"}
+                                                mediaHabilidade={element.mediaHabilidade}
+                                                mediaComportamento={element.mediaComportamento}
+                                                nivel={element.nivel}
                                             />
                                         }
                                     </React.Fragment>
@@ -185,7 +331,7 @@ function Users() {
             </div>
 
             {showModalFiltroJogadores && (
-                <Modal title="Filtrar por" icon={<BsFilterLeft />} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort />} textButton='Filtrar' onClose={() => setShowModalFiltroJogadores(false)} onClickButton={filtrarSalas} onClear={limparModalFiltrarSalas}>
+                <Modal title="Filtrar por" icon={<BsFilterLeft />} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort />} textButton='Filtrar' onClose={() => setShowModalFiltroJogadores(false)} onClickButton={filtrarJogadores} onClear={limparModalFiltrarSalas}>
                     <div className="container_filtro">
                         {/* <div className="filtro_nivel">
                             <p className="titleFiltro">Nivel</p>
@@ -227,6 +373,16 @@ export const User = (props) => {
         setIsOpen(false);
     };
 
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastType, setToastType] = useState('erro');
+
+    function mudarToast(tipo, mensagem) {
+        setShowToast(true);
+        setToastType(tipo.toLowerCase());
+        setToastMessage(mensagem);
+    }
+
     const sendNotifyToUserForFriendship = () => {
 
         fetch(`${currentURL}/notifies/${Number(props.id)}?type=FRIEND_REQUEST&message=Convite para Amigo&description=${USERNAMESESSION}`, {
@@ -259,14 +415,16 @@ export const User = (props) => {
             .then(response => {
                 if (response.ok) {
                     // após a requisição de amizade fazemos uma notificação 
+                    mudarToast("Sucesso", "Convite enviado")
                     console.log("// A requisição de amizade foi bem-sucedida")
                     sendNotifyToUserForFriendship()
                 } else if (response.status === 409) {
-
+                    mudarToast("Erro", "Você já enviou um convite para esse usuário")
                     console.log("você já fez uma requisição para esse usuário")
 
                 } else {
                     console.log("Falha ao enviar a requisição de amizade.");
+                    mudarToast("Erro", "Falha ao enviar o convite")
                 }
             })
             .catch(error => (console.log(error)))
@@ -282,11 +440,25 @@ export const User = (props) => {
                     onCloseModal={closeModal}
                     idSender={props.idSender}
                     idReceiver={props.idReceiver}
+                    mediaHabilidade={props.mediaHabilidade}
+                    mediaComportamento={props.mediaComportamento}
+                    nivel={props.nivel}
                 />
             }
             <div className="divUserRoomCardContainer">
                 <div className="divLeftUser">
-                    <img className='imgRankUsersUser' src={imgTest} alt="" />
+                    {props.nivel === "Prata" &&
+                        <img className='imgRankUsersUser' src={medalPrata} alt="" />
+                    }
+                    {props.nivel === "Ouro" &&
+                        <img className='imgRankUsersUser' src={medalOuro} alt="" />
+                    }
+                    {props.nivel === "Diamante" &&
+                        <img className='imgRankUsersUser' src={medalDiamante} alt="" />
+                    }
+                    {props.nivel === "Mestre" &&
+                        <img className='imgRankUsersUser' src={medalMestre} alt="" />
+                    }
                 </div>
 
                 <div className="divMidUser">
@@ -295,12 +467,16 @@ export const User = (props) => {
                         <p>{props.username ? props.username : "Usuário"}</p>
                     </div>
 
+                    <div className="UsersDivContainerTitulos">
+                        <p>C</p>
+                        <p>H</p>
+                    </div>
                     <div className="divLevelsOfBehaviorAndSkillContainer">
                         <div className="divSKillBehaviorContainer divSKillBehaviorContainerRed">
-                            10
+                            {props.mediaComportamento}
                         </div>
                         <div className="divSKillBehaviorContainer divSKillBehaviorContainerGreen">
-                            10
+                            {props.mediaHabilidade}
                         </div>
                     </div>
                 </div>
@@ -310,9 +486,9 @@ export const User = (props) => {
                             <img className='imgForFriend' onClick={sendFriendShip} src={iconPending} alt="" />
                             :
                             props.friendStatus == "accepted" ?
-                            <img className='imgForFriend' onClick={sendFriendShip} src={iconHeart} alt="" />
-                            :
-                            <img className='imgForFriend' onClick={sendFriendShip} src={iconHeartDisabled} alt="" />
+                                <img className='imgForFriend' onClick={sendFriendShip} src={iconHeart} alt="" />
+                                :
+                                <img className='imgForFriend' onClick={sendFriendShip} src={iconHeartDisabled} alt="" />
                     }
                     {props.friendshipState === "CONFIRMED" &&
                         <button
@@ -323,6 +499,14 @@ export const User = (props) => {
                     }
                 </div>
             </div>
+
+            {showToast && (
+                <Toast
+                    type={toastType}
+                    message={toastMessage}
+                    onClose={() => setShowToast(false)}
+                />
+            )}
         </>
     )
 }

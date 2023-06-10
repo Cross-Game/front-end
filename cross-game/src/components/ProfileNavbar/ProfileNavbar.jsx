@@ -72,8 +72,7 @@ function ProfileJogo(props) {
               })
               setQtdAmigos(contador)
             }
-            else {
-              mudarToast("erro", "Erro ao obter nível");
+            else if (response.status === 204) {
               setQtdAmigos(0)
             }
           })

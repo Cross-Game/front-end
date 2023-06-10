@@ -6,7 +6,9 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import "./ChatRoom.css";
 import { app, databaseApp } from "../../data/firebaseConfig";
 import { Link, NavLink, redirect, useNavigate, useParams } from "react-router-dom";
+import { TOKEN, currentURL } from "../../data/constants";
 import { USERID } from "../../data/constants";
+import axios from "axios";
 
 import enviarIcon from "./assets/enviarIcon.svg"
 import imgTest from "../../assets/index-page/medalDiamante.svg"
@@ -16,6 +18,17 @@ import iconLockNo from "./assets/lockNo.svg"
 import iconClose from "./assets/closeIcon.svg"
 import iconChatNormal from "./assets/chatNormalIcon.svg"
 import iconChatAddIconUser from "./assets/chatAddUserIcon.svg"
+import Button from "../../components/Button";
+import { BsArrowRightShort, BsFillChatLeftTextFill, BsFillStarFill, BsPersonFillAdd } from "react-icons/bs";
+import UserProfile from "../../components/UserProfile";
+import Modal from "../../components/Modal";
+import { HiLink } from "react-icons/hi";
+import { MdContentCopy, MdFeedback, MdOutlineFeedback } from "react-icons/md";
+import { RiCloseLine } from "react-icons/ri";
+import { getJogadorImagem } from "../../utils/getJogadorImagem";
+import Toast from "../../components/Toast";
+
+
 
 // const auth = getAuth(app);
 // const auth = signInAnonymously();
@@ -68,11 +81,18 @@ export const ChatRoom = () => {
     }
   ]
 
+  const [meusAmigos, setMeusAmigos] = useState([]);
   const [usersRoom, setUsersRoom] = useState(testeUsers);
 
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
+
+  const [showModalConvidar, setShowModalConvidar] = useState(false);
+
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('erro');
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -84,9 +104,91 @@ export const ChatRoom = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const obterMeusAmigos = async () => {
+      try {
+        console.log("Chamei obterMeusAmigos");
+        const response = await axios.get(
+          `http://localhost:8080/friends/${USERID}`,
+          {
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${TOKEN}`
+            },
+          }
+        );
+        if (response.status === 200) {
+          console.log(response);
+          var amigos = response.data.filter((amigo) => amigo.friendshipState === "SENDED"); // TODO Mudar para CONFIRMED
+          setMeusAmigos(amigos);
+          console.log("Amigos de vdd: ")
+          console.log(amigos)
+        }
+        else if (response.status === 204) {
+          setMeusAmigos([]);
+        }
+        else {
+          mudarToast("erro", "Erro ao obter amigos");
+        }
+      } catch (error) {
+        console.error("Erro ao obterMeusAmigos:", error);
+      }
+    };
+
+    obterMeusAmigos();
+  }, []);
+
   if (!isVisible) {
     return null;
   }
+
+  function copiarLinkSala() {
+    const link = document.getElementById("salas-linkSala").innerText;
+    navigator.clipboard.writeText(link);
+  }
+
+
+
+  function mudarToast(tipo, mensagem) {
+    setShowToast(true);
+    setToastType(tipo.toLowerCase());
+    setToastMessage(mensagem);
+  }
+
+
+  async function enviarConviteSala(idConvidado) {
+    try {
+      console.log("Enviar convite sala");
+      const response = await axios.post(
+        `${currentURL}/notifies/${idConvidado}`,
+        {
+          type: "GROUP",
+          message: "Te convidou para uma sala de ", // TODO Colocar o jogo;
+          description: "",
+        },
+        {
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        console.log(response);
+        mudarToast("sucesso", "Convite enviado!");
+      } else {
+        mudarToast("erro", "Erro ao enviar convite.");
+      }
+    } catch (error) {
+      console.error("Erro ao criar sala", error);
+      mudarToast("erro", "Erro ao enviar convite.");
+    }
+  }
+
+
 
   return (
     <>
@@ -127,9 +229,7 @@ export const ChatRoom = () => {
             <div className="divPainelControllOfAdminGroup">
               <div className="divPainelControllOfAdminGroupContainer">
                 <LockButton />
-                <div className="divinviteFriendsToRoom">
-                  Convide seus amigos <img src={iconBack} alt="" />
-                </div>
+                <Button text="Convide seus amigos" icon={<BsArrowRightShort />} onClick={() => setShowModalConvidar(true)} />
               </div>
             </div>
           </div>
@@ -138,12 +238,94 @@ export const ChatRoom = () => {
           {<ChatBox idGroup={id} />}
         </section>
       </div>
+
+      {showModalConvidar && (
+        <Modal title='Convide seus amigos' icon={<BsPersonFillAdd />} temFooter={false} onClose={() => setShowModalConvidar(false)}>
+          <div className="salas-convidados">
+            {meusAmigos.map((amigo) => (
+              <UserProfile
+                nome={amigo.username}
+                hasUserId={amigo.friendUserId}
+                key={amigo.id}
+                onClick={() => enviarConviteSala(amigo.friendUserId)}
+              />
+            ))}
+          </div>
+          <div className="salas-groupLink" onClick={copiarLinkSala}>
+            <HiLink />
+            <span className="salas-link"><a id="salas-linkSala">Aqui fica o link da sala</a></span>
+            <MdContentCopy />
+          </div>
+        </Modal>
+      )}
+
+      {showToast && (
+        <Toast
+          type={toastType}
+          message={toastMessage}
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </>
   );
 };
 
 export const PortraitUsers = (props) => {
-  let id = USERID 
+  let id = USERID;
+
+  const [showModalFeedback, setShowModalFeedback] = useState(false);
+
+  const [jogadorSelecionado, setJogadorSelecionado] = useState({ id: 2, nome: 'João Silva', foto: 'https://example.com/joao_silva.jpg', idade: 27, posicao: 'Atacante', pais: 'Brasil' },);
+  const [ratingHabilidade, setRatingHabilidade] = useState(0);
+  const [ratingComportamento, setRatingComportamento] = useState(0);
+  const [comentarioFeedback, setComentarioFeedback] = useState('');
+
+  const [resetAvaliacao, setResetAvaliacao] = useState(false);
+  function limparModalFeedback() {
+    setRatingHabilidade(0);
+    setRatingComportamento(0);
+    setComentarioFeedback('');
+    console.log("Limpando Modal Feedback")
+    setResetAvaliacao(!resetAvaliacao);
+  }
+
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('erro');
+
+  function mudarToast(tipo, mensagem) {
+    setShowToast(true);
+    setToastType(tipo.toLowerCase());
+    setToastMessage(mensagem);
+  }
+
+  function enviarFeedback() {
+    console.log("Chamei enviar feedback")
+    axios.post(`${currentURL}/feedbacks/${jogadorSelecionado.id}`,
+      {
+        userGivenFeedback: sessionStorage.getItem("NICKNAME"),
+        behavior: ratingComportamento,
+        skill: ratingHabilidade,
+        feedbackText: comentarioFeedback
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`
+        }
+      })
+      .then(response => {
+        console.log(response.data);
+        mudarToast("Sucesso", "Avaliação enviada")
+        setTimeout(function() {
+          setShowModalFeedback(false);
+        }, 1000);
+      })
+      .catch(error => {
+        console.error(error);
+        mudarToast("erro", "Erro ao enviar avaliação")
+      });
+  }
+
   return (
     <>
       <div className="portraitUserContainer">
@@ -157,18 +339,54 @@ export const PortraitUsers = (props) => {
         <div className="portraitUserContainerEdit"> {/* TODO: alterar abaixo para verificar se usuario logado é owner da sala */}
           {id === 1 ?
             <div className="optionsPortraitUsersDivs">
-              <img src={iconClose} alt="" />
+              <RiCloseLine />
             </div>
             : null}
           <div className="optionsPortraitUsersDivs">
-            <img src={iconChatNormal} alt="" />
+            <BsFillChatLeftTextFill />
           </div>
-          <div className="optionsPortraitUsersDivs">
-            <img src={iconChatAddIconUser} alt="" />
+          <div className="optionsPortraitUsersDivs" onClick={() => setShowModalFeedback(true)}>
+            <MdOutlineFeedback />
           </div>
         </div>
-
       </div>
+
+      {showModalFeedback && (
+        <Modal title='Feedback' icon={<MdFeedback />} clearAll={true} temFooter='true' ativarBotao='true' textButton="Enviar avaliação" iconButton={<BsArrowRightShort />} onClose={() => setShowModalFeedback(false)} onClear={() => limparModalFeedback()} onClickButton={enviarFeedback}>
+          <UserProfile
+            nome={jogadorSelecionado.nome}
+            hasUserId={jogadorSelecionado.id}
+          />
+
+          <div className="salas-group-avaliacao">
+
+            <div className="salas-modalFeedback-avaliacao ">
+              Habilidade
+              <Avaliacao initialValue={ratingHabilidade} setRating={setRatingHabilidade} key={`habilidade-${resetAvaliacao}`} />
+            </div>
+
+            <div className="salas-modalFeedback-avaliacao ">
+              Comportamento
+              <Avaliacao initialValue={ratingComportamento} setRating={setRatingComportamento} key={`comportamento-${resetAvaliacao}`} />
+            </div>
+
+
+          </div>
+
+          <div className="salas-modalFeedback-avaliacao-comentario">
+            <span>Comentário</span>
+            <textarea className="my-textarea" value={comentarioFeedback} onChange={(e) => setComentarioFeedback(e.target.value)}></textarea>
+          </div>
+        </Modal>
+      )}
+
+      {showToast && (
+        <Toast
+          type={toastType}
+          message={toastMessage}
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </>
   )
 }
@@ -296,6 +514,65 @@ export const ExitFromRoom = () => {
     </>
   )
 }
+
+const Avaliacao = ({ initialValue, setRating, reset }) => {
+  var [avaliacao, setAvaliacao] = useState(initialValue);
+  var [tempAvaliacao, setTempAvaliacao] = useState(0);
+
+  useEffect(() => {
+    if (reset) {
+      setAvaliacao(0);
+    }
+  }, [reset]);
+
+
+  const handleClick = (value) => {
+    if (value === avaliacao) {
+      setAvaliacao(0);
+      setRating(0);
+    } else {
+      setAvaliacao(value);
+      setRating(value);
+    }
+  };
+
+
+  const handleMouseEnter = (value) => {
+    setTempAvaliacao(value);
+  };
+
+  const handleMouseLeave = () => {
+    setTempAvaliacao(0);
+  };
+
+  const getStarColor = (index) => {
+    if (index < tempAvaliacao || index < avaliacao) {
+      return "#19FF00";
+    } else {
+      return "#e4e5e9";
+    }
+  };
+
+  return (
+    <div className="estrelinhas">
+      {[...Array(5)].map((_, index) => {
+        const value = index + 1;
+        return (
+          <BsFillStarFill
+            key={value}
+            onClick={() => handleClick(value)}
+            color={getStarColor(index)}
+            size={14}
+            style={{ marginRight: 5, cursor: "pointer" }}
+            onMouseEnter={() => handleMouseEnter(value)}
+            onMouseLeave={() => handleMouseLeave()}
+          />
+        );
+      })}
+    </div>
+  );
+};
+
 
 //   export const SignIn = () => {
 //     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);

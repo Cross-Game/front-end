@@ -9,7 +9,7 @@ import { HiLink, HiMinusSm } from "react-icons/hi";
 import { BsArrowLeftShort, BsArrowRightShort, BsChatLeftTextFill, BsChevronLeft, BsChevronRight, BsFillCalendarFill, BsFillCalendarWeekFill, BsFillChatLeftTextFill, BsFillStarFill, BsFillUnlockFill, BsLink, BsLink45Deg, BsLockFill, BsPersonFillAdd, BsPlus, BsUnlockFill } from "react-icons/bs";
 import { jogos as listaJogos } from "../../utils/jogos";
 import Button from "../../components/Button";
-import Option from "../Teste/Option/index";
+import Option from "../Users/Option";
 import { RiCloseLine } from "react-icons/ri";
 import "./salas.css";
 import axios from "axios";

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './style.css';
+import "../Option/style.css"
 
 const Option = ({ backgroundColor: color }) => {
   const [hovered, setHovered] = useState(false);

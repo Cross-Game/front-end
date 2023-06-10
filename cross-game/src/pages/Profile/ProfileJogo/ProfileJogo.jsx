@@ -13,6 +13,25 @@ import { MdGamepad } from "react-icons/md";
 import { USERID, TOKEN } from "../../../data/constants";
 import axios from "axios";
 
+const GameFunction = {
+    TOP: "TOP",
+    JUNGLE: "JUNGLE",
+    MID: "MID",
+    ADC: "ADC",
+    SUPPORT: "SUPPORT",
+    DUELIST: "DUELIST",
+    INITIATOR: "INITIATOR",
+    CONTROLLER: "CONTROLLER",
+    SENTINEL: "SENTINEL"
+};
+
+const levels = {
+    LOW: "LOW",
+    MEDIUM: "MEDIUM",
+    HIGH: "HIGH",
+    EXPERT: "EXPERT"
+};
+
 function ProfileJogo() {
     const [showModal, setShowModal] = useState(false);
     const handleOpenModal = () => {
@@ -23,44 +42,73 @@ function ProfileJogo() {
         setShowModal(false);
     };
 
+    const gameFunctionOptions = Object.values(GameFunction);
+    const levelOptions = Object.values(levels);
+
     const [showModalAdicionarPerfilJogo, setShowModalAdicionarPerfilJogo] = useState(false);
     const [jogoSelecionado, setJogoSelecionado] = useState("");
     const [jogos, setJogos] = useState(listaJogos);
-    const [usernameRiot, setUsernameRiot] = useState();
-    let listaProfile = [];
+    const [selectedGameFunction, setSelectedGameFunction] = useState("");
+    const [selectedSkillLevel, setSelectedSkillLevel] = useState("");
+    const [usernameRiot, setUsernameRiot] = useState("");
+    const [listaProfile, setListaProfile] = useState([]);
 
-    function getProfile() {
-
-        axios
-            .get(`http://localhost:8080/user-games/${USERID}/${usernameRiot}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${TOKEN}`
-                    },
-                }
-            )
+    function linkGameToUser(gameId, userId, userGameCreate) {
+        axios.post(`http://localhost:8080/${gameId}/${userId}`, userGameCreate, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${TOKEN}`
+            },
+        })
             .then((response) => {
-                listaProfile.push(response.data);
-                sessionStorage.setItem("LISTA_PROFILE", listaProfile);
-                console.log(response.data)
-                console.log(jogoSelecionado)
+                const updatedList = [...listaProfile, response.data];
+                setListaProfile(updatedList);
+                sessionStorage.setItem("LISTA_PROFILE", JSON.stringify(updatedList));
+                console.log(response.data);
+                console.log(jogoSelecionado);
             })
             .catch((error) => {
                 console.error(error);
-                alert(`Username: "${usernameRiot}" não encontrado`)
+                alert(`Erro ao vincular o jogo ao usuário`);
             });
-    };
+    }
+
+    function getProfile() {
+        axios.get(`http://localhost:8080/user-games/${USERID}/${usernameRiot}`, {
+            headers: {
+                Authorization: `Bearer ${TOKEN}`
+            },
+        })
+            .then((response) => {
+                const updatedList = [...listaProfile, response.data];
+                setListaProfile(updatedList);
+                sessionStorage.setItem("LISTA_PROFILE", JSON.stringify(updatedList));
+                console.log(response.data);
+                console.log(jogoSelecionado);
+            })
+            .catch((error) => {
+                console.error(error);
+                alert(`Username: "${usernameRiot}" não encontrado`);
+            });
+    }
 
     const handleDelete = () => {
         handleOpenModal();
     };
 
-    function handleCadastrar() {
-        getProfile();
+    const handleCadastrar = () => {
+        const gameId = 1; // Defina o ID do jogo
+        const userId = USERID; // Utilizando o ID do usuário do exemplo
+        const userGameCreate = {
+            username: usernameRiot,
+            gameFunction: selectedGameFunction,
+            skillLevel: selectedSkillLevel,
+        };
+        linkGameToUser(gameId, userId, userGameCreate);
+        console.log(linkGameToUser)
     };
 
     function adicionar() {
-        
         return (
             <>
                 <div className="ProfileJogoMiniContainer">
@@ -112,16 +160,13 @@ function ProfileJogo() {
                         onClickButton={handleCadastrar}
                     >
                         <div className="modalEditarPerfil-container">
-                            {/* <UserProfile nome={"Nome"} img={<BsArrowRightShort />} /> */}
-
                             <label>Jogo</label>
-
                             <div className="modalCadastrarProfileJogo-jogos">
                                 {jogos.map((jogo) => (
                                     <React.Fragment key={jogo.id}>
                                         <Tag
                                             text={jogo.nome}
-                                            isSelected={jogoSelecionado === jogo.nome ? true : false}
+                                            isSelected={jogoSelecionado === jogo.nome}
                                             onClick={() => setJogoSelecionado(jogo.nome)}
                                         />
                                     </React.Fragment>
@@ -130,6 +175,32 @@ function ProfileJogo() {
 
                             <label>Username</label>
                             <input type="text" onChange={(event) => setUsernameRiot(event.target.value)} />
+
+                            <label>Game Function</label>
+                            <div className="modalCadastrarProfileJogo-jogos">
+                                {gameFunctionOptions.map((functionValue) => (
+                                    <React.Fragment key={functionValue}>
+                                        <Tag
+                                            text={functionValue}
+                                            isSelected={selectedGameFunction === functionValue}
+                                            onClick={() => setSelectedGameFunction(functionValue)}
+                                        />
+                                    </React.Fragment>
+                                ))}
+                            </div>
+
+                            <label>Skill Level</label>
+                            <div className="modalCadastrarProfileJogo-jogos">
+                                {levelOptions.map((levelValue) => (
+                                    <React.Fragment key={levelValue}>
+                                        <Tag
+                                            text={levelValue}
+                                            isSelected={selectedSkillLevel === levelValue}
+                                            onClick={() => setSelectedSkillLevel(levelValue)}
+                                        />
+                                    </React.Fragment>
+                                ))}
+                            </div>
                         </div>
                     </Modal>
                 )}

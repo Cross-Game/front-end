@@ -11,12 +11,13 @@ export const jogos = [
       nome: "Teamfight Tactics",
       sigla: "TFT",
       rank: ["Ferro","Bronze","Prata","Ouro","Platina","Diamante","Mestre","Grão-Mestre","Desafiante"],
-      gameFunction: ["DUELIST", "INIATOR", "CONTROLLER", "SUPPORT"]
+      gameFunction: ["SUPPORT"]
     },
     {
         id: 3,
       nome: "Valorant",
       sigla: "Valorant",
-      rank: ["Ferro", "Bronze", "Prata","Ouro","Platina","Diamante","Imortal","Radiante"]
+      rank: ["Ferro", "Bronze", "Prata","Ouro","Platina","Diamante","Imortal","Radiante"],
+      gameFunction: ["DUELIST", "INIATOR", "CONTROLLER", "SUPPORT"]
     }
   ];

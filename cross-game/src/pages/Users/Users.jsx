@@ -5,7 +5,7 @@ import { USERID, currentURL, TOKEN, USERNAMESESSION } from "../../data/constants
 import Sidebar from '../../components/Sidebar/Sidebar'
 import './Users.css';
 
-import imgTest from "../../assets/index-page/medalDiamante.svg"
+import imgUserProfile from "../../assets/index-page/testeImg.png";
 import iconHeart from "./assets/iconHeart.svg"
 import iconHeartDisabled from "./assets/iconHeartDisabled.svg"
 import iconPending from "./assets/iconPending.svg"
@@ -17,12 +17,16 @@ import { BsArrowRightShort, BsFilterLeft } from 'react-icons/bs';
 import Option from './Option';
 import RangeBar from '../../components/RangeBar';
 import Toast from '../../components/Toast';
-import { FaSearch } from 'react-icons/fa';
+import Tag from '../../components/Tag';
+
 import { HiSearch } from 'react-icons/hi';
+
 import medalPrata from '../../assets/index-page/medalPrata.svg'
 import medalOuro from '../../assets/index-page/medalOuro.svg'
 import medalDiamante from '../../assets/index-page/medalDiamante.svg'
 import medalMestre from '../../assets/index-page/medalMestre.svg'
+
+import { jogos as listaJogos } from "../../utils/jogos";
 
 function Users() {
 
@@ -100,6 +104,10 @@ function Users() {
         }
     }
 
+    const [jogos, setJogos] = useState(listaJogos);
+    const [jogoSelecionado, setJogoSelecionado] = useState("");
+    const [funcaoSelecionada, setFuncaoSelecionada] = useState("");
+
 
 
     function limparModalFiltrarSalas() {
@@ -107,6 +115,8 @@ function Users() {
         setMaxLevelHabilidade(5);
         setMinLevelComportamento(0);
         setMaxLevelComportamento(5);
+        setJogoSelecionado("");
+        setFuncaoSelecionada("");
     }
 
     const [showToast, setShowToast] = useState(false);
@@ -139,15 +149,18 @@ function Users() {
                     const usuarios = response.data.map(async (usuario) => {
                         const mediaFeedbacks = await obterMediaFeedback(usuario.id);
                         const nivel = await obterQuantidadeAmigos(usuario.id);
+                        const imagem = await obterImagemUsuario(usuario.id);
                         return {
                             ...usuario,
                             mediaComportamento: mediaFeedbacks.mediaComportamento,
                             mediaHabilidade: mediaFeedbacks.mediaHabilidade,
                             nivel: nivel,
+                            imagem: imagem,
                         };
                     });
                     const usuariosComFeedbacks = await Promise.all(usuarios);
                     const shuffledUsuarios = shuffleArray(usuariosComFeedbacks);
+                    console.log(usuariosComFeedbacks)
                     setUsersGeneric(shuffledUsuarios);
                 }
             } catch (error) {
@@ -174,20 +187,20 @@ function Users() {
                 })
 
                 if (contador <= 5) {
-                    return "Prata" 
+                    return "Prata"
                 }
                 else if (contador <= 12) {
-                    return  "Ouro"
+                    return "Ouro"
                 }
                 else if (contador <= 22) {
-                    return "Diamante" 
+                    return "Diamante"
                 }
                 else {
                     return "Mestre"
                 }
             }
             else if (response.status === 204) {
-                return "Prata" 
+                return "Prata"
             }
         }
         catch (error) {
@@ -232,6 +245,44 @@ function Users() {
                 mediaHabilidade: 0
             };
         }
+    };
+
+    const obterImagemUsuario = async (jogadorId) => {
+        try {
+            const response = await axios.get(`${currentURL}/users/${jogadorId}/picture`, {
+                headers: {
+                    Authorization: `Bearer ${TOKEN}`,
+                },
+                responseType: 'blob',
+            });
+            console.log(response)
+            if (response.data.size > 0) {
+                const blobData = response.data;
+                const imageUrl = await convertBlobToBase64(blobData);
+                return imageUrl;
+            }
+            else {
+                console.log("entrei aqui")
+                return imgUserProfile;
+            }
+        } catch (error) {
+            console.log(error);
+            return imgUserProfile;
+        }
+    };
+
+    const convertBlobToBase64 = (blob) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                resolve(reader.result);
+            };
+
+            reader.onerror = reject;
+
+            reader.readAsDataURL(blob);
+        });
     };
 
     useEffect(() => {
@@ -284,11 +335,11 @@ function Users() {
                                 .map((element) => (
                                     idsFriendsPending.includes(element.id) ?
                                         <React.Fragment key={element.id}>
-                                            <User id={element.id} username={element.username} friendStatus={"pending"} mediaComportamento={element.mediaComportamento} mediaHabilidade={element.mediaHabilidade} nivel={element.nivel} />
+                                            <User id={element.id} username={element.username} friendStatus={"pending"} mediaComportamento={element.mediaComportamento} mediaHabilidade={element.mediaHabilidade} nivel={element.nivel} imagem={element.imagem} />
                                         </React.Fragment>
                                         :
                                         <React.Fragment key={element.id}>
-                                            <User id={element.id} username={element.username} friendStatus={"teste"} mediaComportamento={element.mediaComportamento} mediaHabilidade={element.mediaHabilidade} nivel={element.nivel} />
+                                            <User id={element.id} username={element.username} friendStatus={"teste"} mediaComportamento={element.mediaComportamento} mediaHabilidade={element.mediaHabilidade} nivel={element.nivel} imagem={element.imagem} />
                                         </React.Fragment>
                                 ))
                         }
@@ -298,7 +349,7 @@ function Users() {
                 <div className="bottomDiv">
                     <div className="inputDiv">
                         <input type="text" className='inputRooms' placeholder='Buscar amigos' />
-                        <BsFilterLeft className='salas-icon-filtro' onClick={() => setShowModalFiltroJogadores(true)} />
+                        {/* <BsFilterLeft className='salas-icon-filtro' onClick={() => setShowModalFiltroJogadores(true)} /> */}
                         <HiSearch className='salas-icon-search' />
                     </div>
                     <div className="divRoomsAllContainer">
@@ -322,6 +373,7 @@ function Users() {
                                                 mediaHabilidade={element.mediaHabilidade}
                                                 mediaComportamento={element.mediaComportamento}
                                                 nivel={element.nivel}
+                                                imagem={element.imagem}
                                             />
                                         }
                                     </React.Fragment>
@@ -332,7 +384,7 @@ function Users() {
 
             {showModalFiltroJogadores && (
                 <Modal title="Filtrar por" icon={<BsFilterLeft />} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort />} textButton='Filtrar' onClose={() => setShowModalFiltroJogadores(false)} onClickButton={filtrarJogadores} onClear={limparModalFiltrarSalas}>
-                    <div className="container_filtro">
+                    <div className="container_filtro_modal_users">
                         {/* <div className="filtro_nivel">
                             <p className="titleFiltro">Nivel</p>
                             <div className="opcoesNivel">
@@ -342,9 +394,43 @@ function Users() {
                                 <Option backgroundColor='#571618' />
                             </div>
                         </div> */}
+                         <p className='title_container_users'>Perfil Pessoal</p>
                         <div className="container_sliders">
                             <div className="filtro_comportamento"><p className="titleFiltro">Comportamento</p> <RangeBar min='0' max='5' values={currentValuesComportamento} onChange={handleValuesChangeComportamento} /> </div>
                             <div className="filtro_habilidade"><p className="titleFiltro">Habilidade</p>  <RangeBar min='0' max='5' values={currentValuesHabilidade} onChange={handleValuesChangeHabilidade} /> </div>
+                        </div>
+
+                        <div className="container_perfil_de_jogos">
+                            <p className='title_container_users2'>Perfil de Jogos</p>
+                            <p className="titleFiltro">Jogos</p>
+                            <div className="jogos">
+                                {jogos.map((jogo) => (
+                                    <React.Fragment key={jogo.id}>
+                                        <Tag
+                                            text={jogo.nome}
+                                            isSelected={jogoSelecionado === jogo.nome ? true : false}
+                                            onClick={() => setJogoSelecionado(jogo.nome)} />
+                                    </React.Fragment>
+                                ))}
+                            </div>
+
+                            <div className="fitro_funcao_modal" >
+                                <p className="titleFiltro">Função</p>
+                                <div className="filtro_funcao_modal_groupFuncoes">
+                                {jogos &&
+                                    jogos.find((jogo) => jogo.nome === jogoSelecionado)?.gameFunction.map((gameFunction, index) => (
+                                        <React.Fragment key={gameFunction}>
+                                            <br />
+                                            <Tag
+                                                text={gameFunction}
+                                                isSelected={funcaoSelecionada === gameFunction ? true : false}
+                                                onClick={() => setFuncaoSelecionada(gameFunction)}
+                                            />
+                                        </React.Fragment>
+                                    ))}
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </Modal>
@@ -443,6 +529,7 @@ export const User = (props) => {
                     mediaHabilidade={props.mediaHabilidade}
                     mediaComportamento={props.mediaComportamento}
                     nivel={props.nivel}
+                    imagem={props.imagem}
                 />
             }
             <div className="divUserRoomCardContainer">
@@ -463,7 +550,7 @@ export const User = (props) => {
 
                 <div className="divMidUser">
                     <div className="divUserImgAndNameContainerUsers">
-                        <img className='imgUserUsers' src={imgTest} alt="" />
+                        <img className='imgUserUsers' src={props.imagem} alt="" />
                         <p>{props.username ? props.username : "Usuário"}</p>
                     </div>
 

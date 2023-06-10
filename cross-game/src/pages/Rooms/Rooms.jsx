@@ -130,7 +130,7 @@ function Rooms() {
     }
 
     // [Modal] Filtro de Salas
-    const [showModalFiltroSala, setShowModalFiltroSala] = useState(false);
+    const [showModalFiltroSala, setShowModalFiltroSala] = useState(true);
 
     function limparFiltroSalas() {
         setJogoSelecionado("");
@@ -155,7 +155,7 @@ function Rooms() {
             try {
                 console.log("Chamei obterMeusJogos");
                 const response = await axios.get(
-                    `http://localhost:8080/user-games/${USERID}`,
+                    `${currentURL}/user-games/${USERID}`,
                     {
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest',
@@ -166,15 +166,11 @@ function Rooms() {
                 );
                 if (response.status === 200) {
                     console.log(response);
-                    response.data.map((jogo) => {
-                        switch (jogo.gameId) {
-                            case 1: break;
-                            case 2: break;
-                            case 3: break;
-                        }
-                    })
-                    setMeusJogos(response.data)
-                }
+                    const idsDesejados = response.data.map((jogo) => jogo.gameId);
+                    const jogosFiltrados = listaJogos.filter((jogo) => idsDesejados.includes(jogo.id));
+                    setMeusJogos(jogosFiltrados);
+                    setJogos(jogosFiltrados);
+                  }
                 else if (response.status === 204) {
                     console.log("Sem jogos cadastrados")
                 }
@@ -194,9 +190,8 @@ function Rooms() {
         try {
             console.log("Chamei criar sala");
             const response = await axios.post(
-                `http://localhost:8080/team-rooms`,
-                {
-
+                `${currentURL}/team-rooms/${USERID}`,
+                { 
                     roomName: nomeSalaCriar.toString(),
                     capacity: qtdJogadoresSelecionados,
                     gameName: jogoSelecionado.toString(),
@@ -205,7 +200,9 @@ function Rooms() {
                     description: descricaoSalaCriar.toString(),
                     isPrivate: false,
                     tokenAccess: "",
-                    idUserAdmin: sessionStorage.getItem("ID")
+                    idUserAdmin: parseInt(sessionStorage.getItem("ID"),10),
+                    usersInRoom: [], // TODO se não passa da erro
+                    usersHistoryId: [], // TODO se não passa da erro
                 },
                 {
                     headers: {
@@ -284,13 +281,13 @@ function Rooms() {
                 <Modal title="Criar uma sala" icon={<MdGroups />} clearAll={true} temFooter={true} ativarBotao={true} iconButton={<BsArrowRightShort />} textButton='Criar' onClose={() => setShowModalCriarSala(false)} onClear={limparModalCriarSala} onClickButton={criarSala}>
                     {meusJogos.length <= 0 ? (
                         <div className='salas-containerSemJogo'>
-                            <p>Para continuar é necessário cadastrar 1 jogo.</p>
+                            <p>Para continuar é necessário ter cadastrado 1 jogo.</p>
                             <Button text={"Cadastrar jogo"} icon={<BsArrowRightShort />} onClick={() => navigate("/profile")} />
                         </div>
                     ) : (
                         <div className="container_filtro">
                             <div className="filtro_jogos">
-                                <p className="titleFiltro">Escolha um Jogo</p>
+                                <p className="titleFiltro">Escolha um jogo</p>
                                 <div className="jogos">
                                     {jogos.map((jogo) => (
                                         <React.Fragment key={jogo.id}>

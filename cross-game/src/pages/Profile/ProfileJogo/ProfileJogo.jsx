@@ -88,6 +88,7 @@ function ProfileJogo() {
                 sessionStorage.setItem("LISTA_PROFILE", JSON.stringify(updatedList));
                 console.log(response.data);
                 setShowModalAdicionarPerfilJogo(false)
+                alert("Cadastro Realizado !")
             })
             .catch((error) => {
                 console.error(error);
@@ -102,10 +103,6 @@ function ProfileJogo() {
             },
         })
             .then((response) => {
-                listaProfile.push(response.data);
-                sessionStorage.setItem("LISTA_PROFILE", listaProfile);
-                console.log(response.data)
-                console.log(jogoSelecionado)
                 linkGameToUser();
 
             })
@@ -136,37 +133,34 @@ function ProfileJogo() {
                     </div>
                 </div>
                 <div className="ProfileJogoCardContainer">
-                    {[1].map((index) => (
-                        <div className="ProfileJogoCardUsername" key={index}>
-                            <div>
-                                <p className="ProfileJogoEstiloParagrafo">
-                                    NickName: <span>HOmonster</span>
-                                </p>
+                    <div className="card">
+                        <div className="header">Detalhes do Profile</div>
+                        <div className="body">
+                            <div className="skill">
+                                <div className="skill-name">NickName</div>
+                                <div className="skill-percent-number">{usernameRiot}</div>
                             </div>
-                            <div>
-                                <p className="ProfileJogoEstiloParagrafo">
-                                    Habilidade: <span>LOW</span>
-                                </p>
+                            <hr />
+                            <div className="skill">
+                                <div className="skill-name">Habilidade</div>
+                                <div className="skill-percent-number">{selectedSkillLevel}</div>
                             </div>
-                            <div>
-                                <p className="ProfileJogoEstiloParagrafo">
-                                    Função: <span>Top</span>
-                                </p>
+                            <hr />
+                            <div className="skill">
+                                <div className="skill-name">Função</div>
+                                <div className="skill-percent-number">{selectedGameFunction}</div>
                             </div>
-                            <div>
-                                <p className="ProfileJogoEstiloParagrafo">
-                                    Jogo: <span>League of Legends</span>
-                                </p>
+                            <hr />
+                            <div className="skill">
+                                <div className="skill-name">Jogo</div>
+                                <div className="skill-percent-number">{jogoSelecionado}</div>
                             </div>
-                            <div>
-                                <AiOutlineDelete
-                                    className="ProfileJogoEstilo"
-                                    onClick={handleDelete}
-                                    style={{ color: "#0f3", cursor: "pointer" }}
-                                />
+                            <hr />
+                            <div className="ProfileJogoCardRemover">
+                                <button className="ProfileJogoCardRemoverButton">Remover Profile</button>
                             </div>
                         </div>
-                    ))}
+                    </div>
                 </div>
 
                 {showModalAdicionarPerfilJogo && (

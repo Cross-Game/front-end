@@ -53,20 +53,20 @@ function ProfileJogo() {
     const [usernameRiot, setUsernameRiot] = useState("");
     const [listaProfile, setListaProfile] = useState([]);
 
-    const linkGameToUser = () =>  {
+    const linkGameToUser = () => {
         let gameId = 0;
-     
+
         if (jogoSelecionado == "League of Legends") {
             gameId = 1;
-            
+
         }
         if (jogoSelecionado == "Teamfight Tactics") {
             gameId = 2;
-            
+
         }
         if (jogoSelecionado == "Valorant") {
             gameId = 3;
-           
+
         }
 
         const userGameCreate = {
@@ -86,8 +86,8 @@ function ProfileJogo() {
                 const updatedList = [...listaProfile, response.data];
                 setListaProfile(updatedList);
                 sessionStorage.setItem("LISTA_PROFILE", JSON.stringify(updatedList));
-               console.log(response.data);
-               setShowModalAdicionarPerfilJogo(false)
+                console.log(response.data);
+                setShowModalAdicionarPerfilJogo(false)
             })
             .catch((error) => {
                 console.error(error);
@@ -121,7 +121,7 @@ function ProfileJogo() {
 
     const handleCadastrar = () => {
         getProfile();
-        
+
     };
 
     function adicionar() {
@@ -136,16 +136,21 @@ function ProfileJogo() {
                     </div>
                 </div>
                 <div className="ProfileJogoCardContainer">
-                    {[1, 2, 3, 4, 5, 6].map((index) => (
+                    {[1].map((index) => (
                         <div className="ProfileJogoCardUsername" key={index}>
                             <div>
                                 <p className="ProfileJogoEstiloParagrafo">
-                                    Username: <span>HOmonster</span>
+                                    NickName: <span>HOmonster</span>
                                 </p>
                             </div>
                             <div>
                                 <p className="ProfileJogoEstiloParagrafo">
-                                    GamerId: <span>215478166</span>
+                                    Habilidade: <span>LOW</span>
+                                </p>
+                            </div>
+                            <div>
+                                <p className="ProfileJogoEstiloParagrafo">
+                                    Função: <span>Top</span>
                                 </p>
                             </div>
                             <div>

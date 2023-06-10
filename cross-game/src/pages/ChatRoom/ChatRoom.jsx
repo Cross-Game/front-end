@@ -6,7 +6,7 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import "./ChatRoom.css";
 import { app, databaseApp } from "../../data/firebaseConfig";
 import { Link, NavLink, redirect, useNavigate, useParams } from "react-router-dom";
-import { TOKEN } from "../../data/constants";
+import { TOKEN, currentURL } from "../../data/constants";
 import { USERID } from "../../data/constants";
 import axios from "axios";
 
@@ -161,7 +161,7 @@ export const ChatRoom = () => {
     try {
       console.log("Enviar convite sala");
       const response = await axios.post(
-        `http://localhost:8080/notifies/${idConvidado}`,
+        `${currentURL}/notifies/${idConvidado}`,
         {
           type: "GROUP",
           message: "Te convidou para uma sala de ", // TODO Colocar o jogo;
@@ -271,7 +271,7 @@ export const ChatRoom = () => {
 };
 
 export const PortraitUsers = (props) => {
-  let id = 1  /* TODO: id logado  */
+  let id = USERID;
 
   const [showModalFeedback, setShowModalFeedback] = useState(false);
 
@@ -301,7 +301,7 @@ export const PortraitUsers = (props) => {
 
   function enviarFeedback() {
     console.log("Chamei enviar feedback")
-    axios.post(`http://localhost:8080/feedbacks/${jogadorSelecionado.id}`,
+    axios.post(`${currentURL}/feedbacks/${jogadorSelecionado.id}`,
       {
         userGivenFeedback: sessionStorage.getItem("NICKNAME"),
         behavior: ratingComportamento,

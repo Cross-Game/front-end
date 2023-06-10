@@ -155,7 +155,7 @@ function Rooms() {
             try {
                 console.log("Chamei obterMeusJogos");
                 const response = await axios.get(
-                    `http://localhost:8080/user-games/${USERID}`,
+                    `${currentURL}/user-games/${USERID}`,
                     {
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest',
@@ -194,7 +194,7 @@ function Rooms() {
         try {
             console.log("Chamei criar sala");
             const response = await axios.post(
-                `http://localhost:8080/team-rooms`,
+                `${currentURL}/team-rooms`,
                 {
 
                     roomName: nomeSalaCriar.toString(),

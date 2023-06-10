@@ -109,7 +109,7 @@ export const ChatRoom = () => {
       try {
         console.log("Chamei obterMeusAmigos");
         const response = await axios.get(
-          `http://localhost:8080/friends/${USERID}`,
+          `${currentURL}/friends/${USERID}`,
           {
             headers: {
               'X-Requested-With': 'XMLHttpRequest',

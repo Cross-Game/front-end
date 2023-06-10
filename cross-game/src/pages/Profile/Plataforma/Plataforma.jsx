@@ -13,7 +13,7 @@ import imgXbox from "../Plataforma/assets/xbox.png"
 import imgPs from "../Plataforma/assets/Play.png"
 import imgPc from "../Plataforma/assets/computador.png"
 import imgCelular from "../Plataforma/assets/celular.png"
-import { TOKEN, USERID } from "../../../data/constants";
+import { TOKEN, USERID, currentURL } from "../../../data/constants";
 import axios from "axios";
 
 
@@ -34,7 +34,7 @@ function ProfileJogo() {
         console.log("Chamei obter plataforma");
 
         axios.get(
-            `http://localhost:8080/user-platforms/${USERID}`,
+            `${currentURL}/user-platforms/${USERID}`,
             {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
@@ -64,7 +64,7 @@ function ProfileJogo() {
         console.log(plataformasUpperCase);
 
         axios.patch(
-            `http://localhost:8080/user-platforms/${USERID}`,
+            `${currentURL}/user-platforms/${USERID}`,
             plataformasUpperCase,
             {
                 headers: {

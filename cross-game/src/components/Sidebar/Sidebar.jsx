@@ -47,7 +47,7 @@ function Sidebar() {
                             <h3>Dashboard</h3>
                         </NavLink>
 
-                        <NavLink to={"/"} className={({ isActive }) =>
+                        <NavLink to={"/users"} className={({ isActive }) =>
                             isActive ? isOpen ? "itemSideBar itemSidebarActive" : "itemSideBar itemSideBarClose itemSidebarActive" : isOpen ? "itemSideBar" : "itemSideBar itemSideBarClose"}>
                             <FaUserPlus className='iconSideBar' />
                             <h3>Jogadores</h3>

@@ -13,7 +13,7 @@ import { HiClock } from 'react-icons/hi';
 import useFetch from "../../hooks/useFetch";
 import moment from 'moment';
 import axios from 'axios';
-import { USERID, TOKEN } from '../../data/constants';
+import { USERID, TOKEN, currentURL } from '../../data/constants';
 
 
 function Notification(props) {
@@ -24,7 +24,7 @@ function Notification(props) {
   useEffect(() => {
     const obterMensagens = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/notifies/${USERID}`, {
+        const response = await axios.get(`${currentURL}/notifies/${USERID}`, {
           headers: {
             Authorization: `Bearer ${TOKEN}`
           }
@@ -70,11 +70,11 @@ function Notification(props) {
   };
 
   function clearAll() {
-    // TO DO: Marcar todas as notificações do filtro como lidas 
+    // TODO: Marcar todas as notificações do filtro como lidas 
   }
 
   function aceitarAmizade(nicknameFriend) {
-    axios.patch(`http://localhost:8080/friends/confirming-friend-request/${USERID}/${nicknameFriend}`, {}, {
+    axios.patch(`${currentURL}/friends/confirming-friend-request/${USERID}/${String(nicknameFriend)}`, {}, {
       headers: {
         Authorization: `Bearer ${TOKEN}`
       }
@@ -88,7 +88,7 @@ function Notification(props) {
   }
 
   function recusarAmizade(nicknameFriend) {
-    axios.delete(`http://localhost:8080/friends/declining-friend-request/${USERID}/${nicknameFriend}`, {}, {
+    axios.delete(`${currentURL}/friends/declining-friend-request/${USERID}/${nicknameFriend}`, {}, {
       headers: {
         Authorization: `Bearer ${TOKEN}`
       }

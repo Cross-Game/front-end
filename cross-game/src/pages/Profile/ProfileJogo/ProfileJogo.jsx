@@ -13,17 +13,6 @@ import { MdGamepad } from "react-icons/md";
 import { USERID, TOKEN } from "../../../data/constants";
 import axios from "axios";
 
-const GameFunction = {
-    TOP: "TOP",
-    JUNGLE: "JUNGLE",
-    MID: "MID",
-    ADC: "ADC",
-    SUPPORT: "SUPPORT",
-    DUELIST: "DUELIST",
-    INITIATOR: "INITIATOR",
-    CONTROLLER: "CONTROLLER",
-    SENTINEL: "SENTINEL"
-};
 
 const levels = {
     LOW: "LOW",
@@ -42,8 +31,7 @@ function ProfileJogo() {
         setShowModal(false);
     };
 
-    const gameFunctionOptions = Object.values(GameFunction);
-    const levelOptions = Object.values(levels);
+
 
     const [showModalAdicionarPerfilJogo, setShowModalAdicionarPerfilJogo] = useState(false);
     const [jogoSelecionado, setJogoSelecionado] = useState("");
@@ -53,12 +41,12 @@ function ProfileJogo() {
     const [usernameRiot, setUsernameRiot] = useState("");
     const [listaProfile, setListaProfile] = useState([]);
 
+    const levelOptions = Object.values(levels);
     const linkGameToUser = () => {
         let gameId = 0;
 
         if (jogoSelecionado == "League of Legends") {
             gameId = 1;
-
         }
         if (jogoSelecionado == "Teamfight Tactics") {
             gameId = 2;
@@ -193,13 +181,15 @@ function ProfileJogo() {
 
                             <label>Game Function</label>
                             <div className="modalCadastrarProfileJogo-jogos">
-                                {gameFunctionOptions.map((functionValue) => (
-                                    <React.Fragment key={functionValue}>
-                                        <Tag
-                                            text={functionValue}
-                                            isSelected={selectedGameFunction === functionValue}
-                                            onClick={() => setSelectedGameFunction(functionValue)}
-                                        />
+                                {jogos.map((jogo) => (
+                                    <React.Fragment key={jogo.id}>
+                                        {jogo.gameFunction.map(funcao => (
+                                            <Tag
+                                                text={funcao}
+                                                isSelected={selectedGameFunction === funcao}
+                                                onClick={() => setSelectedGameFunction(funcao)}
+                                            />
+                                        ))}
                                     </React.Fragment>
                                 ))}
                             </div>

@@ -4,19 +4,19 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import "./Feedback.css";
 import imgUserProfile from "../../../assets/index-page/testeImg.png"
 import axios from "axios";
+import { TOKEN, currentURL, USERID } from '../../../data/constants'
 
-
-function ProfileJogo() {    
+function ProfileJogo() {
 
     const [feedback, setFeedback] = useState([])
 
     useEffect(() => {
         const config = {
             headers: {
-                Authorization: 'Bearer ' + sessionStorage.getItem("ACESS_TOKEN")
+                Authorization: `Bearer ${TOKEN}`
             }
         };
-        axios.get(`http://localhost:8080/feedbacks/${sessionStorage.getItem("ID")}`, config)
+        axios.get(`${currentURL}/feedbacks/${USERID}`, config)
             .then(response => {
                 setFeedback(response.data)
                 console.log(response.data)
@@ -31,26 +31,26 @@ function ProfileJogo() {
             <>
                 <div className="ProfileFeedbackContainer" id="FeedbackUsername">
                     {feedback.length > 0 ? feedback.map((feedbackItem, index) => (
-                    <div className="ProfileFeedbackCard" key={index}>
-                        <div className="ProfileFeedbackCardTop">
-                            <div className="ProfileFeedbackCardTopFistChild">
-                                <img src={imgUserProfile} alt="" />
-                                <span>{feedbackItem.userGivenFeedback}</span>
+                        <div className="ProfileFeedbackCard" key={index}>
+                            <div className="ProfileFeedbackCardTop">
+                                <div className="ProfileFeedbackCardTopFistChild">
+                                    <img src={imgUserProfile} alt="" />
+                                    <span>{feedbackItem.userGivenFeedback}</span>
+                                </div>
+                                <div>{feedbackItem.feedbackGivenDate}</div>
                             </div>
-                            <div>{feedbackItem.feedbackGivenDate}</div>
-                        </div>
-                        <div className="ProfileFeedbackCardCenter">
-                            <span>{feedbackItem.feedbackText}</span>
-                        </div>
-                        <div className="ProfileFeedbackCardBottom">
-                            <div>Comportamento
-                                <span className="ProfileFeedbackValor" >{feedbackItem.behavior}</span>
+                            <div className="ProfileFeedbackCardCenter">
+                                <span>{feedbackItem.feedbackText}</span>
                             </div>
-                            <div>Habilidade
-                                <span className="ProfileFeedbackValor" >{feedbackItem.skill}</span>
+                            <div className="ProfileFeedbackCardBottom">
+                                <div>Comportamento
+                                    <span className="ProfileFeedbackValor" >{feedbackItem.behavior}</span>
+                                </div>
+                                <div>Habilidade
+                                    <span className="ProfileFeedbackValor" >{feedbackItem.skill}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
                 )) : <p className="ProfileFeedbackValidacao">Nenhum Feedback foi encontrado para o usuário.</p>}
                 </div>
             </>

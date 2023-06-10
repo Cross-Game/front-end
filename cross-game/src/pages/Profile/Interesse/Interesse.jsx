@@ -9,7 +9,7 @@ import { BsArrowRightShort, BsCheck } from "react-icons/bs";
 import { interesses as listaInteresses } from "../../../utils/interesses.js"
 import Tag from "../../../components/Tag";
 import UserProfile from "../../../components/UserProfile";
-import { TOKEN, USERID } from "../../../data/constants";
+import { TOKEN, USERID, currentURL } from "../../../data/constants";
 import axios from "axios";
 import Toast from "../../../components/Toast";
 
@@ -43,7 +43,7 @@ function ProfileJogo() {
     useEffect(() => {
         const obterMeusInteresses = () => {
             axios
-                .get(`http://localhost:8080/preferences/${USERID}`, {
+                .get(`${currentURL}/preferences/${USERID}`, {
                     headers: {
                         "X-Requested-With": "XMLHttpRequest",
                         "Content-Type": "application/json",
@@ -72,8 +72,8 @@ function ProfileJogo() {
     }, []);
 
     useEffect(() => {
-        setDadosCarregados(true); 
-      }, [listaComidas, listaFilmes, listaJogos, listaMusicas, listaSeries]);
+        setDadosCarregados(true);
+    }, [listaComidas, listaFilmes, listaJogos, listaMusicas, listaSeries]);
 
     function removerInteresse(tipo, nome) {
         // lembrar de passar o nome em CAIXA ALTA
@@ -99,7 +99,7 @@ function ProfileJogo() {
         //     });
     };
 
-    function formatarPalavraLegivel(palavra){
+    function formatarPalavraLegivel(palavra) {
         const partes = palavra.split('_');
         const palavrasCapitalizadas = partes.map(parte => parte.charAt(0).toUpperCase() + parte.slice(1).toLowerCase());
         const palavraFormatada = palavrasCapitalizadas.join(' ');
@@ -119,7 +119,7 @@ function ProfileJogo() {
 
         let data = categoriaSelecionadas.map(categoria => categoria.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase().replace(/ /g, "_"));
         axios.post(
-            `http://localhost:8080/preferences/${USERID}`,
+            `${currentURL}/preferences/${USERID}`,
             {
                 [campoBody]: data
             },
@@ -157,29 +157,29 @@ function ProfileJogo() {
     const [hasData, setHasData] = useState(false);
 
     useEffect(() => {
-      setHasData(
-        (listaComidas?.length ?? 0) > 0 ||
-        (listaJogos?.length ?? 0) > 0 ||
-        (listaMusicas?.length ?? 0) > 0 ||
-        (listaSeries?.length ?? 0) > 0 ||
-        (listaFilmes?.length ?? 0) > 0
-      );
+        setHasData(
+            (listaComidas?.length ?? 0) > 0 ||
+            (listaJogos?.length ?? 0) > 0 ||
+            (listaMusicas?.length ?? 0) > 0 ||
+            (listaSeries?.length ?? 0) > 0 ||
+            (listaFilmes?.length ?? 0) > 0
+        );
     }, [listaComidas, listaFilmes, listaJogos, listaMusicas, listaSeries]);
 
 
     function adicionar() {
-            return (
+        return (
 
-                <>
-                    <div className="ProfileJogoMiniContainer">
-                        <div className="ProfileJogoContainerButtonAdicionar">
-                            <span className="ProfileJogoButtonAdicionar" onClick={() => setShowModalAdicionarInteresse(true)}>
-                                Adicionar
-                                <AiFillPlusCircle className="ProfileIconAdicionar" /></span>
-                        </div>
+            <>
+                <div className="ProfileJogoMiniContainer">
+                    <div className="ProfileJogoContainerButtonAdicionar">
+                        <span className="ProfileJogoButtonAdicionar" onClick={() => setShowModalAdicionarInteresse(true)}>
+                            Adicionar
+                            <AiFillPlusCircle className="ProfileIconAdicionar" /></span>
                     </div>
+                </div>
 
-                    {hasData && (
+                {hasData && (
                     <div className="ProfileInteresseContainer">
 
                         {listaComidas && listaComidas.length > 0 && (
@@ -203,7 +203,7 @@ function ProfileJogo() {
                                 </div>
                                 {listaJogos.map((jogo, index) => (
                                     <div className="ProfileInteresseGenero" key={index}>
-                                     <p key={index}>{formatarPalavraLegivel(jogo)}</p>
+                                        <p key={index}>{formatarPalavraLegivel(jogo)}</p>
                                         <AiOutlineDelete className="ProfileInteresseIconExcluir" onClick={() => removerInteresse("gameGenre", { jogo })} />
                                     </div>
                                 ))}
@@ -217,7 +217,7 @@ function ProfileJogo() {
                                 </div>
                                 {listaFilmes.map((filme, index) => (
                                     <div className="ProfileInteresseGenero" key={index}>
-                                     <p key={index}>{formatarPalavraLegivel(filme)}</p>
+                                        <p key={index}>{formatarPalavraLegivel(filme)}</p>
                                         <AiOutlineDelete className="ProfileInteresseIconExcluir" onClick={() => removerInteresse("movieGenre", { filme })} />
                                     </div>
                                 ))}
@@ -231,7 +231,7 @@ function ProfileJogo() {
                                 </div>
                                 {listaMusicas.map((musica, index) => (
                                     <div className="ProfileInteresseGenero" key={index}>
-                                     <p key={index}>{formatarPalavraLegivel(musica)}</p>
+                                        <p key={index}>{formatarPalavraLegivel(musica)}</p>
                                         <AiOutlineDelete className="ProfileInteresseIconExcluir" onClick={() => removerInteresse("seriesGenre", { musica })} />
                                     </div>
                                 ))}
@@ -245,7 +245,7 @@ function ProfileJogo() {
                                 </div>
                                 {listaSeries.map((serie, index) => (
                                     <div className="ProfileInteresseGenero" key={index}>
-                                     <p key={index}>{formatarPalavraLegivel(serie)}</p>
+                                        <p key={index}>{formatarPalavraLegivel(serie)}</p>
                                         <AiOutlineDelete className="ProfileInteresseIconExcluir" onClick={() => removerInteresse("seriesGenre", { serie })} />
                                     </div>
                                 ))}
@@ -254,67 +254,67 @@ function ProfileJogo() {
 
 
                     </div>
-                    )}
+                )}
 
-                    {showModalAdicionarInteresse && (
-                        <Modal title="Interesses" icon={<MdOutlineInterests />} temFooter={true} ativarBotao={true} textButton="Adicionar" iconButton={<BsCheck />} clearAll={true} onClear={limparInteresses} onClickButton={cadastrarInteresse} onClose={() => setShowModalAdicionarInteresse(false)}>
-                            <div className="ModalCadastrarInteresse-body">
-                                {/* <UserProfile nome={"Nome"} img={<BsArrowRightShort />} /> */}
+                {showModalAdicionarInteresse && (
+                    <Modal title="Interesses" icon={<MdOutlineInterests />} temFooter={true} ativarBotao={true} textButton="Adicionar" iconButton={<BsCheck />} clearAll={true} onClear={limparInteresses} onClickButton={cadastrarInteresse} onClose={() => setShowModalAdicionarInteresse(false)}>
+                        <div className="ModalCadastrarInteresse-body">
+                            {/* <UserProfile nome={"Nome"} img={<BsArrowRightShort />} /> */}
 
-                                Interesse
-                                <div className="ModalCadastrarInteresse-interesses">
+                            Interesse
+                            <div className="ModalCadastrarInteresse-interesses">
 
-                                    {
-                                        interesses.map((interesse) => (
-                                            <React.Fragment key={interesse.id}>
-                                                <Tag
-                                                    text={interesse.nome}
-                                                    isSelected={interesseSelecionado === interesse.nome ? true : false}
-                                                    onClick={() => { setInteresseSelecionado(interesse.nome); setCategoriaSelecionadas([]) }}
-                                                />
-                                            </React.Fragment>
-                                        ))}
-                                </div>
-
-                                Categoria
-                                <div className="ModalCadastrarInteresse-categorias">
-                                    {interesses &&
-                                        interesses.find((interesse) => interesse.nome === interesseSelecionado)?.categorias.map((categoria, index) => (
-                                            <React.Fragment key={categoria}>
-                                                <Tag
-                                                    text={categoria}
-                                                    isSelected={categoriaSelecionadas.includes(categoria)}
-                                                    onClick={() =>
-                                                        setCategoriaSelecionadas((prevCategorias) => {
-                                                            if (prevCategorias.includes(categoria)) {
-                                                                return prevCategorias.filter((cat) => cat !== categoria);
-                                                            } else {
-                                                                return [...prevCategorias, categoria];
-                                                            }
-                                                        })
-                                                    }
-                                                />
-                                            </React.Fragment>
-                                        ))
-                                    }
-                                </div>
+                                {
+                                    interesses.map((interesse) => (
+                                        <React.Fragment key={interesse.id}>
+                                            <Tag
+                                                text={interesse.nome}
+                                                isSelected={interesseSelecionado === interesse.nome ? true : false}
+                                                onClick={() => { setInteresseSelecionado(interesse.nome); setCategoriaSelecionadas([]) }}
+                                            />
+                                        </React.Fragment>
+                                    ))}
                             </div>
-                        </Modal>
 
-                    )}
+                            Categoria
+                            <div className="ModalCadastrarInteresse-categorias">
+                                {interesses &&
+                                    interesses.find((interesse) => interesse.nome === interesseSelecionado)?.categorias.map((categoria, index) => (
+                                        <React.Fragment key={categoria}>
+                                            <Tag
+                                                text={categoria}
+                                                isSelected={categoriaSelecionadas.includes(categoria)}
+                                                onClick={() =>
+                                                    setCategoriaSelecionadas((prevCategorias) => {
+                                                        if (prevCategorias.includes(categoria)) {
+                                                            return prevCategorias.filter((cat) => cat !== categoria);
+                                                        } else {
+                                                            return [...prevCategorias, categoria];
+                                                        }
+                                                    })
+                                                }
+                                            />
+                                        </React.Fragment>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </Modal>
 
-                    {showToast && (
-                        <Toast
-                            type={toastType}
-                            message={toastMessage}
-                            onClose={() => setShowToast(false)}
-                        />
-                    )}
+                )}
 
-                </>
-            )
-        }
-    
+                {showToast && (
+                    <Toast
+                        type={toastType}
+                        message={toastMessage}
+                        onClose={() => setShowToast(false)}
+                    />
+                )}
+
+            </>
+        )
+    }
+
 
 
     return (

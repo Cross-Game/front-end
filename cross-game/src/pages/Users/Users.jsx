@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { USERID, currentURL, TOKEN ,USERNAMESESSION} from "../../data/constants";
+import { USERID, currentURL, TOKEN, USERNAMESESSION } from "../../data/constants";
 
 import Sidebar from '../../components/Sidebar/Sidebar'
 import './Users.css';
 
 import imgTest from "../../assets/index-page/medalDiamante.svg"
 import iconHeart from "./assets/iconHeart.svg"
+import iconHeartDisabled from "./assets/iconHeartDisabled.svg"
+import iconPending from "./assets/iconPending.svg"
 import { NothingContentRooms } from '../Rooms/Rooms';
 import ChatWithUser from '../../components/ChatWithUser/ChatWithUser';
 import iconChatNormal from "../../pages/ChatRoom/assets/chatNormalIcon.svg"
@@ -55,6 +57,15 @@ function Users() {
         console.log("amigos", friends);
     }, []);
 
+
+    const idsGenerics = usersGeneric.map((element) => element.id);
+    const idsFriendsAccepted = friends.filter((friend) => (friend.friendshipState === "CONFIRMED")).map((element) => (element.friendUserId));
+    const idsFriendsPending = friends.filter((friend) => (friend.friendshipState === "SENDED")).map((element) => (element.friendUserId));
+
+    const usersFilterIdsAccepted = idsGenerics.filter(numero => idsFriendsAccepted.includes(numero));
+
+    console.log("testes", usersFilterIdsAccepted);
+
     return (
         <div className='containerRooms'>
             <Sidebar />
@@ -70,11 +81,16 @@ function Users() {
                                 text2={"Adicione as pessoas para interagir e adicionar em grupos"}
                                 isInteractive={false}
                             />
-                            : usersGeneric.filter((user) => (user.id !== USERID))
+                            : usersGeneric.filter((user) => (user.id !== USERID && !usersFilterIdsAccepted.includes(user.id)))
                                 .map((element) => (
-                                    <React.Fragment key={element.id}>
-                                        <User id={element.id} username={element.username} />
-                                    </React.Fragment>
+                                    idsFriendsPending.includes(element.id) ?
+                                        <React.Fragment key={element.id}>
+                                            <User id={element.id} username={element.username} friendStatus={"pending"} />
+                                        </React.Fragment>
+                                        :
+                                        <React.Fragment key={element.id}>
+                                            <User id={element.id} username={element.username} friendStatus={"teste"} />
+                                        </React.Fragment>
                                 ))
                         }
                     </div>
@@ -100,6 +116,7 @@ function Users() {
                                                 idSender={USERID}
                                                 idReceiver={element.friendUserId}
                                                 username={element.username}
+                                                friendStatus={"accepted"}
                                             />
                                         }
                                     </React.Fragment>
@@ -123,12 +140,6 @@ export const User = (props) => {
     };
 
     const sendNotifyToUserForFriendship = () => {
-
-        const friendRequestPayloadNotify = {
-            type: "FRIEND_REQUEST",
-            message: "Convite para Amigo",
-            description: props.username
-        }
 
         fetch(`${currentURL}/notifies/${Number(props.id)}?type=FRIEND_REQUEST&message=Convite para Amigo&description=${USERNAMESESSION}`, {
             method: 'POST',
@@ -206,7 +217,15 @@ export const User = (props) => {
                     </div>
                 </div>
                 <div className="divRightUser">
-                    <img className='imgForFriend' onClick={sendFriendShip} src={iconHeart} alt="" />
+                    {
+                        props.friendStatus == "pending" ?
+                            <img className='imgForFriend' onClick={sendFriendShip} src={iconPending} alt="" />
+                            :
+                            props.friendStatus == "accepted" ?
+                            <img className='imgForFriend' onClick={sendFriendShip} src={iconHeart} alt="" />
+                            :
+                            <img className='imgForFriend' onClick={sendFriendShip} src={iconHeartDisabled} alt="" />
+                    }
                     {props.friendshipState === "CONFIRMED" &&
                         <button
                             className='buttonOpenModalForMessagesWithUser'

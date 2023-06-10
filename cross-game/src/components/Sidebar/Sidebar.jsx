@@ -18,6 +18,7 @@ function Sidebar() {
         sessionStorage.removeItem("EMAIL")
         sessionStorage.removeItem("ROLE")
         sessionStorage.removeItem("NICKNAME")
+        sessionStorage.removeItem("IMAGEM")
     }
 
     const [isOpen, setIsOpen] = useState(true);

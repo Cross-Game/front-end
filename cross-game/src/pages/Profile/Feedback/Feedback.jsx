@@ -51,7 +51,7 @@ function ProfileJogo() {
                                 </div>
                             </div>
                         </div>
-                    )) : <p className="ProfileFeedbackValidacao">Nenhum Feedback encontrado para o usuário.</p>}
+                )) : <p className="ProfileFeedbackValidacao">Nenhum Feedback foi encontrado para o usuário.</p>}
                 </div>
             </>
         )

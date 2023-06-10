@@ -1,4 +1,4 @@
-.modal-modal {
+.modal-modalNotification {
     position: fixed;
     top: 0;
     left: 0;
@@ -6,18 +6,21 @@
     height: 100%;
     z-index: 9999;
     display: flex;
-    justify-content: center;
-    background-color: #00000050;
-    align-items: center;
+    justify-content: flex-end;
+    align-items: flex-start;
+    margin-top: 50px;
+    margin-left: -50px;
     font-family: "Krona One";
   }
   
-  .modal-modal-content {
+  .modal-modalNotification-content {
     position: relative;
     display: flex;
     flex-direction: column;
     width: auto;
     max-width: 600px;
+    width: 500px;
+    max-height: 400px;
     background-color: #000000;
     border: 1px solid #ffffff;
     border-radius: 25px;
@@ -26,10 +29,10 @@
     color: #fff;
     margin: 1vh 1vw;
     z-index: 2;
-    box-shadow: 0rem 0rem 0.5rem #000000 ;
+    box-shadow: 0rem 0rem 2rem #000000 ;
   }
   
-  .modal-modal-header {
+  .modal-modalNotification-header {
     display: flex;
     padding: 1rem;
     background-color: #000000;
@@ -37,20 +40,20 @@
     justify-content: space-between;
   }
   
-  .modal-modal-header p.modal-modal-title{
+  .modal-modalNotification-header p.modal-modalNotification-title{
     margin: 0 10px;
     white-space: nowrap;
     color: #fff;
   }
 
-  .modal-modal-group {
+  .modal-modalNotification-group {
     display: flex;
     align-items: flex-end;
     align-items: center;
     color: #fff;
   }
   
-  .modal-modal-clear-all {
+  .modal-modalNotification-clear-all {
     display: flex;
     cursor: pointer;
     color: #7A7A7A;
@@ -60,20 +63,20 @@
     white-space: nowrap;
   }
 
-.modal-modal-clear-all:hover {
+.modal-modalNotification-clear-all:hover {
   color: #9b9b9b;
 }
 
-  .modal-modal-clear-all svg {
+  .modal-modalNotification-clear-all svg {
     font-size: 14px;
     margin-left: 10px;
   }
 
-  .modal-modal svg {
+  .modal-modalNotification svg {
     font-size: 16px;
   }
   
-  .modal-modal-clear-all img {
+  .modal-modalNotification-clear-all img {
     width: 1.2rem;
     height: 1.2rem;
     margin-right: 0.5rem;
@@ -97,14 +100,14 @@
   }
 
   
-  .modal-modal-body {
+  .modal-modalNotification-body {
     padding: 1rem;
     padding-bottom: 0.5rem;
     flex-grow: 1;
     overflow-y: auto;
   }
   
-  .modal-modal-footer {
+  .modal-modalNotification-footer {
     display: flex;
     justify-content: flex-end;
     padding: 1rem;

@@ -70,11 +70,11 @@ function Notification(props) {
   };
 
   function clearAll() {
-    // TO DO: Marcar todas as notificações do filtro como lidas 
+    // TODO: Marcar todas as notificações do filtro como lidas 
   }
 
   function aceitarAmizade(nicknameFriend) {
-    axios.patch(`${currentURL}/friends/confirming-friend-request/${USERID}/${nicknameFriend}`, {}, {
+    axios.patch(`${currentURL}/friends/confirming-friend-request/${USERID}/${String(nicknameFriend)}`, {}, {
       headers: {
         Authorization: `Bearer ${TOKEN}`
       }

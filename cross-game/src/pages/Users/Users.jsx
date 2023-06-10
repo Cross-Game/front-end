@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { USERID, currentURL, TOKEN } from "../../data/constants";
+import { USERID, currentURL, TOKEN ,USERNAMESESSION} from "../../data/constants";
 
 import Sidebar from '../../components/Sidebar/Sidebar'
 import './Users.css';
@@ -12,7 +12,7 @@ import ChatWithUser from '../../components/ChatWithUser/ChatWithUser';
 import iconChatNormal from "../../pages/ChatRoom/assets/chatNormalIcon.svg"
 
 function Users() {
-    
+
     const [usersGeneric, setUsersGeneric] = useState([]);
     const [friends, setFriends] = useState([]);
 
@@ -73,9 +73,10 @@ function Users() {
                             : usersGeneric.filter((user) => (user.id !== USERID))
                                 .map((element) => (
                                     <React.Fragment key={element.id}>
-                                        <User username={element.username} />
+                                        <User id={element.id} username={element.username} />
                                     </React.Fragment>
-                                ))}
+                                ))
+                        }
                     </div>
                 </div>
                 <div className="bottomDiv">
@@ -89,18 +90,20 @@ function Users() {
                                 text2={"Adicione as pessoas para interagir e adicionar em grupos"}
                                 isInteractive={false}
                             />
-                            : friends.map((element) => (
-                                <React.Fragment key={element.id}>
-                                    {
-                                        <User
-                                            friendshipState={element.friendshipState}
-                                            idSender={USERID}
-                                            idReceiver={element.friendUserId}
-                                            username={element.username}
-                                        />
-                                    }
-                                </React.Fragment>
-                            ))}
+                            :
+                            friends.filter((friend) => (friend.friendshipState === "CONFIRMED"))
+                                .map((element) => (
+                                    <React.Fragment key={element.id}>
+                                        {
+                                            <User
+                                                friendshipState={element.friendshipState}
+                                                idSender={USERID}
+                                                idReceiver={element.friendUserId}
+                                                username={element.username}
+                                            />
+                                        }
+                                    </React.Fragment>
+                                ))}
                     </div>
                 </div>
             </div>
@@ -118,6 +121,58 @@ export const User = (props) => {
     const closeModal = () => {
         setIsOpen(false);
     };
+
+    const sendNotifyToUserForFriendship = () => {
+
+        const friendRequestPayloadNotify = {
+            type: "FRIEND_REQUEST",
+            message: "Convite para Amigo",
+            description: props.username
+        }
+
+        fetch(`${currentURL}/notifies/${Number(props.id)}?type=FRIEND_REQUEST&message=Convite para Amigo&description=${USERNAMESESSION}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${TOKEN}`
+            }
+        })
+            .then(response => console.log(response.json()))
+            .then(data => console.log("Notificação enviada:", data))
+            .catch(error => console.log(error))
+    }
+
+    const sendFriendShip = () => {
+        console.log("Eu:" + USERID + " Amigo: " + props.username)
+
+        const friendRequestPayload = {
+            username: props.username
+        };
+
+        fetch(`${currentURL}/friends/${USERID}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${TOKEN}`
+            },
+            body: JSON.stringify(friendRequestPayload),
+        })
+            .then(response => {
+                if (response.ok) {
+                    // após a requisição de amizade fazemos uma notificação 
+                    console.log("// A requisição de amizade foi bem-sucedida")
+                    sendNotifyToUserForFriendship()
+                } else if (response.status === 409) {
+
+                    console.log("você já fez uma requisição para esse usuário")
+
+                } else {
+                    console.log("Falha ao enviar a requisição de amizade.");
+                }
+            })
+            .catch(error => (console.log(error)))
+    }
+
 
     return (
         <>
@@ -151,8 +206,8 @@ export const User = (props) => {
                     </div>
                 </div>
                 <div className="divRightUser">
-                    <img className='imgForFriend' src={iconHeart} alt="" />
-                    {props.friendshipState &&
+                    <img className='imgForFriend' onClick={sendFriendShip} src={iconHeart} alt="" />
+                    {props.friendshipState === "CONFIRMED" &&
                         <button
                             className='buttonOpenModalForMessagesWithUser'
                             onClick={openModal}>

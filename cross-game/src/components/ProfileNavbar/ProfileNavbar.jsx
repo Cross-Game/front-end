@@ -17,6 +17,7 @@ import medalOuro from '../../assets/index-page/medalOuro.svg'
 import medalDiamante from '../../assets/index-page/medalDiamante.svg'
 import medalMestre from '../../assets/index-page/medalMestre.svg'
 
+
 function ProfileJogo(props) {
   const navigate = useNavigate();
   const [showModalNotification, setShowModalNotification] = useState(false);
@@ -50,7 +51,7 @@ function ProfileJogo(props) {
     setImage(event.target.files[0]);
   };
 
-  const [qtdAmigos, setQtdAmigos] = useState(null); 
+  const [qtdAmigos, setQtdAmigos] = useState(null);
 
   useEffect(() => {
     const obterQuantidadeAmigos = async () => {
@@ -62,7 +63,7 @@ function ProfileJogo(props) {
           }
         };
 
-        const response = await axios.get(`http://localhost:8080/friends/${sessionStorage.getItem("ID")}`, config)
+        const response = await axios.get(`${currentURL}/friends/${USERID}`, config)
           .then(response => {
             if (response.status === 200) {
               var contador = 0;
@@ -89,56 +90,56 @@ function ProfileJogo(props) {
     if (qtdAmigos <= 5) {
       return (
         <>
-        <img className="profileJogoMedalUser" src={medalPrata} alt="" ></img> 
-        <div className="profileJogoXpUser">
-        <div className="profileJogoNivelUser">Nivel: <span>Prata</span></div>
-        <div className="profileJogoBarsNiveis"> 
-        <div className="profileJogoBarAtivo"></div>
-        <div className="profileJogoBarDesativado"></div>        <div className="profileJogoBarDesativado"></div>        <div className="profileJogoBarDesativado"></div>
-        </div>
-        </div>
+          <img className="profileJogoMedalUser" src={medalPrata} alt="" ></img>
+          <div className="profileJogoXpUser">
+            <div className="profileJogoNivelUser">Nivel: <span>Prata</span></div>
+            <div className="profileJogoBarsNiveis">
+              <div className="profileJogoBarAtivo"></div>
+              <div className="profileJogoBarDesativado"></div>        <div className="profileJogoBarDesativado"></div>        <div className="profileJogoBarDesativado"></div>
+            </div>
+          </div>
         </>
-      );  
-    }
-    else if (qtdAmigos <= 12){
-      return (
-      <>
-      <img className="profileJogoMedalUser" src={medalOuro} alt="" ></img>
-      <div className="profileJogoXpUser">
-      <div className="profileJogoNivelUser">Nivel: <span>Ouro</span></div>
-      <div className="profileJogoBarsNiveis"> 
-      <div className="profileJogoBarAtivo"></div>      <div className="profileJogoBarAtivo"></div>
-      <div className="profileJogoBarDesativado"></div>        <div className="profileJogoBarDesativado"></div>
-      </div>
-      </div>
-      </>
       );
-    } 
-    else if (qtdAmigos <= 22){
+    }
+    else if (qtdAmigos <= 12) {
       return (
-      <>
-      <img className="profileJogoMedalUser" src={medalDiamante} alt="" ></img>
-      <div className="profileJogoXpUser">
-      <div className="profileJogoNivelUser">Nivel: <span>Diamante</span></div>
-      <div className="profileJogoBarAtivo"></div>       <div className="profileJogoBarAtivo"></div>       <div className="profileJogoBarAtivo"></div>
-      <div className="profileJogoBarsNiveis"> 
-      <div className="profileJogoBarDesativado"></div>
-      </div>
-      </div>
-      </>
+        <>
+          <img className="profileJogoMedalUser" src={medalOuro} alt="" ></img>
+          <div className="profileJogoXpUser">
+            <div className="profileJogoNivelUser">Nivel: <span>Ouro</span></div>
+            <div className="profileJogoBarsNiveis">
+              <div className="profileJogoBarAtivo"></div>      <div className="profileJogoBarAtivo"></div>
+              <div className="profileJogoBarDesativado"></div>        <div className="profileJogoBarDesativado"></div>
+            </div>
+          </div>
+        </>
+      );
+    }
+    else if (qtdAmigos <= 22) {
+      return (
+        <>
+          <img className="profileJogoMedalUser" src={medalDiamante} alt="" ></img>
+          <div className="profileJogoXpUser">
+            <div className="profileJogoNivelUser">Nivel: <span>Diamante</span></div>
+            <div className="profileJogoBarAtivo"></div>       <div className="profileJogoBarAtivo"></div>       <div className="profileJogoBarAtivo"></div>
+            <div className="profileJogoBarsNiveis">
+              <div className="profileJogoBarDesativado"></div>
+            </div>
+          </div>
+        </>
       )
     }
     else {
       return (
-      <>
-      <img className="profileJogoMedalUser" src={medalMestre} alt="" ></img>
-      <div className="profileJogoXpUser">
-      <div className="profileJogoNivelUser">Nivel: <span>Mestre</span></div>
-      <div className="profileJogoBarsNiveis">
-      <div className="profileJogoBarAtivo"></div>       <div className="profileJogoBarAtivo"></div>       <div className="profileJogoBarAtivo"></div>       <div className="profileJogoBarAtivo"></div> 
-      </div>
-      </div>
-      </>
+        <>
+          <img className="profileJogoMedalUser" src={medalMestre} alt="" ></img>
+          <div className="profileJogoXpUser">
+            <div className="profileJogoNivelUser">Nivel: <span>Mestre</span></div>
+            <div className="profileJogoBarsNiveis">
+              <div className="profileJogoBarAtivo"></div>       <div className="profileJogoBarAtivo"></div>       <div className="profileJogoBarAtivo"></div>       <div className="profileJogoBarAtivo"></div>
+            </div>
+          </div>
+        </>
       )
     }
   }

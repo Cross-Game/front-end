@@ -9,7 +9,7 @@ import imagemLol from '../Cadastro/assets/leagueOfLegendsWallpapers.jpg'
 import imagemValorant from '../Cadastro/assets/Fade 1.jpg'
 import imagemTeamF from '../Cadastro/assets/teamFight.png'
 
-import {currentURL} from "../../data/constants"
+import { currentURL } from "../../data/constants"
 
 
 
@@ -165,7 +165,7 @@ function Cadastro() {
 
     function cadastrar() {
 
-        const filme = {
+        const userPayload = {
             username: username,
             email: email,
             password: password,
@@ -179,7 +179,7 @@ function Cadastro() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(filme),
+            body: JSON.stringify(userPayload),
         })
             .then(response => response.json())
             .then(data =>

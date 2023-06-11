@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
 import "./ProfileNavbar.css";
 import imgUserProfile from "../../assets/index-page/testeImg.png";
 import medalUserProfile from "../../assets/index-page/medalOuro.svg";
@@ -22,33 +22,66 @@ function ProfileJogo(props) {
   const navigate = useNavigate();
   const [showModalNotification, setShowModalNotification] = useState(false);
   const [showModalEditarPerfil, setShowModalEditarPerfil] = useState(false);
+  const [imageData, setImageData] = useState();
+  const [temImg, setTemImg] = useState(false);
+  const fileInputRef = useRef(null);
   const [image, setImage] = useState(null);
   const [nivel, setNivel] = useState("Prata");
 
-  const changeAvatar = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("picture", image);
+  useLayoutEffect(() => {
 
-      await axios.patch(
-        `${currentURL}/user/${USERID}/picture`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+    handleUpdateImage()
+
+  }, []);
+
+  const handleUpdateImage = () => {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem("ACESS_TOKEN")
+      },
+      responseType: 'arraybuffer'
+    };
+    axios.get(`http://localhost:8080/users/${USERID}/picture`,
+      config
+    ).then((response) => {
+      const base64Image = btoa(
+        new Uint8Array(response.data).reduce(
+          (data, byte) => data + String.fromCharCode(byte),
+          ''
+        )
       );
+      
+      sessionStorage.setItem("IMAGEM", `${base64Image}`)
+      if(sessionStorage.getItem("IMAGEM") !== '') {
+        sessionStorage.setItem("IMAGEM", `data:image/jpeg;base64,${base64Image}`)
+        setImageData(sessionStorage.getItem("IMAGEM"))
+        setTemImg(true)
+      }
+      
+    }).catch((error) => {
+      console.error('Erro ao obter a imagem do perfil:', error);
+    });
 
-      console.log("Image uploaded successfully");
-      // Faça qualquer outra ação necessária após o upload da imagem
+  }
+
+  const handleImageChange = async (event) => {
+    const file = event.target.files[0];
+    try {
+
+      const response = await axios.patch(`http://localhost:8080/users/${USERID}/picture`, file, {
+        headers: {
+          'Content-Type': 'image/jpeg',
+          Authorization: 'Bearer ' + sessionStorage.getItem("ACESS_TOKEN")
+        },
+      });
+
+      console.log('Imagem enviada com sucesso:' + response.data);
     } catch (error) {
-      console.error("Error uploading image", error);
+      console.error('Erro ao enviar a imagem:', error);
     }
-  };
 
-  const handleImageChange = (event) => {
-    setImage(event.target.files[0]);
+    setImageData(sessionStorage.getItem("IMAGEM"))
+    handleUpdateImage()
   };
 
   const [qtdAmigos, setQtdAmigos] = useState(null);
@@ -161,7 +194,7 @@ function ProfileJogo(props) {
         <div className="profileJogoCore">
           <div className="profileJogoTop">
             <div className="profileJogoDataUser">
-              <img src={imgUserProfile} alt="" />
+              <img className="ImgPerfilUsuario" src={temImg ? imageData : imgUserProfile} width={'100px'}  alt="Imagem de Perfil" />
               <div className="profileJogoEditProfileUser">
                 <div id="nameUsername">{sessionStorage.getItem("NICKNAME")}</div>
                 <div className="profileJogoIconEditProfile" onClick={() => setShowModalEditarPerfil(true)}><RiFileEditFill className="iconTiEdit" />Editar Perfil</div>
@@ -204,24 +237,28 @@ function ProfileJogo(props) {
           title="Editar Perfil"
           icon={<RiFileEditFill />}
           temFooter={true}
-          ativarBotao={true}
-          textButton="Editar"
+          onClick={handleUpdateImage()}
+          ativarBotao={false}
+          textButton="Atualizar"
           iconButton={<BsCheck />}
           onClose={() => setShowModalEditarPerfil(false)}
         >
           <div className="modalEditarPerfil-container">
             <UserProfile
-              nome={"Nome"}
-              img={<BsArrowRightShort />}
-              onClick={changeAvatar}
+              nome={sessionStorage.getItem("NICKNAME")}
+              img={imageData}
             />
-            <div>
+            <div className="modalEditarPerfilInput">
               <input
                 type="file"
                 accept="image/*"
+                ref={fileInputRef}
+                style={{ display: 'none' }}
                 onChange={handleImageChange}
               />
-              <button onClick={changeAvatar}>Upload</button>
+              <button className="modalEditarPerfilButton" onClick={() => { fileInputRef.current.click() }}>
+                Alterar Foto
+              </button>
             </div>
           </div>
         </Modal>

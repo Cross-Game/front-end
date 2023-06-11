@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "../../assets/global.css";
 import { MdNotificationsActive } from 'react-icons/md';
 import "../Notification/notification.css";
-import Modal from "../Modal";
+import ModalNotification from "../ModalNotification";
 import Tag from "../Tag";
 import CardNotification from "./cardNotification";
 import Button from "../Button";
@@ -104,7 +104,7 @@ function Notification(props) {
 
 
   return (
-    <Modal
+    <ModalNotification
       title="Notificações"
       clearAll={true}
       icon={<MdNotificationsActive />}
@@ -186,7 +186,7 @@ function Notification(props) {
         </div>
 
       </div>
-    </Modal>
+    </ModalNotification>
   );
 }
 

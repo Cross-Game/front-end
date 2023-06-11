@@ -336,6 +336,7 @@ export const PortraitUsers = (props) => {
 
   function enviarFeedback() {
     console.log("Chamei enviar feedback")
+    console.log(jogadorSelecionado)
     axios.post(`${currentURL}/feedbacks/${jogadorSelecionado.id}`,
       {
         userGivenFeedback: sessionStorage.getItem("NICKNAME"),
@@ -376,6 +377,11 @@ export const PortraitUsers = (props) => {
     });
   }
 
+  function selecionarUsuarioFeedback(nome, id, img){
+    setShowModalFeedback(true); 
+    setJogadorSelecionado({nome: nome, id: id, img: img});
+  }
+
 
   return (
     <>
@@ -388,18 +394,27 @@ export const PortraitUsers = (props) => {
         </div>
 
         <div className="portraitUserContainerEdit">
-          {id === props.idAdmin ?
+          {/* Expulsar da sala */}
+
             <div onClick={retirandoUsuarioDaSala} className="optionsPortraitUsersDivs">
               {/* <RiCloseLine /> */}
               <img src={iconClose} alt="" />
             </div>
-            : null}
+    
+
+          {/* Chamar chat individual */}
+          { id != id ? (
           <div className="optionsPortraitUsersDivs">
             <img src={iconChatNormal} alt="" />
           </div>
-          <div className="optionsPortraitUsersDivs" onClick={() => setShowModalFeedback(true)}>
-            <img src={iconChatAddIconUser} alt="" />
+          ) : null }
+
+          {/* Enviar feedback */}
+          { id != id ? (
+          <div className="optionsPortraitUsersDivs" onClick={()=> selecionarUsuarioFeedback(props.nomeUser, props.idUserRoom, props.imagem)}>
+          <span className="icon_feedback_optionsPortraitUsersDivs"><MdFeedback /></span>
           </div>
+        ) : null }
         </div>
       </div>
 
@@ -408,6 +423,7 @@ export const PortraitUsers = (props) => {
           <UserProfile
             nome={jogadorSelecionado.nome}
             hasUserId={jogadorSelecionado.id}
+            img={jogadorSelecionado.img}
           />
 
           <div className="salas-group-avaliacao">

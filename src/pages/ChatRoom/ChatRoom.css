@@ -156,23 +156,31 @@
   opacity: 0;
   height: 0;
   overflow: hidden;
-  height: 115px;
+  /* height: 115px; */
   position: absolute;
   border-radius: 0 20px 20px 0;
   background-color: rgba(54, 54, 54, 0.368);
-  width: 45%;
+  width: 2.5vw;
   right: 0;
+  padding: 10px 1px;
   transition: opacity 0.2s ease, height 0.3s ease;
 }
 
 .portraitUserContainer:hover .portraitUserContainerEdit {
   opacity: 1;
-  height: 115px;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 3%;
+}
+
+.icon_feedback_optionsPortraitUsersDivs {
+  font-size: 20px;
+}
+.icon_feedback_optionsPortraitUsersDivs:hover {
+  color: #fff;
 }
 
 .optionsPortraitUsersDivs {

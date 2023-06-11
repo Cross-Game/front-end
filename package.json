@@ -1,0 +1,9 @@
+{
+    "name": "cross-game",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start": "node ./cross-game/bin/www",
+        "pointinstall": "cd cross-game && npm install"
+    }
+}

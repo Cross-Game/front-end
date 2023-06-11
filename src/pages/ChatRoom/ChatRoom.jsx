@@ -191,13 +191,7 @@ export const ChatRoom = () => {
     try {
       console.log("Enviar convite sala");
       const response = await axios.post(
-        `${currentURL}/notifies/${idConvidado}`,
-        {
-          type: "GROUP_INVITE",
-          message: "Te convidou para uma sala de " + gameName, 
-          description: "",
-          state: "AWAITING"
-        },
+        `${currentURL}/notifies/${idConvidado}?type=GROUP_INVITE&message=Te convidou para uma sala de ${gameName}&state=AWAITING&description=${sessionStorage.getItem("NICKNAME")}`,
         {
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -207,8 +201,7 @@ export const ChatRoom = () => {
         }
       );
 
-      if (response.status === 200) {
-        console.log(response);
+      if (response.status === 201) {
         mudarToast("sucesso", "Convite enviado!");
       } else {
         mudarToast("erro", "Erro ao enviar convite.");

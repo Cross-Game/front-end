@@ -1,0 +1,9 @@
+{
+    "name": "front-end",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start": "node ./cross-game/src/App.js",
+        "pointinstall": "cd cross-game && npm install"
+    }
+}

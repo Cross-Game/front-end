@@ -71,10 +71,12 @@
 
 .divSKillBehaviorContainerRed {
     background-color: #8F0000;
+    box-shadow: 0 0 0.5rem #8F0000;
 }
 
 .divSKillBehaviorContainerGreen {
     background-color: #000697;
+    box-shadow: 0 0 0.5rem #000697;
 }
 
 .divRightUser {
@@ -108,4 +110,84 @@
 .imgForFriend {
     width: 70%;
     margin-top: 30%;
+}
+
+.salas-icon-search{
+    color: #737373;
+    font-size: 30px;
+    display: flex;
+    position: relative;
+    right: 70vw;
+}
+
+.salas-icon-filtro{
+    color: #737373;
+    font-size: 30px;
+    display: flex;
+    position: relative;
+    right: 3vw;
+    transform: scaleX(-1);
+}
+
+.salas-icon-filtro:hover {
+    color: #fff;
+}
+
+.UsersDivContainerTitulos {
+    color: #737373;
+    font-size: 8px;
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    justify-content: space-around;
+    margin: 6px 0;
+}
+
+.imgUserUsers{
+    width: 60px;
+    height: 60px;
+    margin-bottom: 2px;
+}
+
+.container_filtro_modal_users {
+    max-width: 30vw;
+    font-size: 12px;
+}
+
+.title_container_users {
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+.container_filtro_modal_users .titleFiltro{
+    color: #7A7A7A;
+}
+
+.title_container_users2 {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    color: #fff;
+}
+
+.container_perfil_de_jogos {
+    max-width: 30vw;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.fitro_funcao_modal {
+
+}
+
+.filtro_funcao_modal_groupFuncoes {
+    display: flex;
+}
+
+.container_perfil_de_jogos .jogos {
+    margin-top: 5px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: wrap;;
 }

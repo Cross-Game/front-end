@@ -41,7 +41,7 @@ function ProfileJogo(props) {
       },
       responseType: 'arraybuffer'
     };
-    axios.get(`http://localhost:8080/users/${USERID}/picture`,
+    axios.get(`${currentURL}/users/${USERID}/picture`,
       config
     ).then((response) => {
       const base64Image = btoa(

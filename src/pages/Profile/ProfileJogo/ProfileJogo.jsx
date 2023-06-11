@@ -10,7 +10,7 @@ import { BsArrowRightShort, BsCheck, BsPersonBadge } from "react-icons/bs";
 import Tag from "../../../components/Tag";
 import { jogos as listaJogos } from "../../../utils/jogos";
 import { MdGamepad } from "react-icons/md";
-import { USERID, TOKEN } from "../../../data/constants";
+import { USERID, TOKEN, currentURL } from "../../../data/constants";
 import axios from "axios";
 import { useEffect } from "react";
 
@@ -42,7 +42,7 @@ function ProfileJogo() {
     let idRemoveProfile = 0;
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/user-games/${USERID}`, {
+        axios.get(`${currentURL}/user-games/${USERID}`, {
             headers: {
                 Authorization: `Bearer ${TOKEN}`
             },
@@ -54,7 +54,7 @@ function ProfileJogo() {
                 setSelectedSkillLevel(response.data[0].skillLevel)
                 setSelectedGameFunction(response.data[0].gameFunction)
                 let idJogo = response.data[0].gameId;
-                axios.get(`http://localhost:8080/games/${idJogo}`, {
+                axios.get(`${currentURL}/games/${idJogo}`, {
                     headers: {
                         Authorization: `Bearer ${TOKEN}`
                     },
@@ -68,7 +68,7 @@ function ProfileJogo() {
     })
 
     function remove() {
-        axios.delete(`http://localhost:8080/user-games/${USERID}/${idRemoveProfile}`, {
+        axios.delete(`${currentURL}/user-games/${USERID}/${idRemoveProfile}`, {
             headers: {
                 Authorization: `Bearer ${TOKEN}`
             },
@@ -81,7 +81,7 @@ function ProfileJogo() {
     }
 
     function getProfile() {
-        axios.get(`http://localhost:8080/user-games/${USERID}/${usernameRiot}/${jogoSelecionado}`, {
+        axios.get(`${currentURL}/user-games/${USERID}/${usernameRiot}/${jogoSelecionado}`, {
             headers: {
                 Authorization: `Bearer ${TOKEN}`
             },
@@ -121,7 +121,7 @@ function ProfileJogo() {
         console.log(usernameRiot)
         console.log(selectedGameFunction)
         console.log(selectedSkillLevel)
-        axios.post(`http://localhost:8080/user-games/${gameId}/${USERID}`, userGameCreate, {
+        axios.post(`${currentURL}/user-games/${gameId}/${USERID}`, userGameCreate, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${TOKEN}`

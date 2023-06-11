@@ -9,13 +9,13 @@ import imagemLol from '../Cadastro/assets/leagueOfLegendsWallpapers.jpg'
 import imagemValorant from '../Cadastro/assets/Fade 1.jpg'
 import imagemTeamF from '../Cadastro/assets/teamFight.png'
 
-import { currentURL } from "../../data/constants"
+import { currentURL, URLSITE } from "../../data/constants"
 
 
 
 function Cadastro() {
 
-    
+
     const [mostrarSenha, setMostrarSenha] = useState(false);
     const [ativarProximo, setAtivarProximo] = useState({})
     const [ativarAnterio, setAtivarAnterior] = useState({ display: 'none' })
@@ -34,7 +34,7 @@ function Cadastro() {
     const [password, setPassword] = useState();
     const [selectedIcon, setSelectedIcon] = useState(<BsPersonCircle className="iconAvatar" />);
     const CLIENT_ID = "1102730864972009612";
-    const REDIRECT_URI = "http://localhost:3000/cadastro";
+    const REDIRECT_URI = `${URLSITE}/cadastro`;
     const SCOPE = "identify email";
     const RESPONSE_TYPE = "code";
     const currentUrl = new URL(window.location.href);
@@ -68,7 +68,7 @@ function Cadastro() {
     const handleCallback = async () => {
         const data = {
             code: queryParams.get("code"),
-            redirect_uri: "http://localhost:3000/cadastro",
+            redirect_uri: `${URLSITE}/cadastro`,
             grant_type: "authorization_code",
             client_id: CLIENT_ID,
             client_secret: "Xrn0whYArSqBySPDGZbVGJlZj0sAL903"
@@ -198,7 +198,7 @@ function Cadastro() {
                 }).then(res => res.json())
                     .then(data =>
                         console.log(currentURL),
-                        window.location.href = "http://localhost:3000/login"
+                        window.location.href = `${URLSITE}/login`
                     )
             )
             .catch(error =>

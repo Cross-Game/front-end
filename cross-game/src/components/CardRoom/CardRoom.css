@@ -65,9 +65,42 @@
 
 .divGamersContent {
     width: 80%;
-    background-color: green;
     height: 30%;
+    display: flex;
+    position: relative;
+    ;
 }
+
+.divGamersContentImgs {
+    /* width: 30%; */
+    max-width: 40%;
+    height: 100%;
+    position: absolute;
+    border-radius: 30px;
+}
+
+.divGamersContentImgs:nth-child(1) {
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+
+.divGamersContentImgs:nth-child(2) {
+    z-index: 2;
+    top: 0;
+    /* top: 10px; Ajuste o valor de deslocamento vertical conforme necessário */
+    left: 30px;
+    /* Ajuste o valor de deslocamento horizontal conforme necessário */
+}
+
+.divGamersContentImgs:nth-child(3) {
+    z-index: 3;
+    top: 0px;
+    /* Ajuste o valor de deslocamento vertical conforme necessário */
+    left: 60px;
+    /* Ajuste o valor de deslocamento horizontal conforme necessário */
+}
+
 
 
 .divDescriptionAndButtonContainer {
@@ -104,7 +137,7 @@
     justify-content: end;
 }
 
-.buttonEnterRoom{
+.buttonEnterRoom {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -113,13 +146,13 @@
     height: 60%;
     border-radius: 40px;
     background-color: #00FF33;
-    font-size: 0.8rem;  
-    text-decoration: none;  
+    font-size: 0.8rem;
+    text-decoration: none;
     color: #000000;
     transition: 300ms;
 }
 
-.buttonEnterRoom:hover{
+.buttonEnterRoom:hover {
     background-color: #1ece3f;
- 
+
 }

@@ -19,6 +19,8 @@ import Button from '../../components/Button';
 import { Navigate, useNavigate } from 'react-router-dom';
 import Toast from '../../components/Toast';
 
+import { getJogadorImagem } from '../../utils/getJogadorImagem'
+
 function Rooms() {
     const navigate = useNavigate();
     const [rooms, setRooms] = useState([]);
@@ -32,6 +34,7 @@ function Rooms() {
                 const res = await axios.get(`${currentURL}/team-rooms`);
                 setRooms(res.data);
                 setIsLoading(false);
+                console.log("Teste", res.data)
             } catch (error) {
                 console.log(error);
                 setIsLoading(false);
@@ -143,12 +146,12 @@ function Rooms() {
     const [toastMessage, setToastMessage] = useState('');
     const [toastType, setToastType] = useState('erro');
 
-    
-  function mudarToast(tipo, mensagem) {
-    setShowToast(true);
-    setToastType(tipo.toLowerCase());
-    setToastMessage(mensagem);
-  }
+
+    function mudarToast(tipo, mensagem) {
+        setShowToast(true);
+        setToastType(tipo.toLowerCase());
+        setToastMessage(mensagem);
+    }
 
     useEffect(() => {
         const obterMeusJogos = async () => {
@@ -205,7 +208,7 @@ function Rooms() {
                     description: descricaoSalaCriar.toString(),
                     isPrivate: false,
                     tokenAccess: "",
-                    idUserAdmin: sessionStorage.getItem("ID")
+                    idUserAdmin: USERID
                 },
                 {
                     headers: {
@@ -250,7 +253,7 @@ function Rooms() {
 
                                 : rooms.map((element) => (
                                     <React.Fragment key={element.id}>
-                                        <CardRoom nomeEquipe={element.roomName} faltantes={element.capacity} gameName={element.gameName} rankGame={element.rankGame} levelGame={element.levelGame} descricao={element.description} isClick={false} idGroup={element.id} />
+                                        <CardRoom imgJogadores={null} nomeEquipe={element.name} faltantes={element.capacity} gameName={element.gameName} rankGame={element.rankGame} levelGame={element.levelGame} descricao={element.description} idAdmin={element.idUserAdmin} isClick={false} idGroup={element.id} />
                                     </React.Fragment>
                                 ))}
                         </div>

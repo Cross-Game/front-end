@@ -33,6 +33,7 @@ function Users() {
     const [usersGeneric, setUsersGeneric] = useState([]);
     const [friends, setFriends] = useState([]);
     const [showModalFiltroJogadores, setShowModalFiltroJogadores] = useState(false);
+    const [meusInteresses, setMeusInteresses] = useState([])
 
 
 
@@ -72,37 +73,86 @@ function Users() {
 
     const [listaOriginal, setListaOriginal] = useState([]);
 
+    var chamadas = 0;
+    var jogadoresFiltrados = [];
+    var chamadas = 0;
+    var jogadoresFiltrados = [];
+
+    
+    
     function filtrarJogadores() {
-        // TO DO basear filtros do interesse.
-        try {
-            // Verifica se a lista original já foi definida
-            if (listaOriginal.length === 0) {
-                setListaOriginal([...usersGeneric]);
-            }
-
-            const jogadoresFiltrados = listaOriginal.filter((jogador) => {
-                const habilidade = jogador.mediaHabilidade;
-                const comportamento = jogador.mediaComportamento;
-
-                if (
-                    habilidade >= minLevelHabilidade &&
-                    habilidade <= maxLevelHabilidade &&
-                    comportamento >= minLevelComportamento &&
-                    comportamento <= maxLevelComportamento
-                ) {
-                    return true;
-                } else {
-                    return false;
-                }
-            });
-
-            setUsersGeneric(jogadoresFiltrados);
-            setShowModalFiltroJogadores(false);
-            mudarToast("Sucesso", "Filtro aplicado.");
-        } catch (error) {
-            console.error("Erro ao filtrar jogadores:", error);
-            mudarToast("Erro", "Erro ao filtrar jogadores.");
+      // TO DO basear filtros do interesse.
+      try {
+        // Verifica se a lista original já foi definida
+        if (listaOriginal.length === 0) {
+          setListaOriginal([...usersGeneric]);
         }
+    
+        jogadoresFiltrados = listaOriginal.filter((jogador) => {
+          const habilidade = jogador.mediaHabilidade;
+          const comportamento = jogador.mediaComportamento;
+    
+          return (
+            habilidade >= minLevelHabilidade &&
+            habilidade <= maxLevelHabilidade &&
+            comportamento >= minLevelComportamento &&
+            comportamento <= maxLevelComportamento
+          );
+        });
+        
+    
+        setUsersGeneric(jogadoresFiltrados);
+        setShowModalFiltroJogadores(false);
+    
+        console.log("obtendo usuario conforme parametros");
+        axios
+          .get(
+            `${currentURL}/users-filter?preference=${meusInteresses[0]}&gameName=${jogoSelecionado.toUpperCase()}&gameFunction=${funcaoSelecionada.toUpperCase()}`,
+            {
+              headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${TOKEN}`
+              }
+            }
+          )
+          .then((response) => {
+            if (response.status === 200) {
+              console.log("Usuarios com filtro selecionado");
+              console.log(response);
+              if (response.data.fila.length !== 0) {
+                const jogadoresFilaUsernames = response.data.fila.map((jogador) => jogador.username);
+                
+                setUsersGeneric((usersGeneric) =>
+                  usersGeneric.filter((jogador) => jogadoresFilaUsernames.includes(jogador.username))
+                );
+
+                mudarToast("sucesso", "Filtro aplicado!");
+                
+              }
+              else if (chamadas < 1) {
+                chamadas++;
+                setMeusInteresses((meusInteresses) => {
+                  const novosInteresses = [...meusInteresses];
+                  novosInteresses[0] = "";
+                  return novosInteresses;
+                });
+                filtrarJogadores();
+              }              
+               else if (chamadas === 1) {
+                mudarToast("erro", "Não foram encontrados jogadores.");
+              }
+            } else {
+              mudarToast("erro", "Erro ao buscar jogadores.");
+            }
+          })
+          .catch((error) => {
+            console.error("Erro ao cadastrar plataformas:", error);
+          });
+      } catch (error) {
+        console.error("Erro ao filtrar jogadores:", error);
+        mudarToast("Erro", "Erro ao filtrar jogadores.");
+      }
     }
 
     const [jogos, setJogos] = useState(listaJogos);
@@ -139,6 +189,7 @@ function Users() {
     }
 
     useEffect(() => {
+        obterMeusInteresses();
         const obterUsuarios = async () => {
             try {
                 const response = await axios.get(`${currentURL}/users`, {
@@ -208,6 +259,24 @@ function Users() {
             console.error('Erro ao buscar quantidade de amigos', error);
             mudarToast('Erro', 'Erro ao buscar quantidade de amigos.');
             return "Prata"
+        }
+    };
+
+    const obterMeusInteresses = async () => {
+        try {
+            const response = await axios.get(`${currentURL}/preferences/${USERID}`, {
+                headers: {
+                    Authorization: `Bearer ${TOKEN}`,
+                },
+            });
+            if (response.status === 200) {
+                setMeusInteresses(response.data.preferences.map((preferencia) => preferencia.preferences));
+            }
+            else {
+                console.log("usuário nao tem nenhuma preferencia cadastrada")
+            }
+        } catch (error) {
+            console.log(error);
         }
     };
 
@@ -328,8 +397,8 @@ function Users() {
                     <div className="divRoomsAllContainer">
                         {usersGeneric === [] || usersGeneric.length === 0 || null || undefined ?
                             <NothingContentRooms
-                                text1={"Nenhum amigo encontrado"}
-                                text2={"Adicione as pessoas para interagir e adicionar em grupos"}
+                                text1={"Nenhum jogador encontrado"}
+                                text2={"Convide pessoas e ajude nosso servidor a crescer ainda mais"}
                                 isInteractive={false}
                             />
                             : usersGeneric.filter((user) => (user.id !== USERID && !usersFilterIdsAccepted.includes(user.id)))

@@ -9,7 +9,7 @@ import { MdGroups } from 'react-icons/md';
 import { BsArrowLeftShort, BsArrowRightShort, BsFillCalendarWeekFill, BsFilterLeft, BsPlus } from 'react-icons/bs';
 import Tag from '../../components/Tag';
 import RangeBar from '../../components/RangeBar';
-import { HiMinusSm } from 'react-icons/hi';
+import { HiMinusSm, HiSearch } from 'react-icons/hi';
 // import { useHistory } from 'react-router-dom';
 // import { use } from 'react-router-dom';
 import { jogos as listaJogos } from "../../utils/jogos";
@@ -32,7 +32,8 @@ function Rooms() {
         const fetchData = async () => {
             try {
                 const res = await axios.get(`${currentURL}/team-rooms`);
-                setRooms(res.data);
+                setRooms(res.data); 
+                setRoomsFiltered(res.data)
                 setIsLoading(false);
                 console.log("Teste", res.data)
             } catch (error) {
@@ -133,7 +134,7 @@ function Rooms() {
     }
 
     // [Modal] Filtro de Salas
-    const [showModalFiltroSala, setShowModalFiltroSala] = useState(false);
+    const [showModalFiltroSala, setShowModalFiltroSala] = useState(true);
 
     function limparFiltroSalas() {
         setJogoSelecionado("");
@@ -153,10 +154,39 @@ function Rooms() {
         setToastMessage(mensagem);
     }
 
+    const [roomsFiltered,setRoomsFiltered] = useState([]);
+    
+    function filtrarSalas(){
+        var encontrei = 0;
+        setRoomsFiltered(rooms);
+        const salasFiltradas = rooms.filter((sala) => {
+            if (!jogoSelecionado || sala.gameName === jogoSelecionado) {
+              if (!rankSelecionado || sala.rankGame === rankSelecionado) {
+                if (!minLevel || sala.levelGame >= minLevel) {
+                    console.log("Devolvendo true")
+                    encontrei++;
+                  return true; 
+                }
+              }
+            }
+            return false;
+          });
+          console.log(salasFiltradas)
+          console.log(salasFiltradas.lenght)
+          if (encontrei!= 0) {
+            mudarToast("sucesso", "Filtro aplicado")
+            setRoomsFiltered(salasFiltradas);
+          }
+          else {
+            mudarToast("erro", "Nenhuma sala encontrada")
+          }
+          setShowModalFiltroSala(false)
+        }
+        
+
     useEffect(() => {
         const obterMeusJogos = async () => {
             try {
-                console.log("Chamei obterMeusJogos");
                 const response = await axios.get(
                     `${currentURL}/user-games/${USERID}`,
                     {
@@ -237,9 +267,11 @@ function Rooms() {
                     <div className="topDiv">
                         <div className="inputDiv">
                             <input type="text" className='inputRooms' placeholder='Buscar salas' />
+                            <BsFilterLeft className='salas-icon-filtro' onClick={() => setShowModalFiltroSala(true)} />
+                            <HiSearch className='salas-icon-search' />
                         </div>
                         <div className="divRoomsAllContainer">
-                            {rooms === [] || rooms.length === 0 || null || undefined ?
+                            {roomsFiltered === [] || roomsFiltered.length === 0 || null || undefined ?
 
                                 <NothingContentRooms
                                     text1={"Não temos nenhuma sala pública"}
@@ -247,7 +279,7 @@ function Rooms() {
                                     isInteractive={true}
                                 />
 
-                                : rooms.map((element) => (
+                                : roomsFiltered.map((element) => (
                                     <React.Fragment key={element.id}>
                                         <CardRoom imgJogadores={null} nomeEquipe={element.name} faltantes={element.capacity} gameName={element.gameName} rankGame={element.rankGame} levelGame={element.levelGame} descricao={element.description} idAdmin={element.idUserAdmin} isClick={false} idGroup={element.id} />
                                     </React.Fragment>
@@ -257,6 +289,8 @@ function Rooms() {
                     <div className="bottomDiv">
                         <div className="inputDiv">
                             <input type="text" className='inputRooms' placeholder='Buscar salas' />
+                            {/* <BsFilterLeft className='salas-icon-filtro' onClick={() => setShowModalFiltroSala(true)} /> */}
+                            <HiSearch className='salas-icon-search-baixo' />
                             <div className='divButtonCriarSala' onClick={() => setShowModalCriarSala(true)}>
                                 Criar sala
                             </div>
@@ -405,7 +439,7 @@ function Rooms() {
             )}
 
             {showModalFiltroSala && (
-                <Modal title="Filtrar por" icon={<BsFilterLeft />} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort />} textButton='Filtrar' onClear={limparFiltroSalas} onClose={() => setShowModalFiltroSala(false)}>
+                <Modal title="Filtrar por" icon={<BsFilterLeft />} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort />} textButton='Filtrar' onClear={limparFiltroSalas} onClose={() => setShowModalFiltroSala(false)} onClickButton={filtrarSalas}>
                     <div className="container_filtro">
 
                         <div className="filtro_jogos">

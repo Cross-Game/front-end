@@ -150,7 +150,7 @@ export const ChatRoom = () => {
         );
         if (response.status === 200) {
           console.log(response);
-          var amigos = response.data.filter((amigo) => amigo.friendshipState === "SENDED"); // TODO Mudar para CONFIRMED
+          var amigos = response.data.filter((amigo) => amigo.friendshipState === "CONFIRMED"); // TODO Mudar para CONFIRMED
           setMeusAmigos(amigos);
           console.log("Amigos de vdd: ")
           console.log(amigos)
@@ -193,9 +193,10 @@ export const ChatRoom = () => {
       const response = await axios.post(
         `${currentURL}/notifies/${idConvidado}`,
         {
-          type: "GROUP",
-          message: "Te convidou para uma sala de ", // TODO Colocar o jogo;
+          type: "GROUP_INVITE",
+          message: "Te convidou para uma sala de " + gameName, 
           description: "",
+          state: "AWAITING"
         },
         {
           headers: {
@@ -400,7 +401,7 @@ export const PortraitUsers = (props) => {
               {/* <RiCloseLine /> */}
               <img src={iconClose} alt="" />
             </div>
-    
+
 
           {/* Chamar chat individual */}
           { id != id ? (

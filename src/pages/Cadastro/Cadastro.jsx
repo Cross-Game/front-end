@@ -125,9 +125,10 @@ function Cadastro() {
         const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{12,}$/;
 
         if (!passwordRegex.test(password)) {
-            setShowModalSenha(true);
+            //setShowModalSenha(true);
             setvalidadoSenha(false);
-            setValidationMessageSenha('A senha deve ter pelo menos 12 caracteres, 1 numero, 1 letra maiúscula, 1 letra minúscula e 1 caractere especial.');
+            setValidationMessageSenha('A senha deve conter pelo menos 12 caracteres sendo: 1 numero, 1 letra maiúscula, 1 letra minúscula e 1 caractere especial.');
+            mudarToast('erro', "A senha deve conter pelo menos 12 caracteres sendo: 1 número, 1 letra maiúscula, 1 letra minúscula e 1 caractere especial.");
         } else {
             setShowModalSenha(false);
             setValidationMessageSenha('');
@@ -140,7 +141,8 @@ function Cadastro() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!emailRegex.test(email)) {
-            setShowModalEmail(true);
+            //setShowModalEmail(true);
+            mudarToast('erro', 'O email deve conter @ e "."')
             setValidadoEmail(false)
             setValidationMessageEmail('O email esta sem o @ ou "."');
         } else {
@@ -165,7 +167,7 @@ function Cadastro() {
     }
 
     function cadastrar() {
-
+        mudarToast('carregando', 'Cadastro em andamento');
         const userPayload = {
             username: username,
             email: email,
@@ -229,6 +231,16 @@ function Cadastro() {
             setTft(true)
         }
     }
+
+    function mudarToast(tipo, mensagem) {
+        setShowToast(true);
+        setToastType(tipo.toLowerCase());
+        setToastMessage(mensagem);
+    }
+
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastType, setToastType] = useState('erro');
 
 
 

@@ -15,6 +15,7 @@ import { currentURL } from "../../data/constants"
 
 function Cadastro() {
 
+    
     const [mostrarSenha, setMostrarSenha] = useState(false);
     const [ativarProximo, setAtivarProximo] = useState({})
     const [ativarAnterio, setAtivarAnterior] = useState({ display: 'none' })

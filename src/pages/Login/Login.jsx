@@ -5,8 +5,8 @@ import { BsDiscord, BsGoogle, BsArrowRightShort, BsArrowLeftShort, BsFillEyeSlas
 import axios from "axios";
 import Toast from "../../components/Toast";
 import { LoginSocialGoogle } from "reactjs-social-login";
-import { updateConstants } from "../../data/constants";
-import {currentURL} from "../../data/constants"
+import { URLSITE, updateConstants } from "../../data/constants";
+import { currentURL } from "../../data/constants"
 
 
 function Login() {
@@ -22,7 +22,7 @@ function Login() {
   const currentUrl = new URL(window.location.href);
   const queryParams = new URLSearchParams(currentUrl.search);
   const CLIENT_ID = "1102730864972009612";
-  const REDIRECT_URI = "http://localhost:3000/cadastro";
+  const REDIRECT_URI = `${URLSITE}/cadastro`;
   const SCOPE = "identify email";
   const RESPONSE_TYPE = "code";
   const [isLoading, setIsLoading] = useState(true);
@@ -55,7 +55,7 @@ function Login() {
   }
 
 
-  const redirectUri = 'http://localhost:3000/login';
+  const redirectUri = `${URLSITE}/login`;
 
   const handleLogin = () => {
     const scope = 'identify email';
@@ -68,7 +68,7 @@ function Login() {
   const handleCallback = async () => {
     const data = {
       code: queryParams.get("code"),
-      redirect_uri: "http://localhost:3000/login",
+      redirect_uri: `${URLSITE}/login`,
       grant_type: "authorization_code",
       client_id: CLIENT_ID,
       client_secret: "Xrn0whYArSqBySPDGZbVGJlZj0sAL903"

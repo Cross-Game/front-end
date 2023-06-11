@@ -14,8 +14,9 @@ AMBIENTE === "desenvolvimento" ? currentURL = "http://localhost:8081" : currentU
 AMBIENTE === "desenvolvimento" ? URLSITE = "http://localhost:3000" : URLSITE = "cross-gameprod.azurewebsites.net";
 
 export function updateConstants() {
-  USERID = sessionStorage.getItem("ID");
+  USERID = Number(sessionStorage.getItem("ID"));
   TOKEN = sessionStorage.getItem("ACESS_TOKEN")
+  USERNAMESESSION = sessionStorage.getItem("NICKNAME");
 }
 
 export { USERID, TOKEN, currentURL, USERNAMESESSION, URLSITE };

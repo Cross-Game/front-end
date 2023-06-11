@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
 import "./CardRoom.css"
 import { Link, redirect, useNavigate } from 'react-router-dom';
+import { TOKEN, USERID, USERNAMESESSION, currentURL } from '../../data/constants'
+import imgTest from "../../assets/index-page/testeImg.png";
+
+import axios from 'axios';
 
 function CardRoom(props) {
-    
+
     const handleEnterRoom = () => {
         if (!window.location.pathname.includes("/rooms/")) {
-            window.location.href = `/rooms/${props.idGroup}`;
+            axios.put(`${currentURL}/team-rooms/add-users/${USERID}/${props.idAdmin}/${props.idGroup}`
+            ).then((response) => {
+                if (response.status === 200) {
+                    window.location.href = `/rooms/${props.idGroup}`;
+                }
+                console.log("Requisição entrar na sala", response)
+            }).catch((error) => {
+                console.error('erro ao entrar na sala', error);
+            });
         }
     };
 
@@ -46,7 +58,11 @@ function CardRoom(props) {
                     </div>
 
                     {/* decidiremos se vamos recuperar as imagens dos jogadores */}
-                    <div className="divGamersContent"></div>
+                    <div className="divGamersContent">
+                        <img src={imgTest} className='divGamersContentImgs' alt="" />
+                        <img src={imgTest} className='divGamersContentImgs' alt="" />
+                        <img src={imgTest} className='divGamersContentImgs' alt="" />
+                    </div>
                     {/*  */}
 
                     <div className="divDescriptionAndButtonContainer">

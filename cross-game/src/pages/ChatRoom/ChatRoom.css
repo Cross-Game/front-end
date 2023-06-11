@@ -176,7 +176,7 @@
 }
 
 .optionsPortraitUsersDivs {
-  width: 70%;
+  width: 75%;
   height: 27%;
   display: flex;
   justify-content: center;
@@ -186,7 +186,7 @@
 
 .optionsPortraitUsersDivs img {
   width: 50%;
-  filter: invert(20%);
+  filter: invert(100%);
   transition: 300ms;
 }
 

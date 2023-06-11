@@ -1,17 +1,15 @@
-import { getAuth, signInAnonymously } from "firebase/auth";
-import { addDoc, and, collection, limit, or, orderBy, query, serverTimestamp, where } from "firebase/firestore";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useAuthState, useSignInWithGoogle } from "react-firebase-hooks/auth";
+import { addDoc, collection, orderBy, query, serverTimestamp, where } from "firebase/firestore";
+import { useEffect, useRef, useState } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import "./ChatRoom.css";
-import { app, databaseApp } from "../../data/firebaseConfig";
-import { Link, NavLink, redirect, useNavigate, useParams } from "react-router-dom";
+import { databaseApp } from "../../data/firebaseConfig";
+import { useNavigate, useParams } from "react-router-dom";
 import { TOKEN, currentURL } from "../../data/constants";
 import { USERID } from "../../data/constants";
 import axios from "axios";
 
 import enviarIcon from "./assets/enviarIcon.svg"
-import imgTest from "../../assets/index-page/medalDiamante.svg"
+import imgTest from "../../assets/index-page/testeImg.png";
 import iconBack from "./assets/arrow-right.svg"
 import iconLockYes from "./assets/lockYes.svg"
 import iconLockNo from "./assets/lockNo.svg"
@@ -29,60 +27,17 @@ import { getJogadorImagem } from "../../utils/getJogadorImagem";
 import Toast from "../../components/Toast";
 
 
-
-// const auth = getAuth(app);
-// const auth = signInAnonymously();
-
 export const ChatRoom = () => {
 
-  // TODO adicionar buscar dos jogadores da sala
-
-  let testeUsers = [
-    {
-      id: 1,
-      nomeUser: "limbo782354823548",
-      imgUser: imgTest
-    }, {
-      id: 2,
-      nomeUser: "mayra",
-      imgUser: imgTest
-    }, {
-      id: 3,
-      nomeUser: "teste",
-      imgUser: imgTest
-    }, {
-      id: 4,
-      nomeUser: "teste2",
-      imgUser: imgTest
-    }, {
-      id: 2,
-      nomeUser: "mayra",
-      imgUser: imgTest
-    }, {
-      id: 3,
-      nomeUser: "teste",
-      imgUser: imgTest
-    }, {
-      id: 4,
-      nomeUser: "teste2",
-      imgUser: imgTest
-    }, {
-      id: 2,
-      nomeUser: "mayra",
-      imgUser: imgTest
-    }, {
-      id: 3,
-      nomeUser: "teste",
-      imgUser: imgTest
-    }, {
-      id: 4,
-      nomeUser: "teste2",
-      imgUser: imgTest
-    }
-  ]
+  const [gameName, setGameName] = useState(null);
+  const [rankRoom, setRankRoom] = useState(null);
+  const [levelRoom, setLevelRoom] = useState(null);
+  const [roomName, setRoomName] = useState(null);
 
   const [meusAmigos, setMeusAmigos] = useState([]);
-  const [usersRoom, setUsersRoom] = useState(testeUsers);
+  const [usersRoom, setUsersRoom] = useState([]);
+
+  const [userAdmin, setUserAdmin] = useState(null);
 
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
@@ -93,6 +48,81 @@ export const ChatRoom = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState('erro');
+
+
+
+  const obterImagemUsuario = async (jogadorId) => {
+    try {
+      const response = await axios.get(`${currentURL}/users/${jogadorId}/picture`, {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+        responseType: 'blob',
+      });
+      console.log(response)
+      if (response.data.size > 0) {
+        const blobData = response.data;
+        const imageUrl = await convertBlobToBase64(blobData);
+        return imageUrl;
+      }
+      else {
+        console.log("entrei aqui")
+        return imgTest;
+      }
+    } catch (error) {
+      console.log(error);
+      return imgTest;
+    }
+  };
+
+  const convertBlobToBase64 = (blob) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };
+
+
+  useEffect(() => {
+    const usersData = async () => {
+      try {
+
+        const response = await axios.get(`${currentURL}/team-rooms/${id}`);
+        console.log(response)
+        if (response.status === 200) {
+          const usuarios = response.data.user.map(async (usuario) => {
+            const imagem = await obterImagemUsuario(usuario.id);
+            return {
+              ...usuario,
+              id: usuario.id,
+              imgUser: imagem,
+              username: usuario.username
+            };
+          });
+          const usuariosTeste = await Promise.all(usuarios);
+          setUsersRoom(usuariosTeste);
+          setUserAdmin(response.data.idUserAdmin)
+
+          setGameName(response.data.gameName)
+          setRankRoom(response.data.rankGame)
+          setLevelRoom(response.data.levelGame)
+          setRoomName(response.data.name)
+          console.log("Informações sala", response)
+        }
+      } catch (error) {
+        console.error('Erro ao buscar usuários:', error);
+        mudarToast('Erro', 'Erro ao buscar jogadores.');
+      }
+    };
+
+    usersData();
+  }, []);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -195,9 +225,9 @@ export const ChatRoom = () => {
       <div className="chatRoomContainerMessages">
         <div className="divPainelControllerContainer">
           <div className="chatRoomHeader">
-            <ExitFromRoom />
+            <ExitFromRoom idGroup={id} idAdmin={userAdmin} />
             <div className="chatRoomHeaderNameId">
-              <h2 className="chatRoomHeaderName">Teste</h2>
+              <h2 className="chatRoomHeaderName">{roomName}</h2>
               <p className="chatRoomHeaderId">Id: {id}</p>
             </div>
           </div>
@@ -205,21 +235,21 @@ export const ChatRoom = () => {
             <div className="divInformationOfFilter">
 
               <div className="chatRoomFilterContainer gameFilter">
-                Valorant
+                {gameName}
               </div>
 
               <div className="chatRoomFilterContainer greenFilter">
-                Ranking Gold
+                Ranking {rankRoom}
               </div>
 
               <div className="chatRoomFilterContainer greenFilter">
-                Level 50
+                Level {levelRoom}
               </div>
             </div>
             <div className="playersOnRoomChatRoom">
 
               {!(usersRoom.length === 0) ? usersRoom.map((users) => (
-                <PortraitUsers nomeUser={users.nomeUser} />
+                <PortraitUsers imagem={users.imgUser} idUserRoom={users.id} nomeUser={users.username} idAdmin={userAdmin} idGroup={id} />
               ))
                 :
                 "Teste sem Participantes" // TODO adicionar div com estilo para sem participantes
@@ -228,7 +258,11 @@ export const ChatRoom = () => {
             </div>
             <div className="divPainelControllOfAdminGroup">
               <div className="divPainelControllOfAdminGroupContainer">
-                <LockButton />
+                {
+                  USERID == userAdmin ?
+                    <LockButton />
+                    : null
+                }
                 <Button text="Convide seus amigos" icon={<BsArrowRightShort />} onClick={() => setShowModalConvidar(true)} />
               </div>
             </div>
@@ -281,6 +315,7 @@ export const PortraitUsers = (props) => {
   const [comentarioFeedback, setComentarioFeedback] = useState('');
 
   const [resetAvaliacao, setResetAvaliacao] = useState(false);
+
   function limparModalFeedback() {
     setRatingHabilidade(0);
     setRatingComportamento(0);
@@ -316,7 +351,7 @@ export const PortraitUsers = (props) => {
       .then(response => {
         console.log(response.data);
         mudarToast("Sucesso", "Avaliação enviada")
-        setTimeout(function() {
+        setTimeout(function () {
           setShowModalFeedback(false);
         }, 1000);
       })
@@ -326,27 +361,44 @@ export const PortraitUsers = (props) => {
       });
   }
 
+  function retirandoUsuarioDaSala() {
+
+    axios.delete(`${currentURL}/team-rooms/remove-users/${props.idUserRoom}/${props.idAdmin}/${props.idGroup}`
+    ).then((response) => {
+      if (response.status === 200) {
+        //  TODO ver como retirar o usuário da sala assim que expulsar
+        mudarToast('Sucesso', 'usuário retirado com sucesso')
+      }
+      console.log("usuário retirado com sucesso", response.data)
+    }).catch((error) => {
+      mudarToast('erro', 'erro ao retirar usuário da sala')
+      console.error('erro ao retirar usuário da sala', error);
+    });
+  }
+
+
   return (
     <>
       <div className="portraitUserContainer">
         <div className="divPortraitUserImg">
-          <img src={imgTest} alt="" />
+          <img src={props.imagem} alt="" />
         </div>
         <div className="divProtraitUserName">
           {props.nomeUser == null || String.toString(props.nomeUser).trim === "" ? null : props.nomeUser}
         </div>
 
-        <div className="portraitUserContainerEdit"> {/* TODO: alterar abaixo para verificar se usuario logado é owner da sala */}
-          {id === 1 ?
-            <div className="optionsPortraitUsersDivs">
-              <RiCloseLine />
+        <div className="portraitUserContainerEdit">
+          {id === props.idAdmin ?
+            <div onClick={retirandoUsuarioDaSala} className="optionsPortraitUsersDivs">
+              {/* <RiCloseLine /> */}
+              <img src={iconClose} alt="" />
             </div>
             : null}
           <div className="optionsPortraitUsersDivs">
-            <BsFillChatLeftTextFill />
+            <img src={iconChatNormal} alt="" />
           </div>
           <div className="optionsPortraitUsersDivs" onClick={() => setShowModalFeedback(true)}>
-            <MdOutlineFeedback />
+            <img src={iconChatAddIconUser} alt="" />
           </div>
         </div>
       </div>
@@ -410,8 +462,6 @@ export const LockButton = () => {
 
   return (
     <>
-
-
       <div
         className={showElement === true && isPrivate === true ?
           "divPrivateRoomSet divPrivateRoomSetWithText divPrivateRoomSetIsLocked" :
@@ -437,6 +487,43 @@ export const LockButton = () => {
 
 export const ChatBox = (props) => {
 
+  const obterImagemUsuario = async (jogadorId) => {
+    try {
+      const response = await axios.get(`${currentURL}/users/${jogadorId}/picture`, {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+        responseType: 'blob',
+      });
+      console.log(response)
+      if (response.data.size > 0) {
+        const blobData = response.data;
+        const imageUrl = await convertBlobToBase64(blobData);
+        return imageUrl;
+      }
+      else {
+        console.log("entrei aqui")
+        // return imgUserProfile;
+      }
+    } catch (error) {
+      console.log(error);
+      // return imgUserProfile;
+    }
+  };
+
+  const convertBlobToBase64 = (blob) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };
+
   const idGroup = Number(props.idGroup);
   const dummy = useRef()
   const messagesRef = collection(databaseApp, "messages");
@@ -446,6 +533,16 @@ export const ChatBox = (props) => {
 
   console.log("Mensagens :", messages)
 
+  const [testeImagem, setTesteImagem] = useState();
+
+  const imagem = obterImagemUsuario(USERID).then((teste) => {
+    setTesteImagem(teste)
+  }).catch((error) => console.log("s"))
+
+
+
+
+  // const imagen
   //rolagem automatica
   useEffect(() => {
     dummy.current.scrollIntoView({ behavior: 'smooth' });
@@ -461,7 +558,7 @@ export const ChatBox = (props) => {
     await addDoc(messagesRef, {
       text: formValue,
       uid,
-      // photoURL,
+      photoURL: testeImagem,
       idGroup,
       createdAt: serverTimestamp()
     });
@@ -489,21 +586,28 @@ export const ChatBox = (props) => {
 };
 
 export const ChatMessage = (props) => {
-  const { uid, text } = props.message;
+  const { uid, text, photoURL } = props.message;
   const messageClass = uid === USERID ? 'sent' : 'received';
   return (
     <div className={`message ${messageClass}`}>
-      {/* <img src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} /> */}
-      <img className="messageImgChatRoom" src={imgTest} />
+      <img className="messageImgChatRoom" src={photoURL || imgTest} />
       <p className="messageText">{text}</p>
     </div>
   );
 };
 
-export const ExitFromRoom = () => {
+export const ExitFromRoom = (props) => {
   const navigate = useNavigate();
   function exit() {
-    navigate("/rooms", { replace: true })
+    axios.delete(`${currentURL}/team-rooms/remove-users/${USERID}/${props.idAdmin}/${props.idGroup}`
+    ).then((response) => {
+      if (response.status === 200) {
+        navigate("/rooms", { replace: true })
+      }
+      console.log("Buscando informações da sala", response.data)
+    }).catch((error) => {
+      console.error('erro ao buscar informações da sala', error);
+    });
   }
 
   return (
@@ -572,29 +676,3 @@ const Avaliacao = ({ initialValue, setRating, reset }) => {
     </div>
   );
 };
-
-
-//   export const SignIn = () => {
-//     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
-
-//     return <button className="sign-in" onClick={() => signInWithGoogle()}>logar com Google</button>;
-//   };
-
-// export const SignIn = () => {
-//   const signIn = async () => {
-//     await signInAnonymously(auth);
-//   };
-
-//   return (
-//     <>
-//       <button className="sign-in" onClick={signIn}>
-//       </button>
-//     </>
-//   );
-// };
-
-// export const SignOut = () => {
-//   return (
-//     <Link className="sign-out" to={"/rooms"}>Sair</Link>
-//   );
-// };

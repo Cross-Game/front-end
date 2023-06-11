@@ -23,15 +23,22 @@ jobs:
 
       - name: npm install, build, and test
         run: |
-          npm install
+          npm install -f
           npm run build --if-present
           npm run test --if-present
+          
+          # zip the build application
+      - name: Zip Release
+        uses: TheDoctor0/zip-release@0.7.1
+        with:
+          filename: release.zip
+          path: ./build/*
       
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: .
+          path: release.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,4 +60,4 @@ jobs:
           app-name: 'cross-gameprod'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CC39889E8F3A45128E802E3AD4E97BFC }}
-          package: .
+          package: release.zip

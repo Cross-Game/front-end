@@ -5,6 +5,7 @@ import { TOKEN, USERID, USERNAMESESSION, currentURL } from '../../data/constants
 import imgTest from "../../assets/index-page/testeImg.png";
 
 import axios from 'axios';
+import Tag from '../Tag';
 
 function CardRoom(props) {
 
@@ -35,9 +36,7 @@ function CardRoom(props) {
                     <div className="roomUniqueInformationRoomFilters">
                         {
                             props.gameName ?
-                                <div className="roomUniqueGame">
-                                    {props.gameName}
-                                </div>
+                                <Tag text={props.gameName}></Tag>
                                 : null
                         }
 

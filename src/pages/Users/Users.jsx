@@ -376,6 +376,33 @@ function Users() {
         });
     };
 
+    const [searchText, setSearchText] = useState('');
+    const [searchTextFriends, setSearchTextFriends] = useState('');
+
+    const handleInputChange = (event) => {
+        const value = event.target.value.toLowerCase();
+        setSearchText(value);
+      
+        const usuariosFiltrados = usersGeneric.filter((user) =>
+          user.username.toLowerCase().includes(value) ||
+          user.nivel.toLowerCase().includes(value) ||
+          user.email.toLowerCase().includes(value) 
+        );
+      
+        setUsersGeneric(usuariosFiltrados);
+      };
+
+      const handleInputChangeFriends = (event) => {
+        const value = event.target.value.toLowerCase();
+        setSearchTextFriends(value);
+      
+        const usuariosFiltrados = friends.filter((user) =>
+          user.username.toLowerCase().includes(value) 
+        );
+      
+        setFriends(usuariosFiltrados);
+      };
+
 
     const idsGenerics = usersGeneric.map((element) => element.id);
     const idsFriendsAccepted = friends.filter((friend) => (friend.friendshipState === "CONFIRMED")).map((element) => (element.friendUserId));
@@ -391,7 +418,7 @@ function Users() {
             <div className='bodyRooms'>
                 <div className="topDiv">
                     <div className="inputDiv">
-                        <input type="text" className='inputRooms' placeholder='Buscar jogadores' />
+                        <input type="text" className='inputRooms' placeholder='Buscar jogadores' value={searchText} onChange={handleInputChange} />
                         <BsFilterLeft className='salas-icon-filtro' onClick={() => setShowModalFiltroJogadores(true)} />
                         <HiSearch className='salas-icon-search' />
                     </div>
@@ -400,7 +427,7 @@ function Users() {
                             <NothingContentRooms
                                 text1={"Nenhum jogador encontrado"}
                                 text2={"Convide pessoas e ajude nosso servidor a crescer ainda mais"}
-                                isInteractive={false}
+                                    isInteractive={false}
                             />
                             : usersGeneric.filter((user) => (user.id !== USERID && !usersFilterIdsAccepted.includes(user.id)))
                                 .map((element) => (
@@ -419,7 +446,7 @@ function Users() {
 
                 <div className="bottomDiv">
                     <div className="inputDiv">
-                        <input type="text" className='inputRooms' placeholder='Buscar amigos' />
+                        <input type="text" className='inputRooms' placeholder='Buscar amigos' value={searchTextFriends} onChange={handleInputChangeFriends}/>
                         {/* <BsFilterLeft className='salas-icon-filtro' onClick={() => setShowModalFiltroJogadores(true)} /> */}
                         <HiSearch className='salas-icon-search' />
                     </div>

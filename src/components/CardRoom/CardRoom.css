@@ -1,5 +1,5 @@
 .roomUniqueContainer {
-    min-width: 26vw;
+    min-width: 30vw;
     height: 75%;
     background-color: #000000;
     border-radius: 20px;
@@ -42,7 +42,7 @@
     width: 100%;
     height: 23%;
     display: flex;
-    gap: 3%;
+    gap: 5px;
     align-items: center;
     font-size: 0.8rem;
     overflow: hidden;
@@ -61,9 +61,11 @@
     border-radius: 20px;
     background-color: rgba(0, 255, 51, 0.1);
     font-size: 0.6rem;
+    white-space: nowrap;
 }
 
 .divGamersContent {
+    margin-top: 10px;
     width: 80%;
     height: 30%;
     display: flex;
@@ -121,12 +123,12 @@
 }
 
 .descriptionRoomContainer p {
-    font-size: 0.8rem;
+    font-size: 0.6rem;
     color: #7A7A7A;
     width: 100%;
     max-width: 100%;
     max-width: 200px;
-    margin-top: 2%;
+    margin-top: 15px;
 }
 
 .buttonRoomDivContainer {
@@ -145,14 +147,14 @@
     width: 100%;
     height: 60%;
     border-radius: 40px;
-    background-color: #00FF33;
+    background-color: #0b5a02;
     font-size: 0.8rem;
     text-decoration: none;
-    color: #000000;
+    color: #fff;
     transition: 300ms;
 }
 
 .buttonEnterRoom:hover {
-    background-color: #1ece3f;
-
+    background-color: #19FF00;
+    color: #000;
 }

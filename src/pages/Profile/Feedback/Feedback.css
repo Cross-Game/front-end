@@ -11,6 +11,9 @@
     flex-wrap: wrap;
     font-size: x-small
 }
+.ProfileFeedbackContainer::-webkit-scrollbar{
+  display: none;
+}
 
 .ProfileFeedbackCard {
     width: 450px;

@@ -68,7 +68,7 @@ function ProfileJogo(props) {
     const file = event.target.files[0];
     try {
 
-      const response = await axios.patch(`http://localhost:8080/users/${USERID}/picture`, file, {
+      const response = await axios.patch(`${currentURL}/users/${USERID}/picture`, file, {
         headers: {
           'Content-Type': 'image/jpeg',
           Authorization: 'Bearer ' + sessionStorage.getItem("ACESS_TOKEN")

@@ -133,7 +133,6 @@ function ProfileJogo() {
                 sessionStorage.setItem("LISTA_PROFILE", JSON.stringify(updatedList));
                 console.log(response.data);
                 setShowModalAdicionarPerfilJogo(false)
-                alert("Cadastro Realizado !")
             })
             .catch((error) => {
                 console.error(error);
@@ -162,7 +161,7 @@ function ProfileJogo() {
                 </div>
                 <div className="ProfileJogoCardContainer">
                     <div className="card">
-                        <div className="header">Detalhes do Profile</div>
+                        <div className="header">Detalhes do Profile Riot Games</div>
                         <div className="body">
                             <div className="skill">
                                 <div className="skill-name">NickName</div>

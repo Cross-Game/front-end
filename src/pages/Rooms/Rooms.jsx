@@ -10,13 +10,11 @@ import { BsArrowLeftShort, BsArrowRightShort, BsFillCalendarWeekFill, BsFilterLe
 import Tag from '../../components/Tag';
 import RangeBar from '../../components/RangeBar';
 import { HiMinusSm } from 'react-icons/hi';
-// import { useHistory } from 'react-router-dom';
-// import { use } from 'react-router-dom';
 import { jogos as listaJogos } from "../../utils/jogos";
 import moment from 'moment';
 import { TOKEN, USERID } from '../../data/constants';
 import Button from '../../components/Button';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Toast from '../../components/Toast';
 
 import { getJogadorImagem } from '../../utils/getJogadorImagem'
@@ -202,7 +200,7 @@ function Rooms() {
                     description: descricaoSalaCriar.toString(),
                     isPrivate: false,
                     tokenAccess: "",
-                    idUserAdmin: parseInt(sessionStorage.getItem("ID"),10),
+                    idUserAdmin: parseInt(sessionStorage.getItem("ID"), 10),
                     usersInRoom: [], // TODO se não passa da erro
                     usersHistoryId: [], // TODO se não passa da erro
                 },
@@ -217,9 +215,11 @@ function Rooms() {
 
             if (response.status === 200) {
                 mudarToast("sucesso", "Sala criada!");
+                window.location.href = `/rooms/${response.data.id}`
             }
             else if (response.status === 201) {
                 mudarToast("sucesso", "Sala criada!");
+                window.location.href = `/rooms/${response.data.id}`
             }
             else {
                 mudarToast("erro", "Erro ao criar sala");

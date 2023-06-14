@@ -647,7 +647,7 @@ export const User = (props) => {
                             props.friendStatus == "accepted" ?
                                 <img className='imgForFriend' onClick={sendFriendShip} src={iconHeart} alt="" />
                                 :
-                                <img className='imgForFriend' onClick={sendFriendShip} src={iconHeartDisabled} alt="" />
+                                <img className='imgForFriend' style={{ cursor: 'pointer' }} onClick={sendFriendShip} src={iconHeartDisabled} alt="" />
                     }
                     {props.friendshipState === "CONFIRMED" &&
                         <button

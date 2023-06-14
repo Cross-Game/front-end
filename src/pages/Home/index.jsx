@@ -20,6 +20,7 @@ import medalDiamante from '../../assets/index-page/medalDiamante.svg'
 import medalMestre from '../../assets/index-page/medalMestre.svg'
 
 import axios from 'axios';
+import { Link, redirect } from 'react-router-dom';
 
 function Home() {
   const [noticies, setNoticies] = useState([]);
@@ -46,6 +47,10 @@ function Home() {
         setTeste(false)
       });
   }, []);
+
+  const handleLinkClick = (url) => {
+    window.open(url, '_blank');
+  };
 
 
   return (
@@ -189,7 +194,12 @@ function Home() {
             teste ?
               noticies.map((element, index) => (
                 
-                <div className="home-imgNoticies" data-src={element.urlToImage} />
+                <div className="home-imgNoticies" onClick={() => handleLinkClick(element.url)} data-src={element.urlToImage}>
+                 
+                  <div className='teste2'>{element.title}</div>
+                  
+                </div>
+                
             
               ))
               // setando imagem de erro quando der erro na api

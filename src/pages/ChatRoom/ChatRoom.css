@@ -156,7 +156,7 @@
   opacity: 0;
   height: 0;
   overflow: hidden;
-  /* height: 115px; */
+  height: 100px;
   position: absolute;
   border-radius: 0 20px 20px 0;
   background-color: rgba(54, 54, 54, 0.368);
@@ -168,7 +168,7 @@
 
 .portraitUserContainer:hover .portraitUserContainerEdit {
   opacity: 1;
-  height: auto;
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -177,10 +177,12 @@
 }
 
 .icon_feedback_optionsPortraitUsersDivs {
-  font-size: 20px;
+  font-size: 1.5rem;
+  transition: 300ms;
 }
+
 .icon_feedback_optionsPortraitUsersDivs:hover {
-  color: #fff;
+  color: white;
 }
 
 .optionsPortraitUsersDivs {

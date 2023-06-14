@@ -10,7 +10,7 @@ import { currentURL } from "../../data/constants";
 
 function Dashboard() {
     const [showModalNotification, setShowModalNotification] = useState(false);
-
+    const [salasRecentes, setSalasRecentes] = useState()
     const [dadosGrafico, setDadosGrafico] = useState([
         0,
         0,
@@ -58,6 +58,12 @@ function Dashboard() {
             .catch(error => {
                 console.error(error);
             });
+        axios.get(`${currentURL}/team-rooms`).then((response) => {
+            setSalasRecentes(response.data)
+            console.log(response.data)
+        }).catch((error) => {
+            console.error(error);
+        });
     }, []);
 
     const chartOptions = {
@@ -119,82 +125,34 @@ function Dashboard() {
                                 <div className="DashboardTableCollum">
                                     <div className="DashboardTableName">
                                         <p>Nome</p>
-                                        <p>Data</p>
+                                        <p>Jogo</p>
                                         <p>Membros</p>
                                     </div>
                                     <hr width="100%" color="#000" />
-                                    <div className="DashboardTableData">
-                                        <p>Cross Game</p>
-                                        <p>03/02/2023</p>
-                                        <p>06</p>
-                                    </div>
-                                    <hr width="100%" color="#000" />
-                                    <div className="DashboardTableData">
-                                        <p>Cross Game</p>
-                                        <p>03/02/2023</p>
-                                        <p>06</p>
-                                    </div>
-                                    <hr width="100%" color="#000" />
-                                    <div className="DashboardTableData">
-                                        <p>Cross Game</p>
-                                        <p>03/02/2023</p>
-                                        <p>06</p>
-                                    </div>
-                                    <hr width="100%" color="#000" />
-                                    <div className="DashboardTableData">
-                                        <p>Cross Game</p>
-                                        <p>03/02/2023</p>
-                                        <p>06</p>
-                                    </div>
-                                    <hr width="100%" color="#000" />
-                                    <div className="DashboardTableData">
-                                        <p>Cross Game</p>
-                                        <p>03/02/2023</p>
-                                        <p>06</p>
-                                    </div>
-                                    <hr width="100%" color="#000" />
-                                    <div className="DashboardTableData">
-                                        <p>Cross Game</p>
-                                        <p>03/02/2023</p>
-                                        <p>06</p>
-                                    </div>
-                                    <hr width="100%" color="#000" />
-                                    <div className="DashboardTableData">
-                                        <p>Cross Game</p>
-                                        <p>03/02/2023</p>
-                                        <p>06</p>
-                                    </div>
-                                    <hr width="100%" color="#000" />
-                                    <div className="DashboardTableData">
-                                        <p>Cross Game</p>
-                                        <p>03/02/2023</p>
-                                        <p>06</p>
-                                    </div>
-                                    <hr width="100%" color="#000" />
-                                    <div className="DashboardTableData">
-                                        <p>Cross Game</p>
-                                        <p>03/02/2023</p>
-                                        <p>06</p>
-                                    </div>
-                                    <hr width="100%" color="#000" />
-                                    <div className="DashboardTableData">
-                                        <p>Cross Game</p>
-                                        <p>03/02/2023</p>
-                                        <p>06</p>
-                                    </div>
-                                    <hr width="100%" color="#000" />
-                                    <div className="DashboardTableData">
-                                        <p>Cross Game</p>
-                                        <p>03/02/2023</p>
-                                        <p>06</p>
-                                    </div>
-                                    <hr width="100%" color="#000" />
-                                    <div className="DashboardTableData">
-                                        <p>Cross Game</p>
-                                        <p>03/02/2023</p>
-                                        <p>06</p>
-                                    </div>
-                                    <hr width="100%" color="#000" />
+                                    {salasRecentes && salasRecentes.map((salas, index) => (
+                                        <div className="DashboardTableCollum" key={index}>
+                                            <div className="DashboardTableData">
+                                                <p>{salas.name}</p>
+                                                <p>{salas.gameName}</p>
+                                                <p>{salas.capacity}</p>
+                                            </div>
+                                            <hr width="100%" color="#000" />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="DashboardTableArquivo ">
+                                <div class="uiverse">
+                                    <span class="tooltip">Baixe um exemplo de arquivo de Upload</span>
+                                    Exemplo de Arquivo
+                                </div>
+                                <div class="uiverse">
+                                    <span class="tooltip">Faça upload do arquivo igual ao de exemplo</span>
+                                    Upload Arquivo
+                                </div>
+                                <div class="uiverse">
+                                    <span class="tooltip">Faça download das salas recentes</span>
+                                    Download Arquivo
                                 </div>
                             </div>
                         </div>

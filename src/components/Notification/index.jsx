@@ -168,7 +168,7 @@ function Notification(props) {
                   />
                 )}
 
-                {notification.type === 'GROUP' && (
+                {notification.type === 'GROUP_INVITE' && (
                   <CardNotification
                     key={notification.id}
                     title={notification.description}

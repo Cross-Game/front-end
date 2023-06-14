@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import "./style.css"
 import { NavLink } from "react-router-dom";
 import { FaUser, FaChartLine, FaUserPlus, FaUsers, FaDoorClosed, FaChevronLeft } from "react-icons/fa";
+import {URLSITE} from "../../data/constants"
 
 function Sidebar() {
 
     useEffect(() => {
         if (sessionStorage.getItem("ACESS_TOKEN") === null) {
-            window.location.href = "http://localhost:3000/login";
+            window.location.href = `${URLSITE}/login`;
         }
     }, []);
 

@@ -41,7 +41,7 @@ function ProfileJogo(props) {
       },
       responseType: 'arraybuffer'
     };
-    axios.get(`http://localhost:8080/users/${USERID}/picture`,
+    axios.get(`${currentURL}/users/${USERID}/picture`,
       config
     ).then((response) => {
       const base64Image = btoa(
@@ -68,7 +68,7 @@ function ProfileJogo(props) {
     const file = event.target.files[0];
     try {
 
-      const response = await axios.patch(`http://localhost:8080/users/${USERID}/picture`, file, {
+      const response = await axios.patch(`${currentURL}/users/${USERID}/picture`, file, {
         headers: {
           'Content-Type': 'image/jpeg',
           Authorization: 'Bearer ' + sessionStorage.getItem("ACESS_TOKEN")
@@ -105,8 +105,8 @@ function ProfileJogo(props) {
               })
               setQtdAmigos(contador)
             }
-            else {
-              mudarToast("erro", "Erro ao obter nível");
+            else if (response.status === 204) {
+              // mudarToast("erro", "Erro ao obter nível");
               setQtdAmigos(0)
             }
           })

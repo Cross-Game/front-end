@@ -9,13 +9,13 @@ import imagemLol from '../Cadastro/assets/leagueOfLegendsWallpapers.jpg'
 import imagemValorant from '../Cadastro/assets/Fade 1.jpg'
 import imagemTeamF from '../Cadastro/assets/teamFight.png'
 
-import { currentURL } from "../../data/constants"
+import { currentURL, URLSITE } from "../../data/constants"
 
 
 
 function Cadastro() {
 
-    
+
     const [mostrarSenha, setMostrarSenha] = useState(false);
     const [ativarProximo, setAtivarProximo] = useState({})
     const [ativarAnterio, setAtivarAnterior] = useState({ display: 'none' })
@@ -34,7 +34,7 @@ function Cadastro() {
     const [password, setPassword] = useState();
     const [selectedIcon, setSelectedIcon] = useState(<BsPersonCircle className="iconAvatar" />);
     const CLIENT_ID = "1102730864972009612";
-    const REDIRECT_URI = "http://localhost:3000/cadastro";
+    const REDIRECT_URI = `${URLSITE}/cadastro`;
     const SCOPE = "identify email";
     const RESPONSE_TYPE = "code";
     const currentUrl = new URL(window.location.href);
@@ -68,7 +68,7 @@ function Cadastro() {
     const handleCallback = async () => {
         const data = {
             code: queryParams.get("code"),
-            redirect_uri: "http://localhost:3000/cadastro",
+            redirect_uri: `${URLSITE}/cadastro`,
             grant_type: "authorization_code",
             client_id: CLIENT_ID,
             client_secret: "Xrn0whYArSqBySPDGZbVGJlZj0sAL903"
@@ -125,9 +125,10 @@ function Cadastro() {
         const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{12,}$/;
 
         if (!passwordRegex.test(password)) {
-            setShowModalSenha(true);
+            //setShowModalSenha(true);
             setvalidadoSenha(false);
-            setValidationMessageSenha('A senha deve ter pelo menos 12 caracteres, 1 numero, 1 letra maiúscula, 1 letra minúscula e 1 caractere especial.');
+            setValidationMessageSenha('A senha deve conter pelo menos 12 caracteres sendo: 1 numero, 1 letra maiúscula, 1 letra minúscula e 1 caractere especial.');
+            mudarToast('erro', "A senha deve conter pelo menos 12 caracteres sendo: 1 número, 1 letra maiúscula, 1 letra minúscula e 1 caractere especial.");
         } else {
             setShowModalSenha(false);
             setValidationMessageSenha('');
@@ -140,7 +141,8 @@ function Cadastro() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!emailRegex.test(email)) {
-            setShowModalEmail(true);
+            //setShowModalEmail(true);
+            mudarToast('erro', 'O email deve conter @ e "."')
             setValidadoEmail(false)
             setValidationMessageEmail('O email esta sem o @ ou "."');
         } else {
@@ -165,7 +167,7 @@ function Cadastro() {
     }
 
     function cadastrar() {
-
+        mudarToast('carregando', 'Cadastro em andamento');
         const userPayload = {
             username: username,
             email: email,
@@ -196,7 +198,7 @@ function Cadastro() {
                 }).then(res => res.json())
                     .then(data =>
                         console.log(currentURL),
-                        window.location.href = "http://localhost:3000/login"
+                        window.location.href = `${URLSITE}/login`
                     )
             )
             .catch(error =>
@@ -229,6 +231,16 @@ function Cadastro() {
             setTft(true)
         }
     }
+
+    function mudarToast(tipo, mensagem) {
+        setShowToast(true);
+        setToastType(tipo.toLowerCase());
+        setToastMessage(mensagem);
+    }
+
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastType, setToastType] = useState('erro');
 
 
 

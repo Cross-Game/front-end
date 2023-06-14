@@ -108,6 +108,9 @@
   color: #fff;
   font-size: small;
 }
+.ProfileJogoCardContainer::-webkit-scrollbar{
+  display: none;
+}
 
 .ProfileJogoCardUsername{
   display: flex;
@@ -156,11 +159,11 @@
 
   .card {
     width: 60%;
-    background-color: #fff;
+    background-color: #7373733f;
     box-shadow: 0 0px 10px rgba(0, 0, 0, 1);
     border-radius: 10px;
     overflow: hidden;
-    color: #000;
+    color: #fff;
   }
   
   .header {
@@ -200,20 +203,22 @@
   }
   .ProfileJogoCardRemoverButton{
     width: 200px;
-    height: 30px;
+    height: 40px;
     margin-top: 10px;
     font-family: 'krona One';
-    border-radius: 10px;
-    border: 0.5px solid #000;
+    border-radius: 20px;
+    border: 0.5px solid rgb(255, 255, 255);
     cursor: pointer;
+    color: #fff;
+    background-color: #7373733f;
   }
 
   .ProfileJogoCardRemoverButton:hover{
     width: 200px;
-    height: 30px;
+    height: 40px;
     margin-top: 10px;
     font-family: 'krona One';
-    border-radius: 10px;
+    border-radius: 20px;
     border: none;
     border: 1px solid rgb(255, 0, 0);
     color: rgb(255, 0, 0);

@@ -10,8 +10,6 @@ import { BsArrowLeftShort, BsArrowRightShort, BsFillCalendarWeekFill, BsFilterLe
 import Tag from '../../components/Tag';
 import RangeBar from '../../components/RangeBar';
 import { HiMinusSm, HiSearch } from 'react-icons/hi';
-// import { useHistory } from 'react-router-dom';
-// import { use } from 'react-router-dom';
 import { jogos as listaJogos } from "../../utils/jogos";
 import moment from 'moment';
 import { TOKEN, USERID } from '../../data/constants';
@@ -27,12 +25,14 @@ function Rooms() {
     const [isLoading, setIsLoading] = useState(true);
     const [jogos, setJogos] = useState(listaJogos);
     const [meusJogos, setMeusJogos] = useState([])
+    const [roomsFiltered, setRoomsFiltered] = useState([]);
+    const [filterAplicado, setfilteAplicado] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const res = await axios.get(`${currentURL}/team-rooms`);
-                setRooms(res.data); 
+                setRooms(res.data);
                 setRoomsFiltered(res.data)
                 setIsLoading(false);
                 console.log("Teste", res.data)
@@ -42,7 +42,7 @@ function Rooms() {
             }
         };
         fetchData();
-    }, []);
+    }, [setRoomsFiltered, setRooms]);
 
 
     // [MODAL] CRIAR SALA
@@ -134,7 +134,7 @@ function Rooms() {
     }
 
     // [Modal] Filtro de Salas
-    const [showModalFiltroSala, setShowModalFiltroSala] = useState(true);
+    const [showModalFiltroSala, setShowModalFiltroSala] = useState(false);
 
     function limparFiltroSalas() {
         setJogoSelecionado("");
@@ -154,35 +154,37 @@ function Rooms() {
         setToastMessage(mensagem);
     }
 
-    const [roomsFiltered,setRoomsFiltered] = useState([]);
-    
-    function filtrarSalas(){
+
+
+    function filtrarSalas() {
+
+        setfilteAplicado(true);
         var encontrei = 0;
         setRoomsFiltered(rooms);
         const salasFiltradas = rooms.filter((sala) => {
             if (!jogoSelecionado || sala.gameName === jogoSelecionado) {
-              if (!rankSelecionado || sala.rankGame === rankSelecionado) {
-                if (!minLevel || sala.levelGame >= minLevel) {
-                    console.log("Devolvendo true")
-                    encontrei++;
-                  return true; 
+                if (!rankSelecionado || sala.rankGame === rankSelecionado) {
+                    if (!minLevel || sala.levelGame >= minLevel) {
+                        console.log("Devolvendo true")
+                        encontrei++;
+                        return true;
+                    }
                 }
-              }
             }
             return false;
-          });
-          console.log(salasFiltradas)
-          console.log(salasFiltradas.lenght)
-          if (encontrei!= 0) {
+        });
+        console.log(salasFiltradas)
+        console.log(salasFiltradas.lenght)
+        if (encontrei != 0) {
             mudarToast("sucesso", "Filtro aplicado")
             setRoomsFiltered(salasFiltradas);
-          }
-          else {
-            mudarToast("erro", "Nenhuma sala encontrada")
-          }
-          setShowModalFiltroSala(false)
         }
-        
+        else {
+            mudarToast("erro", "Nenhuma sala encontrada")
+            setRoomsFiltered(salasFiltradas);
+        }
+        setShowModalFiltroSala(false)
+    }
 
     useEffect(() => {
         const obterMeusJogos = async () => {
@@ -207,7 +209,7 @@ function Rooms() {
                 }
                 else {
                     console.error("Erro ao obter meus jogos", response.status);
-                    // mudarToast("erro", "Erro ao cadastrar plataformas");
+
                 }
             } catch (error) {
                 console.error("Erro ao obter meus jogos:", error);
@@ -215,7 +217,7 @@ function Rooms() {
         };
 
         obterMeusJogos();
-    }, []); // Sem dependências
+    }, []);
 
     const criarSala = async () => {
         try {
@@ -233,8 +235,8 @@ function Rooms() {
                     isPrivate: false,
                     tokenAccess: "",
                     idUserAdmin: parseInt(sessionStorage.getItem("ID"), 10),
-                    usersInRoom: [], // TODO se não passa da erro
-                    usersHistoryId: [], // TODO se não passa da erro
+                    usersInRoom: [],
+                    usersHistoryId: [],
                 },
                 {
                     headers: {
@@ -275,12 +277,18 @@ function Rooms() {
                         <div className="divRoomsAllContainer">
                             {roomsFiltered === [] || roomsFiltered.length === 0 || null || undefined ?
 
-                                <NothingContentRooms
-                                    text1={"Não temos nenhuma sala pública"}
-                                    text2={"Seja o primeiro a criar"}
-                                    isInteractive={true}
-                                />
-
+                                setfilteAplicado ?
+                                    <NothingContentRooms
+                                        text1={"Não temos nenhuma sala com esse filtro"}
+                                        text2={"tente outro filtro"}
+                                        isInteractive={true}
+                                    />
+                                    :
+                                    <NothingContentRooms
+                                        text1={"Não temos nenhuma sala pública"}
+                                        text2={"Seja o primeiro a criar"}
+                                        isInteractive={true}
+                                    />
                                 : roomsFiltered.map((element) => (
                                     <React.Fragment key={element.id}>
                                         <CardRoom imgJogadores={null} nomeEquipe={element.name} faltantes={element.capacity} gameName={element.gameName} rankGame={element.rankGame} levelGame={element.levelGame} descricao={element.description} idAdmin={element.idUserAdmin} isClick={false} idGroup={element.id} />
@@ -290,25 +298,35 @@ function Rooms() {
                     </div>
                     <div className="bottomDiv">
                         <div className="inputDiv">
-                            <input type="text" className='inputRooms' placeholder='Buscar salas' />
+                            <input type="text" className='inputRooms' placeholder='Buscar minhas salas' />
                             {/* <BsFilterLeft className='salas-icon-filtro' onClick={() => setShowModalFiltroSala(true)} /> */}
                             <HiSearch className='salas-icon-search-baixo' />
                             <div className='divButtonCriarSala' onClick={() => setShowModalCriarSala(true)}>
                                 Criar sala
                             </div>
-                            <div className="divButtonBuscaRapida">
-                                Busca rápida
-                            </div>
                         </div>
                         <div className="divRoomsAllContainer">
-                            <CardRoom nomeEquipe={"Teste"} faltantes={10} gameName={"Valorant"} rankGame={10} isClick={false} levelGame={10} idGroup={5} />
-                            <CardRoom nomeEquipe={"Teste"} faltantes={10} gameName={"Valorant"} rankGame={10} isClick={false} levelGame={10} idGroup={5} />
-                            <CardRoom nomeEquipe={"Teste"} faltantes={10} gameName={"Valorant"} rankGame={10} isClick={false} levelGame={10} idGroup={5} />
-                            <CardRoom nomeEquipe={"Teste"} faltantes={10} gameName={"Valorant"} rankGame={10} isClick={false} levelGame={10} idGroup={5} />
-                            <CardRoom nomeEquipe={"Teste"} faltantes={10} gameName={"Valorant"} rankGame={10} isClick={false} levelGame={10} idGroup={5} />
-                            <CardRoom nomeEquipe={"Teste"} faltantes={10} gameName={"Valorant"} rankGame={10} isClick={false} levelGame={10} idGroup={5} />
-                            <CardRoom nomeEquipe={"Teste"} faltantes={10} gameName={"Valorant"} rankGame={10} isClick={false} levelGame={10} idGroup={5} />
-                            <CardRoom nomeEquipe={"Teste"} faltantes={10} gameName={"Valorant"} rankGame={10} isClick={false} levelGame={10} idGroup={5} />
+                            {rooms === [] || rooms.length === 0 || null || undefined ?
+
+                                setfilteAplicado ?
+                                    <NothingContentRooms
+                                        text1={"Não temos nenhuma sala com esse filtro"}
+                                        text2={"tente outro filtro"}
+                                        isInteractive={true}
+                                    />
+                                    :
+                                    <NothingContentRooms
+                                        text1={"Não temos nenhuma sala pública"}
+                                        text2={"Seja o primeiro a criar"}
+                                        isInteractive={true}
+                                    />
+                                : rooms.filter((element) => element.idUserAdmin === USERID).map((element) => (
+                                    <React.Fragment key={element.id}>
+                                        <CardRoom imgJogadores={null} nomeEquipe={element.name} faltantes={element.capacity} gameName={element.gameName} rankGame={element.rankGame} levelGame={element.levelGame} descricao={element.description} idAdmin={element.idUserAdmin} isClick={false} idGroup={element.id} />
+                                    </React.Fragment>
+                                ))}
+
+                            {/* <CardRoom nomeEquipe={"Teste"} faltantes={10} gameName={"Valorant"} rankGame={10} isClick={false} levelGame={10} idGroup={5} /> */}
                         </div>
                     </div>
                 </div>

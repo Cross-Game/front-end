@@ -105,7 +105,6 @@ function Users() {
             setUsersGeneric(jogadoresFiltrados);
             setShowModalFiltroJogadores(false);
 
-            console.log("obtendo usuario conforme parametros");
             axios
                 .get(
                     `${currentURL}/users-filter?preference=${meusInteresses[0]}&gameName=${jogoSelecionado.toUpperCase()}&gameFunction=${funcaoSelecionada.toUpperCase()}`,
@@ -119,8 +118,6 @@ function Users() {
                 )
                 .then((response) => {
                     if (response.status === 200) {
-                        console.log("Usuarios com filtro selecionado");
-                        console.log(response);
                         if (response.data.fila.length !== 0) {
                             const jogadoresFilaUsernames = response.data.fila.map((jogador) => jogador.username);
 
@@ -213,7 +210,6 @@ function Users() {
                     });
                     const usuariosComFeedbacks = await Promise.all(usuarios);
                     const shuffledUsuarios = shuffleArray(usuariosComFeedbacks);
-                    console.log(usuariosComFeedbacks)
                     setUsersGeneric(shuffledUsuarios);
                 }
             } catch (error) {
@@ -222,7 +218,6 @@ function Users() {
             }
         };
         obterUsuarios();
-        console.log("users", usersGeneric);
     }, []);
 
 
@@ -235,8 +230,23 @@ function Users() {
                     }
                 });
                 if (response.status === 200) {
-                    setFriends(response.data);
-                    // removeFriendsFromUsers();
+                    console.log("Amigos",response)
+                    const usuarios = response.data.map(async (usuario) => {
+                        const mediaFeedbacks = await obterMediaFeedback(usuario.friendUserId);
+                        const nivel = await obterQuantidadeAmigos(usuario.friendUserId);
+                        const imagem = await obterImagemUsuario(usuario.friendUserId);
+                        return {
+                            ...usuario,
+                            mediaComportamento: mediaFeedbacks.mediaComportamento,
+                            mediaHabilidade: mediaFeedbacks.mediaHabilidade,
+                            nivel: nivel,
+                            imagem: imagem,
+                        };
+                    });
+                    const usuariosComFeedbacks = await Promise.all(usuarios);
+                    const shuffledUsuarios = shuffleArray(usuariosComFeedbacks);
+            
+                    setFriends(shuffledUsuarios);
                 }
             } catch (error) {
                 console.error('Erro ao buscar amigos:', error);
@@ -353,7 +363,6 @@ function Users() {
                 return imageUrl;
             }
             else {
-                console.log("entrei aqui")
                 return imgUserProfile;
             }
         } catch (error) {
@@ -383,8 +392,6 @@ function Users() {
 
     const usersFilterIdsAccepted = idsGenerics.filter(numero => idsFriendsAccepted.includes(numero));
 
-    console.log("testes", usersFilterIdsAccepted);
-
     return (
         <div className='containerRooms'>
             <Sidebar />
@@ -406,11 +413,24 @@ function Users() {
                                 .map((element) => (
                                     idsFriendsPending.includes(element.id) ?
                                         <React.Fragment key={element.id}>
-                                            <User id={element.id} username={element.username} friendStatus={"pending"} mediaComportamento={element.mediaComportamento} mediaHabilidade={element.mediaHabilidade} nivel={element.nivel} imagem={element.imagem} />
+                                            <User id={element.id} 
+                                            username={element.username} 
+                                            friendStatus={"pending"} 
+                                            mediaComportamento={element.mediaComportamento} 
+                                            mediaHabilidade={element.mediaHabilidade} 
+                                            nivel={element.nivel} 
+                                            imagem={element.imagem} />
                                         </React.Fragment>
                                         :
                                         <React.Fragment key={element.id}>
-                                            <User id={element.id} username={element.username} friendStatus={"teste"} mediaComportamento={element.mediaComportamento} mediaHabilidade={element.mediaHabilidade} nivel={element.nivel} imagem={element.imagem} />
+                                            <User 
+                                            id={element.id} 
+                                            username={element.username}
+                                            friendStatus={"teste"} 
+                                            mediaComportamento={element.mediaComportamento} 
+                                            mediaHabilidade={element.mediaHabilidade} 
+                                            nivel={element.nivel} 
+                                            imagem={element.imagem} />
                                         </React.Fragment>
                                 ))
                         }
@@ -542,21 +562,18 @@ export const User = (props) => {
 
     const sendNotifyToUserForFriendship = () => {
 
-        fetch(`${currentURL}/notifies/${Number(props.id)}?type=FRIEND_REQUEST&message=Convite para Amigo&description=${USERNAMESESSION}`, {
+        fetch(`${currentURL}/notifies/${Number(props.id)}?type=FRIEND_REQUEST&message=Convite para Amigo&description=${USERNAMESESSION}&state=AWAITING`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${TOKEN}`
             }
         })
-            .then(response => console.log(response.json()))
-            .then(data => console.log("Notificação enviada:", data))
+            .then(response => console.log(response))
             .catch(error => console.log(error))
     }
 
     const sendFriendShip = () => {
-        console.log("Eu:" + USERID + " Amigo: " + props.username)
-
         const friendRequestPayload = {
             username: props.username
         };
@@ -570,18 +587,14 @@ export const User = (props) => {
             body: JSON.stringify(friendRequestPayload),
         })
             .then(response => {
-                if (response.ok) {
-                    // após a requisição de amizade fazemos uma notificação 
+                if (response.ok) { 
                     mudarToast("Sucesso", "Convite enviado")
-                    //console.log("// A requisição de amizade foi bem-sucedida")
                     sendNotifyToUserForFriendship()
                 } else if (response.status === 409) {
-                    mudarToast("Erro", "Você já enviou um convite para esse usuário")
-                    //console.log("você já fez uma requisição para esse usuário")
+                    mudarToast("Erro", "Você já enviou ou recebeu um convite do esse usuário")
 
                 } else {
                     mudarToast("Erro", "Falha ao enviar o convite")
-                    //console.log("Falha ao enviar a requisição de amizade.");
                 }
             })
             .catch(error => (console.log(error)))

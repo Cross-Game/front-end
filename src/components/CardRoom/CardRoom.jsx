@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./CardRoom.css"
 import { Link, redirect, useNavigate } from 'react-router-dom';
 import { TOKEN, USERID, USERNAMESESSION, currentURL } from '../../data/constants'
 import imgTest from "../../assets/index-page/testeImg.png";
 
 import axios from 'axios';
+
+
 
 function CardRoom(props) {
 
@@ -21,6 +23,72 @@ function CardRoom(props) {
             });
         }
     };
+
+
+
+    const obterImagemUsuario = async (jogadorId) => {
+        try {
+            const response = await axios.get(`${currentURL}/users/${jogadorId}/picture`, {
+                headers: {
+                    Authorization: `Bearer ${TOKEN}`,
+                },
+                responseType: 'blob',
+            });
+            console.log(response)
+            if (response.data.size > 0) {
+                const blobData = response.data;
+                const imageUrl = await convertBlobToBase64(blobData);
+                return imageUrl;
+            }
+            else {
+                return imgTest;
+            }
+        } catch (error) {
+            console.log(error);
+            return imgTest;
+        }
+    };
+
+    const convertBlobToBase64 = (blob) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                resolve(reader.result);
+            };
+
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
+    };
+
+    const [userImage, setUserImage] = useState([]);
+
+    useEffect(() => {
+        const usersData = async () => {
+            try {
+
+                const response = await axios.get(`${currentURL}/team-rooms/${props.idGroup}`);
+                console.log(response)
+                if (response.status === 200) {
+                    const usuarios = response.data.user.map(async (usuario) => {
+                        const imagem = await obterImagemUsuario(usuario.id);
+                        return {
+                            ...usuario,
+                            id: usuario.id,
+                            imgUser: imagem,
+                        };
+                    });
+                    const usuariosTeste = await Promise.all(usuarios);
+                    setUserImage(usuariosTeste)
+                    console.log("buscar imagens dos usuarios", response)
+                }
+            } catch (error) {
+                console.error('Erro ao buscar imagens usuários:', error);
+            }
+        };
+        usersData();
+    }, []);
 
     return (
         <>
@@ -59,9 +127,14 @@ function CardRoom(props) {
 
                     {/* decidiremos se vamos recuperar as imagens dos jogadores */}
                     <div className="divGamersContent">
-                        <img src={imgTest} className='divGamersContentImgs' alt="" />
-                        <img src={imgTest} className='divGamersContentImgs' alt="" />
-                        <img src={imgTest} className='divGamersContentImgs' alt="" />
+                        {userImage.map((element, index) => (
+                            <React.Fragment key={element.id}>
+                                <img style={{
+                                    zIndex: index + 1,
+                                    left: index * 30
+                                }} src={element.imgUser} className='divGamersContentImgs' alt="" />
+                            </React.Fragment>
+                        ))}
                     </div>
                     {/*  */}
 
@@ -70,9 +143,6 @@ function CardRoom(props) {
                             <p>{props.descricao}</p>
                         </div>
                         <div className="buttonRoomDivContainer">
-                            {/* <Link className="buttonEnterRoom" to={`${1}`}> */}
-                            {/* <IsClickedRoom idGroup={props.idGroup} />
-                             */}
                             <div onClick={handleEnterRoom} className="buttonEnterRoom">
                                 Entrar
                             </div>

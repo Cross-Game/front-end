@@ -150,7 +150,7 @@ export const ChatRoom = () => {
         );
         if (response.status === 200) {
           console.log(response);
-          var amigos = response.data.filter((amigo) => amigo.friendshipState === "CONFIRMED"); // TODO Mudar para CONFIRMED
+          var amigos = response.data.filter((amigo) => amigo.friendshipState === "CONFIRMED");
           setMeusAmigos(amigos);
           console.log("Amigos de vdd: ")
           console.log(amigos)
@@ -371,9 +371,9 @@ export const PortraitUsers = (props) => {
     });
   }
 
-  function selecionarUsuarioFeedback(nome, id, img){
-    setShowModalFeedback(true); 
-    setJogadorSelecionado({nome: nome, id: id, img: img});
+  function selecionarUsuarioFeedback(nome, id, img) {
+    setShowModalFeedback(true);
+    setJogadorSelecionado({ nome: nome, id: id, img: img });
   }
 
 
@@ -387,30 +387,30 @@ export const PortraitUsers = (props) => {
           {props.nomeUser == null || String.toString(props.nomeUser).trim === "" ? null : props.nomeUser}
         </div>
 
-        <div className="portraitUserContainerEdit">
-          {/* Expulsar da sala */}
 
-            <div onClick={retirandoUsuarioDaSala} className="optionsPortraitUsersDivs">
-              {/* <RiCloseLine /> */}
-              <img src={iconClose} alt="" />
+        {
+          id !== props.idUserRoom ?
+            <div className="portraitUserContainerEdit">
+
+              {
+                id === props.idAdmin &&
+                <div onClick={retirandoUsuarioDaSala} className="optionsPortraitUsersDivs">
+                  <img src={iconClose} alt="" />
+                </div>
+              }
+
+              {
+                id !== props.idUserRoom ? (
+                  <div className="optionsPortraitUsersDivs" onClick={() => selecionarUsuarioFeedback(props.nomeUser, props.idUserRoom, props.imagem)}>
+                    <span className="icon_feedback_optionsPortraitUsersDivs"><MdFeedback /></span>
+                  </div>
+                ) : null
+              }
             </div>
-
-
-          {/* Chamar chat individual */}
-          { id != id ? (
-          <div className="optionsPortraitUsersDivs">
-            <img src={iconChatNormal} alt="" />
-          </div>
-          ) : null }
-
-          {/* Enviar feedback */}
-          { id != id ? (
-          <div className="optionsPortraitUsersDivs" onClick={()=> selecionarUsuarioFeedback(props.nomeUser, props.idUserRoom, props.imagem)}>
-          <span className="icon_feedback_optionsPortraitUsersDivs"><MdFeedback /></span>
-          </div>
-        ) : null }
-        </div>
+            : null
+        }
       </div>
+
 
       {showModalFeedback && (
         <Modal title='Feedback' icon={<MdFeedback />} clearAll={true} temFooter='true' ativarBotao='true' textButton="Enviar avaliação" iconButton={<BsArrowRightShort />} onClose={() => setShowModalFeedback(false)} onClear={() => limparModalFeedback()} onClickButton={enviarFeedback}>
@@ -512,12 +512,8 @@ export const ChatBox = (props) => {
         return imageUrl;
       }
       else {
-        console.log("entrei aqui")
-        // return imgUserProfile;
       }
     } catch (error) {
-      console.log(error);
-      // return imgUserProfile;
     }
   };
 
@@ -568,7 +564,7 @@ export const ChatBox = (props) => {
     await addDoc(messagesRef, {
       text: formValue,
       uid,
-      photoURL: testeImagem,
+      photoURL: testeImagem === undefined ? imgTest : testeImagem,
       idGroup,
       createdAt: serverTimestamp()
     });

@@ -68,12 +68,12 @@
     height: 30%;
     display: flex;
     position: relative;
-    ;
+    overflow: hidden;
 }
 
 .divGamersContentImgs {
     /* width: 30%; */
-    max-width: 40%;
+    max-width: 20%;
     height: 100%;
     position: absolute;
     border-radius: 30px;

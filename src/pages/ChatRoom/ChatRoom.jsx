@@ -150,7 +150,7 @@ export const ChatRoom = () => {
         );
         if (response.status === 200) {
           console.log(response);
-          var amigos = response.data.filter((amigo) => amigo.friendshipState === "SENDED"); // TODO Mudar para CONFIRMED
+          var amigos = response.data.filter((amigo) => amigo.friendshipState === "CONFIRMED"); // TODO Mudar para CONFIRMED
           setMeusAmigos(amigos);
           console.log("Amigos de vdd: ")
           console.log(amigos)
@@ -191,12 +191,7 @@ export const ChatRoom = () => {
     try {
       console.log("Enviar convite sala");
       const response = await axios.post(
-        `${currentURL}/notifies/${idConvidado}`,
-        {
-          type: "GROUP",
-          message: "Te convidou para uma sala de ", // TODO Colocar o jogo;
-          description: "",
-        },
+        `${currentURL}/notifies/${idConvidado}?type=GROUP_INVITE&message=Te convidou para uma sala de ${gameName}&state=AWAITING&description=${sessionStorage.getItem("NICKNAME")}`,
         {
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -206,8 +201,7 @@ export const ChatRoom = () => {
         }
       );
 
-      if (response.status === 200) {
-        console.log(response);
+      if (response.status === 201) {
         mudarToast("sucesso", "Convite enviado!");
       } else {
         mudarToast("erro", "Erro ao enviar convite.");
@@ -336,6 +330,7 @@ export const PortraitUsers = (props) => {
 
   function enviarFeedback() {
     console.log("Chamei enviar feedback")
+    console.log(jogadorSelecionado)
     axios.post(`${currentURL}/feedbacks/${jogadorSelecionado.id}`,
       {
         userGivenFeedback: sessionStorage.getItem("NICKNAME"),
@@ -376,6 +371,11 @@ export const PortraitUsers = (props) => {
     });
   }
 
+  function selecionarUsuarioFeedback(nome, id, img){
+    setShowModalFeedback(true); 
+    setJogadorSelecionado({nome: nome, id: id, img: img});
+  }
+
 
   return (
     <>
@@ -388,18 +388,27 @@ export const PortraitUsers = (props) => {
         </div>
 
         <div className="portraitUserContainerEdit">
-          {id === props.idAdmin ?
+          {/* Expulsar da sala */}
+
             <div onClick={retirandoUsuarioDaSala} className="optionsPortraitUsersDivs">
               {/* <RiCloseLine /> */}
               <img src={iconClose} alt="" />
             </div>
-            : null}
+
+
+          {/* Chamar chat individual */}
+          { id != id ? (
           <div className="optionsPortraitUsersDivs">
             <img src={iconChatNormal} alt="" />
           </div>
-          <div className="optionsPortraitUsersDivs" onClick={() => setShowModalFeedback(true)}>
-            <img src={iconChatAddIconUser} alt="" />
+          ) : null }
+
+          {/* Enviar feedback */}
+          { id != id ? (
+          <div className="optionsPortraitUsersDivs" onClick={()=> selecionarUsuarioFeedback(props.nomeUser, props.idUserRoom, props.imagem)}>
+          <span className="icon_feedback_optionsPortraitUsersDivs"><MdFeedback /></span>
           </div>
+        ) : null }
         </div>
       </div>
 
@@ -408,6 +417,7 @@ export const PortraitUsers = (props) => {
           <UserProfile
             nome={jogadorSelecionado.nome}
             hasUserId={jogadorSelecionado.id}
+            img={jogadorSelecionado.img}
           />
 
           <div className="salas-group-avaliacao">

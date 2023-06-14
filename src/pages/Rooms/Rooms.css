@@ -488,4 +488,12 @@
     align-items: center;
     gap: 20px;
   }
+
+  .salas-icon-search-baixo {
+    color: #737373;
+    font-size: 45px;
+    display: flex;
+    position: relative;
+    right: 49vw;
+  }
   

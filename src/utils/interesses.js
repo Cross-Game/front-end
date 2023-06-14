@@ -2,7 +2,7 @@ export const interesses = [
     {
       id: 1,
       nome: "Comidas",
-      categorias: ["Brasileira", "Cafes", "Chinesa", "Coreana", "Fast Food", "Indiana", "Italiana", "Japonesa", "Mexicana"]
+      categorias: ["BRASILEIRA", "CAFES", "CHINESA", "COREANA", "Fast Food", "Indiana", "Italiana", "Japonesa", "Mexicana"]
     },
     {
       id: 2,

@@ -14,6 +14,7 @@ import useFetch from "../../hooks/useFetch";
 import moment from 'moment';
 import axios from 'axios';
 import { USERID, TOKEN, currentURL } from '../../data/constants';
+import { useNavigate } from 'react-router-dom';
 
 
 function Notification(props) {
@@ -81,10 +82,15 @@ function Notification(props) {
     })
       .then(response => {
         console.log(response.data);
+        window.location.href = "/users"
       })
       .catch(error => {
         console.error(error);
       });
+  }
+
+  function mandarParaSala(nicknameFriend){
+    window.location.href = "/rooms"
   }
 
   function recusarAmizade(nicknameFriend) {
@@ -95,6 +101,7 @@ function Notification(props) {
     })
       .then(response => {
         console.log(response.data);
+        window.location.href = "/users"
       })
       .catch(error => {
         console.error(error);
@@ -164,8 +171,11 @@ function Notification(props) {
                     message={notification.message}
                     date={moment(notification.date).format('DD/MM/YYYY')}
                     time={moment(notification.date).format('HH:mm')}
-                    temFooter={false}
-                  />
+                    temFooter={true}
+                    >
+                    <Tag text="Aceitar" onClick={() => mandarParaSala(notification.description)} />
+                    <Tag text="Recusar" onClick={() => mandarParaSala(notification.description)} />
+                  </CardNotification>
                 )}
 
                 {notification.type === 'GROUP_INVITE' && (
@@ -176,8 +186,12 @@ function Notification(props) {
                     message={notification.message}
                     date={moment(notification.date).format('DD/MM/YYYY')}
                     time={moment(notification.date).format('HH:mm')}
-                    temFooter={false}
-                  />
+                    temFooter={true}
+                    >
+                    <Tag text="Aceitar" onClick={() => mandarParaSala(notification.description)} />
+                    <Tag text="Recusar" onClick={() => mandarParaSala(notification.description)} />
+                  </CardNotification>
+                  
                 )
                 }
               </React.Fragment>

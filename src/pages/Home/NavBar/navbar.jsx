@@ -1,10 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import iconLogo from "../../../assets/index-page/Union.png"
-import ImFacebook, { ImFacebook2 } from "react-icons/im"
-import facebook from "../../../assets/index-page/Facebook.svg"
-import discord from "../../../assets/index-page/Discord.svg"
-import instagram from "../../../assets/index-page/Instagram.svg"
-import youtube from "../../../assets/index-page/Youtube.svg"
 import { BiGroup } from "react-icons/bi"
 import "@fontsource/krona-one";
 import "./style.css"
@@ -13,7 +8,6 @@ import { BsDiscord } from "react-icons/bs";
 import { RiFacebookBoxFill, RiInstagramFill, RiYoutubeFill } from "react-icons/ri";
 
 function NavBar() {
-
     const navigate = useNavigate();
     return (
         <>
@@ -38,7 +32,7 @@ function NavBar() {
                     <div className="navbar-navBarDireitaBaixo">
                         <div className="navbar-baixoEsquerda">
                             <div><BiGroup className="navbar-iconeNavBar" /></div>
-                            <div> +<span>1000</span> Players</div>
+                            <div>+<span>200</span> Players</div>
                         </div>
                         <div className="navbar-baixoMeio">
                             <div className="navbar-linkPages">

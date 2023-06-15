@@ -1,5 +1,5 @@
-const AMBIENTE = "desenvolvimento"
-// const AMBIENTE = "producao"
+// const AMBIENTE = "desenvolvimento"
+const AMBIENTE = "producao"
 
 
 

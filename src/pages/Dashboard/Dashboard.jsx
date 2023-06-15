@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Dashboard.css";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { Chart } from "react-google-charts";
@@ -11,6 +11,7 @@ import { currentURL } from "../../data/constants";
 function Dashboard() {
     const [showModalNotification, setShowModalNotification] = useState(false);
     const [salasRecentes, setSalasRecentes] = useState()
+    const fileInputRef = useRef(null);
     const [dadosGrafico, setDadosGrafico] = useState([
         0,
         0,
@@ -101,6 +102,38 @@ function Dashboard() {
         ['D-0', dadosGrafico[7], '#fff'],
     ];
 
+    function linkArquivoLeouyt() {
+        window.location.href = "https://stefaninilatam-my.sharepoint.com/:x:/g/personal/lmsoares1_latam_stefanini_com/EXpTtcELfMpFiDPPl9m0cAIBJm1NxAictVMLHBTM06_gsQ?e=cgpHlb"
+    }
+
+    function enviarArquivo() {
+        const myHeaders = {
+          Authorization: `Bearer ${sessionStorage.getItem("ACESS_TOKEN")}`
+        };
+      
+        const fileInput = fileInputRef.current;
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0], '/C:/Users/55119/Downloads/exemplo-import.txt');
+        
+        axios.post(`${currentURL}/users/${sessionStorage.getItem("ID")}/upload-file`, formData, { headers: myHeaders })
+          .then(response => console.log(response))
+          .catch(error => console.log('error', error));
+    }
+
+    function handleButtonClick() {
+        const fileInput = fileInputRef.current;
+        fileInput.click();
+    }
+
+    
+    const exportFeedbacks = async () => {
+        try {
+            window.location.href = `${currentURL}/feedbacks/export-txt/${sessionStorage.getItem("ID")}`
+        } catch (error) {
+            console.log('error', error);
+        }
+    };
+    
 
     return (
         <>
@@ -118,7 +151,7 @@ function Dashboard() {
                                     Salas Recentes
                                 </p>
                                 <p className="DashboardTableTittleSegundo">
-                                    Em que eu participei
+                                    Entre em alguma no menu de salas
                                 </p>
                             </div>
                             <div className="DashboardTableItens">
@@ -142,16 +175,17 @@ function Dashboard() {
                                 </div>
                             </div>
                             <div className="DashboardTableArquivo ">
-                                <div class="uiverse">
-                                    <span class="tooltip">Baixe um exemplo de arquivo de Upload</span>
-                                    Exemplo de Arquivo
+                                <div class="uiverse" onClick={linkArquivoLeouyt}>
+                                    <span class="tooltip">Baixe instruções para o arquivo de Upload</span>
+                                    Arquivo de Layout
                                 </div>
-                                <div class="uiverse">
+                                <div class="uiverse" onClick={handleButtonClick}>
                                     <span class="tooltip">Faça upload do arquivo igual ao de exemplo</span>
                                     Upload Arquivo
                                 </div>
-                                <div class="uiverse">
-                                    <span class="tooltip">Faça download das salas recentes</span>
+                                <input type="file" id="fileInput" onChange={enviarArquivo} ref={fileInputRef} style={{ display: 'none' }}/>
+                                <div class="uiverse" onClick={exportFeedbacks}>
+                                    <span class="tooltip">Faça download dos seus Feedbacks</span>
                                     Download Arquivo
                                 </div>
                             </div>

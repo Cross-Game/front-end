@@ -114,6 +114,9 @@
   font-weight: 100;
   border-radius: 20px;
 }
+.ProfileFeedbackCardCenter::-webkit-scrollbar{
+  display: none;
+}
 
 .ProfileFeedbackCardBottom{
   z-index: 1;

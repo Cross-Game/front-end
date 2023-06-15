@@ -21,6 +21,7 @@ import medalMestre from '../../assets/index-page/medalMestre.svg'
 
 import axios from 'axios';
 import { Link, redirect } from 'react-router-dom';
+import { URLSITE } from '../../data/constants';
 
 function Home() {
   const [noticies, setNoticies] = useState([]);
@@ -187,27 +188,27 @@ function Home() {
         </div>
       </div>
       {/* noticies */}
-      <div className="home-noticiesContent">
+      {/* <div className="home-noticiesContent">
         <AwesomeSlider >
           {
 
             teste ?
               noticies.map((element, index) => (
-                
+
                 <div className="home-imgNoticies" onClick={() => handleLinkClick(element.url)} data-src={element.urlToImage}>
-                 
+
                   <div className='teste2'>{element.title}</div>
-                  
+
                 </div>
-                
-            
+
+
               ))
               // setando imagem de erro quando der erro na api
               : <div className="home-imgNoticies" data-src={medalDiamante} />
           }
         </AwesomeSlider>
 
-      </div>
+      </div> */}
 
 
       <div className="home-contactContent">

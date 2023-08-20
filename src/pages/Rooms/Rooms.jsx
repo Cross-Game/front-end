@@ -275,7 +275,7 @@ function Rooms() {
                             <HiSearch className='salas-icon-search' />
                         </div>
                         <div className="divRoomsAllContainer">
-                            {roomsFiltered === [] || roomsFiltered.length === 0 || null || undefined ?
+                            {roomsFiltered == [] || roomsFiltered.length === 0 || roomsFiltered == null || roomsFiltered === undefined ?
 
                                 setfilteAplicado ?
                                     <NothingContentRooms
@@ -306,7 +306,7 @@ function Rooms() {
                             </div>
                         </div>
                         <div className="divRoomsAllContainer">
-                            {rooms === [] || rooms.length === 0 || null || undefined ?
+                            {rooms == [] || rooms.length === 0 || rooms == null || rooms === undefined ?
 
                                 setfilteAplicado ?
                                     <NothingContentRooms
@@ -326,7 +326,7 @@ function Rooms() {
                                     </React.Fragment>
                                 ))}
 
-                            {/* <CardRoom nomeEquipe={"Teste"} faltantes={10} gameName={"Valorant"} rankGame={10} isClick={false} levelGame={10} idGroup={5} /> */}
+                            {/* <CardRoom nomeEquipe={"Teste"} faltantes={10} gameName={"Valorant"} rankGame={10} isClick={false} levelGame={10} idAdmin={1}  idGroup={1} /> */}
                         </div>
                     </div>
                 </div>

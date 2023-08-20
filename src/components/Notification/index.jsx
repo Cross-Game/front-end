@@ -22,6 +22,7 @@ function Notification(props) {
   const [notificacoes, setNotificacoes] = useState([]);
   const [filteredNotifications, setFilteredNotifications] = useState([])
 
+
   useEffect(() => {
     const obterMensagens = async () => {
       try {
@@ -59,6 +60,18 @@ function Notification(props) {
     }
   }
 
+  function fecharNotificacao(id) {
+    fetch(`${currentURL}/notifies/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${TOKEN}`
+      }
+    })
+      .then(response => console.log(response))
+      .catch(error => console.log(error))
+  }
+
   useEffect(() => {
     filtrarNotificacoes()
   }, [notificacoes, selectedOption])
@@ -74,7 +87,17 @@ function Notification(props) {
     // TODO: Marcar todas as notificações do filtro como lidas 
   }
 
-  function aceitarAmizade(nicknameFriend) {
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('erro');
+
+  function mudarToast(tipo, mensagem) {
+    setShowToast(true);
+    setToastType(tipo.toLowerCase());
+    setToastMessage(mensagem);
+  }
+
+  function aceitarAmizade(nicknameFriend, id) {
     axios.patch(`${currentURL}/friends/confirming-friend-request/${USERID}/${String(nicknameFriend)}`, {}, {
       headers: {
         Authorization: `Bearer ${TOKEN}`
@@ -82,29 +105,37 @@ function Notification(props) {
     })
       .then(response => {
         console.log(response.data);
+        fecharNotificacao(id)
+        mudarToast("Sucesso", "Amizade aceita")
         window.location.href = "/users"
       })
       .catch(error => {
+        mudarToast('Erro', 'Erro ao aceitar amizade.');
         console.error(error);
       });
   }
 
-  function mandarParaSala(nicknameFriend){
+  function mandarParaSala(nicknameFriend) {
     window.location.href = "/rooms"
   }
 
-  function recusarAmizade(nicknameFriend) {
-    axios.delete(`${currentURL}/friends/declining-friend-request/${USERID}/${nicknameFriend}`, {}, {
+
+
+  function recusarAmizade(nicknameFriend, id) {
+    axios.delete(`${currentURL}/friends/declining-friend-request/${USERID}/${String(nicknameFriend)}`, {
       headers: {
         Authorization: `Bearer ${TOKEN}`
       }
     })
       .then(response => {
         console.log(response.data);
+        fecharNotificacao(id)
+        mudarToast("Sucesso", "Amizade recusada")
         window.location.href = "/users"
       })
       .catch(error => {
         console.error(error);
+        mudarToast('Erro', 'Erro ao recusar amizade.');
       });
   }
 
@@ -145,57 +176,58 @@ function Notification(props) {
           {filteredNotifications.length === 0 ? (
             <></>
           ) : (
-            filteredNotifications.map((notification) => (
-              <React.Fragment key={notification.id}>
-                {notification.type === 'FRIEND_REQUEST' && (
-                  <CardNotification
-                    key={notification.id}
-                    title={notification.description}
-                    icon={<BsPersonHeart />}
-                    message={notification.message}
-                    date={moment(notification.date).format('DD/MM/YYYY')}
-                    time={moment(notification.date).format('HH:mm')}
-                    temFooter={true}
-                  >
-                    <Tag text="Aceitar" onClick={() => aceitarAmizade(notification.description)} />
-                    <Tag text="Recusar" onClick={() => recusarAmizade(notification.description)} />
-                  </CardNotification>
-                )
-                }
-
-                {notification.type === 'EVENT' && (
-                  <CardNotification
-                    key={notification.id}
-                    title={notification.description}
-                    icon={<HiClock />}
-                    message={notification.message}
-                    date={moment(notification.date).format('DD/MM/YYYY')}
-                    time={moment(notification.date).format('HH:mm')}
-                    temFooter={true}
+            filteredNotifications.filter((notification) => notification.state === "AWAITING")
+              .map((notification) => (
+                <React.Fragment key={notification.id}>
+                  {notification.type === 'FRIEND_REQUEST' && (
+                    <CardNotification
+                      key={notification.id}
+                      title={notification.description}
+                      icon={<BsPersonHeart />}
+                      message={notification.message}
+                      date={moment(notification.date).format('DD/MM/YYYY')}
+                      time={moment(notification.date).format('HH:mm')}
+                      temFooter={true}
                     >
-                    <Tag text="Aceitar" onClick={() => mandarParaSala(notification.description)} />
-                    <Tag text="Recusar" onClick={() => mandarParaSala(notification.description)} />
-                  </CardNotification>
-                )}
+                      <Tag text="Aceitar" onClick={() => aceitarAmizade(notification.description, notification.id)} />
+                      <Tag text="Recusar" onClick={() => recusarAmizade(notification.description, notification.id)} />
+                    </CardNotification>
+                  )
+                  }
 
-                {notification.type === 'GROUP_INVITE' && (
-                  <CardNotification
-                    key={notification.id}
-                    title={notification.description}
-                    icon={<MdGroups />}
-                    message={notification.message}
-                    date={moment(notification.date).format('DD/MM/YYYY')}
-                    time={moment(notification.date).format('HH:mm')}
-                    temFooter={true}
+                  {notification.type === 'EVENT' && (
+                    <CardNotification
+                      key={notification.id}
+                      title={notification.description}
+                      icon={<HiClock />}
+                      message={notification.message}
+                      date={moment(notification.date).format('DD/MM/YYYY')}
+                      time={moment(notification.date).format('HH:mm')}
+                      temFooter={true}
                     >
-                    <Tag text="Aceitar" onClick={() => mandarParaSala(notification.description)} />
-                    <Tag text="Recusar" onClick={() => mandarParaSala(notification.description)} />
-                  </CardNotification>
-                  
-                )
-                }
-              </React.Fragment>
-            ))
+                      <Tag text="Aceitar" onClick={() => mandarParaSala(notification.description)} />
+                      <Tag text="Recusar" onClick={() => mandarParaSala(notification.description)} />
+                    </CardNotification>
+                  )}
+
+                  {notification.type === 'GROUP_INVITE' && (
+                    <CardNotification
+                      key={notification.id}
+                      title={notification.description}
+                      icon={<MdGroups />}
+                      message={notification.message}
+                      date={moment(notification.date).format('DD/MM/YYYY')}
+                      time={moment(notification.date).format('HH:mm')}
+                      temFooter={true}
+                    >
+                      <Tag text="Aceitar" onClick={() => mandarParaSala(notification.description)} />
+                      <Tag text="Recusar" onClick={() => mandarParaSala(notification.description)} />
+                    </CardNotification>
+
+                  )
+                  }
+                </React.Fragment>
+              ))
           )}
         </div>
 

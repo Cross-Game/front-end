@@ -50,14 +50,14 @@ function ProfileJogo(props) {
           ''
         )
       );
-      
+
       sessionStorage.setItem("IMAGEM", `${base64Image}`)
-      if(sessionStorage.getItem("IMAGEM") !== '') {
+      if (sessionStorage.getItem("IMAGEM") !== '') {
         sessionStorage.setItem("IMAGEM", `data:image/jpeg;base64,${base64Image}`)
         setImageData(sessionStorage.getItem("IMAGEM"))
         setTemImg(true)
       }
-      
+
     }).catch((error) => {
       console.error('Erro ao obter a imagem do perfil:', error);
     });
@@ -194,7 +194,7 @@ function ProfileJogo(props) {
         <div className="profileJogoCore">
           <div className="profileJogoTop">
             <div className="profileJogoDataUser">
-              <img className="ImgPerfilUsuario" src={temImg ? imageData : imgUserProfile} width={'100px'}  alt="Imagem de Perfil" />
+              <img className="ImgPerfilUsuario" src={temImg ? imageData : imgUserProfile} width={'100px'} alt="Imagem de Perfil" />
               <div className="profileJogoEditProfileUser">
                 <div id="nameUsername">{sessionStorage.getItem("NICKNAME")}</div>
                 <div className="profileJogoIconEditProfile" onClick={() => setShowModalEditarPerfil(true)}><RiFileEditFill className="iconTiEdit" />Editar Perfil</div>

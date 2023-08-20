@@ -247,6 +247,7 @@ function Users() {
                     const shuffledUsuarios = shuffleArray(usuariosComFeedbacks);
             
                     setFriends(shuffledUsuarios);
+                    console.log("friends here", friends)
                 }
             } catch (error) {
                 console.error('Erro ao buscar amigos:', error);
@@ -403,7 +404,7 @@ function Users() {
                         <HiSearch className='salas-icon-search' />
                     </div>
                     <div className="divRoomsAllContainer">
-                        {usersGeneric === [] || usersGeneric.length === 0 || null || undefined ?
+                        {usersGeneric == [] || usersGeneric.length === 0 || usersGeneric == null || usersGeneric === undefined ?
                             <NothingContentRooms
                                 text1={"Nenhum jogador encontrado"}
                                 text2={"Convide pessoas e ajude nosso servidor a crescer ainda mais"}
@@ -444,7 +445,9 @@ function Users() {
                         <HiSearch className='salas-icon-search' />
                     </div>
                     <div className="divRoomsAllContainer">
-                        {friends === [] || friends.length === 0 || null || undefined ?
+                        
+                        {friends.length === 0 || friends === null || friends === undefined ?
+                        
                             <NothingContentRooms
                                 text1={"Nenhum amigo encontrado"}
                                 text2={"Adicione as pessoas para interagir e adicionar em grupos"}
@@ -466,6 +469,7 @@ function Users() {
                                                 nivel={element.nivel}
                                                 imagem={element.imagem}
                                             />
+                                        
                                         }
                                     </React.Fragment>
                                 ))}
@@ -654,10 +658,10 @@ export const User = (props) => {
                 </div>
                 <div className="divRightUser">
                     {
-                        props.friendStatus == "pending" ?
+                        props.friendStatus === "pending" ?
                             <img className='imgForFriend' onClick={sendFriendShip} src={iconPending} alt="" />
                             :
-                            props.friendStatus == "accepted" ?
+                            props.friendStatus === "accepted" ?
                                 <img className='imgForFriend' onClick={sendFriendShip} src={iconHeart} alt="" />
                                 :
                                 <img className='imgForFriend' style={{ cursor: 'pointer' }} onClick={sendFriendShip} src={iconHeartDisabled} alt="" />

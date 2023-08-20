@@ -2,23 +2,18 @@
 import React, { useState } from 'react';
 import "../../assets/global.css";
 import "../Notification/notification.css";
-import useFetch from '../../hooks/useFetch';
 
 function CardNotification(props) {
     const {icon, title, message, date, time, temFooter, children} = props;
 
     const [hover, setHover] = useState(false);
-
+    
     const handleMouseEnter = () => {
-      setHover(true);
-    };
-  
-    const handleMouseLeave = () => {
-      setHover(false);
+      setHover(!hover);
     };
 
     return (
-        <div className="notification-cardNotification"  onClick={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <div className="notification-cardNotification"  onClick={handleMouseEnter} >
             <div className="notification-content">
             {icon && <span className="notification-icon">{icon}</span>}
                 <div className="notification-group-body">

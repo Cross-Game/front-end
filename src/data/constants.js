@@ -10,7 +10,7 @@ let currentURL = ""
 let URLSITE = ""
 let USERNAMESESSION = sessionStorage.getItem("NICKNAME")
 
-AMBIENTE === "desenvolvimento" ? currentURL = "http://localhost:8080" : currentURL = "http://api-crossgame.sytes.net:8080/";
+AMBIENTE === "desenvolvimento" ? currentURL = "http://localhost:8080" : currentURL = "http://api-crossgame.sytes.net:8080";
 AMBIENTE === "desenvolvimento" ? URLSITE = "http://localhost:3000" : URLSITE = "http://crossgame.sytes.net:3000";
 
 export function updateConstants() {

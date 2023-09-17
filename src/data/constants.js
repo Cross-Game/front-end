@@ -10,8 +10,8 @@ let currentURL = ""
 let URLSITE = ""
 let USERNAMESESSION = sessionStorage.getItem("NICKNAME")
 
-AMBIENTE === "desenvolvimento" ? currentURL = "http://localhost:8080" : currentURL = "https://crossgame-api.azurewebsites.net";
-AMBIENTE === "desenvolvimento" ? URLSITE = "http://localhost:3000" : URLSITE = "https://cross-gameprod.azurewebsites.net";
+AMBIENTE === "desenvolvimento" ? currentURL = "http://localhost:8080" : currentURL = "http://backend-crossgame.sytes.net:8080/";
+AMBIENTE === "desenvolvimento" ? URLSITE = "http://localhost:3000" : URLSITE = "http://frontend-crossgame.sytes.net:3000/";
 
 export function updateConstants() {
   USERID = Number(sessionStorage.getItem("ID"));

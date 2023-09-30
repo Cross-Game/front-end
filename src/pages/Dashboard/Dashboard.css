@@ -141,6 +141,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    display: none;
 }
   .uiverse {
     position: relative;

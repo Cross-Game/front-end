@@ -18,11 +18,6 @@ function Cadastro() {
 
     const [mostrarSenha, setMostrarSenha] = useState(false);
     const [ativarProximo, setAtivarProximo] = useState({})
-    const [ativarAnterio, setAtivarAnterior] = useState({ display: 'none' })
-    const [bordaJogo, setBordaJogo] = useState({ border: '1px solid #fff' })
-    const [valorant, setValorant] = useState(false);
-    const [tft, setTft] = useState(false);
-    const [lol, setLol] = useState(false);
     const [showModaSenha, setShowModalSenha] = useState(false);
     const [showModalEmail, setShowModalEmail] = useState(false);
     const [validationMessageSenha, setValidationMessageSenha] = useState('');
@@ -46,8 +41,7 @@ function Cadastro() {
         setTimeout(() => {
 
             if (!(queryParams.get("code") == null)) {
-                setAtivarProximo({ display: 'none' });
-                setAtivarAnterior({ display: '' });
+              
                 handleCallback()
             }
         }, 1);
@@ -121,13 +115,14 @@ function Cadastro() {
     };
 
     const validatePassword = (password) => {
+        // Lógica para validar a senha
         const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{12,}$/;
 
         if (!passwordRegex.test(password)) {
-            setShowModalSenha(true);
+            //setShowModalSenha(true);
             setvalidadoSenha(false);
-            setValidationMessageSenha('Deve conter 12 caracteres: 1 numero, 1 letra maiúscula, 1 letra minúscula e 1 caractere especial.');
-            mudarToast('erro', "Deve conter 12 caracteres: 1 número, 1 letra maiúscula, 1 letra minúscula e 1 caractere especial.");
+            setValidationMessageSenha('A senha deve conter pelo menos 12 caracteres sendo: 1 numero, 1 letra maiúscula, 1 letra minúscula e 1 caractere especial.');
+            mudarToast('erro', "A senha deve conter pelo menos 12 caracteres sendo: 1 número, 1 letra maiúscula, 1 letra minúscula e 1 caractere especial.");
         } else {
             setShowModalSenha(false);
             setValidationMessageSenha('');
@@ -136,10 +131,11 @@ function Cadastro() {
     };
 
     const validateEmail = (email) => {
+        // Lógica para validar o email
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!emailRegex.test(email)) {
-            setShowModalEmail(true);
+            //setShowModalEmail(true);
             mudarToast('erro', 'O email deve conter @ e "."')
             setValidadoEmail(false)
             setValidationMessageEmail('O email esta sem o @ ou "."');
@@ -156,10 +152,6 @@ function Cadastro() {
     }
 
     function handleSubmit() {
-        if (validadoEmail && validadoSenha) {
-            setAtivarProximo({ display: 'none' });
-            setAtivarAnterior({ display: '' });
-        }
         handleCallback()
         console.log(queryParams.get("code"))
     }
@@ -205,30 +197,7 @@ function Cadastro() {
 
     }
 
-    function voltar() {
-        setAtivarProximo({ display: '' });
-        setAtivarAnterior({ display: 'none' });
-        setEmail('');
-        setUsername('');
-        setPassword('');
-    }
-
-    const selecionarJogo = (indice) => {
-        setBordaJogo({ border: '0.1px solid #fff' })
-        if (indice === 1) {
-            setValorant(true);
-            setLol(false)
-            setTft(false)
-        } else if (indice === 2) {
-            setValorant(false);
-            setLol(true)
-            setTft(false)
-        } else {
-            setValorant(false);
-            setLol(false)
-            setTft(true)
-        }
-    }
+   
 
     function mudarToast(tipo, mensagem) {
         setShowToast(true);
@@ -298,8 +267,8 @@ function Cadastro() {
                                 </div>
                             )}
                         </div>
-                        <div className="botaoCadastro" onClick={handleSubmit}>
-                            <div>Próximo</div>
+                        <div className="botaoCadastro" onClick={cadastrar}>
+                            <div>Cadastrar</div>
                             <BsArrowRightShort className="arrowProximo" />
                         </div>
                         <div className="subTitulo">ou com as seguintes plataformas</div>
@@ -315,9 +284,8 @@ function Cadastro() {
                                         setEmail(data.email);
                                         setUsername(data.name);
                                         setPassword(data.access_token);
-                                        setAtivarProximo({ display: 'none' });
-                                        setAtivarAnterior({ display: '' });
                                         console.log(data);
+                                        window.location.reload = `${URLSITE}/cadastro`
                                     }}
                                     onReject={(err) => {
                                         console.log(err)
@@ -327,26 +295,6 @@ function Cadastro() {
                                 </LoginSocialGoogle>
                             </div>
                         </div>
-                    </div>
-                </form>
-                <form className="cardCadastroTwo" style={ativarAnterio}>
-                    <div className="selecioneJogo">Selecione um jogo você irá jogar:</div>
-                    <div className="containerJogos">
-                        <div className="contornoJogo" style={valorant ? bordaJogo : { border: '1px solid #000' }} onClick={() => selecionarJogo(1)}>
-                            <img src={imagemValorant} className="imagemVal" alt="" />
-
-                        </div>
-                        <div className="contornoJogo" style={lol ? bordaJogo : { border: '1px solid #000' }} onClick={() => selecionarJogo(2)}>
-                            <img src={imagemLol} className="imagemLol" alt="" />
-
-                        </div>
-                        <div className="contornoJogo" style={tft ? bordaJogo : { border: '1px solid #000' }} onClick={() => selecionarJogo(3)}>
-                            <img src={imagemTeamF} className="imagemTf" alt="" />
-
-                        </div>
-                    </div>
-                    <div className="botoes">
-                        <div onClick={cadastrar} className="botaoCadastrar">Prosseguir</div>
                     </div>
                 </form>
             </div>

@@ -6,7 +6,7 @@ import axios from "axios"
 import { currentURL } from '../../data/constants';
 import Modal from '../../components/Modal';
 import { MdGroups } from 'react-icons/md';
-import { BsArrowLeftShort, BsArrowRightShort, BsFillCalendarWeekFill, BsFilterLeft, BsPlus } from 'react-icons/bs';
+import { BsArrowLeftShort, BsArrowRightShort, BsFillCalendarWeekFill, BsFilterLeft, BsImage, BsPlus } from 'react-icons/bs';
 import Tag from '../../components/Tag';
 import RangeBar from '../../components/RangeBar';
 import { HiMinusSm, HiSearch } from 'react-icons/hi';
@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import Toast from '../../components/Toast';
 
 import { getJogadorImagem } from '../../utils/getJogadorImagem'
+import { imageListClasses } from '@mui/material';
 
 function Rooms() {
     const navigate = useNavigate();
@@ -43,6 +44,9 @@ function Rooms() {
         };
         fetchData();
     }, [setRoomsFiltered, setRooms]);
+
+
+
 
 
     // [MODAL] CRIAR SALA
@@ -227,10 +231,10 @@ function Rooms() {
                 {
 
                     roomName: nomeSalaCriar.toString(),
-                    capacity: qtdJogadoresSelecionados,
+                    capacity: 0,
                     gameName: jogoSelecionado.toString(),
-                    rankGame: rankSelecionado.toString(),
-                    levelGame: minLevel,
+                    rankGame: null,
+                    levelGame: 0,
                     description: descricaoSalaCriar.toString(),
                     isPrivate: false,
                     tokenAccess: "",
@@ -263,6 +267,30 @@ function Rooms() {
         }
     };
 
+
+
+    const [gamesApi, setGamesApi] = useState([]);
+
+
+    useEffect(() => {
+        console.log("retrieve information games");
+        axios.get(
+            `${currentURL}/games-api/`
+            // FIXME ajuste para buscar mais de um jogo
+        ).then(response => {
+            if (response.status === 200) {
+                // mudarToast("sucesso", "Sala criada!");
+                console.log("Buscado jogos da api", response.data);
+                setGamesApi(response.data)
+            }
+        }).catch(error =>
+            mudarToast("erro", "ao buscar jogos")
+
+        )
+
+    }, [])
+
+
     return (
         <>
             <div className='containerRooms'>
@@ -277,7 +305,7 @@ function Rooms() {
                         <div className="divRoomsAllContainer">
                             {roomsFiltered == [] || roomsFiltered.length === 0 || roomsFiltered == null || roomsFiltered === undefined ?
 
-                                setfilteAplicado ?
+                                filterAplicado ?
                                     <NothingContentRooms
                                         text1={"Não temos nenhuma sala com esse filtro"}
                                         text2={"tente outro filtro"}
@@ -301,14 +329,18 @@ function Rooms() {
                             <input type="text" className='inputRooms' placeholder='Buscar minhas salas' />
                             {/* <BsFilterLeft className='salas-icon-filtro' onClick={() => setShowModalFiltroSala(true)} /> */}
                             <HiSearch className='salas-icon-search-baixo' />
-                            <div className='divButtonCriarSala' onClick={() => setShowModalCriarSala(true)}>
+
+                            <div className='divButtonCriarSala' onClick={() => {
+                                setShowModalCriarSala(true)
+                                // retrieveGames()
+                            }}>
                                 Criar sala
                             </div>
                         </div>
                         <div className="divRoomsAllContainer">
                             {rooms == [] || rooms.length === 0 || rooms == null || rooms === undefined ?
 
-                                setfilteAplicado ?
+                                filterAplicado ?
                                     <NothingContentRooms
                                         text1={"Não temos nenhuma sala com esse filtro"}
                                         text2={"tente outro filtro"}
@@ -335,15 +367,87 @@ function Rooms() {
 
             {showModalCriarSala && (
                 <Modal title="Criar uma sala" icon={<MdGroups />} clearAll={true} temFooter={true} ativarBotao={true} iconButton={<BsArrowRightShort />} textButton='Criar' onClose={() => setShowModalCriarSala(false)} onClear={limparModalCriarSala} onClickButton={criarSala}>
-                    {meusJogos.length <= 0 ? (
-                        <div className='salas-containerSemJogo'>
-                            <p>Para continuar é necessário ter cadastrado 1 jogo</p>
-                            <Button text={"Cadastrar jogo"} icon={<BsArrowRightShort />} onClick={() => navigate("/profile")} />
+                    <div className="container_filtro">
+                        <div className="filtro_jogos">
+                            <p className="titleFiltro">Escolha um jogo</p>
+                            <div className="jogos">
+                                {gamesApi.map((game) => (
+                                    <React.Fragment key={game.id}>
+                                        <div style={{ backgroundImage: `url(${game.imageGame.link})`, }} className='gameModalSelected'
+                                            onClick={() => {
+                                                setJogoSelecionado(game.name)
+                                                console.log(jogoSelecionado.toString())
+                                            }}>
+                                            <p>{game.name}</p>
+                                        </div>
+                                    </React.Fragment>
+                                ))}
+                            </div>
                         </div>
-                    ) : (
+                        
+                        <div className="filtro_descricao">
+                            <p className="titleFiltro">Nome da sala</p>
+                            <textarea
+                                className="my-textarea my-textarea-input-name-room"
+                                value={nomeSalaCriar}
+                                onChange={(e) => {
+                                    if (e.target.value.length <= 20) {
+                                        setNomeSalaCriar(e.target.value);
+                                    }
+                                }}
+                            ></textarea>
+                        </div>
+
+                        <div className="filtro_descricao">
+                            <p className="titleFiltro">Descrição</p>
+                            <textarea
+                                className="my-textarea"
+                                value={descricaoSalaCriar}
+                                onChange={(e) => {
+                                    if (e.target.value.length <= 90) {
+                                        setDescricaoSalaCriar(e.target.value);
+                                    }
+                                }}
+                            ></textarea>
+                        </div>
+                    </div>
+                </Modal >
+            )
+            }
+
+            {
+                showToast && (
+                    <Toast
+                        type={toastType}
+                        message={toastMessage}
+                        onClose={() => setShowToast(false)}
+                    />
+                )
+            }
+
+            {
+                showModalCalendario && (
+
+                    <Modal onClose={() => setShowModalCalendario(false)} title='Agendar partida' icon={<BsFillCalendarWeekFill />} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort />} textButton='Agendar' onClickButton={() => agendarSala()}>
+                        <div className="salas-groupCalendario">
+                            Dia
+                            {currentDayNow && <NumberList min={1} max={31} step={1} initialValue={parseInt(currentDayNow)} onSelectedNumberChange={handleSelectedDayChange} />}
+                            Hora
+                            {currentHourNow && <NumberList min={0} max={23} step={1} initialValue={parseInt(currentHourNow)} onSelectedNumberChange={handleSelectedHourChange} />}
+                            Minutos
+                            {currentMinuteNow && <NumberList min={0} max={55} step={5} initialValue={Math.ceil(currentMinuteNow / 5) * 5} onSelectedNumberChange={handleSelectedMinuteChange} />}
+                        </div>
+                    </Modal>
+                )
+            }
+
+            {
+                showModalFiltroSala && (
+                    <Modal title="Filtrar por" icon={<BsFilterLeft />} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort />} textButton='Filtrar' onClear={limparFiltroSalas} onClose={() => setShowModalFiltroSala(false)} onClickButton={filtrarSalas}>
                         <div className="container_filtro">
+
                             <div className="filtro_jogos">
-                                <p className="titleFiltro">Escolha um jogo</p>
+                                <p className="titleFiltro">Meus Jogos</p>
                                 <div className="jogos">
                                     {jogos.map((jogo) => (
                                         <React.Fragment key={jogo.id}>
@@ -361,27 +465,7 @@ function Rooms() {
                                 <RangeBar min={1} max={100} values={currentValues} onChange={handleValuesChange} />
                             </div>
 
-                            <div className="filtro_qtdPlayers">
-                                <p className="titleFiltro">Qtd de Players</p>
-                                <div className="container_input_qtd">
-                                    <input type="text" value={qtdJogadoresSelecionados} className="input_qtd_players"></input>
-                                    <div className="container_valor">
-                                        <HiMinusSm className="valor" onClick={() => {
-                                            if (qtdJogadoresSelecionados > 2) {
-                                                setQtdJogadoresSelecionados(qtdJogadoresSelecionados - 1);
-                                            }
-                                        }} />
-                                        <BsPlus className="valor" onClick={() => {
-                                            if (qtdJogadoresSelecionados < 10) {
-                                                setQtdJogadoresSelecionados(qtdJogadoresSelecionados + 1);
-                                            }
-                                        }} />
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div className="filtro_rank" >
+                            <div className="filtro_rank">
                                 <p className="titleFiltro">Rank</p>
                                 {jogos &&
                                     jogos.find((jogo) => jogo.nome === jogoSelecionado)?.rank.map((rank, index) => (
@@ -396,109 +480,10 @@ function Rooms() {
                                     ))}
                             </div>
 
-                            <div className="filtro_descricao">
-                                <p className="titleFiltro">Nome da sala</p>
-                                <textarea
-                                    className="my-textarea"
-                                    value={nomeSalaCriar}
-                                    onChange={(e) => {
-                                        if (e.target.value.length <= 20) {
-                                            setNomeSalaCriar(e.target.value);
-                                        }
-                                    }}
-                                ></textarea>
-                            </div>
-
-                            <div className="filtro_descricao">
-                                <p className="titleFiltro">Descrição</p>
-                                <textarea
-                                    className="my-textarea"
-                                    value={descricaoSalaCriar}
-                                    onChange={(e) => {
-                                        if (e.target.value.length <= 90) {
-                                            setDescricaoSalaCriar(e.target.value);
-                                        }
-                                    }}
-                                ></textarea>
-                            </div>
-
-                            {/* <div className="filtro_horario">
-                            <form>
-                                <p className="titleFiltro">Quando?</p>
-                                <label><input type="radio" name='quando' value='agora' onFocus={handleInputFocus} onBlur={handleInputBlur} checked /> Agora</label>
-                                <div className="salas-group-inputRadio">
-                                    <label><input type="radio" name='quando' value='agendado' onFocus={handleInputFocus} onBlur={handleInputBlur} /> Apartir das <span>{horarioSelecionado}</span> <BsFillCalendarWeekFill className="iconCalendario" onClick={() => setShowModalCalendario(true)} /></label>
-                                </div>
-                            </form>
-                        </div> */}
                         </div>
-                    )}
-                </Modal>
-            )}
-
-            {showToast && (
-                <Toast
-                    type={toastType}
-                    message={toastMessage}
-                    onClose={() => setShowToast(false)}
-                />
-            )}
-
-            {showModalCalendario && (
-
-                <Modal onClose={() => setShowModalCalendario(false)} title='Agendar partida' icon={<BsFillCalendarWeekFill />} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort />} textButton='Agendar' onClickButton={() => agendarSala()}>
-                    <div className="salas-groupCalendario">
-                        Dia
-                        {currentDayNow && <NumberList min={1} max={31} step={1} initialValue={parseInt(currentDayNow)} onSelectedNumberChange={handleSelectedDayChange} />}
-                        Hora
-                        {currentHourNow && <NumberList min={0} max={23} step={1} initialValue={parseInt(currentHourNow)} onSelectedNumberChange={handleSelectedHourChange} />}
-                        Minutos
-                        {currentMinuteNow && <NumberList min={0} max={55} step={5} initialValue={Math.ceil(currentMinuteNow / 5) * 5} onSelectedNumberChange={handleSelectedMinuteChange} />}
-                    </div>
-                </Modal>
-            )}
-
-            {showModalFiltroSala && (
-                <Modal title="Filtrar por" icon={<BsFilterLeft />} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort />} textButton='Filtrar' onClear={limparFiltroSalas} onClose={() => setShowModalFiltroSala(false)} onClickButton={filtrarSalas}>
-                    <div className="container_filtro">
-
-                        <div className="filtro_jogos">
-                            <p className="titleFiltro">Meus Jogos</p>
-                            <div className="jogos">
-                                {jogos.map((jogo) => (
-                                    <React.Fragment key={jogo.id}>
-                                        <Tag
-                                            text={jogo.nome}
-                                            isSelected={jogoSelecionado === jogo.nome ? true : false}
-                                            onClick={() => setJogoSelecionado(jogo.nome)} />
-                                    </React.Fragment>
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className="filtro_level">
-                            <p className="titleFiltro">Level</p>
-                            <RangeBar min={1} max={100} values={currentValues} onChange={handleValuesChange} />
-                        </div>
-
-                        <div className="filtro_rank">
-                            <p className="titleFiltro">Rank</p>
-                            {jogos &&
-                                jogos.find((jogo) => jogo.nome === jogoSelecionado)?.rank.map((rank, index) => (
-                                    <React.Fragment key={rank}>
-                                        <br />
-                                        <Tag
-                                            text={rank}
-                                            isSelected={rankSelecionado === rank ? true : false}
-                                            onClick={() => setRankSelecionado(rank)}
-                                        />
-                                    </React.Fragment>
-                                ))}
-                        </div>
-
-                    </div>
-                </Modal>
-            )}
+                    </Modal>
+                )
+            }
         </>
     );
 }

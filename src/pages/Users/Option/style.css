@@ -1,38 +1,91 @@
 /* MODAL JOGADORES */
 
 .option {
-    cursor: pointer;
-    width: 32px;
-    height: 32px;
-    border-radius: 32px;
-    transition: all 0.4s opacity;
-  }
-  
-  .option:hover {
-    filter: brightness(300%);
-    filter: saturate(250%);
-    border: 2px solid #19FF00;
-    width: 29px;
-    height: 29px;
-  }
-  
-  .option.selected {
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    filter: brightness(300%);
-    filter: saturate(250%);
-    border: 2px solid #19FF00;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 32px;
+  transition: all 0.4s opacity;
+}
+
+.option:hover {
+  filter: brightness(300%);
+  filter: saturate(250%);
+  border: 2px solid #19FF00;
+  width: 29px;
+  height: 29px;
+}
+
+.option.selected {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  filter: brightness(300%);
+  filter: saturate(250%);
+  border: 2px solid #19FF00;
 }
 
 .invisivel {
-    width: 50vw;
-    height: auto;
+  width: 50vw;
+  height: auto;
 }
 
 
 /* MODAL JOGOS */
 
-.jogos{
-    display: flex;
+.jogos {
+  display: flex;
+  min-width: 560px;
+  min-height: 200px;
+  max-width: 560px;
+  max-height: 200px;
+  overflow-y: scroll;
+  flex-wrap: wrap;
+}
+
+.jogos::-webkit-scrollbar {
+  width: 8px;
+}
+
+.jogos::-webkit-scrollbar-track {
+  background: rgba(220, 213, 200, 0.521);
+}
+
+.jogos::-webkit-scrollbar-thumb {
+  background-color: rgba(56, 56, 62, 0.628);
+  border-radius: 3px;
+}
+
+.gameModalSelected {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  width: 110px;
+  height: 130px;
+  max-width: 110px;
+  max-height: 150px;
+  margin: 2%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  transition: 300ms;
+}
+
+.gameModalSelected p {
+  z-index: 1;
+  background-color: #4142418a;
+  color: rgb(12, 12, 12);
+  width: 100%;
+  font-size: 0.8rem;
+  height: min-content;
+  display: none;
+}
+
+.gameModalSelected:hover {
+  transform:scale(1.02) ;
+}
+
+.gameModalSelected:hover p {
+  display: flex;
 }

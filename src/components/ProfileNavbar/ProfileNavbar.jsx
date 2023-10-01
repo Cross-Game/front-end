@@ -209,7 +209,7 @@ function ProfileJogo(props) {
 
             <div style={props.profiles} className="profileJogoButtonNvigation"
               onClick={() => navigate("/profile")}
-            >Profiles</div>
+            >Meus Jogos</div>
             <div style={props.interesses} className="profileJogoButtonNvigation"
               onClick={() => navigate("/profile/interesse")}
             > Interesses</div>

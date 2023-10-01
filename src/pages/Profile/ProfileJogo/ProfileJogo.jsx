@@ -3,7 +3,8 @@ import ProfileNavbar from "../../../components/ProfileNavbar/ProfileNavbar";
 import "./ProfileJogo.css";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import { AiFillPlusCircle, AiOutlineDelete } from "react-icons/ai";
-import UserProfile from "../../../components/UserProfile";
+import { GiConsoleController } from "react-icons/gi"
+import img from "../../../assets/index-page/medalPrata.svg"
 import Modal from "../../../components/Modal";
 import { RiFileEditFill } from "react-icons/ri";
 import { BsArrowRightShort, BsCheck, BsPersonBadge } from "react-icons/bs";
@@ -148,106 +149,114 @@ function ProfileJogo() {
 
     };
 
+    const handlerSelecionarJogo = () => {
+        console.log("Jogo Selecionado")
+    }
+
+    const handlerMeusJogo = () => {
+        console.log("Meus Jogos")
+    }
+
     function adicionar() {
         return (
             <>
                 <div className="ProfileJogoMiniContainer">
                     <div className="ProfileJogoContainerButtonAdicionar">
-                        <span className="ProfileJogoButtonAdicionar" onClick={() => setShowModalAdicionarPerfilJogo(true)}>
+                        <span className="ProfileJogoButtonAdicionar" onClick={() => handlerMeusJogo()}>
+                            Jogos
+                            <GiConsoleController className="ProfileIconAdicionar" />
+                        </span>
+                        <span className="ProfileJogoButtonAdicionar" onClick={() => console.log("chamar a api de lista de jogo")}>
                             Adicionar
                             <AiFillPlusCircle className="ProfileIconAdicionar" />
                         </span>
                     </div>
                 </div>
-                <div className="ProfileJogoCardContainer">
-                    <div className="card">
-                        <div className="header">Detalhes do Profile Riot Games</div>
-                        <div className="body">
-                            <div className="skill">
-                                <div className="skill-name">NickName</div>
-                                <div className="skill-percent-number">{usernameRiot}</div>
-                            </div>
-                            <hr />
-                            <div className="skill">
-                                <div className="skill-name">Habilidade</div>
-                                <div className="skill-percent-number">{selectedSkillLevel}</div>
-                            </div>
-                            <hr />
-                            <div className="skill">
-                                <div className="skill-name">Função</div>
-                                <div className="skill-percent-number">{selectedGameFunction}</div>
-                            </div>
-                            <hr />
-                            <div className="skill">
-                                <div className="skill-name">Jogo</div>
-                                <div className="skill-percent-number">{jogoSelecionado}</div>
-                            </div>
-                            <hr />
-                            <div className="ProfileJogoCardRemover">
-                                <button className="ProfileJogoCardRemoverButton" onClick={remove}>
-                                    Remover Profile
-                                </button>
-                            </div>
+                <div className="ProfileJogoCardContainerTitulo">
+                    <h2 className="tituloInputGame">Jogos selecionado por você</h2>
+                    <div className="search">
+                        <input type="text" className="search__input" placeholder="Busque pelo nome do jogo"/>
+                            <button className="search__button">
+                                <svg className="search__icon" aria-hidden="true" viewBox="0 0 24 24">
+                                    <g>
+                                        <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
+                                    </g>
+                                </svg>
+                            </button>
+                    </div>
+                </div>
+                <div className="ProfileJogoCardContainerJogo">
+                    <div className="cardJogo" onClick={handlerSelecionarJogo}>
+                        <div class="card-details">
+                            <img src={img} className="imgJogo" />
+                        </div>
+                    </div>
+                    <div className="cardJogo" onClick={handlerSelecionarJogo}>
+                        <div class="card-details">
+                            <img src={img} className="imgJogo" />
+                        </div>
+                    </div><div className="cardJogo" onClick={handlerSelecionarJogo}>
+                        <div class="card-details">
+                            <img src={img} className="imgJogo" />
+                        </div>
+                    </div><div className="cardJogo" onClick={handlerSelecionarJogo}>
+                        <div class="card-details">
+                            <img src={img} className="imgJogo" />
+                        </div>
+                    </div><div className="cardJogo" onClick={handlerSelecionarJogo}>
+                        <div class="card-details">
+                            <img src={img} className="imgJogo" />
+                        </div>
+                    </div><div className="cardJogo" onClick={handlerSelecionarJogo}>
+                        <div class="card-details">
+                            <img src={img} className="imgJogo" />
+                        </div>
+                    </div><div className="cardJogo" onClick={handlerSelecionarJogo}>
+                        <div class="card-details">
+                            <img src={img} className="imgJogo" />
+                        </div>
+                    </div><div className="cardJogo" onClick={handlerSelecionarJogo}>
+                        <div class="card-details">
+                            <img src={img} className="imgJogo" />
+                        </div>
+                    </div><div className="cardJogo" onClick={handlerSelecionarJogo}>
+                        <div class="card-details">
+                            <img src={img} className="imgJogo" />
+                        </div>
+                    </div><div className="cardJogo" onClick={handlerSelecionarJogo}>
+                        <div class="card-details">
+                            <img src={img} className="imgJogo" />
+                        </div>
+                    </div><div className="cardJogo" onClick={handlerSelecionarJogo}>
+                        <div class="card-details">
+                            <img src={img} className="imgJogo" />
+                        </div>
+                    </div><div className="cardJogo" onClick={handlerSelecionarJogo}>
+                        <div class="card-details">
+                            <img src={img} className="imgJogo" />
+                        </div>
+                    </div><div className="cardJogo" onClick={handlerSelecionarJogo}>
+                        <div class="card-details">
+                            <img src={img} className="imgJogo" />
+                        </div>
+                    </div><div className="cardJogo" onClick={handlerSelecionarJogo}>
+                        <div class="card-details">
+                            <img src={img} className="imgJogo" />
+                        </div>
+                    </div><div className="cardJogo" onClick={handlerSelecionarJogo}>
+                        <div class="card-details">
+                            <img src={img} className="imgJogo" />
+                        </div>
+                    </div><div className="cardJogo" onClick={handlerSelecionarJogo}>
+                        <div class="card-details">
+                            <img src={img} className="imgJogo" />
+                        </div>
+                    </div><div className="cardJogo" onClick={handlerSelecionarJogo}>
+                        <div class="card-details">
+                            <img src={img} className="imgJogo" />
                         </div>
                     </div>
                 </div>
-
-                {showModalAdicionarPerfilJogo && (
-                    <Modal
-                        title="Perfil de Jogo"
-                        icon={<BsPersonBadge />}
-                        temFooter={true}
-                        ativarBotao={true}
-                        textButton="Cadastrar"
-                        iconButton={<BsCheck />}
-                        onClose={() => setShowModalAdicionarPerfilJogo(false)}
-                        onClickButton={handleCadastrar}
-                    >
-                        <div className="modalEditarPerfil-container">
-                            <label>Jogo</label>
-                            <div className="modalCadastrarProfileJogo-jogos">
-                                {jogos.map((jogo) => (
-                                    <React.Fragment key={jogo.id}>
-                                        <Tag
-                                            text={jogo.nome}
-                                            isSelected={jogoSelecionado === jogo.nome ? true : false}
-                                            onClick={() => setJogoSelecionado(jogo.nome)} />
-                                    </React.Fragment>
-                                ))}
-                            </div>
-
-                            <label>Username</label>
-                            <input type="text" onChange={(event) => setUsernameRiot(event.target.value)} />
-
-                            <label>Game Function</label>
-                            <div className="modalCadastrarProfileJogo-jogos">
-                                {jogos &&
-                                    jogos.find((jogo) => jogo.nome === jogoSelecionado)?.gameFunction.map((gameFunction, index) => (
-                                        <React.Fragment key={gameFunction} >
-                                            <br />
-                                            <Tag
-                                                text={gameFunction}
-                                                isSelected={selectedGameFunction === gameFunction ? true : false}
-                                                onClick={() => setSelectedGameFunction(gameFunction)}
-                                            />
-                                        </React.Fragment>
-                                    ))}
-                            </div>
-                            <label>Skill Level</label>
-                            <div className="modalCadastrarProfileJogo-jogos">
-                                {levelOptions.map((levelValue) => (
-                                    <React.Fragment key={levelValue}>
-                                        <Tag
-                                            text={levelValue}
-                                            isSelected={selectedSkillLevel === levelValue}
-                                            onClick={() => setSelectedSkillLevel(levelValue)}
-                                        />
-                                    </React.Fragment>
-                                ))}
-                            </div>
-                        </div>
-                    </Modal>
-                )}
             </>
         );
     }

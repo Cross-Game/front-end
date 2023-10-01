@@ -70,8 +70,12 @@
   background-position: center;
   cursor: pointer;
   transition: 300ms;
+  border: rgba(255, 255, 255, 0) 3px solid;
 }
 
+.gameModalSelectedPlus{
+  border: #19FF00 3px solid;
+}
 .gameModalSelected p {
   z-index: 1;
   background-color: #4142418a;

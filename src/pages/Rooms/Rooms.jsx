@@ -270,13 +270,13 @@ function Rooms() {
 
 
     const [gamesApi, setGamesApi] = useState([]);
+    const [idGameSelecionado, setIdGameSelecionado] = useState();
 
 
     useEffect(() => {
         console.log("retrieve information games");
         axios.get(
             `${currentURL}/games-api/`
-            // FIXME ajuste para buscar mais de um jogo
         ).then(response => {
             if (response.status === 200) {
                 // mudarToast("sucesso", "Sala criada!");
@@ -373,10 +373,11 @@ function Rooms() {
                             <div className="jogos">
                                 {gamesApi.map((game) => (
                                     <React.Fragment key={game.id}>
-                                        <div style={{ backgroundImage: `url(${game.imageGame.link})`, }} className='gameModalSelected'
+                                        <div style={{ backgroundImage: `url(${game.imageGame.link})`, }}
+                                            className={idGameSelecionado == game.id ? 'gameModalSelected gameModalSelectedPlus' : 'gameModalSelected '}
                                             onClick={() => {
                                                 setJogoSelecionado(game.name)
-                                                console.log(jogoSelecionado.toString())
+                                                setIdGameSelecionado(game.id)
                                             }}>
                                             <p>{game.name}</p>
                                         </div>
@@ -384,7 +385,7 @@ function Rooms() {
                                 ))}
                             </div>
                         </div>
-                        
+
                         <div className="filtro_descricao">
                             <p className="titleFiltro">Nome da sala</p>
                             <textarea

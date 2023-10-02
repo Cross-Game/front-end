@@ -12,14 +12,15 @@
 }
 
 .ProfileJogoButtonAdicionar {
-  width: 150px;
-  height: 30px;
+  width: 160px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 2px solid #0f3;
   border-radius: 20px;
   margin-top: 20px;
+  margin-left: 10px;
   cursor: pointer;
 }
 
@@ -111,7 +112,22 @@
 .ProfileJogoCardContainer::-webkit-scrollbar{
   display: none;
 }
-
+.ProfileJogoCardContainerJogo {
+  height: 265px;
+  border: 1px solid #737373;
+  border-radius: 20px;
+  padding: 5px 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: hidden;
+  overflow-y: scroll;
+  color: #fff;
+  font-size: small;
+}
+.ProfileJogoCardContainerJogo::-webkit-scrollbar{
+  display: none;
+}
 .ProfileJogoCardUsername{
   display: flex;
   align-items: center;
@@ -195,32 +211,120 @@
     font-size: 16px;
   }
 
-  .ProfileJogoCardRemover{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .ProfileJogoCardRemoverButton{
-    width: 200px;
-    height: 40px;
-    margin-top: 10px;
-    font-family: 'krona One';
-    border-radius: 20px;
-    border: 0.5px solid rgb(255, 255, 255);
-    cursor: pointer;
+  .tituloInputGame{
     color: #fff;
-    background-color: #7373733f;
   }
 
-  .ProfileJogoCardRemoverButton:hover{
-    width: 200px;
-    height: 40px;
-    margin-top: 10px;
-    font-family: 'krona One';
+  .inputSearchGame{
+    width: 50%;
+    padding: 7px 15px;
+  }
+
+  .ProfileJogoCardContainerTitulo{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+  }
+
+  .imgJogo{
+    border-radius: 16px;
+  }
+
+  .nenhumJogoVinculado{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /*Inicio Card Jogo*/
+
+  .cardJogo {
+    width: 120px;
+    height: 160px;
+    margin: 5px;
     border-radius: 20px;
+    background: #000;
+    position: relative;
+    padding: 0.2rem;
+    border: 2px solid #000;
+    transition: 0.05s ease-out;
+    overflow: hidden;
+   }
+   
+   .card-details {
+    color: black;
+    height: 100%;
+    gap: .5em;
+    display: grid;
+    place-content: center;
+   }
+   
+   
+   /*Hover*/
+   .cardJogo:hover {
+    border-color: #00ff33;
+    box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
+   }
+   
+   .cardJogo:hover .cardJogo-button {
+    transform: translate(-50%, 50%);
+    opacity: 1;
+   }
+
+   /*buscador*/
+
+   .search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+  }
+  
+  .search__input {
+    font-family: inherit;
+    font-size: inherit;
+    background-color: #f4f2f2;
     border: none;
-    border: 1px solid rgb(255, 0, 0);
-    color: rgb(255, 0, 0);
-    background-color: #7373733f;
+    color: #646464;
+    padding: 0.6rem 1rem;
+    border-radius: 30px;
+    width: 35em;
+    transition: all ease-in-out .5s;
+    margin-right: -3rem;
+  }
+  
+  .search__input:hover, .search__input:focus {
+    box-shadow: 0 0 1em #00000013;
+  }
+  
+  .search__input:focus {
+    outline: none;
+    background-color: #f0eeee;
+  }
+  
+  .search__input::-webkit-input-placeholder {
+    font-weight: 100;
+    color: #ccc;
+  }
+  
+  .search__input:focus + .search__button {
+    background-color: #f0eeee;
+  }
+  
+  .search__button {
+    border: none;
+    background-color: #f4f2f2;
+    margin-top: .1em;
+  }
+  
+  .search__button:hover {
+    cursor: pointer;
+  }
+  
+  .search__icon {
+    height: 1.3em;
+    width: 1.3em;
+    fill: #b4b4b4;
   }

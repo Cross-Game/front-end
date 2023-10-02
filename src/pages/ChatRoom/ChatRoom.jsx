@@ -232,13 +232,13 @@ export const ChatRoom = () => {
                 {gameName}
               </div>
 
-              <div className="chatRoomFilterContainer greenFilter">
+              {/* <div className="chatRoomFilterContainer greenFilter">
                 Ranking {rankRoom}
-              </div>
+              </div> */}
 
-              <div className="chatRoomFilterContainer greenFilter">
+              {/* <div className="chatRoomFilterContainer greenFilter">
                 Level {levelRoom}
-              </div>
+              </div> */}
             </div>
             <div className="playersOnRoomChatRoom">
 

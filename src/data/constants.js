@@ -11,7 +11,7 @@ let URLSITE = ""
 let USERNAMESESSION = sessionStorage.getItem("NICKNAME")
 
 AMBIENTE === "desenvolvimento" ? currentURL = "http://localhost:8080" : currentURL = "https://matchmakingapi.sytes.net";
-AMBIENTE === "desenvolvimento" ? URLSITE = "http://localhost:3000" : URLSITE = "http://cross-game.sytes.net";
+AMBIENTE === "desenvolvimento" ? URLSITE = "http://localhost:3000" : URLSITE = "https://cross-game.sytes.net";
 
 export function updateConstants() {
   USERID = Number(sessionStorage.getItem("ID"));

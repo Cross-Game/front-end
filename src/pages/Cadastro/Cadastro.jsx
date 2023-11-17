@@ -33,6 +33,7 @@ function Cadastro() {
     const queryParams = new URLSearchParams(currentUrl.search);
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
+    const [posDados, setPosDados] = useState(false);
 
     useEffect(() => {
         setTimeout(() => {
@@ -44,11 +45,14 @@ function Cadastro() {
         }, 1);
     }, []);
 
+
     useEffect(() => {
         setTimeout(() => {
             setIsLoading(false);
         }, 2000);
-    }, []);
+    }, [
+
+    ]);
 
     const handleLogin = () => {
         const url = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=${RESPONSE_TYPE}&scope=${encodeURIComponent(SCOPE)}`;
@@ -81,6 +85,7 @@ function Cadastro() {
             setEmail(userResponse.data.email);
             setUsername(userResponse.data.username);
             setPassword(response.data.access_token);
+            cadastrar()
             console.log(userResponse.data.email);
             console.log(userResponse.data.username);
             console.log(response.data.access_token);
@@ -185,6 +190,7 @@ function Cadastro() {
                 }).then(res => res.json())
                     .then(data =>
                         console.log(currentURL),
+                        mudarToast("sucesso", 'Cadastrado Realizado!'),
                         window.location.href = `${URLSITE}/login`
                     )
             )
@@ -279,6 +285,7 @@ function Cadastro() {
                                         setEmail(data.email);
                                         setUsername(data.name);
                                         setPassword(data.access_token);
+                                        cadastrar()
                                         console.log(data);
                                         window.location.reload = `${URLSITE}/cadastro`
                                     }}

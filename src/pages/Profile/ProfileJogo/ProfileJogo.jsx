@@ -12,6 +12,7 @@ import Toast from "../../../components/Toast";
 import { USERID, TOKEN, currentURL } from "../../../data/constants";
 import axios from "axios";
 import { useEffect } from "react";
+import Loading from "../../../components/Loading/loading"
 
 
 const levels = {
@@ -31,6 +32,7 @@ function ProfileJogo() {
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [toastType, setToastType] = useState('erro');
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         axios.get(`${currentURL}/games-api/`, {
@@ -39,7 +41,9 @@ function ProfileJogo() {
             },
         })
             .then((response) => {
+                setListaJogos([]);
                 setListaJogos(response.data)
+                setIsLoading(false)
             })
             .catch((error) => {
                 console.error(error);
@@ -60,6 +64,7 @@ function ProfileJogo() {
     }
 
     const handlerMeusJogo = () => {
+        setIsLoading(true)
         axios.get(`${currentURL}/user-games/${USERID}/games`, {
             headers: {
                 Authorization: `Bearer ${TOKEN}`
@@ -67,14 +72,18 @@ function ProfileJogo() {
         })
             .then((response) => {
                 if (response != null) {
+                    setJogoByName()
+                    setListaJogos([])
                     setListaJogos(response.data)
                     setjogoVinculado(true)
+                    setIsLoading(false)
                 } else {
                     console.log()
                 }
             })
             .catch((error) => {
                 console.error(error);
+                setIsLoading(false)
             });
     }
 
@@ -90,7 +99,8 @@ function ProfileJogo() {
     }
 
     const handlerBuscarJogos = () => {
-        axios.get(`${currentURL}/games-api/${buscarJogo}`, {
+        setIsLoading(true)
+        axios.get(`${currentURL}/games-api/internal/${buscarJogo}`, {
             headers: {
                 Authorization: `Bearer ${TOKEN}`
             },
@@ -98,12 +108,14 @@ function ProfileJogo() {
             .then((response) => {
                 console.log(response.data);
                 if (response.data !== undefined) {
-                    setJogoByName(response.data)
                     setListaJogos([])
+                    setJogoByName(response.data)
+                    setIsLoading(false)
                 }
             })
             .catch((error) => {
                 console.error(error);
+                setIsLoading(false)
                 mudarToast("erro", "Digite o nome de algum jogo !")
             });
     }
@@ -125,12 +137,30 @@ function ProfileJogo() {
             },
         })
             .then((response) => {
+                mudarToast("sucesso", 'Jogo Adicionado!')
 
             })
             .catch((error) => {
                 console.error(error);
             });
     }
+    const handlerRetrieveAllGames = () => {
+        setIsLoading(true)
+        axios.get(`${currentURL}/games-api/`, {
+            headers: {
+                Authorization: `Bearer ${TOKEN}`
+            },
+        })
+            .then((response) => {
+                setJogoByName()
+                setListaJogos(response.data);
+                setIsLoading(false)
+            })
+            .catch((error) => {
+                console.error(error);
+                setIsLoading(false)
+            });
+    };
 
     function adicionar() {
         return (
@@ -138,12 +168,16 @@ function ProfileJogo() {
                 <div className="ProfileJogoMiniContainer">
                     <div className="ProfileJogoContainerButtonAdicionar">
                         <span className="ProfileJogoButtonAdicionar" onClick={handlerMeusJogo}>
-                            Meus Jogos
+                            Meus
                             <GiConsoleController className="ProfileIconAdicionar" />
                         </span>
                         <span className="ProfileJogoButtonAdicionar" onClick={handlerAdicionarJogo}>
                             Adicionar
                             <AiFillPlusCircle className="ProfileIconAdicionar" />
+                        </span>
+                        <span className="ProfileJogoButtonAdicionar" onClick={handlerRetrieveAllGames}>
+                            Todos 
+                            <GiConsoleController className="ProfileIconAdicionar" />
                         </span>
                     </div>
                 </div>
@@ -161,20 +195,28 @@ function ProfileJogo() {
                     </div>
                 </div>
                 <div className="ProfileJogoCardContainerJogo">
-                    {listaJogos.length > 0 && listaJogos.map((jogo, index) => (
-                        <div className="cardJogo" id="selectedCardJogo" style={index == jogoSelecionado ? bordaJogo : { border: '1px solid #000' }} key={index}
-                            onClick={() => handlerClickCard(index)}
-                        >
-                            <div className="card-details">
-                                <img src={jogo.imageGame.link} className="imgJogo" />
+                    {isLoading ?
+                        <Loading />
+                        : listaJogos.length > 0 && listaJogos.map((jogo, index) => (
+
+                            <div className="cardJogo" id="selectedCardJogo" style={index == jogoSelecionado ? bordaJogo : { border: '1px solid #000' }} key={index}
+                                onClick={() => handlerClickCard(index)}
+                            >
+                                <div className="card-details">
+                                    <img src={jogo.imageGame.link} className="imgJogo" />
+                                </div>
                             </div>
-                        </div>
-                    )) }
-                    {jogoByName && <div className="cardJogo" id="selectedCardJogo">
-                        <div className="card-details">
-                            <img src={jogoByName.imageGame.link} className="imgJogo" />
-                        </div>
-                    </div>}
+                        ))
+                    }
+
+
+                    {isLoading ?
+                        <Loading />
+                        : jogoByName  && <div className="cardJogo" id="selectedCardJogo">
+                            <div className="card-details">
+                                <img src={jogoByName.imageGame.link} className="imgJogo" />
+                            </div>
+                        </div>}
                     {showToast && (
                         <Toast
                             type={toastType}
@@ -182,6 +224,7 @@ function ProfileJogo() {
                             onClose={() => setShowToast(false)}
                         />
                     )}
+
                 </div>
 
             </>

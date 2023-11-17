@@ -4,10 +4,7 @@ import { BsDiscord, BsArrowRightShort, BsFillEyeFill, BsFillEyeSlashFill, BsGoog
 import { LoginSocialGoogle } from "reactjs-social-login";
 import { useNavigate } from "react-router-dom"
 import axios from "axios";
-import Loading from '../../components/Loading/loading';
-import imagemLol from '../Cadastro/assets/leagueOfLegendsWallpapers.jpg'
-import imagemValorant from '../Cadastro/assets/Fade 1.jpg'
-import imagemTeamF from '../Cadastro/assets/teamFight.png'
+
 
 import { currentURL, URLSITE } from "../../data/constants"
 
@@ -65,7 +62,7 @@ function Cadastro() {
             redirect_uri: `${URLSITE}/cadastro`,
             grant_type: "authorization_code",
             client_id: CLIENT_ID,
-            client_secret: "Xrn0whYArSqBySPDGZbVGJlZj0sAL903"
+            client_secret: "BTis6TVBX8_wSr7e6T-5QM3o10FvS8qa"
         };
 
         try {
@@ -213,9 +210,7 @@ function Cadastro() {
 
     return (
         <>
-            {isLoading ? (
-                <Loading />
-            ) : <div className="container">
+           <div className="container">
                 <div className="botaoVoltar" onClick={() => navigate("/")}>
                     <p>Voltar</p>
                 </div>
@@ -298,7 +293,7 @@ function Cadastro() {
                     </div>
                 </form>
             </div>
-            }</>
+            </>
     )
 }
 

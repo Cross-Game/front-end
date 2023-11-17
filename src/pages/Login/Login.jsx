@@ -71,7 +71,7 @@ function Login() {
       redirect_uri: `${URLSITE}/login`,
       grant_type: "authorization_code",
       client_id: CLIENT_ID,
-      client_secret: "Xrn0whYArSqBySPDGZbVGJlZj0sAL903"
+      client_secret: "BTis6TVBX8_wSr7e6T-5QM3o10FvS8qa"
     };
 
     try {

@@ -231,7 +231,7 @@ function Rooms() {
                 {
 
                     roomName: nomeSalaCriar.toString(),
-                    capacity: 0,
+                    capacity: 10,
                     gameName: jogoSelecionado.toString(),
                     rankGame: null,
                     levelGame: 0,

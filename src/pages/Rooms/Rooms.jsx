@@ -227,7 +227,7 @@ function Rooms() {
                 {
 
                     roomName: nomeSalaCriar.toString(),
-                    capacity: qtdJogadoresSelecionados,
+                    capacity: 10,
                     gameName: jogoSelecionado.toString(),
                     rankGame: rankSelecionado.toString(),
                     levelGame: minLevel,

@@ -10,7 +10,6 @@ import { BsArrowLeftShort, BsArrowRightShort, BsFillCalendarWeekFill, BsFilterLe
 import Tag from '../../components/Tag';
 import RangeBar from '../../components/RangeBar';
 import { HiMinusSm, HiSearch } from 'react-icons/hi';
-import { jogos as listaJogos } from "../../utils/jogos";
 import moment from 'moment';
 import { TOKEN, USERID } from '../../data/constants';
 import Button from '../../components/Button';
@@ -24,7 +23,7 @@ function Rooms() {
     const navigate = useNavigate();
     const [rooms, setRooms] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [jogos, setJogos] = useState(listaJogos);
+    const [jogos, setJogos] = useState();
     const [meusJogos, setMeusJogos] = useState([])
     const [roomsFiltered, setRoomsFiltered] = useState([]);
     const [filterAplicado, setfilteAplicado] = useState(false);
@@ -194,7 +193,7 @@ function Rooms() {
         const obterMeusJogos = async () => {
             try {
                 const response = await axios.get(
-                    `${currentURL}/user-games/${USERID}`,
+                    `${currentURL}/user-games/${USERID}/games`,
                     {
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest',
@@ -204,10 +203,11 @@ function Rooms() {
                     }
                 );
                 if (response.status === 200) {
+                    console.log(jogos)
                     const idsDesejados = response.data.map((jogo) => jogo.gameId);
-                    const jogosFiltrados = listaJogos.filter((jogo) => idsDesejados.includes(jogo.id));
+                    const jogosFiltrados = jogos.filter((jogo) => idsDesejados.includes(jogo.id));
                     setMeusJogos(jogosFiltrados);
-                    setJogos(jogosFiltrados);
+                    setJogos(response.data);
                 }
                 else if (response.status === 204) {
                 }
@@ -282,6 +282,7 @@ function Rooms() {
                 // mudarToast("sucesso", "Sala criada!");
                 console.log("Buscado jogos da api", response.data);
                 setGamesApi(response.data)
+                setJogos(response.data)
             }
         }).catch(error =>
             mudarToast("erro", "ao buscar jogos")
@@ -453,32 +454,12 @@ function Rooms() {
                                     {jogos.map((jogo) => (
                                         <React.Fragment key={jogo.id}>
                                             <Tag
-                                                text={jogo.nome}
-                                                isSelected={jogoSelecionado === jogo.nome ? true : false}
-                                                onClick={() => setJogoSelecionado(jogo.nome)} />
+                                                text={jogo.name}
+                                                isSelected={jogoSelecionado === jogo.name ? true : false}
+                                                onClick={() => setJogoSelecionado(jogo.name)} />
                                         </React.Fragment>
                                     ))}
                                 </div>
-                            </div>
-
-                            <div className="filtro_level">
-                                <p className="titleFiltro">Level</p>
-                                <RangeBar min={1} max={100} values={currentValues} onChange={handleValuesChange} />
-                            </div>
-
-                            <div className="filtro_rank">
-                                <p className="titleFiltro">Rank</p>
-                                {jogos &&
-                                    jogos.find((jogo) => jogo.nome === jogoSelecionado)?.rank.map((rank, index) => (
-                                        <React.Fragment key={rank}>
-                                            <br />
-                                            <Tag
-                                                text={rank}
-                                                isSelected={rankSelecionado === rank ? true : false}
-                                                onClick={() => setRankSelecionado(rank)}
-                                            />
-                                        </React.Fragment>
-                                    ))}
                             </div>
 
                         </div>

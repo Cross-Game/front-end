@@ -1,15 +1,16 @@
 .tag {
   font-family: "Krona One";
   color: #fff;
-  font-size: 10px;
+  font-size: 12px;
   padding: 5px 10px;
+  height: 10px;
   display: flex;
   background-color: #0b5a02;;
   border-radius: 25px;
   margin-right: 10px;
   transition: all 0.4s opacity;
   align-items: center;
-  white-space: nowrap;
+  white-space: wrap;
 }
 
 .tag:hover {
@@ -24,16 +25,17 @@
 
 .tag_selected {
   font-family: "Krona One";
-  font-size: 10px;
+  font-size: 12px;
   padding: 5px 10px;
   display: flex;
+  height: 15%;
   color: #000;
   background-color: #19FF00;
   border-radius: 25px;
   margin-right: 10px;
   transition: all 0.4s opacity;
   align-items: center;
-  white-space: nowrap;
+  white-space: wrap;
 }
 
 

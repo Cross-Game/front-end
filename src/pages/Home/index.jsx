@@ -12,7 +12,7 @@ import chatIcon from '../../assets/index-page/chatIcon.svg'
 import xboxIcon from '../../assets/index-page/xboxIcon.svg'
 import playIcon from '../../assets/index-page/playstationIcon.svg'
 import pcIcon from '../../assets/index-page/pcIcon.svg'
-import riotIcon from '../../assets/index-page/riotIcon.svg'
+import twitchIcon from '../../assets/index-page/iconTwitch.svg'
 import likeIcon from '../../assets/index-page/likeIcon.svg'
 import medalPrata from '../../assets/index-page/medalPrata.svg'
 import medalOuro from '../../assets/index-page/medalOuro.svg'
@@ -111,9 +111,8 @@ function Home() {
 
             <div className='home-rightGroup'>
               <div className='home-riotContainer'>
-                <img src={riotIcon} alt="" />
-                <div>Adicione seu perfil
-                  da Riot Games</div>
+                <img src={twitchIcon} alt="" />
+                <div>Adicione jogos direto da Twitch</div>
               </div>
               <div className='home-avaliationContainer'>
                 <img src={likeIcon} alt="" />

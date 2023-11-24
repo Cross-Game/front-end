@@ -107,7 +107,7 @@ function Users() {
 
             axios
                 .get(
-                    `${currentURL}/users-filter?preference=${meusInteresses[0]}&gameName=${jogoSelecionado.toUpperCase()}&gameFunction=${funcaoSelecionada.toUpperCase()}`,
+                    `${currentURL}/users-filter?preference=${meusInteresses[0]}&gameName=${jogoSelecionado.toUpperCase()}&gameFunction=TOP}`,
                     {
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest',
@@ -153,11 +153,25 @@ function Users() {
         }
     }
 
-    const [jogos, setJogos] = useState(listaJogos);
+    const [jogos, setJogos] = useState([]);
     const [jogoSelecionado, setJogoSelecionado] = useState("");
-    const [funcaoSelecionada, setFuncaoSelecionada] = useState("");
 
+    useEffect(() => {
+        console.log("retrieve information games");
+        axios.get(
+            `${currentURL}/games-api/`
+        ).then(response => {
+            if (response.status === 200) {
+                // mudarToast("sucesso", "Sala criada!");
+                console.log("Buscado jogos da api", response.data);
+                setJogos(response.data)
+            }
+        }).catch(error =>
+            mudarToast("erro", "ao buscar jogos")
 
+        )
+
+    }, [])
 
     function limparModalFiltrarSalas() {
         setMinLevelHabilidade(0);
@@ -165,8 +179,33 @@ function Users() {
         setMinLevelComportamento(0);
         setMaxLevelComportamento(5);
         setJogoSelecionado("");
-        setFuncaoSelecionada("");
     }
+
+    // function filtrarSalas() {
+
+    //     setfilteAplicado(true);
+    //     var encontrei = 0;
+    //     setRoomsFiltered(rooms);
+    //     const salasFiltradas = rooms.filter((sala) => {
+    //         if (!jogoSelecionado || sala.gameName === jogoSelecionado) {
+    //             console.log("Devolvendo true")
+    //             encontrei++;
+    //             return true;
+    //         }
+    //         return false;
+    //     });
+    //     console.log(salasFiltradas)
+    //     console.log(salasFiltradas.lenght)
+    //     if (encontrei != 0) {
+    //         mudarToast("sucesso", "Filtro aplicado")
+    //         setRoomsFiltered(salasFiltradas);
+    //     }
+    //     else {
+    //         mudarToast("erro", "Nenhuma sala encontrada")
+    //         setRoomsFiltered(salasFiltradas);
+    //     }
+    //     setShowModalFiltroSala(false)
+    // }
 
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
@@ -357,7 +396,6 @@ function Users() {
                 },
                 responseType: 'blob',
             });
-            console.log(response)
             if (response.data.size > 0) {
                 const blobData = response.data;
                 const imageUrl = await convertBlobToBase64(blobData);
@@ -367,7 +405,6 @@ function Users() {
                 return imgUserProfile;
             }
         } catch (error) {
-            console.log(error);
             return imgUserProfile;
         }
     };
@@ -480,15 +517,6 @@ function Users() {
             {showModalFiltroJogadores && (
                 <Modal title="Filtrar por" icon={<BsFilterLeft />} clearAll='true' temFooter='true' ativarBotao='true' iconButton={<BsArrowRightShort />} textButton='Filtrar' onClose={() => setShowModalFiltroJogadores(false)} onClickButton={filtrarJogadores} onClear={limparModalFiltrarSalas}>
                     <div className="container_filtro_modal_users">
-                        {/* <div className="filtro_nivel">
-                            <p className="titleFiltro">Nivel</p>
-                            <div className="opcoesNivel">
-                                <Option backgroundColor='#4D4D4D' />
-                                <Option backgroundColor='#604F00' />
-                                <Option backgroundColor='#052D4F' />
-                                <Option backgroundColor='#571618' />
-                            </div>
-                        </div> */}
                         <p className='title_container_users'>Perfil Pessoal</p>
                         <div className="container_sliders">
                             <div className="filtro_comportamento"><p className="titleFiltro">Comportamento</p> <RangeBar min='0' max='5' values={currentValuesComportamento} onChange={handleValuesChangeComportamento} /> </div>
@@ -499,31 +527,14 @@ function Users() {
                             <p className='title_container_users2'>Perfil de Jogos</p>
                             <p className="titleFiltro">Jogos</p>
                             <div className="jogos">
-                                {jogos.map((jogo) => (
+                                {jogos.length > 0 && jogos.map((jogo) => (
                                     <React.Fragment key={jogo.id}>
                                         <Tag
-                                            text={jogo.nome}
-                                            isSelected={jogoSelecionado === jogo.nome ? true : false}
-                                            onClick={() => setJogoSelecionado(jogo.nome)} />
+                                            text={jogo.name}
+                                            isSelected={jogoSelecionado === jogo.name ? true : false}
+                                            onClick={() => setJogoSelecionado(jogo.name)} />
                                     </React.Fragment>
                                 ))}
-                            </div>
-
-                            <div className="fitro_funcao_modal" >
-                                <p className="titleFiltro">Função</p>
-                                <div className="filtro_funcao_modal_groupFuncoes">
-                                    {jogos &&
-                                        jogos.find((jogo) => jogo.nome === jogoSelecionado)?.gameFunction.map((gameFunction, index) => (
-                                            <React.Fragment key={gameFunction}>
-                                                <br />
-                                                <Tag
-                                                    text={gameFunction}
-                                                    isSelected={funcaoSelecionada === gameFunction ? true : false}
-                                                    onClick={() => setFuncaoSelecionada(gameFunction)}
-                                                />
-                                            </React.Fragment>
-                                        ))}
-                                </div>
                             </div>
 
                         </div>

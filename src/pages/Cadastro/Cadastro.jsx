@@ -82,13 +82,7 @@ function Cadastro() {
                     authorization: `Bearer ${response.data.access_token}`,
                 },
             });
-            setEmail(userResponse.data.email);
-            setUsername(userResponse.data.username);
-            setPassword(response.data.access_token);
-            cadastrar()
-            console.log(userResponse.data.email);
-            console.log(userResponse.data.username);
-            console.log(response.data.access_token);
+            cadastrar(userResponse.data.username, userResponse.data.email, response.data.access_token)
         } catch (error) {
             console.error(error);
         }
@@ -158,23 +152,21 @@ function Cadastro() {
         console.log(queryParams.get("code"))
     }
 
-    function cadastrar() {
-        mudarToast('carregando', 'Cadastro em andamento');
-        const userPayload = {
-            username: username,
-            email: email,
-            password: password,
-            role: "USER"
-        };
-
-
+    function cadastrar(usernameClient, emailClient, passwordClient) {
 
         fetch(`${currentURL}/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(userPayload),
+            body: JSON.stringify(
+                {
+                    username: usernameClient,
+                    email: emailClient,
+                    password: passwordClient,
+                    role: "USER"
+                }
+            ),
         })
             .then(response => response.json())
             .then(data =>
@@ -190,7 +182,7 @@ function Cadastro() {
                 }).then(res => res.json())
                     .then(data =>
                         console.log(currentURL),
-                        mudarToast("sucesso", 'Cadastrado Realizado!'),
+                        mudarToast('sucesso', 'Cadastrado Realizado!'),
                         window.location.href = `${URLSITE}/login`
                     )
             )
@@ -282,12 +274,7 @@ function Cadastro() {
                                     discoveryDocs="claims_supported"
                                     acess_type="online"
                                     onResolve={({ providor, data }) => {
-                                        setEmail(data.email);
-                                        setUsername(data.name);
-                                        setPassword(data.access_token);
-                                        cadastrar()
-                                        console.log(data);
-                                        window.location.reload = `${URLSITE}/cadastro`
+                                        cadastrar(data.name, data.email, data.access_token)
                                     }}
                                     onReject={(err) => {
                                         console.log(err)

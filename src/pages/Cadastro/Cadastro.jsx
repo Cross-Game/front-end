@@ -277,7 +277,7 @@ function Cadastro() {
                             <div><BsDiscord className="loginDiscord" onClick={handleLogin} /></div>
                             <div>
                                 <LoginSocialGoogle
-                                    client_id={'885530994482-00qe1f2qo6m0htsqeprvua1tthf2kqdt.apps.googleusercontent.com'}
+                                    client_id={'159829132486-8p9g8nfvnkn0gbg53b5tkkncndolr53v.apps.googleusercontent.com'}
                                     scope="openid profile email"
                                     discoveryDocs="claims_supported"
                                     acess_type="online"

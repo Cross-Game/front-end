@@ -23,7 +23,7 @@ function Rooms() {
     const navigate = useNavigate();
     const [rooms, setRooms] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [jogos, setJogos] = useState();
+    const [jogos, setJogos] = useState([]);
     const [meusJogos, setMeusJogos] = useState([])
     const [roomsFiltered, setRoomsFiltered] = useState([]);
     const [filterAplicado, setfilteAplicado] = useState(false);
@@ -166,13 +166,9 @@ function Rooms() {
         setRoomsFiltered(rooms);
         const salasFiltradas = rooms.filter((sala) => {
             if (!jogoSelecionado || sala.gameName === jogoSelecionado) {
-                if (!rankSelecionado || sala.rankGame === rankSelecionado) {
-                    if (!minLevel || sala.levelGame >= minLevel) {
-                        console.log("Devolvendo true")
-                        encontrei++;
-                        return true;
-                    }
-                }
+                console.log("Devolvendo true")
+                encontrei++;
+                return true;
             }
             return false;
         });
@@ -186,6 +182,23 @@ function Rooms() {
             mudarToast("erro", "Nenhuma sala encontrada")
             setRoomsFiltered(salasFiltradas);
         }
+        setShowModalFiltroSala(false)
+    }
+
+    function filtrarSalasPorNome(nomeSala) {
+        setfilteAplicado(true);
+        var encontrei = 0;
+        setRoomsFiltered(rooms);
+        const salasFiltradas = rooms.filter((sala) => {
+            console.log(nomeSala)
+            if (sala.name.startsWith(nomeSala)) {
+                console.log("Devolvendo true")
+                encontrei++;
+                return true;
+            }
+            return false;
+        });
+        setRoomsFiltered(salasFiltradas);
         setShowModalFiltroSala(false)
     }
 
@@ -299,9 +312,9 @@ function Rooms() {
                 <div className='bodyRooms'>
                     <div className="topDiv">
                         <div className="inputDiv">
-                            <input type="text" className='inputRooms' placeholder='Buscar salas' />
+                            <input type="text" className='inputRooms' placeholder='Buscar salas' onChange={(event) => filtrarSalasPorNome(event.target.value)}/>
                             <BsFilterLeft className='salas-icon-filtro' onClick={() => setShowModalFiltroSala(true)} />
-                            <HiSearch className='salas-icon-search' />
+                            <HiSearch className='salas-icon-search'/>
                         </div>
                         <div className="divRoomsAllContainer">
                             {roomsFiltered == [] || roomsFiltered.length === 0 || roomsFiltered == null || roomsFiltered === undefined ?
@@ -451,7 +464,7 @@ function Rooms() {
                             <div className="filtro_jogos">
                                 <p className="titleFiltro">Meus Jogos</p>
                                 <div className="jogos">
-                                    {jogos.map((jogo) => (
+                                    {jogos.lenght > 0 || jogos.map((jogo) => (
                                         <React.Fragment key={jogo.id}>
                                             <Tag
                                                 text={jogo.name}

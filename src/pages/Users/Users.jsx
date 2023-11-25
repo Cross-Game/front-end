@@ -61,7 +61,7 @@ function Users() {
         setMinLevelComportamento(newValues.min);
         setMaxLevelComportamento(newValues.max);
     };
-
+    useEffect(() => {filtrarJogadores()},[])
     const removeFriendsFromUsers = () => {
         const usersWithoutFriends = usersGeneric.filter(user => {
             // Verifica se o usuário não possui amigos com a flag CONFIRMED
@@ -181,32 +181,6 @@ function Users() {
         setJogoSelecionado("");
     }
 
-    // function filtrarSalas() {
-
-    //     setfilteAplicado(true);
-    //     var encontrei = 0;
-    //     setRoomsFiltered(rooms);
-    //     const salasFiltradas = rooms.filter((sala) => {
-    //         if (!jogoSelecionado || sala.gameName === jogoSelecionado) {
-    //             console.log("Devolvendo true")
-    //             encontrei++;
-    //             return true;
-    //         }
-    //         return false;
-    //     });
-    //     console.log(salasFiltradas)
-    //     console.log(salasFiltradas.lenght)
-    //     if (encontrei != 0) {
-    //         mudarToast("sucesso", "Filtro aplicado")
-    //         setRoomsFiltered(salasFiltradas);
-    //     }
-    //     else {
-    //         mudarToast("erro", "Nenhuma sala encontrada")
-    //         setRoomsFiltered(salasFiltradas);
-    //     }
-    //     setShowModalFiltroSala(false)
-    // }
-
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [toastType, setToastType] = useState('erro');
@@ -257,7 +231,7 @@ function Users() {
             }
         };
         obterUsuarios();
-    }, []);
+    }, [setUsersGeneric]);
 
 
     useEffect(() => {
@@ -269,7 +243,7 @@ function Users() {
                     }
                 });
                 if (response.status === 200) {
-                    console.log("Amigos",response)
+                    console.log("Amigos", response)
                     const usuarios = response.data.map(async (usuario) => {
                         const mediaFeedbacks = await obterMediaFeedback(usuario.friendUserId);
                         const nivel = await obterQuantidadeAmigos(usuario.friendUserId);
@@ -284,7 +258,7 @@ function Users() {
                     });
                     const usuariosComFeedbacks = await Promise.all(usuarios);
                     const shuffledUsuarios = shuffleArray(usuariosComFeedbacks);
-            
+
                     setFriends(shuffledUsuarios);
                     console.log("friends here", friends)
                 }
@@ -423,6 +397,22 @@ function Users() {
         });
     };
 
+    const [filterAplicado, setfilteAplicado] = useState(false);
+
+    function filtrarJogadorPorNome(userBusca) {
+        setfilteAplicado(true);
+        setUsersGeneric(usersGeneric);
+        const usersFiltrados = usersGeneric.filter((user) => {
+            console.log(userBusca)
+            if (user.username.startsWith(userBusca)) {
+                console.log("Devolvendo true")
+                return true;
+            }
+            return;
+        });
+        
+        setUsersGeneric(usersFiltrados)
+    }
 
     const idsGenerics = usersGeneric.map((element) => element.id);
     const idsFriendsAccepted = friends.filter((friend) => (friend.friendshipState === "CONFIRMED")).map((element) => (element.friendUserId));
@@ -436,39 +426,46 @@ function Users() {
             <div className='bodyRooms'>
                 <div className="topDiv">
                     <div className="inputDiv">
-                        <input type="text" className='inputRooms' placeholder='Buscar jogadores' />
+                        <input type="text" className='inputRooms' placeholder='Buscar jogadores'  onChange={(event) => filtrarJogadorPorNome(event.target.value)} />
                         <BsFilterLeft className='salas-icon-filtro' onClick={() => setShowModalFiltroJogadores(true)} />
                         <HiSearch className='salas-icon-search' />
                     </div>
                     <div className="divRoomsAllContainer">
                         {usersGeneric == [] || usersGeneric.length === 0 || usersGeneric == null || usersGeneric === undefined ?
-                            <NothingContentRooms
-                                text1={"Nenhum jogador encontrado"}
-                                text2={"Convide pessoas e ajude nosso servidor a crescer ainda mais"}
-                                isInteractive={false}
-                            />
+                            filterAplicado ?
+                                <NothingContentRooms
+                                    text1={"Nenhum amigo encontrado pelo filtro"}
+                                    text2={"tente por outro filtro"}
+                                    isInteractive={false}
+                                />
+                                :
+                                <NothingContentRooms
+                                    text1={"Nenhum jogador encontrado"}
+                                    text2={"Convide pessoas e ajude nosso servidor a crescer ainda mais"}
+                                    isInteractive={false}
+                                />
                             : usersGeneric.filter((user) => (user.id !== USERID && !usersFilterIdsAccepted.includes(user.id)))
                                 .map((element) => (
                                     idsFriendsPending.includes(element.id) ?
                                         <React.Fragment key={element.id}>
-                                            <User id={element.id} 
-                                            username={element.username} 
-                                            friendStatus={"pending"} 
-                                            mediaComportamento={element.mediaComportamento} 
-                                            mediaHabilidade={element.mediaHabilidade} 
-                                            nivel={element.nivel} 
-                                            imagem={element.imagem} />
+                                            <User id={element.id}
+                                                username={element.username}
+                                                friendStatus={"pending"}
+                                                mediaComportamento={element.mediaComportamento}
+                                                mediaHabilidade={element.mediaHabilidade}
+                                                nivel={element.nivel}
+                                                imagem={element.imagem} />
                                         </React.Fragment>
                                         :
                                         <React.Fragment key={element.id}>
-                                            <User 
-                                            id={element.id} 
-                                            username={element.username}
-                                            friendStatus={"teste"} 
-                                            mediaComportamento={element.mediaComportamento} 
-                                            mediaHabilidade={element.mediaHabilidade} 
-                                            nivel={element.nivel} 
-                                            imagem={element.imagem} />
+                                            <User
+                                                id={element.id}
+                                                username={element.username}
+                                                friendStatus={"teste"}
+                                                mediaComportamento={element.mediaComportamento}
+                                                mediaHabilidade={element.mediaHabilidade}
+                                                nivel={element.nivel}
+                                                imagem={element.imagem} />
                                         </React.Fragment>
                                 ))
                         }
@@ -482,9 +479,8 @@ function Users() {
                         <HiSearch className='salas-icon-search' />
                     </div>
                     <div className="divRoomsAllContainer">
-                        
+
                         {friends.length === 0 || friends === null || friends === undefined ?
-                        
                             <NothingContentRooms
                                 text1={"Nenhum amigo encontrado"}
                                 text2={"Adicione as pessoas para interagir e adicionar em grupos"}
@@ -506,7 +502,7 @@ function Users() {
                                                 nivel={element.nivel}
                                                 imagem={element.imagem}
                                             />
-                                        
+
                                         }
                                     </React.Fragment>
                                 ))}
@@ -602,7 +598,7 @@ export const User = (props) => {
             body: JSON.stringify(friendRequestPayload),
         })
             .then(response => {
-                if (response.ok) { 
+                if (response.ok) {
                     mudarToast("Sucesso", "Convite enviado")
                     sendNotifyToUserForFriendship()
                 } else if (response.status === 409) {

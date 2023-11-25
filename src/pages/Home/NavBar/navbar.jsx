@@ -6,8 +6,17 @@ import "./style.css"
 import { useNavigate } from "react-router-dom"
 import { BsDiscord } from "react-icons/bs";
 import { RiFacebookBoxFill, RiInstagramFill, RiYoutubeFill } from "react-icons/ri";
+import axios from 'axios';
+import { currentURL } from "../../../data/constants";
 
 function NavBar() {
+    const [users, setUsers] = useState(0)
+
+    useEffect(() => {
+      axios.get(`${currentURL}/users/count`).then((response) => {
+        setUsers(response.data)
+      })
+    },[])
     const navigate = useNavigate();
     return (
         <>
@@ -32,7 +41,7 @@ function NavBar() {
                     <div className="navbar-navBarDireitaBaixo">
                         <div className="navbar-baixoEsquerda">
                             <div><BiGroup className="navbar-iconeNavBar" /></div>
-                            <div>+<span>200</span> Players</div>
+                            <div>+<span>{users}</span> Players</div>
                         </div>
                         <div className="navbar-baixoMeio">
                             <div className="navbar-linkPages">

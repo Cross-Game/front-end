@@ -15,20 +15,33 @@ import imgPc from "../Plataforma/assets/computador.png"
 import imgCelular from "../Plataforma/assets/celular.png"
 import { TOKEN, USERID, currentURL } from "../../../data/constants";
 import axios from "axios";
+import Toast from '../../../components/Toast';
 
 
 function ProfileJogo() {
     const [showModalAdicionarPlataforma, setShowModalAdicionarPlataforma] = useState(false);
     const [plataformasSelecionadas, setPlataformasSelecionadas] = useState([]);
     const [plataformas, setPlataformas] = useState([]);
+    const [plataformasAtualizada, setPlataformasAtualizada] = useState(false)
+
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastType, setToastType] = useState('erro');
+
+    function mudarToast(tipo, mensagem) {
+        setShowToast(true);
+        setToastType(tipo.toLowerCase());
+        setToastMessage(mensagem);
+    }
 
     function limparPlataformas() {
         setPlataformasSelecionadas("")
     }
 
+
     useEffect(() => {
         obterPlataformas();
-    }, []);
+    }, [plataformasAtualizada]);
 
     function obterPlataformas() {
         console.log("Chamei obter plataforma");
@@ -76,6 +89,9 @@ function ProfileJogo() {
         )
             .then((response) => {
                 if (response.status === 201) {
+                    mudarToast("sucesso", "Plataforma cadastrada")
+                    setShowModalAdicionarPlataforma(false)
+                    setPlataformasAtualizada(!plataformasAtualizada)
                     console.log("Sucesso ao cadastrar plataformas");
                 } else {
                     console.error("Erro ao cadastrar plataformas", response.status);
@@ -175,6 +191,13 @@ function ProfileJogo() {
                         </div>
                     </Modal>
                 )}
+                {showToast && (
+                <Toast
+                    type={toastType}
+                    message={toastMessage}
+                    onClose={() => setShowToast(false)}
+                />
+            )}
             </>
         )
     }

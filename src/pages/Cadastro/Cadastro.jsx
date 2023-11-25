@@ -260,7 +260,7 @@ function Cadastro() {
                                 </div>
                             )}
                         </div>
-                        <div className="botaoCadastro" onClick={cadastrar}>
+                        <div className="botaoCadastro" onClick={() => cadastrar(username, email, password)}>
                             <div>Cadastrar</div>
                             <BsArrowRightShort className="arrowProximo" />
                         </div>

@@ -66,8 +66,6 @@ function Rooms() {
         setRankSelecionado("");
         setDescricaoSalaCriar("");
         setNomeSalaCriar("");
-        console.log(minLevel);
-        console.log(maxLevel);
         setMinLevel(1);
         setMaxLevel(100);
     }

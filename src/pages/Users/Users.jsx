@@ -27,11 +27,10 @@ import medalOuro from '../../assets/index-page/medalOuro.svg'
 import medalDiamante from '../../assets/index-page/medalDiamante.svg'
 import medalMestre from '../../assets/index-page/medalMestre.svg'
 
-import { jogos as listaJogos } from "../../utils/jogos";
-
 function Users() {
 
     const [usersGeneric, setUsersGeneric] = useState([]);
+    const [users, setUsers] = useState([]);
     const [friends, setFriends] = useState([]);
     const [showModalFiltroJogadores, setShowModalFiltroJogadores] = useState(false);
     const [meusInteresses, setMeusInteresses] = useState([])
@@ -61,7 +60,7 @@ function Users() {
         setMinLevelComportamento(newValues.min);
         setMaxLevelComportamento(newValues.max);
     };
-    useEffect(() => {filtrarJogadores()},[])
+    useEffect(() => { filtrarJogadores() }, [])
     const removeFriendsFromUsers = () => {
         const usersWithoutFriends = usersGeneric.filter(user => {
             // Verifica se o usuário não possui amigos com a flag CONFIRMED
@@ -92,7 +91,6 @@ function Users() {
             jogadoresFiltrados = listaOriginal.filter((jogador) => {
                 const habilidade = jogador.mediaHabilidade;
                 const comportamento = jogador.mediaComportamento;
-
                 return (
                     habilidade >= minLevelHabilidade &&
                     habilidade <= maxLevelHabilidade &&
@@ -107,7 +105,7 @@ function Users() {
 
             axios
                 .get(
-                    `${currentURL}/users-filter?preference=${meusInteresses[0]}&gameName=${jogoSelecionado.toUpperCase()}&gameFunction=TOP}`,
+                    `https://localhost:8080/users-filter?preference=${meusInteresses[0]}&gameName=${jogoSelecionado.toUpperCase()}&gameFunction=TOP}`,
                     {
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest',
@@ -224,6 +222,7 @@ function Users() {
                     const usuariosComFeedbacks = await Promise.all(usuarios);
                     const shuffledUsuarios = shuffleArray(usuariosComFeedbacks);
                     setUsersGeneric(shuffledUsuarios);
+                    setUsers(shuffledUsuarios)
                 }
             } catch (error) {
                 console.error('Erro ao buscar usuários:', error);
@@ -399,19 +398,32 @@ function Users() {
 
     const [filterAplicado, setfilteAplicado] = useState(false);
 
+    
     function filtrarJogadorPorNome(userBusca) {
-        setfilteAplicado(true);
-        setUsersGeneric(usersGeneric);
-        const usersFiltrados = usersGeneric.filter((user) => {
-            console.log(userBusca)
-            if (user.username.startsWith(userBusca)) {
-                console.log("Devolvendo true")
-                return true;
+        // TO DO basear filtros do interesse.
+        try {
+            // Verifica se a lista original já foi definida
+            if (listaOriginal.length === 0) {
+                setListaOriginal([...usersGeneric]);
             }
-            return;
-        });
-        
-        setUsersGeneric(usersFiltrados)
+            setfilteAplicado(true)
+            setUsersGeneric(listaOriginal);
+            jogadoresFiltrados = listaOriginal.filter((jogador) => {
+
+                if (jogador.username.toLowerCase().startsWith(userBusca.toLowerCase())) {
+                    console.log("ta passando aqui")
+                    console.log(jogador.username)
+                    return true;
+                }
+                return false;
+            });
+            setUsersGeneric(jogadoresFiltrados);
+            setShowModalFiltroJogadores(false);
+
+        } catch (error) {
+            console.error("Erro ao filtrar jogadores pelo campo de busca:", error);
+            mudarToast("Erro", "Erro ao filtrar jogadores.");
+        }
     }
 
     const idsGenerics = usersGeneric.map((element) => element.id);
@@ -426,7 +438,7 @@ function Users() {
             <div className='bodyRooms'>
                 <div className="topDiv">
                     <div className="inputDiv">
-                        <input type="text" className='inputRooms' placeholder='Buscar jogadores'  onChange={(event) => filtrarJogadorPorNome(event.target.value)} />
+                        <input type="text" className='inputRooms' placeholder='Buscar jogadores' onChange={(event) => filtrarJogadorPorNome(event.target.value)} />
                         <BsFilterLeft className='salas-icon-filtro' onClick={() => setShowModalFiltroJogadores(true)} />
                         <HiSearch className='salas-icon-search' />
                     </div>
@@ -519,21 +531,6 @@ function Users() {
                             <div className="filtro_habilidade"><p className="titleFiltro">Habilidade</p>  <RangeBar min='0' max='5' values={currentValuesHabilidade} onChange={handleValuesChangeHabilidade} /> </div>
                         </div>
 
-                        <div className="container_perfil_de_jogos">
-                            <p className='title_container_users2'>Perfil de Jogos</p>
-                            <p className="titleFiltro">Jogos</p>
-                            <div className="jogos">
-                                {jogos.length > 0 && jogos.map((jogo) => (
-                                    <React.Fragment key={jogo.id}>
-                                        <Tag
-                                            text={jogo.name}
-                                            isSelected={jogoSelecionado === jogo.name ? true : false}
-                                            onClick={() => setJogoSelecionado(jogo.name)} />
-                                    </React.Fragment>
-                                ))}
-                            </div>
-
-                        </div>
                     </div>
                 </Modal>
             )}

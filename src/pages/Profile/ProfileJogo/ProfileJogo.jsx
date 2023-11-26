@@ -129,7 +129,7 @@ function ProfileJogo() {
                 skillLevel: "MEDIUM",
                 gameFunction: "TOP",
                 GenericGamersIds: [
-                    (jogoSelecionado + 1)
+                    jogoSelecionado
                 ]
             }, {
             headers: {
@@ -199,8 +199,8 @@ function ProfileJogo() {
                         <Loading />
                         : listaJogos.length > 0 && listaJogos.map((jogo, index) => (
 
-                            <div className="cardJogo" id="selectedCardJogo" style={index == jogoSelecionado ? bordaJogo : { border: '1px solid #000' }} key={index}
-                                onClick={() => handlerClickCard(index)}
+                            <div className="cardJogo" id="selectedCardJogo" style={jogo.id == jogoSelecionado ? bordaJogo : { border: '1px solid #000' }} key={index}
+                                onClick={() => handlerClickCard(jogo.id)}
                             >
                                 <div className="card-details">
                                     <img src={jogo.imageGame.link} className="imgJogo" />

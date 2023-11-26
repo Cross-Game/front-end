@@ -34,25 +34,22 @@ function Cadastro() {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
     const [posDados, setPosDados] = useState(false);
+    const [chamadaDiscord, setChamadaDiscord] = useState(false);
 
     useEffect(() => {
         setTimeout(() => {
 
-            if (!(queryParams.get("code") == null)) {
-              
-                handleCallback()
+            if (chamadaDiscord === false) {
+                if (!(queryParams.get("code") == null)) {
+
+                    handleCallback()
+                    setChamadaDiscord(true)
+                }
+
             }
         }, 1);
-    }, []);
+    }, [chamadaDiscord, queryParams]);
 
-
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-    }, [
-
-    ]);
 
     const handleLogin = () => {
         const url = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=${RESPONSE_TYPE}&scope=${encodeURIComponent(SCOPE)}`;
@@ -61,6 +58,7 @@ function Cadastro() {
     };
 
     const handleCallback = async () => {
+
         const data = {
             code: queryParams.get("code"),
             redirect_uri: `${URLSITE}/cadastro`,
@@ -147,52 +145,59 @@ function Cadastro() {
         setMostrarSenha(!mostrarSenha);
     }
 
-    function handleSubmit() {
-        handleCallback()
-        console.log(queryParams.get("code"))
-    }
+ 
 
     function cadastrar(usernameClient, emailClient, passwordClient) {
-
         fetch(`${currentURL}/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(
-                {
-                    username: usernameClient,
-                    email: emailClient,
-                    password: passwordClient,
-                    role: "USER"
-                }
-            ),
+            body: JSON.stringify({
+                username: usernameClient,
+                email: emailClient,
+                password: passwordClient,
+                role: "USER"
+            }),
         })
-            .then(response => response.json())
-            .then(data =>
-                fetch(`${currentURL}/user-auth`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        username: username,
-                        password: password
-                    }),
-                }).then(res => res.json())
-                    .then(data =>
-                        console.log(currentURL),
-                        mudarToast('sucesso', 'Cadastrado Realizado!'),
-                        window.location.href = `${URLSITE}/login`
-                    )
-            )
-            .catch(error =>
-                console.error(error),
-                console.log(currentURL));
-
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Resposta de rede não foi bem-sucedida.');
+        })
+        .then(userData => {
+            return fetch(`${currentURL}/user-auth`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: userData.username, // Use o nome de usuário retornado da chamada anterior
+                    password: passwordClient // Use a senha recebida ou qualquer parâmetro necessário
+                }),
+            });
+        })
+        .then(authResponse => {
+            if (authResponse.ok) {
+                return authResponse.json();
+            }
+            throw new Error('Resposta de rede não foi bem-sucedida.');
+        })
+        .then(authData => {
+            console.log(currentURL);
+            mudarToast('sucesso', 'Cadastro realizado!');
+            window.location.href = `${URLSITE}/login`;
+        })
+        .catch(error => {
+            console.error(error);
+            console.log(currentURL);
+            mudarToast('erro', 'Erro ao cadastrar.');
+        });
     }
+    
 
-   
+
 
     function mudarToast(tipo, mensagem) {
         setShowToast(true);
@@ -208,7 +213,7 @@ function Cadastro() {
 
     return (
         <>
-           <div className="container">
+            <div className="container">
                 <div className="botaoVoltar" onClick={() => navigate("/")}>
                     <p>Voltar</p>
                 </div>
@@ -287,7 +292,7 @@ function Cadastro() {
                     </div>
                 </form>
             </div>
-            </>
+        </>
     )
 }
 

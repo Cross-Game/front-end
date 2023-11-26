@@ -31,6 +31,7 @@ export const ChatRoom = () => {
 
   const [gameName, setGameName] = useState(null);
   const [rankRoom, setRankRoom] = useState(null);
+  const [roomId, setRoomId] = useState(null);
   const [levelRoom, setLevelRoom] = useState(null);
   const [roomName, setRoomName] = useState(null);
 
@@ -113,6 +114,7 @@ export const ChatRoom = () => {
           setRankRoom(response.data.rankGame)
           setLevelRoom(response.data.levelGame)
           setRoomName(response.data.name)
+          setRoomId(response.data.id)
           console.log("Informações sala", response)
         }
       } catch (error) {
@@ -191,7 +193,7 @@ export const ChatRoom = () => {
     try {
       console.log("Enviar convite sala");
       const response = await axios.post(
-        `${currentURL}/notifies/${idConvidado}?type=GROUP_INVITE&message=Te convidou para uma sala de ${gameName}&state=AWAITING&description=${sessionStorage.getItem("NICKNAME")}`,
+        `${currentURL}/notifies/${idConvidado}?type=GROUP_INVITE&message=Você foi convidado para entrar no grupo ${roomName}&state=AWAITING&description=${roomId}`,
         {
           headers: {
             'X-Requested-With': 'XMLHttpRequest',

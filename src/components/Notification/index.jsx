@@ -182,7 +182,7 @@ function Notification(props) {
                   {notification.type === 'FRIEND_REQUEST' && (
                     <CardNotification
                       key={notification.id}
-                      title={notification.description}
+                      title={"Pedido de amizade"}
                       icon={<BsPersonHeart />}
                       message={notification.message}
                       date={moment(notification.date).format('DD/MM/YYYY')}
@@ -213,7 +213,7 @@ function Notification(props) {
                   {notification.type === 'GROUP_INVITE' && (
                     <CardNotification
                       key={notification.id}
-                      title={notification.description}
+                      title={"Convite para grupo"}
                       icon={<MdGroups />}
                       message={notification.message}
                       date={moment(notification.date).format('DD/MM/YYYY')}

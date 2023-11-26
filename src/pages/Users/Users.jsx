@@ -570,7 +570,7 @@ export const User = (props) => {
 
     const sendNotifyToUserForFriendship = () => {
 
-        fetch(`${currentURL}/notifies/${Number(props.id)}?type=FRIEND_REQUEST&message=Convite para Amigo&description=${USERNAMESESSION}&state=AWAITING`, {
+        fetch(`${currentURL}/notifies/${Number(props.id)}?type=FRIEND_REQUEST&message=${USERNAMESESSION} enviou um pedido de amizade&description=${USERNAMESESSION}&state=AWAITING`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
